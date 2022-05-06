@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="PentagonHMI.RackStatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PentagonHMI"
+             mc:Ignorable="d">
+    
+    <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <ItemsControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" x:Name="RackStatusTypeListItemsControl" Margin="2"
+                          VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="{Binding RackStatusTypeName}">
+                            <ItemsControl ItemsSource="{Binding RackStatusSlotList}" VirtualizingPanel.IsVirtualizing="True"
+                                      VirtualizingPanel.VirtualizationMode="Recycling">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Columns="1"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="50"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Label Grid.Column="0" BorderBrush="Black" BorderThickness="1" Content="{Binding RackStatusSlotName}"
+                                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                            <Label Grid.Column="1" BorderBrush="Black" BorderThickness="1"
+                                               DataContext="{Binding RackStatusSlotStatusModel}"
+                                               Background="{Binding RackStatusSlotStatusColor}" Content="{Binding RackStatusSlotStatusName}"
+                                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </GroupBox>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <GroupBox Grid.Row="0" Grid.Column="1" Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Legend">
+                <ItemsControl x:Name="RackStatusSlotStatusListItemsControl" VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Background="{Binding RackStatusSlotStatusColor}" Padding="10 4"
+                                       Text="{Binding RackStatusSlotStatusName}" TextAlignment="Center"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </GroupBox>
+            
+            <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="RackStatusActionListItemsControl"
+                          VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="RackStatusActionButton" Content="{Binding RackStatusActionName}" Cursor="Hand"
+                                Margin="4" Padding="10" Tag="{Binding}" Click="rackStatusActionButton_Click"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </ScrollViewer>
+
+</UserControl>

@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucDesign"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:my="clr-namespace:PentagonHMI.UserControls"
+             d:DesignHeight="800" d:DesignWidth="800">
+    <Grid>
+        <Border Grid.Row="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0">
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0"  Content="CONFIGURATION" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,2,2,0"/>
+                <Grid Grid.Row="1">
+                    
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <Button Background="{DynamicResource NormalButtonBrush}" Content="Save" Height="23" HorizontalAlignment="Right" Margin="0,0,10,5" Name="btnSave" Style="{DynamicResource styGlassButton}" VerticalAlignment="Bottom" Width="75" />
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

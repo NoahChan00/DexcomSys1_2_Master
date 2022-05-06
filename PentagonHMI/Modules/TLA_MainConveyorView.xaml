@@ -1,0 +1,167 @@
+﻿<UserControl x:Class="PentagonHMI.TLA_MainConveyorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PentagonHMI"
+             mc:Ignorable="d">
+    
+    <Canvas Background="White" Height="1080" Width="1920">
+        <Image Height="1080" Source="/Images/TLA/TLA Layout.png" Width="1920"/>
+        
+        <Grid Canvas.Left="200" Canvas.Top="320" Height="440" Width="120">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="In PnP"/>
+
+            <Rectangle Grid.Row="1" x:Name="InPnPRectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="InPnPTextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Canvas.Left="380" Canvas.Top="320" Height="440" Width="80">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="Labelling"/>
+
+            <Rectangle Grid.Row="1" x:Name="LabellingRectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="LabellingTextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Canvas.Left="480" Canvas.Top="320" Height="440" Width="140">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="Cen Vis"/>
+
+            <Rectangle Grid.Row="1" x:Name="CenVisRectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="CenVisTextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Canvas.Left="625" Canvas.Top="320" Height="440" Width="155">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="CSSD"/>
+
+            <Rectangle Grid.Row="1" x:Name="CSSDRectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="CSSDTextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Canvas.Left="840" Canvas.Top="320" Height="440" Width="310">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="DIMM"/>
+
+            <Rectangle Grid.Row="1" x:Name="DIMMRectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="DIMMTextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Canvas.Left="1270" Canvas.Top="320" Height="440" Width="190">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="PCI"/>
+
+            <Rectangle Grid.Row="1" x:Name="PCIERectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="PCIETextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <Grid Canvas.Left="1570" Canvas.Top="320" Height="440" Width="120">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Background="Black" FontSize="15" Foreground="White" Padding="10 5" Text="Out PnP"/>
+
+            <Rectangle Grid.Row="1" x:Name="OutPnPRectangle" Opacity="0.7"/>
+            <TextBlock Grid.Row="1" x:Name="OutPnPTextBlock" Background="White" FontSize="18" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Bottom"/>
+        </Grid>
+
+        <StackPanel Canvas.Left="0" Canvas.Top="310" x:Name="Zone1EStop1StackPanel">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 1 E-Stop 1"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="0 10 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="0" Canvas.Top="415" x:Name="Zone1EStop2StackPanel">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 1 E-Stop 2"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="0 10 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="95" Canvas.Top="475" x:Name="Zone30AEStop1StackPanel">
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Left" Margin="0 0 0 10" Stroke="White" Width="20"/>
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 30A E-Stop 1"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="95" Canvas.Top="570" x:Name="Zone30AEStop2StackPanel">
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Left" Margin="0 0 0 10" Stroke="White" Width="20"/>
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 30A E-Stop 2"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="300" Canvas.Top="360" x:Name="Zone3BEStop1StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 3B E-Stop 1"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="300" Canvas.Top="450" x:Name="Zone3BEStop2StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 3B E-Stop 2"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="600" Canvas.Top="360" x:Name="Zone4CEStop1StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 4C E-Stop 1"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="600" Canvas.Top="450" x:Name="Zone4CEStop2StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 4C E-Stop 2"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="1000" Canvas.Top="360" x:Name="Zone6BEStop1StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 6B E-Stop 1"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="1000" Canvas.Top="450" x:Name="Zone6BEStop2StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 6B E-Stop 2"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="1290" Canvas.Top="360" x:Name="Zone7CEStop1StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 7C E-Stop 1"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="1290" Canvas.Top="450" x:Name="Zone7CEStop2StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 7C E-Stop 2"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="1570" Canvas.Top="360" x:Name="Zone9EStop1StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 9 E-Stop 1"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+
+        <StackPanel Canvas.Left="1570" Canvas.Top="450" x:Name="Zone9EStop2StackPanel" Orientation="Horizontal">
+            <TextBlock Background="Crimson" FontSize="20" Foreground="White" Padding="10 5" Text="Zone 9 E-Stop 2"/>
+            <Rectangle Fill="Crimson" Height="20" HorizontalAlignment="Right" Margin="10 0 0 0" Stroke="White" Width="20"/>
+        </StackPanel>
+    </Canvas>
+
+</UserControl>

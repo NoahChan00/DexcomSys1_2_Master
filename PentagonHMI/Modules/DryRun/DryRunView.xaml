@@ -1,0 +1,92 @@
+﻿<UserControl x:Class="PentagonHMI.DryRunView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PentagonHMI"
+             xmlns:liveCharts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             mc:Ignorable="d"
+             TextElement.FontSize="18">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0" Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Dry Run Mode">
+            <ComboBox x:Name="DryRunListComboBox" DisplayMemberPath="DryRunName" Margin="10" Padding="5"/>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Control">
+            <ItemsControl x:Name="DryRunActionListItemsControl" VirtualizingPanel.IsVirtualizing="True"
+                          VirtualizingPanel.VirtualizationMode="Recycling">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button x:Name="DryRunActionButton" Content="{Binding DryRunActionName}" IsEnabled="{Binding DryRunActionEnable}"
+                                Margin="15" Padding="10" Tag="{Binding}" Click="dryRunActionButton_Click"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Dry Run (HH:mm:ss)">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="180"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ItemsControl Grid.Row="0" Grid.Column="0" x:Name="DryRunTimeListItemsControl" VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <GroupBox Header="{Binding DryRunTimeName}">
+                                <TextBlock Text="{Binding DryRunTimeString}" TextAlignment="Right"/>
+                            </GroupBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <ItemsControl Grid.Row="1" Grid.Column="0" x:Name="DryRunCountListItemsControl" VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <GroupBox Header="{Binding DryRunCountName}">
+                                <TextBlock Text="{Binding DryRunCount}" TextAlignment="Center"/>
+                            </GroupBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <GroupBox Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Header="Dry Run Duration (min)">
+                    <liveCharts:PieChart x:Name="DryRunDurationPieChart" LegendLocation="Top"/>
+                </GroupBox>
+            </Grid>
+        </GroupBox>
+    </Grid>
+
+</UserControl>

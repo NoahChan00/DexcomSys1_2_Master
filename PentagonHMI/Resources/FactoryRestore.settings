@@ -1,0 +1,66 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PentagonHMI" GeneratedClassName="FactoryRestore">
+  <Profiles />
+  <Settings>
+    <Setting Name="Singulation_Stepper_2DBarcode_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Singulation_Stepper_Conveyor_Speed" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">14.65</Value>
+    </Setting>
+    <Setting Name="FnB_Stepper_TicMark_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="UPC_Stepper_TicMark_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="UPC_Stepper_OQC_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter1_Transfer_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">5.5</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter1_Reject_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">191</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter1_Transfer_Speed" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter1_Reject_Speed" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter2_Transfer_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter2_Reject_Distance" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">193</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter2_Transfer_Speed" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter2_Reject_Speed" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
+    <Setting Name="Singulation_Stepper_2DBarcode_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM5</Value>
+    </Setting>
+    <Setting Name="Singulation_Stepper_Conveyor_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM6</Value>
+    </Setting>
+    <Setting Name="FnB_Stepper_TicMark_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM3</Value>
+    </Setting>
+    <Setting Name="UPC_Stepper_TicMark_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM10</Value>
+    </Setting>
+    <Setting Name="UPC_Stepper_OQC_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM9</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter1_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM11</Value>
+    </Setting>
+    <Setting Name="Sorting_Stepper_Sorter2_COM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM13</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="PentagonHMI.UserControls.UcData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:loc="clr-namespace:PentagonHMI.UserControls"
+             mc:Ignorable="d">
+    <Grid Width="305" Height="280">
+        <Grid Margin="0 0 0 40" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <loc:PieSlice x:Name="zone2Pie" Stroke="SteelBlue" Fill="SteelBlue"
+         Height="205" Width="205"
+         StartAngle="313" EndAngle="0"
+         HorizontalAlignment="Center"/>
+            <Ellipse Name="Round2"  Fill="SteelBlue" Height="200" Width="200"/>
+            <Ellipse Width="185" Height="185" Fill="White"/>
+            <Grid Name="Z2PieContainer">
+                <loc:PieSlice Stroke="White" Fill="White"
+         Height="200" Width="200" Margin="5"
+         StartAngle="0" EndAngle="0"
+         HorizontalAlignment="Center"/>
+            </Grid>
+            <loc:PieSlice Stroke="DodgerBlue" Fill="DodgerBlue"
+         Height="185" Width="185"
+         StartAngle="0" EndAngle="40"
+         HorizontalAlignment="Center"/>
+            <Ellipse Name="Round1" Fill="DodgerBlue" Height="180" Width="180"/>
+            <Ellipse Width="165" Height="165" Fill="White"/>
+            <Grid Name="Z1PieContainer">
+                <loc:PieSlice Stroke="White" Fill="White"
+         Height="180" Width="180"
+         StartAngle="0" EndAngle="0"
+         HorizontalAlignment="Center"/>
+            </Grid>
+            <Ellipse Name="Round" Fill="DeepSkyBlue" Height="160" Width="160"/>
+            <!--<Ellipse Width="125" Height="125" Fill="White"/>-->
+            <Grid Name="PieContainer">
+                <loc:PieSlice x:Name="Pie" Stroke="White" Fill="White"
+         Height="165" Width="165"
+         StartAngle="0" EndAngle="0"
+         HorizontalAlignment="Center"/>
+            </Grid>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <TextBlock Text="Overall Yield" FontSize="14" FontWeight="DemiBold" FontStyle="Italic" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <TextBlock Name="TBox" FontSize="50" FontWeight="DemiBold" HorizontalAlignment="Center">
+            N/A
+                </TextBlock>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="P" Padding="2 2 0 2" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                        <Label Content="ass:" FontSize="10" Padding="1 2 2 2" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                        <TextBlock Name="TPass" Text="0" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="F" FontSize="14" Padding="15 2 0 2" FontWeight="DemiBold" FontStyle="Italic"/>
+                        <Label Content="ail:" FontSize="10" Padding="1 2 2 2" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                        <TextBlock Name="TFail" Text="0" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Canvas Margin="0 5 0 0">
+            <Line Stroke="DodgerBlue" Canvas.Top="2" Canvas.Left="-1" StrokeThickness="2" X1="174" X2="174" Y1="19" Y2="72"/>
+            <Line Stroke="DodgerBlue" Canvas.Top="1" Canvas.Left="-1" StrokeThickness="2" X1="174" X2="290" Y1="20" Y2="20"/>
+            <Line x:Name="z2Line1" Stroke="SteelBlue" Canvas.Top="155" Canvas.Left="-1" StrokeThickness="2" X1="174" X2="174" Y1="50" Y2="71"/>
+            <Line x:Name="z2Line2" Stroke="SteelBlue" Canvas.Top="176" Canvas.Left="-1" StrokeThickness="2" X1="173" X2="290" Y1="50" Y2="50"/>
+            <Label Content="ZONE1" Canvas.Left="240" Canvas.Top="-5" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+            <Label x:Name="lblZone2" Content="ZONE2" Canvas.Left="240" Canvas.Top="200" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+            <StackPanel Canvas.Left="177" Canvas.Top="23" Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="P" Padding="2 2 0 2" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                    <Label Content="ass:" Foreground="DimGray" FontSize="10" Padding="1 2 2 2" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                    <TextBlock Name="T1Pass" Text="0" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="F" FontSize="14" Padding="15 2 0 2" FontWeight="DemiBold" FontStyle="Italic"/>
+                    <Label Content="ail:" Foreground="DimGray" FontSize="10" Padding="1 2 2 2" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                    <TextBlock Name="T1Fail" Text="0" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel x:Name="sp_Zone2" Canvas.Left="175" Canvas.Top="230" Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="P" Padding="2 2 0 2" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                    <Label Content="ass:" Foreground="DimGray" FontSize="10" Padding="1 2 2 2" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                    <TextBlock Name="T2Pass" Text="0" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="F" FontSize="14" Padding="15 2 0 2" FontWeight="DemiBold" FontStyle="Italic"/>
+                    <Label Content="ail:" Foreground="DimGray" FontSize="10" Padding="1 2 2 2" FontWeight="DemiBold" FontStyle="Italic"></Label>
+                    <TextBlock Name="T2Fail" Text="0" VerticalAlignment="Center" FontSize="14" FontWeight="DemiBold" FontStyle="Italic"/>
+                </StackPanel>
+            </StackPanel>
+        </Canvas>
+    </Grid>
+</UserControl>

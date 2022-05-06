@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="PentagonHMI.UserControls.UCSettingMode"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.UserControls"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10 10 10 20"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ToggleButton">
+            <EventSetter Event="Click" Handler="TBtn_MouseClick"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Width" Value="130"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel x:Name="SettingMode" Orientation="Vertical">
+            <Label Margin="0" Foreground="DarkBlue" FontWeight="Bold" FontSize="20"  Content="Machine Mode :"/>
+            <StackPanel Orientation="Horizontal">
+                <Border>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="STATION NAME" FontWeight="Bold"/>
+                        <StackPanel>
+                            <Border Name="StnMode">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label MinWidth="210" Content="STATION MODE :" FontWeight="Bold"/>
+                                    <ToggleButton Name="Dis" Content="Disable(OFF)"/>
+                                    <ToggleButton Name="DryRun" Content="DryRun(OFF)"/>
+                                </StackPanel>
+                            </Border>
+                            <Border Name="ZnMode">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label MinWidth="210" Content="ZONE DISABLE MODE:" FontWeight="Bold"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <ToggleButton Name="Dis_Z1" Content="Zone1(OFF)"/>
+                                        <ToggleButton Name="Dis_Z2" Content="Zone2(OFF)"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border Name="ShtMode">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label MinWidth="210" Content="SHUTTLE DISABLE MODE :" FontWeight="Bold"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <ToggleButton Name="Dis_S1" Content="Shuttle1(OFF)"/>
+                                        <ToggleButton Name="Dis_S2" Content="Shuttle2(OFF)"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

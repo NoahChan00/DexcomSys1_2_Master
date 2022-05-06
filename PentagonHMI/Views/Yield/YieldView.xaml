@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="PentagonHMI.Views.YieldView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PentagonHMI.Views"
+             xmlns:liveCharts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf">
+    
+    <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Yield (%)">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <liveCharts:Gauge Grid.Row="0" From="0" To="100"/>
+
+            <ItemsControl Grid.Row="1" x:Name="YieldStatusListItemsControl" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="1"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <UniformGrid Rows="1">
+                            <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="{Binding YieldStatusName, StringFormat={}{0} : }"/>
+                            <TextBlock Style="{StaticResource CenterValueTextBlockStyle}" Text="{Binding YieldStatus}"/>
+                        </UniformGrid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+    </GroupBox>
+
+</UserControl>

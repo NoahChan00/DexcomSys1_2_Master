@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="PentagonHMI.UserControls.UCLabelTextbox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Name="ucLabelTextboxErrorMessage" d:DesignWidth="150">
+    <Grid Margin="0">
+        <Label Name="ucLabelTitle" Padding="5,5,5,0" VerticalAlignment="Top" Content="{Binding ElementName=ucLabelTextboxErrorMessage, Path=ucLabelTitleContent}" MinWidth="50" HorizontalAlignment="Left" Foreground="DarkSlateGray"  />
+        <Label Name="ucTextBox" Margin="50,0,0,0"  TabIndex="0" VerticalContentAlignment="Top" MinWidth="100"  Foreground="DarkSlateGray" />
+      
+    </Grid>
+</UserControl>
+

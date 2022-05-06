@@ -1,0 +1,82 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PentagonHMI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SubStation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">11</Value>
+    </Setting>
+    <Setting Name="ScannerIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">NA</Value>
+    </Setting>
+    <Setting Name="ScannerPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">11001</Value>
+    </Setting>
+    <Setting Name="PLC_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="OEEIdealCycleTimeSec" Type="System.String" Scope="User">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="LogoutTimeSec" Type="System.String" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="DatabaseConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Persist Security Info = False;Data Source = UN-FT-CL1-P1729\SQLEXPRESS02;Integrated Security = true; Initial Catalog = gdb;&lt;/ConnectionString&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Persist Security Info = False;Data Source = UN-FT-CL1-P1729\SQLEXPRESS02;Integrated Security = true; Initial Catalog = gdb;</Value>
+    </Setting>
+    <Setting Name="LogLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\HMI\</Value>
+    </Setting>
+    <Setting Name="ServerName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UN-FT-CL1-P1729\SQLEXPRESS02</Value>
+    </Setting>
+    <Setting Name="Station" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="Lifter1Station" Type="System.String" Scope="User">
+      <Value Profile="(Default)">88</Value>
+    </Setting>
+    <Setting Name="Lifter2Station" Type="System.String" Scope="User">
+      <Value Profile="(Default)">89</Value>
+    </Setting>
+    <Setting Name="TotalLifter" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="ProjectType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ARCADIA</Value>
+    </Setting>
+    <Setting Name="FeatureFlag" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MotorOn</Value>
+    </Setting>
+    <Setting Name="RepenishIconFlag" Type="System.String" Scope="User">
+      <Value Profile="(Default)">on</Value>
+    </Setting>
+    <Setting Name="CalibrationFlag" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Off</Value>
+    </Setting>
+    <Setting Name="PalletRejectInt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="PickRetryPrompt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">On</Value>
+    </Setting>
+    <Setting Name="localIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">191.168.3.221</Value>
+    </Setting>
+    <Setting Name="LocalPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PLC_IPAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">193.168.3.02</Value>
+    </Setting>
+    <Setting Name="PLC_Timeout" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3000</Value>
+    </Setting>
+    <Setting Name="StationType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ARCADIA_MAIN</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

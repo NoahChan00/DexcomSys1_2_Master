@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="PentagonHMI.DIMM_Modules.DummyMes.ucDummyMES"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.DIMM_Modules.DummyMes"
+             mc:Ignorable="d" >
+    <UserControl.Resources>
+        <Style TargetType="GroupBox">
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid DataContext="{Binding Path=Model}">
+        <Border CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="15" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Style="{DynamicResource styTopPenalBlue}" Content="Server Info" FontSize="18" Height="30" Padding="30,2,2,0" />
+                <Grid Grid.Row="1">
+                    <StackPanel HorizontalAlignment="Left" MinWidth="300">
+                        <GroupBox Header="MPN 1">
+                            <StackPanel>
+                                <TextBox Margin="5" Name="Tbx_Rack1MPN" Padding="10 5" HorizontalContentAlignment="Center"/>
+                                <Button Content="UPDATE MPN" Click="Update_Click" Tag="1" Padding="10 0 10 0" Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="MPN 2">
+                            <StackPanel>
+                                <TextBox Margin="5" Name="Tbx_Rack2MPN" Padding="10 5" HorizontalContentAlignment="Center"/>
+                                <Button Content="UPDATE MPN" Click="Update_Click" Tag="2" Padding="10 0 10 0" Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="MPN 1 SLOT">
+                            <StackPanel>
+                                <TextBox Margin="5" Name="Tbx_Rack3MPN" Padding="10 5" HorizontalContentAlignment="Center"/>
+                                <Button Content="UPDATE MPN SLOT" Click="Update_Click" Tag="3" Padding="10 0 10 0" Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <GroupBox Header="MPN 2 SLOT">
+                            <StackPanel>
+                                <TextBox Margin="5" Name="Tbx_Rack4MPN" Padding="10 5" HorizontalContentAlignment="Center"/>
+                                <Button Content="UPDATE MPN SLOT" Click="Update_Click" Tag="4" Padding="10 0 10 0" Margin="5"/>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

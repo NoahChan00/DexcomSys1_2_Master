@@ -1,0 +1,168 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucReplanishment"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.ChildControls"
+             xmlns:my="clr-namespace:PentagonHMI.UserControls"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <!--<RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>-->
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Border CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+            <Label Name="lbl_HeaderTitle_1" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,0,0,0"/>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_1" VerticalAlignment="Top" ucLabelTitleContent="Item #1"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16" />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_1" VerticalAlignment="Top" ucLabelTitleContent="Qty #1"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem1"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem1_Click"  />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_2" VerticalAlignment="Top" ucLabelTitleContent="Item #2"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_2" VerticalAlignment="Top" ucLabelTitleContent="Qty #2"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem2"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem2_Click" />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_3" VerticalAlignment="Top" ucLabelTitleContent="Item #3"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_3" VerticalAlignment="Top" ucLabelTitleContent="Qty #3"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem3"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem3_Click" />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_4" VerticalAlignment="Top" ucLabelTitleContent="Item #4"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_4" VerticalAlignment="Top" ucLabelTitleContent="Qty #4"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem4"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem4_Click" />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_5" VerticalAlignment="Top" ucLabelTitleContent="Item #5"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_5" VerticalAlignment="Top" ucLabelTitleContent="Qty #5"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem5"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem5_Click" />
+            </TextBlock>
+        </StackPanel>
+
+        <Border Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" Name="TopupScreen" Height="230" Width="400" VerticalAlignment="Center" HorizontalAlignment="Right" CornerRadius=" 12,12,12,12" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}"   Background="White" Visibility="Collapsed"  >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="350*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Label x:Name="lblTitle" Content="{DynamicResource MAIN_WINDOW_MENU_HEADER_TOPUP}" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Padding="30,2,2,0" Grid.ColumnSpan="2" />
+                <Grid Grid.Row="1" Margin="0,2,0,0" Grid.ColumnSpan="2">
+                    <StackPanel VerticalAlignment="Top">
+                        <!--<TextBlock Height="23" Name="txtBlockInstructions" Text="{DynamicResource LOGIN_TEXTBLOCK_INSTRUCTIONS}" Margin="5" />-->
+                        <TextBlock Height="23" Name="txtBlockInstructions" Text="Please enter qty top-up" Margin="5" />
+                        <!--<my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="TopUpItem" VerticalAlignment="Top" ucLabelTitleContent="Item"  ucLabelTitleWidth="70"  Margin="5" ucText="" FontSize="14"  />
+                        <-->
+                        <!--my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="CurrentQty" VerticalAlignment="Top" ucLabelTitleContent="Qty"  ucLabelTitleWidth="70"  Margin="5" ucText="" FontSize="14"  />-->
+                        <my:UCLabelTextboxErrorMessage HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="PartItem_TopUp" VerticalAlignment="Top" ucLabelTitleContent="Part Item "    textboxIsReadOnly="True"  isPassword="False" ucLabelTitleWidth="80"  />
+                        <my:UCLabelTextboxErrorMessage HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="PartQty_Topup" VerticalAlignment="Top" ucLabelTitleContent="Part Qty "   textboxIsReadOnly="True" isPassword="False" ucLabelTitleWidth="80" />
+                        <my:UCLabelTextboxErrorMessage HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="ucQtyAdd" ucLabelTitleContent="Qty" isPassword="False" ucLabelTitleWidth="80" ucTextBoxWidth="100" />
+
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2" Grid.ColumnSpan="2" >
+                    <!--<Button Name="btnSave" Content="{DynamicResource MAIN_WINDOW_BUTTON_SAVE}" Click="btnSave_Click"  Width="75" Height="23" Background="{DynamicResource NormalButtonBrush}" Style="{DynamicResource styGlassButton}"  HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom"/>-->
+                    <Grid Margin="0,0,0,0" HorizontalAlignment="Center">
+                        <Button Content="Top Up" Name="btnTopupQty" Margin="0,0,180,0" Width="76" Height="23" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" IsDefault="True" Click="btnTopupQty_Click"/>
+                        <Button Content="Cancel" Name="btnCancel" Margin="0,0,0,0" Width="76" Height="23" HorizontalAlignment="Center"   VerticalAlignment="Top" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" Click="btnCancel_Click" />
+                        <Button Content="Deduct" Name="btnDeduct" Margin="0,0,0,0" Width="76" Height="23" HorizontalAlignment="Right" VerticalAlignment="Top" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" Click="btnDeduct_Click" />
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <Grid Name="Title_2" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed">
+            <Border CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+            <Label Name="lbl_HeaderTitle_2" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,0,0,0"/>
+        </Grid>
+        
+        <StackPanel Name="ItemList_2" Grid.Row="3" Grid.ColumnSpan="2" Visibility="Collapsed">
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_1_2" VerticalAlignment="Top" ucLabelTitleContent="Item #1"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16" />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_1_2" VerticalAlignment="Top" ucLabelTitleContent="Qty #1"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem1_2"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem1_2_Click"  />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_2_2" VerticalAlignment="Top" ucLabelTitleContent="Item #2"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_2_2" VerticalAlignment="Top" ucLabelTitleContent="Qty #2"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem2_2"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem2_2_Click" />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_3_2" VerticalAlignment="Top" ucLabelTitleContent="Item #3"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_3_2" VerticalAlignment="Top" ucLabelTitleContent="Qty #3"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem3_2"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem3_2_Click" />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_4_2" VerticalAlignment="Top" ucLabelTitleContent="Item #4"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_4_2" VerticalAlignment="Top" ucLabelTitleContent="Qty #4"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem4_2"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem4_2_Click" />
+            </TextBlock>
+
+            <TextBlock>
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Item_5_2" VerticalAlignment="Top" ucLabelTitleContent="Item #5"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="Qty_5_2" VerticalAlignment="Top" ucLabelTitleContent="Qty #5"  ucLabelTitleWidth="80"  Margin="5" ucText="" FontSize="16"  />
+                <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btn_AddItem5_2"   Background="LightGray"   Width="80" Height="35" Margin="10" Content="Add Qty"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="16" IsEnabled="True" Click="btn_AddItem5_2_Click" />
+            </TextBlock>
+        </StackPanel>
+
+        <Border Grid.Row="3" Grid.Column="1" Name="TopupScreen_2" Height="230" Width="400" VerticalAlignment="Center" HorizontalAlignment="Right" CornerRadius=" 12,12,12,12" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}"   Background="White" Visibility="Collapsed"  >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*" />
+                        <ColumnDefinition Width="350*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="lblTitle_2" Content="{DynamicResource MAIN_WINDOW_MENU_HEADER_TOPUP}" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Padding="30,2,2,0" Grid.ColumnSpan="2" />
+                    <Grid Grid.Row="1" Margin="0,2,0,0" Grid.ColumnSpan="2">
+                        <StackPanel VerticalAlignment="Top">
+                            <!--<TextBlock Height="23" Name="txtBlockInstructions" Text="{DynamicResource LOGIN_TEXTBLOCK_INSTRUCTIONS}" Margin="5" />-->
+                            <TextBlock Height="23" Name="txtBlockInstructions_2" Text="Please enter qty top-up" Margin="5" />
+                            <!--<my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="TopUpItem" VerticalAlignment="Top" ucLabelTitleContent="Item"  ucLabelTitleWidth="70"  Margin="5" ucText="" FontSize="14"  />
+                        <-->
+                            <!--my:UCLabelTitleLabelDisplay1 HorizontalAlignment="Right"  x:Name="CurrentQty" VerticalAlignment="Top" ucLabelTitleContent="Qty"  ucLabelTitleWidth="70"  Margin="5" ucText="" FontSize="14"  />-->
+                            <my:UCLabelTextboxErrorMessage HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="PartItem_TopUp_2" VerticalAlignment="Top" ucLabelTitleContent="Part Item "    textboxIsReadOnly="True"  isPassword="False" ucLabelTitleWidth="80"  />
+                            <my:UCLabelTextboxErrorMessage HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="PartQty_Topup_2" VerticalAlignment="Top" ucLabelTitleContent="Part Qty "   textboxIsReadOnly="True" isPassword="False" ucLabelTitleWidth="80" />
+                            <my:UCLabelTextboxErrorMessage HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="ucQtyAdd_2" ucLabelTitleContent="Qty Add" isPassword="False" ucLabelTitleWidth="80" ucTextBoxWidth="100" />
+
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                        <!--<Button Name="btnSave" Content="{DynamicResource MAIN_WINDOW_BUTTON_SAVE}" Click="btnSave_Click"  Width="75" Height="23" Background="{DynamicResource NormalButtonBrush}" Style="{DynamicResource styGlassButton}"  HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom"/>-->
+                        <Grid Margin="0,0,0,0" HorizontalAlignment="Center">
+                        <Button Content="Top Up" Name="btnTopupQty_2" HorizontalAlignment="Left" Margin="0,0,180,0"  Width="76" Height="23" VerticalAlignment="Top" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" IsDefault="True" Click="btnTopupQty_2_Click"  />
+                        <Button Content="Cancel" Name="btnCancel_2" HorizontalAlignment="Center" Margin="0,0,6,0"  Width="76" Height="23" VerticalAlignment="Top" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" Click="btnCancel_2_Click" />
+                        <Button Content="Deduct" Name="btnDeduct_2" HorizontalAlignment="Right" Margin="0,0,0,0" Width="76" Height="23" VerticalAlignment="Top" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" Click="btnDeduct_2_Click" />
+                    </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+        
+    </Grid>
+</UserControl>

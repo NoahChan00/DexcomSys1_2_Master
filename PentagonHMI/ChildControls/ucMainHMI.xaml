@@ -1,0 +1,1593 @@
+﻿<UserControl xmlns:my="clr-namespace:PentagonHMI.UserControls"  x:Class="PentagonHMI.ChildControls.ucMainHMI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+            xmlns:chartingprimitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+            xmlns:visualizationToolkit="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+            xmlns:sys ="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" Height="830">
+
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FF627793" Offset="0"/>
+            <GradientStop Color="#FF234372" Offset="1"/>
+
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="HeaderBorderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="#FF1D1D1D" Offset="0.614"/>
+            <GradientStop Color="#FF007F96" Offset="0.853"/>
+            <GradientStop Color="#FF0AEAFA" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="Status" TargetType="TextBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="MidnightBlue"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="110"/>
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+
+        <Style x:Key="ID2" TargetType="ToggleButton">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Background" Value="MidnightBlue"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <EventSetter Event="Click" Handler="TB2_click"/>
+        </Style>
+
+        <Style x:Key="ID" TargetType="ToggleButton">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Background" Value="MidnightBlue"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <EventSetter Event="Click" Handler="TB_click"/>
+            <!--<Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Label Background="AliceBlue" Foreground="Black"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>-->
+        </Style>
+
+        <Style x:Key="Part" TargetType="TextBox">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Background" Value="CornflowerBlue"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+        <Style x:Key="Part_F8" TargetType="TextBox">
+            <Setter Property="FontSize" Value="9"/>
+            <Setter Property="Background" Value="CornflowerBlue"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+
+        <Style x:Key="Qty" TargetType="TextBox">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="AliceBlue"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0.5"/>
+            <Setter Property="Foreground" Value="MidnightBlue"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+
+        <Style x:Key="Zone" TargetType="TextBox">
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Background" Value="YellowGreen"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="1"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+
+        <Style x:Key="Order" TargetType="TextBox">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Background" Value="Gray" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <!--<Setter Property="Text" Value="usususususususususususssskc"/>-->
+            <EventSetter Event="MouseEnter" Handler=" O1_MouseEnter"/>
+        </Style>
+
+        <Style x:Key="ZoneID" TargetType="TextBox">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="Orange" />
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="MinHeight" Value="20"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+        </Style>
+
+        <Style x:Key="Down" TargetType="Polygon">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="Points" Value="40,0, 35,15, 30,0"/>
+            <Setter Property="Margin" Value="1.5 0 0 0"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="Fill" Value="Orange"/>
+        </Style>
+
+        <Style x:Key="Up" TargetType="Polygon">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="Points" Value="30,15,40,15,35,0"/>
+            <Setter Property="Margin" Value="1.5 0 0 0"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="Fill" Value="Orange"/>
+        </Style>
+
+        <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource HeaderBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="{DynamicResource GridLineBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="MinWidth" Value="0" />
+            <Setter Property="MinHeight" Value="25" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Height" Value="34"/>
+            <Setter Property="Margin" Value="10 5"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="Detail" TargetType="Rectangle">
+            <!--<EventSetter Event="MouseEnter" Handler="Canvas_MouseEnter"/>-->
+            <!--<EventSetter Event="MouseLeave" Handler="Canvas_MouseLeave"/>-->
+            <!--<Setter Property="Background" Value="Transparent"/>-->
+            <Setter Property="Stroke" Value="Gray"/>
+            <Setter Property="StrokeThickness" Value="2"/>
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <LinearGradientBrush SpreadMethod="Reflect" StartPoint="0 0" EndPoint="0.01 0.01">
+                        <!--EndPoint="0 0.05">-->
+                        <GradientStop Offset="0.1" Color="Gray"/>
+                        <GradientStop Offset="0.5" Color="Transparent"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Opacity" Value="0.9"/>
+        </Style>
+
+        <!--<Style x:Key="Down" TargetType="Polygon">
+            <Setter Property="Points" Value="42,0, 21.5,13, 0,0"/>
+            <Setter Property="Margin" Value="1.5 0 0 0"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="Fill" Value="Red"/>
+        </Style>
+
+        <Style x:Key="Up" TargetType="Polygon">
+            <Setter Property="Points" Value="0,13 42,13 21.5,0"/>
+            <Setter Property="Margin" Value="1.5 0 0 -0.5"/>
+            <Setter Property="StrokeThickness" Value="0"/>
+            <Setter Property="Fill" Value="Red"/>
+        </Style>-->
+
+        <Style x:Key="Gap" TargetType="Rectangle">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="Width" Value="31"/>
+        </Style>
+
+        <Style x:Key="Gape" TargetType="Rectangle">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="Width" Value="35"/>
+        </Style>
+
+        <Style TargetType="Rectangle">
+            <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Stroke" Value="Black"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Fill" Value="White"/>
+            <Setter Property="Width" Value="53"/>
+            <Setter Property="Height" Value="80"/>
+        </Style>
+
+        <Style TargetType="RadioButton">
+            <Setter Property="FontSize" Value="6"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="CadetBlue"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="2.0" ScaleY="2.0"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="0 10 100 50"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid DockPanel.Dock="Left" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="81*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="354*"/>
+                <ColumnDefinition Width="127*"/>
+                <ColumnDefinition Width="0*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.ColumnSpan="2" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Column="0" Grid.Row="0" >
+                    <Grid>
+                        <Border Grid.Column="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0" Height="810" VerticalAlignment="Top">
+                            <Grid Margin="0,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Content="{DynamicResource MAIN_WINDOW_SCREEN_TITLE}" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Padding="30,2,2,0"/>
+
+                                <Canvas Grid.Column="0"  Visibility="Visible" Grid.Row="1" Width="1850" Height="650" HorizontalAlignment="Center" VerticalAlignment="Top"  x:Name="Canvas1">
+                                    <!--Width="3600" Height="750"<Image Canvas.Left="0" Canvas.Top="0" HorizontalAlignment="Left" Stretch="Fill" Width="{Binding ActualWidth, ElementName=Canvas1}" Height="{Binding ActualHeight, ElementName=Canvas1}"  Source="/HMI;component/Images/MainStatus2.jpg"/>-->
+                                    <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                                        <Rectangle Margin="0 0 0 4" Height="20" StrokeThickness="0" Width="{Binding ElementName=Canvas1}"/>
+                                        <!--<Image HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="Fill" Width="1800" Height="300" Source="/HMI;component/Images/MainSeattle1.png"/>-->
+                                        <Rectangle Margin="0 0 0 4" Height="40" StrokeThickness="0" Width="{Binding ElementName=Canvas1}"/>
+                                        <Rectangle Margin="0 0 0 4" Height="3" StrokeThickness="0" Fill="Gray" Width="{Binding ElementName=Canvas1}"/>
+                                        <Rectangle Margin="0 0 0 4" Height="40" StrokeThickness="0" Width="{Binding ElementName=Canvas1}"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <!--<Image HorizontalAlignment="Left" VerticalAlignment="Top" Width="1800" Height="200" Stretch="Fill"  Source="/HMI;component/Images/MainSeattle2.png"/>-->
+                                            <Border BorderThickness="2" BorderBrush="Blue" Margin="-80 -40 0 0">
+                                                <!--<Image Height="300" Margin="0" HorizontalAlignment="Right" Source="/HMI;component/Images/MainLineTest3.png"/>-->
+                                            </Border>
+                                            <!--<StackPanel  Name="Orderdetail" Orientation="Vertical" Canvas.Left="527" Canvas.Top="778">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Width="57" BorderThickness="2" BorderBrush="Gray" Text="Order ID: "/>
+                                                    <TextBox  Text="OD-UFO1821-00122"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Width="57" BorderThickness="2" BorderBrush="Gray" Text="Status: "/>
+                                                    <TextBox  Text="In-Progress"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Width="57" BorderThickness="2" BorderBrush="Gray" Text="Part Installing: "/>
+                                                    <TextBox  Text="GNAT"/>
+                                                </StackPanel>
+                                            </StackPanel>-->
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Canvas.Left="3" Canvas.Top="3" Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Margin="0 0 5 0"  Name="help"  FontSize="14" FontWeight="Bold"  Background="CadetBlue" Foreground="White"  Content="HELP" MouseLeftButtonDown="help_MouseLeftButtonDown"/>
+                                            <Label Visibility="Collapsed" Margin="0 0 5 0" Name="Menu"  FontSize="14" FontWeight="Bold"  Background="CadetBlue" Foreground="White"  Content="ALERT LIST" MouseLeftButtonDown="Menu_MouseLeftButtonDown"/>
+                                            <Label Margin="0 0 5 0" Name="Menu2"  FontSize="14" FontWeight="Bold"  Background="CadetBlue" Foreground="White"  Content="MENU" MouseLeftButtonDown="Menu2_MouseLeftButtonDown"/>
+                                            <RadioButton Margin="0" Click="RadioButton_Click">SHOW ALL PARTS</RadioButton>
+                                        </StackPanel>
+                                        <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
+                                            <Label Visibility="Collapsed" Margin="0 0 5 0" Name="UPHshow"  FontSize="14" FontWeight="Bold"  Background="RoyalBlue" Foreground="White"  Content="CURRENT LINE UPH :" MouseLeftButtonDown="UPHshow_MouseLeftButtonDown"/>
+                                            <Label Visibility="Collapsed" Margin="0 0 5 0" Name="UPHLine" Width="30" Height="29" FontSize="14" FontWeight="Bold"  Background="RoyalBlue" Foreground="White"/>
+                                            <Label Margin="0 0 5 0" Name="strConveyorOnlineStatus" Content="Main Conveyor Online Status :" Width="210" Height="29" FontSize="14" FontWeight="Bold"  Background="RoyalBlue" Foreground="White"/>
+                                            <Label Margin="0 0 5 0" Name="ConveyorOnlineStatus" Content="OFFLINE" Width="65" Height="29" FontSize="14" FontWeight="Bold"  Background="Red" Foreground="White"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <Rectangle Canvas.Top="420" Canvas.Left="1448"  Fill="Transparent" Stroke="Blue" StrokeThickness="2" Height="195" Width="131"/>
+                                    <Polygon Fill="Blue" Opacity="0.2" Canvas.Top="372" Canvas.Left="1580" Points="-1,240,-1,48,139,0,140,315" Stroke="Blue" StrokeThickness="2" Height="374" Width="139" />
+                                    <!--<Polygon Canvas.Top="509" Canvas.Left="1633" Points="0,23,87,0,87,400" Stroke="Blue" StrokeThickness="2" Height="402" Width="89" />-->
+
+                                    <StackPanel  Canvas.Left="193" Canvas.Top="163" Orientation="Horizontal">
+                                        <Rectangle x:Name="Zone1"/>
+                                        <Rectangle x:Name="Zone2A"/>
+                                        <Rectangle x:Name="Zone2B"/>
+                                        <Rectangle x:Name="Zone3"/>
+                                        <Rectangle x:Name="Zone5A"/>
+                                        <Rectangle x:Name="Zone5B"/>
+                                        <Rectangle x:Name="Zone5C"/>
+
+                                        <Rectangle x:Name="Zone6A" Fill="Gray"/>
+                                        <Rectangle x:Name="Zone6B" Fill="Gray"/>
+
+                                        <Rectangle x:Name="Zone7A"/>
+                                        <Rectangle x:Name="Zone7B"/>
+                                        <Rectangle x:Name="Zone7C"/>
+
+                                        <Rectangle x:Name="Zone8A" Fill="Gray"/>
+                                        <Rectangle x:Name="Zone8B" Fill="Gray"/>
+
+                                        <Rectangle  x:Name="Zone9A"/>
+                                        <Rectangle  x:Name="Zone9B"/>
+                                        <Rectangle  x:Name="Zone9C"/>
+
+                                        <Rectangle  x:Name="Zone10A" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone10B" Fill="Gray"/>
+
+                                        <Rectangle  x:Name="Zone11A"/>
+                                        <Rectangle  x:Name="Zone11B"/>
+                                        <Rectangle  x:Name="Zone11C"/>
+
+                                        <Rectangle  x:Name="Zone12A" Fill="Gray"/>
+                                        <Rectangle Visibility="Collapsed"  x:Name="Zone12B"/>
+                                        <Rectangle  x:Name="Zone12C"/>
+
+                                        <Rectangle  x:Name="Zone13A" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone13B" Fill="Gray"/>
+                                    </StackPanel>
+
+                                    <StackPanel Canvas.Left="160" Canvas.Top="489" Orientation="Horizontal">
+                                        <Rectangle  x:Name="Zone14A" Width="55"/>
+                                        <Rectangle  x:Name="Zone14B" Width="55"/>
+
+                                        <Rectangle Visibility="Collapsed"  x:Name="Zone15A" Width="55"/>
+                                        <Rectangle  x:Name="Zone15B" Width="55"/>
+
+                                        <Rectangle  x:Name="Zone16A" Width="55" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone16B" Width="55" Fill="Gray"/>
+
+                                        <Rectangle  x:Name="Zone17A" Width="55"/>
+                                        <Rectangle  x:Name="Zone17B" Width="55"/>
+                                        <Rectangle  x:Name="Zone17C" Width="55"/>
+
+                                        <Rectangle  x:Name="Zone18A" Width="55" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone18B" Width="55" Fill="Gray"/>
+
+                                        <Rectangle  x:Name="Zone19A" Width="55"/>
+                                        <Rectangle  x:Name="Zone19B" Width="55"/>
+                                        <Rectangle  x:Name="Zone19C" Width="55"/>
+
+                                        <Rectangle  x:Name="Zone20A" Width="55" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone20B" Width="55" Fill="Gray"/>
+
+                                        <Rectangle  x:Name="Zone21A" Width="55"/>
+                                        <Rectangle  x:Name="Zone21B" Width="55"/>
+                                        <Rectangle  x:Name="Zone21C" Width="55"/>
+
+                                        <Rectangle  x:Name="Zone22A" Width="55" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone22B" Width="55" Fill="Gray"/>
+
+                                        <Rectangle  x:Name="Zone23A" Width="55"/>
+                                        <Rectangle  x:Name="Zone23B" Width="55"/>
+                                        <Rectangle Visibility="Collapsed"  x:Name="Zone23C" Width="55"/>
+
+                                        <Rectangle  x:Name="Zone24A" Width="55" Fill="Gray"/>
+                                        <Rectangle  x:Name="Zone24B" Width="55"/>
+
+                                        <Rectangle  x:Name="Zone25" Width="55"/>
+                                        <Rectangle  x:Name="Zone26" Width="55"/>
+                                        <Rectangle  x:Name="Zone27" Width="55"/>
+                                    </StackPanel>
+
+                                    <StackPanel Canvas.Left="1740" Canvas.Top="392" Orientation="Vertical">
+                                        <Rectangle  x:Name="Zone29D" Width="60" Height="58"/>
+                                        <Rectangle  x:Name="Zone29C" Width="60" Height="58"/>
+                                        <Rectangle  x:Name="Zone29B" Width="60" Height="58"/>
+                                        <Rectangle  x:Name="Zone29A" Width="60" Height="58"/>
+                                    </StackPanel>
+
+
+                                    <Rectangle Name="c1" Width="439" Height="105" Canvas.Left="4" Canvas.Top="222" Style="{DynamicResource Detail}">
+                                    </Rectangle>
+
+                                    <Rectangle Name="c2" Width="120" Height="146" Canvas.Left="556" Canvas.Top="155" Style="{DynamicResource Detail}">
+                                    </Rectangle>
+
+                                    <Rectangle Name="c3" Width="420" Height="130"   Canvas.Left="669" Style="{DynamicResource Detail}" Canvas.Top="20"/>
+                                    <Rectangle Name="c4" Width="127" Height="130" Canvas.Left="821" Canvas.Top="151" Style="{DynamicResource Detail}"/>
+                                    <Rectangle Name="c6" Width="136" Height="175" Canvas.Left="1440" Style="{DynamicResource Detail}" Canvas.Top="110"/>
+                                    <Rectangle Name="c5" Width="120" Height="212" Canvas.Left="1084" Canvas.Top="112" Style="{DynamicResource Detail}"/>
+
+                                    <Rectangle Name="c7" Width="139" Height="200" Canvas.Left="293" Canvas.Top="418" Style="{DynamicResource Detail}"/>
+                                    <Rectangle Name="c8" Width="136" Height="200" Canvas.Left="576" Canvas.Top="418" Style="{DynamicResource Detail}"/>
+                                    <Rectangle Name="c9" Width="141" Height="190" Canvas.Left="852" Canvas.Top="430" Style="{DynamicResource Detail}"/>
+                                    <Rectangle Name="c10" Width="146" Height="190" Canvas.Left="1130" Canvas.Top="430" Style="{DynamicResource Detail}"/>
+
+                                    <Rectangle Name="c11" Width="90" Height="200" Canvas.Left="1338" Canvas.Top="42" Style="{DynamicResource Detail}"/>
+                                    <Rectangle Name="c12" Width="101" Height="132" Canvas.Left="1350" Canvas.Top="486" Style="{DynamicResource Detail}"/>
+
+                                    <Grid Visibility="Collapsed" x:Name="s2Zone6A" Canvas.Left="563" Canvas.Top="162">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Canvas.Left="564" Canvas.Top="184" Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" x:Name="s2Zone6B" Canvas.Left="616" Canvas.Top="162">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+
+                                    <Grid Visibility="Collapsed" Canvas.Left="827" Canvas.Top="162" x:Name="s4Zone8A">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Canvas.Left="882" Canvas.Top="162" x:Name="s4Zone8B">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Canvas.Left="1092" Canvas.Top="162" x:Name="s5Zone10A">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Canvas.Left="1147" Canvas.Top="162" x:Name="s5Zone10B">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Canvas.Left="1464" Canvas.Top="162" x:Name="s6Zone13A">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Canvas.Left="1517" Canvas.Top="162" x:Name="s6Zone13B">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="325" Canvas.Top="488" x:Name="s7Zone16A">
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="380" Canvas.Top="488" x:Name="s7Zone16B" >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="600" Canvas.Top="488" x:Name="s8Zone18A" >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="655" Canvas.Top="488" x:Name="s8Zone18B" >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="875" Canvas.Top="488" x:Name="s9Zone20A"  >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="930" Canvas.Top="488" x:Name="s9Zone20B"  >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid Visibility="Collapsed" Width="55" Canvas.Left="1150" Canvas.Top="488" x:Name="s10Zone22A" >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <Grid  Visibility="Collapsed" Width="55" Canvas.Left="1205" Canvas.Top="488" x:Name="s10Zone22B" >
+                                        <Border BorderThickness="1" BorderBrush="Red">
+                                            <Rectangle Fill="Black" Opacity="0.8"/>
+                                        </Border>
+                                        <Label Foreground="Red" Margin="0 12 0 0" >Disabled</Label>
+                                    </Grid>
+
+                                    <!--<Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="20" Margin="0" Canvas.Top="266" Height="110" Width="311"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="408" Margin="0" Canvas.Top="213" Height="112" Width="85"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="493" Margin="0" Canvas.Top="83" Height="105" Width="297"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="589" Margin="0" Canvas.Top="188" Height="123" Width="90"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="771" Margin="0" Canvas.Top="182" Height="163" Width="89"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="950" Margin="0" Canvas.Top="116" Height="157" Width="60"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="1056" Margin="0" Canvas.Top="168" Height="208" Width="124"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="95" Margin="0" Canvas.Top="579" Height="224" Width="137"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="281" Margin="0" Canvas.Top="589" Height="214" Width="130"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="484" Margin="0" Canvas.Top="476" Height="286" Width="105"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="683" Margin="0" Canvas.Top="476" Height="286" Width="95"/>
+                                    <Rectangle Fill="Blue" Opacity="0.4" Canvas.Left="855" Margin="0" Canvas.Top="664" Height="163" Width="60"/>-->
+
+
+                                    <StackPanel Name="ASRSTray" Orientation="Vertical" Canvas.Left="342" Canvas.Top="449" Visibility="Collapsed">
+                                        <TextBox Margin="0" FontSize="15" Style="{DynamicResource Part}" Visibility="Visible" Text="ASRS Stock Quantity"/>
+                                        <TextBox FontSize="15" Style="{DynamicResource Qty}" Visibility="Visible" Name="QtyASRS1"/>
+                                    </StackPanel>
+
+                                    <StackPanel Name="ASRSMOBO" Orientation="Vertical" Canvas.Left="674" Canvas.Top="3" Visibility="Collapsed" >
+                                        <TextBox Margin="0" FontSize="15" Style="{DynamicResource Part}" Visibility="Visible" Text="ASRS Stock Quantity"/>
+                                        <TextBox FontSize="15" Style="{DynamicResource Qty}" Visibility="Visible" x:Name="QtyASRS2"/>
+                                    </StackPanel>
+
+                                    <!--Asset Tag-->
+
+                                    <StackPanel Orientation="Horizontal" Canvas.Left="550" Canvas.Top="84">
+                                        <StackPanel Name="Tag6A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O1"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="6A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly1"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Conveyor-->
+
+                                        <StackPanel Name="Tag7A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O3"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="7A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly3"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <StackPanel Name="Tag7C" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O5"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="7C"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly5"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Mobo Robot-->
+
+                                        <StackPanel Name="Tag8B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O7"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="8B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly7"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Conveyor-->
+
+                                        <StackPanel Name="Tag9B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O9"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="9B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly9"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--KoolaidTang-->
+
+                                        <StackPanel Name="Tag10A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O11"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="10A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly11"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Conveyor-->
+
+                                        <StackPanel Name="Tag11A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O13"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="11A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly13"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <StackPanel Name="Tag11C" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O15"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="11C"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly15"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <StackPanel Name="Tag12C" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O18"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="12C"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly18"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <StackPanel Name="Tag13B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O20"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="13B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly20"/>
+                                        </StackPanel>
+
+
+                                        <StackPanel Name="Tag12B" Visibility="Collapsed" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O17"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="12B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly17"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Affix Fan-->
+
+                                    </StackPanel>
+
+                                    <StackPanel Name="Tag6B" Orientation="Horizontal" Canvas.Left="609" Canvas.Top="245">
+                                        <StackPanel Orientation="Vertical" >
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly2"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="6B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O2"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Conveyor-->
+
+                                        <StackPanel Name="Tag7B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly4"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="7B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O4"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Mobo Robot-->
+
+                                        <StackPanel Name="Tag8A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly6"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="8A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O6"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Conveyor-->
+
+                                        <StackPanel Name="Tag9A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly8"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="9A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O8"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <StackPanel Name="Tag9C" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly10"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="9C"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O10"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--KoolaidTang-->
+
+                                        <StackPanel Name="Tag10B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly12"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="10B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O12"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+                                        <!--Conveyor-->
+
+                                        <StackPanel Name="Tag11B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly14"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="11B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O14"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <StackPanel Name="Tag12A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly16"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="12A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O16"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gap}"/>
+
+                                        <!--Affix Fan-->
+                                        <StackPanel Name="Tag13A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly19"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="13A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O19"/>
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                    <!--Layer 2-->
+
+                                    <StackPanel Name="Tag14A" Orientation="Horizontal" Canvas.Left="160" Canvas.Top="410">
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O21"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="14A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly21"/>
+                                        </StackPanel>
+
+                                        <!--<Rectangle Style="{DynamicResource Gape}"/>-->
+
+                                        <StackPanel Name="Tag15A" Visibility="Collapsed" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O23"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="15A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly23"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag15B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O24"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="15B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly24"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+                                        <!--Baffles-->
+                                        <StackPanel Name="Tag16B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O26"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="16B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly26"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+                                        <!--conveyor-->
+                                        <StackPanel Name="Tag17B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O28"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="17B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly28"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <!--BIOSCOBRA-->
+
+                                        <StackPanel Name="Tag18A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O30"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="18A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly30"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <!--Conveyor-->
+                                        <StackPanel Name="Tag19A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O32"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="19A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly32"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag19C" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O34"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="19C"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly34"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <!--LHS-->
+
+                                        <StackPanel Name="Tag20B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O36"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="20B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly36"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+                                        <!--conveyor-->
+
+                                        <StackPanel Name="Tag21B" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O38"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="21B"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly38"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <!--SHS-->
+
+                                        <StackPanel Name="Tag22A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O40"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="22A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly40"/>
+
+
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <!--conveyor-->
+
+                                        <StackPanel Name="Tag23A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O42"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="23A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly42"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag23C" Visibility="Collapsed" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly44"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="23C"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O44"/>
+                                        </StackPanel>
+
+
+                                        <StackPanel Name="Tag24A" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O45"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="24A"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly45"/>
+                                        </StackPanel>
+
+                                        <!--<Rectangle Style="{DynamicResource Gape}"/>-->
+
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="TagEND" Orientation="Vertical">
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O47"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="END"/>
+                                            <Polygon Style="{DynamicResource Down}" x:Name="poly47"/>
+                                        </StackPanel>
+
+
+                                    </StackPanel>
+
+                                    <StackPanel Name="Tag14B" Orientation="Horizontal" Canvas.Left="215" Canvas.Top="568">
+                                        <StackPanel Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly22"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="14B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O22"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+                                        <!--Baffles-->
+
+                                        <StackPanel Name="Tag16A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly25"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="16A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O25"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+                                        <!--conveyor-->
+
+                                        <StackPanel Name="Tag17A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly27"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="17A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O27"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag17C" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly29"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="17C"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O29"/>
+                                        </StackPanel>
+
+                                        <!--BIOSCOBRA-->
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag18B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly31"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="18B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O31"/>
+                                        </StackPanel>
+
+                                        <!--Conveyor-->
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag19B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly33"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="19B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O33"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <!--LHS-->
+
+                                        <StackPanel Name="Tag20A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly35"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="20A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O35"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+                                        <!--conveyor-->
+
+                                        <StackPanel Name="Tag21A" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly37"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="21A"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O37"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag21C" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly39"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="21C"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O39"/>
+                                        </StackPanel>
+
+                                        <!--SHS-->
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag22B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly41"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="22B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O41"/>
+                                        </StackPanel>
+
+                                        <!--conveyor-->
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+                                        <StackPanel Name="Tag23B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly43"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="23B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O43"/>
+                                        </StackPanel>
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+
+                                        <StackPanel Name="Tag24B" Orientation="Vertical">
+                                            <Polygon Style="{DynamicResource Up}" x:Name="poly46"/>
+                                            <TextBox Style="{DynamicResource ZoneID}" Text="24B"/>
+                                            <TextBox Style="{DynamicResource Order}" x:Name="O46"/>
+                                        </StackPanel>
+
+
+                                        <Rectangle Style="{DynamicResource Gape}"/>
+
+
+                                    </StackPanel>
+
+                                    <!--End Order-->
+                                    <StackPanel Canvas.Left="1730" Canvas.Top="392" Orientation="Vertical">
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Width="20" Height="58" Style="{DynamicResource ZoneID}" Text="29D"/>
+                                            <!--<TextBox Style="{DynamicResource Order}" x:Name="O51" Height="55"/>-->
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Width="20" Height="58" Style="{DynamicResource ZoneID}" Text="29C"/>
+                                            <!--<TextBox Style="{DynamicResource Order}" x:Name="O50" Height="55"/>-->
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Width="20" Height="58" Style="{DynamicResource ZoneID}" Text="29B"/>
+                                            <!--<TextBox Style="{DynamicResource Order}" x:Name="O49" Height="55"/>-->
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Width="20" Height="58" Style="{DynamicResource ZoneID}" Text="29A"/>
+                                            <!--<TextBox Style="{DynamicResource Order}" x:Name="O48" Height="55"/>-->
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <Border  Canvas.Left="210" Canvas.Top="255" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel  Orientation="Vertical" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" Name="M1"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="Empty Tray (1)" Name="S1"/>
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Name="Station1">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P1"/>
+                                                    <TextBox Style="{DynamicResource Qty}" x:Name="Qty1" Height="26"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border  Canvas.Left="519" Canvas.Top="340" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel  Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                <TextBox Style="{DynamicResource Status}" Name="M2"/>
+                                            </StackPanel>
+                                            <ToggleButton Style="{DynamicResource ID}" Content="Asset Tag (2)" x:Name="S2"/>
+                                            <StackPanel Orientation="Vertical" Name="Station2"></StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Canvas.Left="787" Canvas.Top="7" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <StackPanel  Orientation="Vertical" Margin="0">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" Name="M3"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="MOBO ASRS (3)" x:Name="S3"/>
+                                                <StackPanel Orientation="Horizontal" Name="Station3">
+                                                    <TextBox Style="{DynamicResource Part}" x:Name="P4"/>
+                                                    <TextBox Style="{DynamicResource Qty}" x:Name="Qty4"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Canvas.Left="805" Canvas.Top="340" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel  Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                <TextBox Style="{DynamicResource Status}" x:Name="M4"/>
+                                            </StackPanel>
+                                            <ToggleButton Style="{DynamicResource ID}" Content="MOBO Robot (4)" x:Name="S4"/>
+                                            <StackPanel Orientation="Vertical" Name="Station4"></StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Canvas.Left="1043" Canvas.Top="340" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel Orientation="Vertical" >
+                                            <StackPanel  Orientation="Vertical" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" Name="M5"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="Koolaid &amp; GNAT (5)" Name="S5"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical" Name="Station5">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P5"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty5"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P5_2"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty5_2"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border  Canvas.Left="1250" Canvas.Top="7" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal">
+                                            <StackPanel  Orientation="Vertical" >
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" Name="M11"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="PWRCABLEVELCRO (11)" x:Name="S11"/>
+                                                <StackPanel Orientation="Vertical" Name="Station11">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBox Style="{DynamicResource Part}" x:Name="P11"/>
+                                                        <TextBox Style="{DynamicResource Qty}" x:Name="Qty11"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBox Style="{DynamicResource Part}" x:Name="P11_2"/>
+                                                        <TextBox Style="{DynamicResource Qty}" x:Name="Qty11_2"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Canvas.Left="1488" Canvas.Top="7" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <StackPanel  Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" x:Name="M6"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="Affix Fan (6)" Name="S6"/>
+                                                <StackPanel Orientation="Vertical" Name="Station6">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBox Style="{DynamicResource Part}" Name="P6"/>
+                                                        <TextBox Style="{DynamicResource Qty}" Name="Qty6"/>
+                                                    </StackPanel>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBox Style="{DynamicResource Part_F8}" Height="30" Name="P6_2"/>
+                                                        <TextBox Style="{DynamicResource Qty}" Height="30" VerticalContentAlignment="Center" Name="Qty6_2"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+
+
+                                    <Border Canvas.Left="35" Canvas.Top="717" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel  Orientation="Horizontal" Name="Station7">
+                                            <StackPanel  Orientation="Vertical" Name="Station7_1">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P7"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty7"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P7_2"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty7_2"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <StackPanel  Orientation="Vertical" Name="Station7_2">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part_F8}" Name="P7_3" Height="24"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty7_3"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part_F8}" Name="P7_4"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty7_4"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border Canvas.Left="240" Canvas.Top="660" BorderThickness="0" BorderBrush="White">
+                                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" >
+                                            <StackPanel HorizontalAlignment="Right"  Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" Name="M7"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="Baffles (7)" Name="S7"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+
+                                    <Border Canvas.Left="545" Canvas.Top="660" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel HorizontalAlignment="Right" Orientation="Vertical" >
+                                            <StackPanel  Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" Name="M8"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="BIOS &amp; Cobra (8)" Name="S8"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Vertical" Name="Station8">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P8"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty8"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P8_2"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty8_2"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border   Canvas.Left="823" Canvas.Top="660" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel  Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                <TextBox Style="{DynamicResource Status}" Name="M9"/>
+                                            </StackPanel>
+                                            <ToggleButton Style="{DynamicResource ID}" Content="Large Heatsink (9)" Name="S9"/>
+                                            <StackPanel Orientation="Vertical" Name="Station9">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P9"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty9"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <TextBox Style="{DynamicResource Part}" Name="P9_2"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty9_2"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+
+                                    <Border Canvas.Left="1113" Canvas.Top="660" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel  Orientation="Vertical" >
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                <TextBox Style="{DynamicResource Status}" x:Name="M10"/>
+                                            </StackPanel>
+                                            <ToggleButton Style="{DynamicResource ID}" Content="Small Heatsink (10)" Name="S10"/>
+                                            <StackPanel Orientation="Vertical" Name="Station10">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P10"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty10"/>
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Part}" Name="P10_2"/>
+                                                    <TextBox Style="{DynamicResource Qty}" Name="Qty10_2"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Canvas.Left="1357" Canvas.Top="660" BorderThickness="2" BorderBrush="White">
+                                        <StackPanel Orientation="Vertical" >
+                                            <StackPanel  Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBox Style="{DynamicResource Status}" Text="Status: "/>
+                                                    <TextBox Style="{DynamicResource Status}" x:Name="M12"/>
+                                                </StackPanel>
+                                                <ToggleButton Style="{DynamicResource ID}" Content="SATA Cable (12)" x:Name="S12"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Name="Station12">
+                                                <TextBox Style="{DynamicResource Part}" Name="P12"/>
+                                                <TextBox Style="{DynamicResource Qty}" Name="Qty12"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+
+                                    <Border Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="OrderDetail" Height="150" Width="242"  CornerRadius=" 12,12,12,12" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}"  Background="White" Canvas.Left="468" Canvas.Top="358">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="25"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="30"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Border CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+                                                <Label Content="Order Information :" Style="{DynamicResource styTopPenalBlue}" Height="25" VerticalAlignment="Top" FontSize="18" Padding="10,0,0,0"/>
+                                            </Grid>
+                                            <Grid Grid.Row="1">
+                                                <StackPanel>
+                                                    <Label Content="Station: Koolaid&amp;GNAT (Zone 1)" FontSize="14" FontWeight="Bold"/>
+                                                    <Label Content="Order ID : OD-UFO1821-00122" FontSize="14" FontWeight="Bold"/>
+                                                    <Label Content="Part Installing : GNAT" FontSize="14" FontWeight="Bold"/>
+                                                    <Label Content="Status : In-Progress" FontSize="14" FontWeight="Bold"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <Grid Grid.Row="2" Margin="0,0,0,0" HorizontalAlignment="Right">
+                                                <Button Content="Close" Margin="0,0,8,7" x:Name="btnOK" Width="76" HorizontalAlignment="Right" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" IsDefault="True" Height="23" VerticalAlignment="Bottom" Click="btnOK_Click"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+
+                                    <StackPanel Orientation="Horizontal" Canvas.Left="193" Canvas.Top="167">
+                                        <my:UCCheckBoxBed NoPresentSensor="True" x:Name="L1" Tag="Zone 1"/>
+                                        <my:UCCheckBoxBed x:Name="L2" Tag="Zone 2A"/>
+                                        <my:UCCheckBoxBed x:Name="L3" Tag="Zone 2B"/>
+                                        <my:UCCheckBoxBed x:Name="L4" Tag="Zone 3"/>
+                                        <my:UCCheckBoxBed x:Name="L5" Tag="Zone 5A"/>
+                                        <my:UCCheckBoxBed x:Name="L6" Tag="Zone 5B"/>
+                                        <my:UCCheckBoxBed x:Name="L7" Tag="Zone 5C"/>
+                                        <my:UCCheckBoxBed x:Name="L8" Tag="Zone 6A"/>
+                                        <my:UCCheckBoxBed x:Name="L9" Tag="Zone 6B"/>
+                                        <my:UCCheckBoxBed x:Name="L10" Tag="Zone 7A"/>
+                                        <my:UCCheckBoxBed x:Name="L11" Tag="Zone 7B"/>
+                                        <my:UCCheckBoxBed x:Name="L12" Tag="Zone 7C"/>
+                                        <my:UCCheckBoxBed x:Name="L13" Tag="Zone 8A"/>
+                                        <my:UCCheckBoxBed x:Name="L14" Tag="Zone 8B"/>
+                                        <my:UCCheckBoxBed x:Name="L15" Tag="Zone 9A"/>
+                                        <my:UCCheckBoxBed x:Name="L16" Tag="Zone 9B"/>
+                                        <my:UCCheckBoxBed x:Name="L17" Tag="Zone 9C"/>
+                                        <my:UCCheckBoxBed x:Name="L18" Tag="Zone 10A"/>
+                                        <my:UCCheckBoxBed x:Name="L19" Tag="Zone 10B"/>
+                                        <my:UCCheckBoxBed x:Name="L20" Tag="Zone 11A"/>
+                                        <my:UCCheckBoxBed x:Name="L21" Tag="Zone 11B"/>
+                                        <my:UCCheckBoxBed x:Name="L22" Tag="Zone 11C"/>
+                                        <my:UCCheckBoxBed x:Name="L23" Tag="Zone 12A"/>
+                                        <my:UCCheckBoxBed Visibility="Collapsed" x:Name="L24" Tag="Zone 12B"/>
+                                        <my:UCCheckBoxBed x:Name="L25" Tag="Zone 12C"/>
+                                        <my:UCCheckBoxBed x:Name="L26" Tag="Zone 13A"/>
+                                        <my:UCCheckBoxBed x:Name="L27" Tag="Zone 13B"/>
+                                    </StackPanel>
+
+                                    <StackPanel Canvas.Left="310" Canvas.Top="100">
+                                        <ToggleButton Style="{DynamicResource ID2}" FontSize="14" Width="140" Content="Input Pick &amp; Place"/>
+                                        <my:UCPointIO Enlarge="True" ZoneSpan="1" ucwidth="140"  x:Name="Point4"/>
+                                    </StackPanel>
+
+                                    <StackPanel Canvas.Left="90" Canvas.Top="260">
+                                        <ToggleButton Style="{DynamicResource ID2}" FontSize="14" Width="90" Content="Main Panel"/>
+                                        <my:UCPointIO Enlarge="True" ucwidth="90"  ZoneSpan="1" x:Name="Point0"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Canvas.Left="194" Canvas.Top="225">
+                                        <my:UCPointIO ZoneSpan="1" x:Name="Point1"/>
+                                        <my:UCPointIO ZoneSpan="2" x:Name="Point2"/>
+                                        <my:UCPointIO ZoneSpan="1" x:Name="Point3"/>
+                                        <!--<my:UCPointIO ZoneSpan="1" x:Name="Point4"/>-->
+                                        <my:UCPointIO ZoneSpan="3" x:Name="Point5"/>
+                                        <my:UCPointIO ZoneSpan="2" x:Name="Point6"/>
+                                        <my:UCPointIO ZoneSpan="3" x:Name="Point7"/>
+                                        <my:UCPointIO ZoneSpan="2" x:Name="Point8"/>
+                                        <my:UCPointIO ZoneSpan="3" x:Name="Point9"/>
+                                        <my:UCPointIO ZoneSpan="2" x:Name="Point10"/>
+                                        <my:UCPointIO ZoneSpan="3" x:Name="Point11"/>
+                                        <my:UCPointIO ZoneSpan="2" x:Name="Point12"/>
+                                        <my:UCPointIO ZoneSpan="2" x:Name="Point13"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Canvas.Left="160" Canvas.Top="492">
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb1" Tag="Zone 14A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb2" Tag="Zone 14B"/>
+                                        <my:UCCheckBoxBed Visibility="Collapsed" Width="55" x:Name="Lb3" Tag="Zone 15A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb4" Tag="Zone 15B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb5" Tag="Zone 16A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb6" Tag="Zone 16B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb7" Tag="Zone 17A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb8" Tag="Zone 17B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb9" Tag="Zone 17C"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb10" Tag="Zone 18A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb11" Tag="Zone 18B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb12" Tag="Zone 19A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb13" Tag="Zone 19B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb14" Tag="Zone 19C"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb15" Tag="Zone 20A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb16" Tag="Zone 20B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb17" Tag="Zone 21A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb18" Tag="Zone 21B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb19" Tag="Zone 21C"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb20" Tag="Zone 22A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb21" Tag="Zone 22B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb22" Tag="Zone 23A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb23" Tag="Zone 23B"/>
+                                        <my:UCCheckBoxBed Visibility="Collapsed" Width="55" x:Name="Lb24" Tag="Zone 23C"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb25" Tag="Zone 24A"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb26" Tag="Zone 24B"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb27" Tag="Zone 25"/>
+                                        <my:UCCheckBoxBed Width="55" x:Name="Lb28" Tag="Zone 26"/>
+                                        <my:UCCheckBoxBed NoPresentSensor="True" Width="55" x:Name="Lb29" Tag="Zone 27"/>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Canvas.Left="161" Canvas.Top="551">
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point14"/>
+                                        <my:UCPointIO ZoneSpan="L1" x:Name="Point15"/>
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point16"/>
+                                        <my:UCPointIO ZoneSpan="L3" x:Name="Point17"/>
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point18"/>
+                                        <my:UCPointIO ZoneSpan="L3" x:Name="Point19"/>
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point20"/>
+                                        <my:UCPointIO ZoneSpan="L3" x:Name="Point21"/>
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point22"/>
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point23"/>
+                                        <my:UCPointIO ZoneSpan="L2" x:Name="Point24"/>
+                                        <my:UCPointIO ZoneSpan="L1" x:Name="Point25"/>
+                                        <my:UCPointIO ZoneSpan="L1" x:Name="Point26"/>
+                                        <my:UCPointIO ZoneSpan="L1" x:Name="Point27"/>
+                                        <!--<my:UCPointIO ZoneSpan="L1" x:Name="Point28"/>-->
+                                        <!--<my:UCPointIO ZoneSpan="4" x:Name="Point29"/>-->
+                                    </StackPanel>
+
+                                    <StackPanel Canvas.Left="1690" Canvas.Top="635">
+                                        <ToggleButton Style="{DynamicResource ID2}" FontSize="14" Width="145" Content="Output Pick &amp; Place"/>
+                                        <my:UCPointIO Enlarge="True" ucwidth="144" ZoneSpan="L1" x:Name="Point28"/>
+                                    </StackPanel>
+
+                                    <ToggleButton Style="{DynamicResource ID2}" Canvas.Left="1715" Canvas.Top="370" FontSize="11" Width="100" Content="Output Conveyor"/>
+
+
+                                    <CheckBox Click="Z29_Click" Canvas.Top="395" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29DOut" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+
+                                    <CheckBox Click="Z29_Click" Canvas.Top="432" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29DIn" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+
+                                    <CheckBox Click="Z29_Click" Canvas.Top="455" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29COut" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Click="Z29_Click" Canvas.Top="490" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29CIn" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+
+                                    <CheckBox Click="Z29_Click" Canvas.Top="512" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29BOut" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+                                    <CheckBox Click="Z29_Click" Canvas.Top="547" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29BIn" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+
+                                    <CheckBox Click="Z29_Click" Canvas.Top="569" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29AOut" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+
+                                    <CheckBox Click="Z29_Click" Canvas.Top="605" Canvas.Right="0" HorizontalAlignment="Left" x:Name="Z29AIn" Style="{DynamicResource styCheckBox}" Canvas.Left="1755">
+                                        <CheckBox.LayoutTransform>
+                                            <ScaleTransform ScaleX="0.8" ScaleY="0.8" />
+                                        </CheckBox.LayoutTransform>
+                                    </CheckBox>
+
+                                    <TextBox IsReadOnly="True" Name="Z29PLC" Opacity="1" Height="232" Width="22" Canvas.Top="392" Canvas.Right="0" TextWrapping="Wrap" FontWeight="Bold" FontSize="16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Red" Foreground="White" Canvas.Left="1785">PIO229</TextBox>
+
+                                    <chartingToolkit:Chart x:Name="UPHchart" Visibility="Collapsed" Padding="1" Grid.Row="0" Grid.RowSpan="2" Background="White" BorderBrush="Transparent" Canvas.Left="157" Canvas.Top="42" Height="241" Width="530">
+                                        <chartingToolkit:LineSeries DependentValuePath="Value" IndependentValuePath="Key" Title="UPH" x:Name="lineChart">
+                                            <chartingToolkit:LineSeries.DependentRangeAxis>
+                                                <chartingToolkit:LinearAxis Orientation="Y" Minimum="0"/>
+                                            </chartingToolkit:LineSeries.DependentRangeAxis>
+                                        </chartingToolkit:LineSeries>
+                                        <chartingToolkit:ColumnSeries DependentValuePath="Value" Title="" IndependentValuePath="Key" x:Name="TagChart">
+                                            <chartingToolkit:ColumnSeries.DataPointStyle>
+                                                <Style TargetType="chartingToolkit:ColumnDataPoint">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="chartingToolkit:ColumnDataPoint">
+                                                                <Grid>
+                                                                    <Rectangle
+                                    Fill="{TemplateBinding Background}"
+                                    Stroke="Transparent"/>
+                                                                    <Grid
+                                    Background="#aaffffff"
+                                    Margin="0 -20 0 0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Top">
+                                                                        <TextBlock
+                                        Text="{TemplateBinding FormattedDependentValue}"
+                                        FontWeight="Bold"
+                                        Padding="0"
+                                        Margin="0"
+                                        FontSize="10"
+                                                                            />
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </chartingToolkit:ColumnSeries.DataPointStyle>
+                                        </chartingToolkit:ColumnSeries>
+                                    </chartingToolkit:Chart>
+
+                                    <StackPanel MouseLeftButtonUp="Orderinfo_MouseLeftButtonUp" MouseMove="Orderinfo_MouseMove" MouseLeftButtonDown="Orderinfo_MouseLeftButtonDown" Name="Orderinfo" Canvas.Left="10" Canvas.Top="87">
+                                        <Grid Margin="0 0 0 -3">
+                                            <Label Name="OrderinfoTitle" Content="Order Information" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Padding="30,2,2,0"/>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <Label Name="Close" MouseLeftButtonDown="Label_MouseLeftButtonDown" FontSize="17" FontWeight="Bold" Foreground="Red">X</Label>
+                                                <!--<Button Margin="0" Background="Transparent" FontSize="15" FontWeight="Bold" Foreground="Red" Click="Button_Click" Width="100">X</Button>-->
+                                                <Rectangle Width="10" Height="1" Visibility="Hidden"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Border BorderThickness="2" BorderBrush="Black" CornerRadius="0.2">
+                                            <StackPanel>
+                                                <Label FontSize="13" Background="#eaeae1" FontWeight="Bold" Content="Order"/>
+                                                <DataGrid IsReadOnly="True" Name="gridOrder" CanUserAddRows="false" ItemsSource="{Binding}"/>
+                                                <Label  FontSize="13" Background="#eaeae1" FontWeight="Bold" Content="Part Installed"/>
+                                                <DataGrid IsReadOnly="True" Name="gridOrder2" CanUserAddRows="false" ItemsSource="{Binding}"/>
+                                                <Label  FontSize="13" Background="#eaeae1" FontWeight="Bold" Content="Part Rejected"/>
+                                                <DataGrid IsReadOnly="True" Name="gridOrder3" CanUserAddRows="false" ItemsSource="{Binding}"/>
+                                            </StackPanel>
+                                        </Border>
+
+                                    </StackPanel>
+
+                                    <StackPanel Visibility="Collapsed"  MouseLeftButtonUp="Orderinfo_MouseLeftButtonUp" MouseMove="Orderinfo_MouseMove" MouseLeftButtonDown="Orderinfo_MouseLeftButtonDown" Name="SP_EstopError" Canvas.Left="800"  Canvas.Top="200">
+                                        <Grid>
+                                            <Label Name="Estop_title" FontWeight="Bold" Content="E-STOP TRIGGERED AT ZONE:"  Height="35" Background="Red" BorderThickness="2" BorderBrush="Black" VerticalAlignment="Top" FontSize="20" Padding="30,2,2,0"/>
+                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                                <!--<Label Name="Close2" MouseLeftButtonDown="Label_MouseLeftButtonDown" FontSize="17" FontWeight="Bold" Foreground="Red">X</Label>-->
+                                                <Rectangle Width="10" Height="10" Visibility="Hidden"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Border BorderThickness="2" BorderBrush="Black" CornerRadius="0.2">
+                                            <StackPanel>
+                                                <!--<Label MinHeight="30" Width="500" Name="Caption" FontSize="20" Background="#eaeae1" FontWeight="Bold" Content="E-STOP TRIGGERED AT:"/>-->
+                                                <Label MinHeight="100" HorizontalContentAlignment="Center" Width="400" Name="LBEstopZone" FontSize="90" Foreground="Red" Background="#eaeae1" FontWeight="Bold" Content="ZONE X"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+
+                                    <StackPanel Name="Legend" Visibility="Collapsed" Orientation="Vertical" Canvas.Left="50" Canvas.Top="1" Height="227">
+                                        <ToggleButton Style="{DynamicResource ID}" Content="Station Name (ID)"/>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <TextBox Style="{DynamicResource Part}" Text="Part Model ID" />
+                                            <TextBox Style="{DynamicResource Qty}" Text="Stock Quantity" />
+                                        </StackPanel>
+                                        <TextBox Width="200" Height="25" Background="Gray" FontWeight="Bold" TextAlignment="Center" Foreground="White" Text="Order ID (Not in Progress)"/>
+                                        <TextBox Width="200" Height="25" Background="Green" FontWeight="Bold" TextAlignment="Center" Foreground="White" Text="Order ID (In Progress)"/>
+                                        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                            <Grid VerticalAlignment="Top" HorizontalAlignment="Left">
+                                                <Rectangle Width="60" Height="84"></Rectangle>
+                                                <my:UCCheckBoxBed Width="60"></my:UCCheckBoxBed>
+                                                <my:UCPointIO ucwidth="58" VerticalAlignment="Bottom"></my:UCPointIO>
+                                            </Grid>
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Label BorderThickness="1" Background="White" FontWeight="Bold" HorizontalContentAlignment="Center" BorderBrush="Red" Content="Sensor In"></Label>
+                                                    <Label BorderThickness="1" Background="White" FontWeight="Bold" HorizontalContentAlignment="Center" BorderBrush="Red" Content="Sensor Out"></Label>
+                                                </StackPanel>
+                                                <Label BorderThickness="1" Background="White" FontWeight="Bold" HorizontalContentAlignment="Center" BorderBrush="Red" Content="Sensor Present"></Label>
+                                                <Label BorderThickness="1" Background="Red" FontWeight="Bold" HorizontalContentAlignment="Center" BorderBrush="Red" Foreground="White" Content="Zone Conveyor Status"></Label>
+                                            </StackPanel>
+                                            <!--<Image Width="347" Margin="0,-75" Height="282" Source="/HMI;component/Images/check.jpg" />-->
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Canvas>
+
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+
+</UserControl>

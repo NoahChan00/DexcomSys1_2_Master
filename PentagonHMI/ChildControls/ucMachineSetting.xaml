@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucMachineSetting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="400">
+    <Grid>
+        <Button Content="Tower Light Setting" Height="50" HorizontalAlignment="Left" Margin="12,0,0,0" Name="btn_TowerLight" VerticalAlignment="Top" Width="175" />
+        <Button Content="By Pass Setting" Height="50" HorizontalAlignment="Left" Margin="10,60,0,0" Name="Btn_ByPass" VerticalAlignment="Top" Width="175" />
+        <Button Content="User Access" Height="50" HorizontalAlignment="Left" Margin="10,120,0,0" Name="Btn_UserAccess" VerticalAlignment="Top" Width="175" />
+        <Button Content="Station Setting" Height="50" HorizontalAlignment="Left" Margin="10,180,0,0" Name="Btn_Station" VerticalAlignment="Top" Width="175" />
+        <Button Content="IO Input" Height="50" HorizontalAlignment="Left" Margin="10,240,0,0" Name="Btn_IO_Input" VerticalAlignment="Top" Width="175" />
+        <Button Content="IO Output" Height="50" HorizontalAlignment="Left" Margin="210,0,0,0" Name="Btn_IO_Output" VerticalAlignment="Top" Width="175" />
+        <Button Content="Alarm" Height="50" HorizontalAlignment="Left" Margin="210,60,0,0" Name="Btn_Alarm" VerticalAlignment="Top" Width="175" Click="Btn_Alarm_Click" />
+        <Button Content="Alert Setting" Height="50" HorizontalAlignment="Left" Margin="210,120,0,0" Name="Btn_Alert" VerticalAlignment="Top" Width="175" Click="Btn_Alert_Click" />
+        <Button Content="Middleware Setting" Height="50" HorizontalAlignment="Left" Margin="210,180,0,0" Name="Btn_Middleware" VerticalAlignment="Top" Width="175" />
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <!-- 
+        This file contains only IO differenct in newer belly band machine (2013 sept)
+        Config file value "IsVersion2BB" must set to "True" to show this.
+    -->
+    
+    
+    <!-- ############################# -->
+    <!-- ###### IO Input Module ###### -->
+    <!-- ############################# -->
+    <!-- Labels -->
+    <system:String x:Key="IO_INPUT_IX0_03">0.03 产品输送带(一)PE(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_04">0.04 产品输送带(一)高度PE(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_05">0.05 产品输送带(一)PE(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_06">0.06 产品输送带(二)PE(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_10">0.10 产品输送带(一)高度PE(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_04">1.04 粘合器(一)腹带张力极限传感器</system:String>
+    <system:String x:Key="IO_INPUT_IX1_05">1.05 粘合器(二)腹带张力极限传感器</system:String>
+                   
+    <!-- ##############################-->
+    <!-- ###### IO Output Module ###### -->
+    <!-- ##############################-->
+    <!-- Labels -->
+    <system:String x:Key="IO_OUTPUT_QX5_00">5.00 SelProg(一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_01">5.01 SelProg(二)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_02">5.02 SelProg(四)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_03">5.03 卷带机(一/二)开关</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_04">5.04 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_05">5.05 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_06">5.06 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_14">5.14 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_12">6.12 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_13">6.13 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_03">7.03 警示灯亮起绿灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_04">7.04 警示灯亮起黄灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_05">7.05 警示灯亮起红灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_06">7.06 蜂鸣器</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_08">7.08 启动按钮灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_09">7.09 停止按钮灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_10">7.10 重设按钮灯</system:String>
+        
+    <!-- #####################################-->
+    <!-- ###### Robot IO Input Module ###### -->
+    <!-- #####################################-->
+    <system:String x:Key="ROBOT_IO_INPUT_RI_03">In 3 标签粘合器(一)摆臂的气缸磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_04">In 4 标签粘合器(一)产品输入的气缸磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_05">In 5 标签粘合器(二)摆臂的气缸磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_06">In 6 标签粘合器(二)产品输入的气缸磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_11">In 11 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_16">In 16 SelProg(一)</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_17">In 17 SelProg(二)</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_18">In 18 SelProg(四)</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_19">In 19 标签粘合器(二)清扫器传感器</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_20">In 20 标签粘合器(二)清扫器传感器</system:String>
+
+    <!-- #####################################-->
+    <!-- ###### Robot IO Output Module ###### -->
+    <!-- #####################################-->
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_07">Out 7 标签粘合器(一/二)摆臂的气缸</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_08">Out 8 标签粘合器(一)产品输入的气缸</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_09">Out 9 标签粘合器(一/二)清扫器手柄</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_10">Out 10 标签粘合器(二)产品输入的气缸</system:String>
+
+</ResourceDictionary>

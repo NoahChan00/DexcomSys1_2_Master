@@ -1,0 +1,161 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucPartTopup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.ChildControls"
+             xmlns:my="clr-namespace:PentagonHMI.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+           
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+           
+        </Grid.RowDefinitions>
+        <!--<Grid Grid.Row="0" Grid.Column="0">
+            <Grid>
+                <Border Grid.Column="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Assemble Diagram" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,2,2,0"/>
+                </Grid>
+            </Grid>
+        </Grid>-->
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid>
+                <Border Grid.Column="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>                   
+                    <Label Grid.Row="0" Grid.ColumnSpan="1" Content="Part Replenish" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,2,2,0"/>
+
+                    <Grid  Grid.Row="1" Grid.Column="0">
+                        <Grid.RowDefinitions>                            
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartItem_1" VerticalAlignment="Top" ucLabelTitleContent="Part Item #1"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartQty_1" VerticalAlignment="Top" ucLabelTitleContent="Part Qty #1"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment="Left"   Style="{DynamicResource styGlassButton}" Name="btnTopup_Item1"   Background="Green"   Width="80" Height="50" Margin="10" Content="TOP UP"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="20" IsEnabled="True"  Click="btnTopup_Item1_Click" />
+                      
+                    </Grid>
+                    <Grid  Grid.Row="2" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartItem_2" VerticalAlignment="Top" ucLabelTitleContent="Part Item #2"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartQty_2" VerticalAlignment="Top" ucLabelTitleContent="Part Qty #2"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment ="Left" Style="{DynamicResource styGlassButton}" Name="btnTopup_Item2"   Background="Green"   Width="80" Height="50" Margin="10" Content="TOP UP"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="20" IsEnabled="True" Click="btnTopup_Item2_Click" />
+
+                    </Grid>
+                    <Grid  Grid.Row="3" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartItem_3" VerticalAlignment="Top" ucLabelTitleContent="Part Item #3"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartQty_3" VerticalAlignment="Top" ucLabelTitleContent="Part Qty #3"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment ="Left" Style="{DynamicResource styGlassButton}" Name="btnTopup_Item3"   Background="Green"   Width="80" Height="50" Margin="10" Content="TOP UP"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="20" IsEnabled="True" Click="btnTopup_Item3_Click" />
+
+                    </Grid>
+
+                    <Grid  Grid.Row="4" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartItem_4" VerticalAlignment="Top" ucLabelTitleContent="Part Item #4"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartQty_4" VerticalAlignment="Top" ucLabelTitleContent="Part Qty #4"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment ="Left" Style="{DynamicResource styGlassButton}" Name="btnTopup_Item4"   Background="Green"   Width="80" Height="50" Margin="10" Content="TOP UP"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="20" IsEnabled="True" Click="btnTopup_Item4_Click" />
+
+                    </Grid>
+                    <Grid  Grid.Row="5" Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Right"   x:Name="PartItem_5" VerticalAlignment="Top" ucLabelTitleContent="Part Item #5"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <my:UCLabelTitleLabelDisplay1 Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right"  x:Name="PartQty_5" VerticalAlignment="Top" ucLabelTitleContent="Part Qty #5"  ucLabelTitleWidth="170"  Margin="5" ucText="" FontSize="16"  />
+                        <Button  Grid.RowSpan ="2" Grid.Column="1" HorizontalAlignment ="Left" Style="{DynamicResource styGlassButton}" Name="btnTopup_Item5"   Background="Green"   Width="80" Height="50" Margin="10" Content="TOP UP"  Foreground="{DynamicResource NormalForegroundBrush}" FontSize="20" IsEnabled="True" Click="btnTopup_Item5_Click" />
+
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+   
+        <Border Name="TopupScreen" Height="230" Width="450" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center" CornerRadius=" 12,12,12,12" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}"  Grid.Row="0" Background="White" Visibility="Collapsed"  >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="417*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="*" />                   
+                 
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Label x:Name="lblTitle" Content="{DynamicResource MAIN_WINDOW_MENU_HEADER_TOPUP}" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Padding="30,2,2,0" Grid.ColumnSpan="2" />
+                <Grid Grid.Row="1" Margin="0,2,0,0" Grid.ColumnSpan="2">
+                    <StackPanel VerticalAlignment="Top">
+                        <TextBlock Height="23" Name="txtBlockInstructions" Text="{DynamicResource LOGIN_TEXTBLOCK_INSTRUCTIONS}" Margin="5" />
+                        <my:UCLabelTextboxErrorMessage  HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="PartItem_TopUp" VerticalAlignment="Top" ucLabelTitleContent="Part Item "    textboxIsReadOnly="False"  isPassword="False"   />
+                        <my:UCLabelTextboxErrorMessage  HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="PartQty_Topup" VerticalAlignment="Top" ucLabelTitleContent="Part Qty "   textboxIsReadOnly="False" isPassword="False"   />
+
+                        <my:UCLabelTextboxErrorMessage  HorizontalAlignment="Left"  ucLabelErrorContent=""  x:Name="ucTopupQty" ucLabelTitleContent="{DynamicResource MAIN_WINDOW_LABEL_TOPUP}" isPassword="False" />
+
+                    </StackPanel>
+                </Grid>
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                    <!--<Button Name="btnSave" Content="{DynamicResource MAIN_WINDOW_BUTTON_SAVE}" Click="btnSave_Click"  Width="75" Height="23" Background="{DynamicResource NormalButtonBrush}" Style="{DynamicResource styGlassButton}"  HorizontalAlignment="Right" Margin="0,0,10,5" VerticalAlignment="Bottom"/>-->
+                    <Grid Margin="0,5,0,0">
+                        <Button Content="{DynamicResource MAIN_WINDOW_BUTTON_TOPUP}" Margin="0,0,88,0" Name="btnTopupQty" Width="76" Click="btnTopupQty_Click" HorizontalAlignment="Right" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" IsDefault="True" Height="23" VerticalAlignment="Top" />
+                        <Button HorizontalAlignment="Right" Margin="0,0,6,0" Name="btnCancel" Width="76" Height="23" VerticalAlignment="Top" Click="btnCancel_Click" Content="{DynamicResource LOGIN_BUTTON_CANCEL}" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+
+    </Grid>
+</UserControl>

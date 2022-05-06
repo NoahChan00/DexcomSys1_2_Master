@@ -1,0 +1,936 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- ################################ -->
+    <!-- ###### Main Window Module ###### -->
+    <!-- ################################ -->
+    <!-- Buttons -->
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SIGNIN">工程师模式</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SIGNOUT">操作员模式</system:String>
+    <!--<system:String x:Key="MAIN_WINDOW_BUTTON_SIGNIN">登录</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SIGNOUT">登出</system:String>-->
+    <system:String x:Key="MAIN_WINDOW_BUTTON_TRANSLATE">English</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_MAIN">主页</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SINGULATOR">分离机</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_FNB">F&amp;B-CN</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_UPC">UPC-CN</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SORTING">排序</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_IO_INPUT">IO 输入</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_IO_OUTPUT">IO 输出</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_ROBOT_CONFIG">机械手配置</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_CONVEYOR_CONFIG">传送机配置</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_MORE">更多</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_LESS">更少</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_OEE">OEE-CN</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_OEE_DETAIL">OEE 详细</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_ALARM">警报</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_LOG">运行记录</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_USER_MANAGEMENT">用户管理</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_MIDDLEWARE_SETTING">中间设备设置</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_ALARM_LOG">警报记录</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_LABEL_SETTING">标签设置</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_ALERT_SETTING">警报设置</system:String>
+
+    <!-- Menu Header Title -->
+    <system:String x:Key="MAIN_WINDOW_MENU_HEADER_MACHINE_STATUS_AND_INFORMATION">机器状态和信息</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_HEADER_MENU_NAVIGATION">菜单导航</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_HEADER_EVENT_LOG">事件日志</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_HEADER_CONNECTION_STATUS">连接状态</system:String>
+    
+    <!-- Sub Menu Header Title -->
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_MACHINE">机器</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_PRODUCT">产品</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_CONNECTION_STATUS">连接状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_APPLICATORS_STATUS">卷带机状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_DEVICE_STATUS">设备状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_VISION">目检</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_ALERT_WARNING">警报/警告</system:String>
+    
+    <!-- Sub Menu Title -->
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_NAME">名称</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_STATUS">状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_IP">IP</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_VISION">目检</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_VISION_M">目检(M)</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_VISION_S">目检(S)</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_ROBOT">机械手</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_ROBOT_M">机械手(M)</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_ROBOT_S">机械手(S)</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_SERVER">服务器</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_PLC">调节器</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_PLC_M">调节器(M)</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_PLC_S">调节器(S)</system:String>
+    <!--<system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_PLC_M">PLC(M)</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_PLC_S">PLC(S)</system:String>-->
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_CYCLE_TIME">循环时间</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_LAST_RESULT">最后结果</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_MACHINE_STATUS">机器状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_APPLICATOR_1">卷带机 1</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_APPLICATOR_2">卷带机 2</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_BARCODE">条码</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_GLOVE_COUNT_DOWN">手套变更单位周期</system:String>
+    <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_RECIPE">配方</system:String>
+
+    <!-- DataTable Event Header -->
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_DATETIME">日期时间</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_USER">用户</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_LOG_TYPE">日志类型</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_DESCRIPTION">描述</system:String>
+
+    <!-- Menu Title -->
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_HOME">主页</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_STATISTIC">统计</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_OEE">OEE</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_CONFIGURATION">设定</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_TCPIP">TCP/IP</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_USER_MANAGEMENT">用户管理</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_EVENT_LOG">事件日志</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_MACHINE_STATUS">机器状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_PASSWORD_CHANGE">更改密码</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_PRODUCT_INFORMATION">产品信息</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_MESSAGES">信息</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_DEVICE">设备</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_HELP">帮助页面</system:String>
+    
+
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_HOME_LOG">选择"首页"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_EVENT_LOG">选择"事件日志"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_OEE_LOG">选择"OEE"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_TCPIP_LOG">选择"TCP/IP"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_USER_MANAGEMENT_LOG">选择"用户管理"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_CHANGE_PASSWORD_LOG">选择"更改密码"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_IO_OUTPUT_LOG">选择"IO 输出"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_IO_INPUT_LOG">选择"IO 输入"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_ROBOT_IO_OUTPUT_LOG">选择"机械手 IO 输出"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_ROBOT_IO_INPUT_LOG">选择"机械手 IO 输入"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_SETTING_LOG">选择"设置"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_ALERT_LIST_LOG">选择"警报清单"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_WARNING_LIST_LOG">选择"警告清单"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_VERSION_LOG">选择"版本"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_PRODUCT_INFO">选择"产品资料"</system:String>
+    <system:String x:Key="MAIN_WINDOW_TREE_ITEM_HELP_LOG">选择"帮助页面"</system:String>
+    <!-- Others -->
+    <!--<system:String x:Key="MAIN_WINDOW_TITLE">Bellyband</system:String>-->
+    <system:String x:Key="MAIN_WINDOW_TITLE">Belly Band 自动化</system:String>
+    <system:String x:Key="MAIN_WINDOW_SCREEN_TITLE">主屏幕</system:String>
+    <system:String x:Key="MAIN_WINDOW_SCREEN_ERROR_TITLE">错误屏幕</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SAVE">保存</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_NEW">添加</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_DELETE">删除</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_SELECT">选择</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_CLEAR">清除</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_START">开始</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_STOP">终止</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_PURGE">清除</system:String>
+    <system:String x:Key="MAIN_WINDOW_GROUPBOX_TITLE">信息</system:String>
+    <system:String x:Key="MAIN_WINDOW_GROUPBOX_LABEL_UPH">UPH-CN</system:String>
+    <system:String x:Key="MAIN_WINDOW_GROUPBOX_LABEL_TOTAL_INPUT">输入总计</system:String>
+    <system:String x:Key="MAIN_WINDOW_GROUPBOX_LABEL_PASSED">通过</system:String>
+    <system:String x:Key="MAIN_WINDOW_GROUPBOX_LABEL_FAILED">失败</system:String>
+    <system:String x:Key="MAIN_WINDOW_SCREEN_LOGIN_AS">登录</system:String>
+    <system:String x:Key="MAIN_WINDOW_CONNECTION_STATUS">连接状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_SYSTEM">系统</system:String>
+    <system:String x:Key="MAIN_WINDOW_ERROR">故障</system:String>
+    <system:String x:Key="MAIN_WINDOW_WARNING">警告</system:String>
+    <system:String x:Key="MAIN_WINDOW_CLEARED">清除</system:String>
+    <system:String x:Key="MAIN_WINDOW_LABEL_RUNNING">运行</system:String>
+    <system:String x:Key="MAIN_WINDOW_LABEL_INITIALIZATION">初始化</system:String>
+    <system:String x:Key="MAIN_WINDOW_LABEL_STOP">停止</system:String>
+    <system:String x:Key="MAIN_WINDOW_LABEL_ALERT">警报</system:String>
+    <system:String x:Key="MAIN_WINDOW_LABEL_MACHINE_STATUS">机器状态</system:String>
+    <system:String x:Key="MAIN_WINDOW_LABEL_IDLE">空闲</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_PURGE_CLICKED">清除按妞</system:String>
+    <system:String x:Key="MAIN_WINDOW_READY">预备</system:String>
+    <system:String x:Key="MAIN_WINDOW_BELLY_BAND_LOW">Belly Band 低</system:String>
+
+    <system:String x:Key="MAIN_WINDOW_BUTTON_CYCLE_STOP_CLICKED">循环按下停止按妞</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_CYCLE_STOP">停止</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_ROBOT_HOME">机械手复位</system:String>
+    <system:String x:Key="MAIN_WINDOW_BUTTON_ROBOT_HOME_CLICKED">机械手主页按妞</system:String>
+
+
+    <system:String x:Key="MAIN_WINDOW_MSG_CHANGE_LANGUAGE">语言改为中文</system:String>
+    <system:String x:Key="MAIN_WINDOW_MSG_START_CLICK">按开始</system:String>
+
+    <system:String x:Key="MAIN_WINDOW_TASK">任务</system:String>
+    <system:String x:Key="MAIN_WINDOW_CURR_USER_MODE_OPERATOR">当前模式: 操作员</system:String>
+    <system:String x:Key="MAIN_WINDOW_CURR_USER_MODE_ENGINEER">当前模式: 工程师</system:String>
+
+    <!-- Errors -->
+    <system:String x:Key="MAIN_WINDOW_ERR_MSG_ROBOT">请参考机械手操作手册</system:String>
+    <system:String x:Key="MAIN_WINDOW_ERR_MSG_VISION">目检</system:String>
+    <system:String x:Key="MAIN_WINDOW_ERR_MSG_IDLE">材料要求</system:String>
+    <system:String x:Key="MAIN_WINDOW_ERR_MSG_STOP">按下启动按钮</system:String>
+
+    <!--Error Panel -->
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_MESSAGE_HEADER_DATETIME">记录日期时间</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_MESSAGE_HEADER_ERRORCODE">警报码</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_MESSAGE_HEADER_ERROR">警报/警告</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_MESSAGE_HEADER_ACTION">行动</system:String>
+
+    <!-- ################################## -->
+    <!-- ###### Alert / Warning List ###### -->
+    <!-- ################################## -->
+    <!-- Errors -->
+    <system:String x:Key="0">清除:警告讯号清除</system:String>
+    <!-- PLC Errors -->
+    <system:String x:Key="1">EMO (报废品) 被按住:解开EMO和重启以继续操作</system:String>
+    <system:String x:Key="2">EMO (粘合器二) 被按住:解开EMO和重启以继续操作</system:String>
+    <system:String x:Key="3">EMO (机械手) 被按住:解开EMO和重启以继续操作</system:String>
+    <system:String x:Key="4">EMO (HMI 面板) 被按住:解开EMO和重启以继续操作</system:String>
+    <system:String x:Key="5">机械手还未进入操作状态:按“重启”按钮</system:String>
+    <system:String x:Key="6">视觉检测还未进入操作状态:重启视觉检测系统</system:String>
+    <system:String x:Key="7">机械手出现错误:按“重启”按钮</system:String>
+    <system:String x:Key="8">视觉检测系统出现错误:重启视觉检测系统</system:String>
+    <system:String x:Key="9">气压输入过低:检查输入的气压</system:String>
+    <system:String x:Key="10">安全继电器未启动:按“重启”按钮</system:String>
+    <system:String x:Key="11">所有的粘合器还未进入操作状态:检查粘合器(一)和(二)</system:String>
+    <system:String x:Key="12">输入物品的位置过高(输入品输送带):移开过高的物品</system:String>
+    <system:String x:Key="13">视觉检测系统已断线:确保视觉检测系统已连线并和机器网络连接</system:String>
+    <system:String x:Key="14">机械手操控器已断线:确保机械手操控器已连接到机器网络</system:String>
+    <system:String x:Key="15">物品已卡在传感器 0.03:检查输入品输送带(一)的传感器和动力辊筒</system:String>
+    <system:String x:Key="16">物品已卡在传感器 0.05:检查输入品输送带(一)的传感器和动力辊筒</system:String>
+    <system:String x:Key="17">检测系统的成绩显示连续性失误:检查报废品的气泡/放置位置或视觉检测的成绩</system:String>
+    <system:String x:Key="18">摄影机(一)连续性失误:移开物品并重启系统</system:String>
+    <system:String x:Key="19">物品已卡在传感器 0.06:检查输入品输送带(二)的传感器和动力辊筒</system:String>
+    <system:String x:Key="20">折叠站(一)的气缸(二)磁簧开关未启动:停止机器的操作并检查磁簧开关</system:String>
+    <system:String x:Key="21">折叠站(一)的气缸(三)磁簧开关未启动:停止机器的操作并检查磁簧开关</system:String>
+    <system:String x:Key="22">折叠站(一)的气缸(四)磁簧开关未启动:停止机器的操作并检查磁簧开关</system:String>
+    <system:String x:Key="23">“运作停止按钮”被按:按“重启”按钮</system:String>
+    <system:String x:Key="24">折叠站(二)的气缸(二)磁簧开关未启动:停止机器的操作并检查磁簧开关</system:String>
+    <system:String x:Key="25">折叠站(二)的气缸(三)磁簧开关未启动:停止机器的操作并检查磁簧开关</system:String>
+    <system:String x:Key="26">折叠站(二)的气缸(四)磁簧开关未启动:停止机器的操作并检查磁簧开关</system:String>
+    <system:String x:Key="27">门已被打开 (粘合器一):请小心的关上门</system:String>
+    <system:String x:Key="28">门已被打开 (粘合器二):请小心的关上门</system:String>
+    <system:String x:Key="29">门已被打开 (机械手):请小心的关上门</system:String>
+    <system:String x:Key="30">机械手无法提取物品:检查气压开关镶嵌</system:String>
+
+
+
+    <!--PLC Warnings-->
+    <system:String x:Key="101">粘合器(一)的腹带已耗尽:即刻更换新的腹带</system:String>
+    <system:String x:Key="102">粘合器(二)的腹带已耗尽:即刻更换新的腹带</system:String>
+    <system:String x:Key="103">粘合器(一)已偏离原位:检查粘合器(一)的曲轴夹钳的位置</system:String>
+    <system:String x:Key="104">粘合器(二)已偏离原位:检查粘合器(二)的曲轴夹钳的位置</system:String>
+    <system:String x:Key="105">粘合器(一)无法粘合腹带:检查粘合器(一)的腹带的状况，或计算机荧幕</system:String>
+    <system:String x:Key="106">粘合器(二)无法粘合腹带:检查粘合器(二)的腹带的状况，或计算机荧幕</system:String>
+    <system:String x:Key="107">可编程逻辑控制器已低电量:联络 Pentamaster 服务团队</system:String>
+    <system:String x:Key="108">视觉检测的成绩显示已超时:如果持续性的发生，检查视觉检测的操作软件</system:String>
+    <system:String x:Key="109">正在清除中:按停止按钮以停止操作</system:String>
+    <system:String x:Key="110">无任何物件:放入物件以防止机器进入空闲状态</system:String>
+    <system:String x:Key="111">物件被放置在报废品输送带已超过一分钟:移开被报废的物件</system:String>
+    <system:String x:Key="112">腹带粘合器(一)的传感器已连续关闭十五秒:检查腹带粘合器(一)的传感器</system:String>
+    <system:String x:Key="113">腹带粘合器(二)的传感器已连续关闭十五秒:检查腹带粘合器(二)的传感器</system:String>
+    <system:String x:Key="114">报废品输送带已满:移开被报废的物件</system:String>
+    <system:String x:Key="115">物件停放在放置点:检查主输送带的状态</system:String>
+    <system:String x:Key="116">手套和 PE Foam 单位周期达到：请更换真空杯手套和 PE Foam</system:String>
+
+    <!-- Vision Errors -->
+    <system:String x:Key="400">A侧和B侧的检测时间已超时:检查视觉检测软件</system:String>
+    <system:String x:Key="401">A侧的检测时间已超时:检查视觉检测软件</system:String>
+    <system:String x:Key="402">B侧的检测时间已超时:检查视觉检测软件</system:String>
+    <system:String x:Key="403">A侧和B侧的摄影机无法接收信号:检查摄影机和启动输入/输出</system:String>
+    <system:String x:Key="404">A侧的摄影机无法接收信号:检查摄影机和启动输入/输出</system:String>
+    <system:String x:Key="405">B侧的摄影机无法接收信号:检查摄影机和启动输入/输出</system:String>
+    <system:String x:Key="406">光源控制器(一)无法传送和接收数据:重启光源控制器</system:String>
+    <system:String x:Key="407">光源控制器(二)无法传送和接收数据:重启光源控制器</system:String>
+    <system:String x:Key="408">光源控制器(一)和(二)无法传送和接收数据:重启光源控制器</system:String>
+    <system:String x:Key="409">方向检测摄影机出现错误:重设摄影机</system:String>
+    <system:String x:Key="410">腹带摄影机(一)出现错误:重设摄影机</system:String>
+    <system:String x:Key="411">腹带摄影机(二)出现错误:重设摄影机</system:String>
+    <system:String x:Key="412">方向检测出现错误:检查视觉检测机的操作记录 C:\Genesis\Database\Event Log\</system:String>
+    <system:String x:Key="413">腹带检测(一)出现错误:检查视觉检测机的操作记录 C:\Genesis\Database\Event Log\</system:String>
+    <system:String x:Key="414">腹带检测(二)出现错误:检查视觉检测机的操作记录 C:\Genesis\Database\Event Log\</system:String>
+    <system:String x:Key="415">气泡检查超时:检查视觉软件泡沫站选项卡</system:String>
+
+    <!-- Robot Error -->
+    <!--<system:String x:Key="8000">X值超过上限</system:String>
+    <system:String x:Key="8001">Y值超过上限</system:String>
+    <system:String x:Key="8002">收到不正确的数据</system:String>
+    <system:String x:Key="8003">Z值为零</system:String>
+    <system:String x:Key="8004">传感器错误于(三)</system:String>
+    <system:String x:Key="8005">网端口错误</system:String>
+    <system:String x:Key="8006">机器人左撇子错误</system:String>
+    <system:String x:Key="8007">部件落下</system:String>
+    <system:String x:Key="8008">RS232 超时</system:String>
+    <system:String x:Key="8009">Z高于零</system:String>
+    <system:String x:Key="8010">部件不能从真空落下</system:String>
+    <system:String x:Key="8011">Belly Band 卡</system:String>
+    <system:String x:Key="8012">Z值超限</system:String>
+    <system:String x:Key="8013">端口203错误</system:String>
+    <system:String x:Key="8014">连续3次失败</system:String>
+    <system:String x:Key="8015">传感器错误于(四)</system:String>
+    <system:String x:Key="8016">传感器错误于(五)</system:String>
+    <system:String x:Key="8017">传感器错误于(六)</system:String>
+    <system:String x:Key="8018">传感器错误于(十)</system:String>
+    <system:String x:Key="8019">传感器错误于(十五)</system:String>-->
+    <system:String x:Key="8000">X值超过上限:如机器无法启动时，手动的把机械手移到安全线</system:String>
+    <system:String x:Key="8001">Y值超过上限:如机器无法启动时，手动的把机械手移到安全线</system:String>
+    <system:String x:Key="8002">收到不正确的数据:联络Pentamaster维修团队</system:String>
+    <system:String x:Key="8003">Z值为零:按下位于机械手上方的Z连锁按钮，并手动的把Z支杆往下移30mm</system:String>
+    <system:String x:Key="8004">传感器错误于(三):暂停机器及检查磁簧开关的输入三</system:String>
+    <system:String x:Key="8005">网端口错误:检查网络中心的状况及连接到机械手控制器的网线</system:String>
+    <system:String x:Key="8006">机器人左撇子错误:手动的把机械手移动到右手边</system:String>
+    <system:String x:Key="8007">部件落下:暂停机器并清除产品</system:String>
+    <system:String x:Key="8008">RS232 超时:检查条码扫描器的控制器状况及连接到机械手控制器的RS232电缆</system:String>
+    <system:String x:Key="8009">Z高于零:按下位于机械手上方的Z连锁按钮，并手动的把Z支杆往下移30mm</system:String>
+    <system:String x:Key="8010">部件不能从真空落下:检查机械手吸盘，压力开关及真空阀</system:String>
+    <system:String x:Key="8011">Belly Band 卡:检查粘合器一的输入十二，及粘合器二的输入十三</system:String>
+    <system:String x:Key="8012">Z值超限:确保用户界面的Z偏离数值没有超出范围</system:String>
+    <system:String x:Key="8013">端口203错误:检查网络中心的状况及连接到机械手控制器的网线</system:String>
+    <system:String x:Key="8014">连续3次失败:检查机械手吸盘，压力开关及真空阀</system:String>
+    <system:String x:Key="8015">传感器错误于(四):暂停机器并检查磁簧开关的输入四</system:String>
+    <system:String x:Key="8016">传感器错误于(五):暂停机器并检查磁簧开关的输入五</system:String>
+    <system:String x:Key="8017">传感器错误于(六):暂停机器并检查磁簧开关的输入六</system:String>
+    <system:String x:Key="8018">传感器错误于(十):暂停机器并检查磁簧开关的输入十</system:String>
+    <system:String x:Key="8019">传感器错误于(十五):暂停机器并检查磁簧开关的输入十五</system:String>
+    <system:String x:Key="4001">西塔数值超过限额:如机器无法启动，手动的旋转机械手到0度</system:String>
+
+
+    <!-- ########################## -->
+    <!-- ###### Login Module ###### -->
+    <!-- ########################## -->
+    <!-- Buttons -->
+    <system:String x:Key="LOGIN_BUTTON_CANCEL">取消</system:String>
+    <system:String x:Key="LOGIN_BUTTON_SIGNIN">登入</system:String>
+    <!-- Error Messages -->
+    <system:String x:Key="LOGIN_ERROR_MSG_PASSWORD_IS_EMPTY">密码不能为空。</system:String>
+    <system:String x:Key="LOGIN_ERROR_MSG_USERNAME_IS_EMPTY">用户名不能为空。</system:String>
+    <!-- Labels -->
+    <system:String x:Key="LOGIN_LABEL_PASSWORD">密码</system:String>
+    <system:String x:Key="LOGIN_LABEL_USERNAME">用户名</system:String>
+    <!-- Others -->
+    <system:String x:Key="LOGIN_WINDOW_TITLE">登录</system:String>
+    <system:String x:Key="LOGIN_TEXTBLOCK_INSTRUCTIONS">请输入您的凭据进行。</system:String>
+    <system:String x:Key="LOGIN_TEXTBLOCK_INVALID">登入失败</system:String>
+    <system:String x:Key="LOGIN_MSG_IS_LOGIN">登入。</system:String>
+    <system:String x:Key="LOGIN_MSG_IS_LOGOUT">登出。</system:String>
+
+    <!-- ############################# -->
+    <!-- ###### IO Input Module ###### -->
+    <!-- ############################# -->
+    <!-- Others -->
+    <system:String x:Key="IO_INPUT_CONFIG_SCREEN_TITLE">控制器输入配置</system:String>
+    <system:String x:Key="IO_INPUT_WINDOW_TITLE">控制器输入</system:String>
+    <!-- Labels -->
+    <!--<system:String x:Key="IO_INPUT_IX0_00">IX0.00 启动按钮</system:String>
+    <system:String x:Key="IO_INPUT_IX0_01">IX0.01 停止按钮</system:String>
+    <system:String x:Key="IO_INPUT_IX0_02">IX0.02 重设按钮</system:String>
+    <system:String x:Key="IO_INPUT_IX0_03">IX0.03 进料传送机 PE1</system:String>
+    <system:String x:Key="IO_INPUT_IX0_04">IX0.04 进料传送机 PE2</system:String>
+    <system:String x:Key="IO_INPUT_IX0_05">IX0.05 进料传送机 PE3</system:String>
+    <system:String x:Key="IO_INPUT_IX0_06">IX0.06 进料传送机 PE4</system:String>
+    <system:String x:Key="IO_INPUT_IX0_07">IX0.07 拒收传送机 PE2</system:String>
+    <system:String x:Key="IO_INPUT_IX0_08">IX0.08 紧急停止 A</system:String>
+    <system:String x:Key="IO_INPUT_IX0_09">IX0.09 紧急停止 B</system:String>
+    <system:String x:Key="IO_INPUT_IX0_10">IX0.10 紧急停止 C</system:String>
+    <system:String x:Key="IO_INPUT_IX0_11">IX0.11 紧急停止 D</system:String>
+    <system:String x:Key="IO_INPUT_IX0_12">IX0.12 BLDC 马达料筒里面簧开关 1</system:String>
+    <system:String x:Key="IO_INPUT_IX0_13">IX0.13 BLDC 马达料筒里面簧开关 2</system:String>
+    <system:String x:Key="IO_INPUT_IX0_14">IX0.14 Belly Band 存在感应器 1</system:String>
+    <system:String x:Key="IO_INPUT_IX0_15">IX0.15 Belly Band 存在感应器 2</system:String>
+    <system:String x:Key="IO_INPUT_IX1_00">IX1.00 Belly Band 低现感应器 1</system:String>
+    <system:String x:Key="IO_INPUT_IX1_01">IX1.01 Belly Band 低现感应器 2</system:String>
+    <system:String x:Key="IO_INPUT_IX1_02">IX1.02 肘夹近程感应器 1</system:String>
+    <system:String x:Key="IO_INPUT_IX1_03">IX1.03 肘夹近程感应器 2</system:String>
+    <system:String x:Key="IO_INPUT_IX1_04">IX1.04 肘夹插槽感应器 1</system:String>
+    <system:String x:Key="IO_INPUT_IX1_05">IX1.05 肘夹插槽感应器 2</system:String>
+    <system:String x:Key="IO_INPUT_IX1_06">IX1.06 门开关 1</system:String>
+    <system:String x:Key="IO_INPUT_IX1_07">IX1.07 门开关 2</system:String>
+    <system:String x:Key="IO_INPUT_IX1_08">IX1.08 门开关 3</system:String>
+    <system:String x:Key="IO_INPUT_IX1_09">IX1.09 折叠料筒里面 1 簧开关(1)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_10">IX1.10 折叠料筒里面 2 簧开关(1)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_11">IX1.11 折叠料筒里面 3 簧开关(1)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_12">IX1.12 折叠料筒里面 4 簧开关(1)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_13">IX1.13 折叠式安全感应器 1</system:String>
+    <system:String x:Key="IO_INPUT_IX1_14">IX1.14 折叠料筒里面 1 簧开关(2)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_15">IX1.15 折叠料筒里面 2 簧开关(2)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_00">IX2.00 折叠料筒里面 3 簧开关(2)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_01">IX2.01 折叠料筒里面 4 簧开关(2)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_02">IX2.02 折叠式安全感应器 1</system:String>
+    <system:String x:Key="IO_INPUT_IX2_03">IX2.03 机器人手臂就绪</system:String>
+    <system:String x:Key="IO_INPUT_IX2_04">IX2.04 机器人手臂运行</system:String>
+    <system:String x:Key="IO_INPUT_IX2_05">IX2.05 机器人手臂错误</system:String>
+    <system:String x:Key="IO_INPUT_IX2_06">IX2.06 主传送机接口 1</system:String>
+    <system:String x:Key="IO_INPUT_IX2_07">IX2.07 主传送机接口 2</system:String>
+    <system:String x:Key="IO_INPUT_IX2_08">IX2.08 主调压开关</system:String>
+    <system:String x:Key="IO_INPUT_IX2_09">IX2.09 安全继电器</system:String>
+    <system:String x:Key="IO_INPUT_IX2_10">IX2.10 机器人手臂安全停止</system:String>
+    <system:String x:Key="IO_INPUT_IX2_11">IX2.11 备用</system:String>
+    <system:String x:Key="IO_INPUT_IX2_12">IX2.12 备用</system:String>
+    <system:String x:Key="IO_INPUT_IX2_13">IX2.13 备用</system:String>
+    <system:String x:Key="IO_INPUT_IX2_14">IX2.14 备用</system:String>
+    <system:String x:Key="IO_INPUT_IX2_15">IX2.15 备用</system:String>-->
+
+    <system:String x:Key="IO_INPUT_IX0_00">0.00 启动按钮</system:String>
+    <system:String x:Key="IO_INPUT_IX0_01">0.01 停止按钮</system:String>
+    <system:String x:Key="IO_INPUT_IX0_02">0.02 重启按钮</system:String>
+    <system:String x:Key="IO_INPUT_IX0_03">0.03 产品输送带PE(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_04">0.04 产品输送带PE(二) </system:String>
+    <system:String x:Key="IO_INPUT_IX0_05">0.05 产品输送带PE(三)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_06">0.06 产品输送带PE(四)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_07">0.07 报废品输送带PE(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_08">0.08 EMO (报废品输送带)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_09">0.09 EMO (粘合器二)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_10">0.10 EMO (机械手)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_11">0.11 EMO (HMI 面板)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_12">0.12 BLDC 电机的气缸磁簧开关(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_13">0.13 BLDC 电机的气缸磁簧开关(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_14">0.14 腹带检测传感器(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX0_15">0.15 腹带检测传感器(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_00">1.00 运作停止信号</system:String>
+    <system:String x:Key="IO_INPUT_IX1_01">1.01 报废品输送带(三)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_02">1.02 曲轴夹钳的接近传感器(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_03">1.03 曲轴夹钳的接近传感器(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_04">1.04 曲轴夹钳的插槽传感器(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_05">1.05 曲轴夹钳的插槽传感器(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_06">1.06 门开关感应器(粘合器一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_07">1.07 门开关感应器(粘合器二)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_08">1.08 门开关感应器(机械手)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_09">1.09 折叠气缸(一)的磁簧开关(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_10">1.10 折叠气缸(二)的磁簧开关(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_11">1.11 折叠气缸(三)的磁簧开关(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_12">1.12 折叠气缸(四)的磁簧开关(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_13">1.13 保留</system:String>
+    <system:String x:Key="IO_INPUT_IX1_14">1.14 折叠气缸(一)的磁簧开关(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX1_15">1.15 折叠气缸(二)的磁簧开关(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_00">2.00 折叠气缸(三)的磁簧开关(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_01">2.01 折叠气缸(四)的磁簧开关(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_02">2.02 保留</system:String>
+    <system:String x:Key="IO_INPUT_IX2_03">2.03 机械手已就绪</system:String>
+    <system:String x:Key="IO_INPUT_IX2_04">2.04 机械手操作中</system:String>
+    <system:String x:Key="IO_INPUT_IX2_05">2.05 机械手出现错误</system:String>
+    <system:String x:Key="IO_INPUT_IX2_06">2.06 保留</system:String>
+    <system:String x:Key="IO_INPUT_IX2_07">2.07 主输送操作信号</system:String>
+    <system:String x:Key="IO_INPUT_IX2_08">2.08 主气压开关</system:String>
+    <system:String x:Key="IO_INPUT_IX2_09">2.09 安全继电器的信号</system:String>
+    <system:String x:Key="IO_INPUT_IX2_10">2.10 机械手可安全的关闭信号</system:String>
+    <system:String x:Key="IO_INPUT_IX2_11">2.11 启动粘合器(一)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_12">2.12 启动粘合器(二)</system:String>
+    <system:String x:Key="IO_INPUT_IX2_13">2.13 保留</system:String>
+    <system:String x:Key="IO_INPUT_IX2_14">2.14 保留</system:String>
+    <system:String x:Key="IO_INPUT_IX2_15">2.15 保留</system:String>
+
+    <!-- ##############################-->
+    <!-- ###### IO Output Module ###### -->
+    <!-- ##############################-->
+    <!-- Others -->
+    <system:String x:Key="IO_OUTPUT_CONFIG_SCREEN_TITLE">控制器输出配置</system:String>
+    <system:String x:Key="IO_OUTPUT_WINDOW_TITLE">控制器输出</system:String>
+    <system:String x:Key="IO_OUTPUT_INTERNER_STRING_ON">开</system:String>
+    <system:String x:Key="IO_OUTPUT_INTERNER_STRING_OFF">关</system:String>
+    <!-- Labels -->
+    <!--<system:String x:Key="IO_OUTPUT_QX5_00">QX5.00 启动按钮灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_01">QX5.01 停止按钮灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_02">QX5.02 重设按钮灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_03">QX5.03 绿塔灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_04">QX5.04 琥珀塔灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_05">QX5.05 赤塔灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_06">QX5.06 蜂鸣器</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_07">QX5.07 进料传送机动力滚筒 1</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_08">QX5.08 进料传送机动力滚筒 2</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_09">QX5.09 进料传送机动力滚筒 3</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_10">QX5.10 拒收传送机动力滚筒</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_11">QX5.11 摄像头站 1</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_12">QX5.12 BLDC 马达料筒里面簧 1</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_13">QX5.13 BLDC 马达料筒里面簧 2</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_14">QX5.14 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_15">QX5.15 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_00">QX6.00 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_01">QX6.01 折叠料筒里面 1 簧(1)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_02">QX6.02 折叠料筒里面 2 簧(1)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_03">QX6.03 折叠料筒里面 3 簧(1)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_04">QX6.04 折叠料筒里面 4 簧(1)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_05">QX6.05 折叠料筒里面 1 簧(2)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_06">QX6.06 折叠料筒里面 2 簧(2)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_07">QX6.07 折叠料筒里面 3 簧(2)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_08">QX6.08 折叠料筒里面 4 簧(2)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_09">QX6.09 启动机器人手臂</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_10">QX6.10 停止机器人手臂</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_11">QX6.11 重设机器人手臂</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_12">QX6.12 主传送机接口 1</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_13">QX6.13 主传送机接口 2</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_14">QX6.14 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_15">QX6.15 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_00">QX7.00 门锁 1</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_01">QX7.01 门锁 2</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_02">QX7.02 门锁 3</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_03">QX7.03 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_04">QX7.04 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_05">QX7.05 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_06">QX7.06 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_07">QX7.07 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_08">QX7.08 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_09">QX7.09 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_10">QX7.10 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_11">QX7.11 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_12">QX7.12 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_13">QX7.13 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_14">QX7.14 备用</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_15">QX7.15 备用</system:String>-->
+
+    <system:String x:Key="IO_OUTPUT_QX5_00">5.00 启动 PB 灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_01">5.01 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_02">5.02 重启 PB 灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_03">5.03 警示灯亮起绿灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_04">5.04 警示灯亮起黄灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_05">5.05 警示灯亮起红灯</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_06">5.06 蜂鸣器</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_07">5.07 产品输入输送带PR(一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_08">5.08 产品输入输送带PR(二)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_09">5.09 产品输入输送带PR(三)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_10">5.10 报废品输送带PR(一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_11">5.11 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_12">5.12 粘合器(一)的电机气缸</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_13">5.13 粘合器(二)的电机气缸</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_14">5.14 特殊功能</system:String>
+    <system:String x:Key="IO_OUTPUT_QX5_15">5.15 省略条形码扫描器的成绩显示</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_00">6.00 主输送操作信号给机械手</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_01">6.01 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_02">6.02 折叠气缸二(一) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_03">6.03 折叠气缸三(一) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_04">6.04 折叠气缸四(一) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_05">6.05 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_06">6.06 折叠气缸二(二) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_07">6.07 折叠气缸三(二) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_08">6.08 折叠气缸四(二) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_09">6.09 机械手已启动</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_10">6.10 机械手已停止</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_11">6.11 机械手已重启</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_12">6.12 主输送带界面(一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_13">6.13 主输送带界面(二)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_14">6.14 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_15">6.15 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_00">7.00 门锁(粘合器二)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_01">7.01 门锁(机械手)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_02">7.02 门锁(粘合器一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_03">7.03 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_04">7.04 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_05">7.05 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_06">7.06 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_07">7.07 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_08">7.08 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_09">7.09 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_10">7.10 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_11">7.11 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_12">7.12 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_13">7.13 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_14">7.14 保留</system:String>
+    <system:String x:Key="IO_OUTPUT_QX7_15">7.15 保留</system:String>
+
+    <!-- #####################################-->
+    <!-- ###### Robot IO Input Module ###### -->
+    <!-- #####################################-->
+    <system:String x:Key="ROBOT_IO_INPUT_CONFIG_SCREEN_TITLE">机械手控制器输出配置</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_WINDOW_TITLE">机械手控制器输入</system:String>
+
+    <system:String x:Key="ROBOT_IO_INPUT_RI_00">In 0 机械手启动</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_01">In 1 机械手停止</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_02">In 2 机械手重启</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_03">In 3 标签粘合器(一)的气缸(一)磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_04">In 4 标签粘合器(一)的气缸(二)磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_05">In 5 标签粘合器(二)的气缸(一)磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_06">In 6 标签粘合器(二)的气缸(二)磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_07">In 7 真空气压开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_08">In 8 报废品输送带的传感器(一)</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_09">In 9 主输送操作信号</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_10">In 10 粘合器(一)的腹带截断器的磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_11">In 11 特殊功能</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_12">In 12 粘合器(一)的腹带卡住的传感器</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_13">In 13 粘合器(二)的腹带卡住的传感器</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_14">In 14 省略条形码扫描器的成绩显示</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_15">In 15 粘合器(一)的腹带截断器的磁簧开关</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_16">In 16 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_17">In 17 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_18">In 18 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_19">In 19 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_20">In 20 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_21">In 21 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_22">In 22 保留</system:String>
+    <system:String x:Key="ROBOT_IO_INPUT_RI_23">In 23 保留</system:String>
+
+
+    <!-- #####################################-->
+    <!-- ###### Robot IO Output Module ###### -->
+    <!-- #####################################-->
+    <system:String x:Key="ROBOT_IO_OUTPUT_CONFIG_SCREEN_TITLE">机械手控制器输出配置</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_WINDOW_TITLE">机械手控制器输出</system:String>
+
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_00">Out 0 机械手已就绪</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_01">Out 1 机械手操作中</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_02">Out 2 机械手出现错误</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_03">Out 3 粘合器(一)的腹带截断器</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_04">Out 4 粘合器(二)的腹带截断器</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_05">Out 5 摄影站(三)</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_06">Out 6 摄影站(四)</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_07">Out 7 标签粘合器(一)的气缸(一)手柄</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_08">Out 8 标签粘合器(一)的气缸(二)</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_09">Out 9 标签粘合器(二)的气缸(一)手柄</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_10">Out 10 标签粘合器(二)的气缸(二)</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_11">Out 11 真空</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_12">Out 12 清除</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_13">Out 13 机械手处在待机位置</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_14">Out 14 粘合器(一)的电机启动</system:String>
+    <system:String x:Key="ROBOT_IO_OUTPUT_RO_15">Out 15 粘合器(二)的电机启动</system:String>
+
+    <!-- ##################### -->
+    <!-- ######   Home  ###### -->
+    <!-- ##################### -->
+    <!-- other-->
+    <system:String x:Key="HOME_WINDOW_TITLE">主页</system:String>
+    <!-- Labels -->
+    <system:String x:Key="HOME_LABEL_STATISTIC">统计</system:String>
+    <system:String x:Key="HOME_LABEL_VISION_RESULT">视觉结果</system:String>
+    <system:String x:Key="HOME_LABEL_YIELD">产量</system:String>
+    <system:String x:Key="HOME_LABEL_PASS">通过</system:String>
+    <system:String x:Key="HOME_LABEL_FAIL">失效</system:String>
+    <system:String x:Key="HOME_LABEL_TOTAL">总额</system:String>
+    <system:String x:Key="HOME_LABEL_BARCODE">条形码</system:String>
+    <system:String x:Key="HOME_LABEL_ORIENTATION">取向</system:String>
+    <system:String x:Key="HOME_LABEL_BELLYBAND1">Belly Band 1</system:String>
+    <system:String x:Key="HOME_LABEL_BELLYBAND2">Belly Band 2</system:String>
+    <system:String x:Key="HOME_LABEL_PLACEMENT1">安置 1</system:String>
+    <system:String x:Key="HOME_LABEL_PLACEMENT2">安置 2</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE0">气泡 &lt; 0 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE1">气泡 1-2 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE2">气泡 2-3 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE3">气泡 3-4 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE4">气泡 4-5 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE5">气泡 5-6 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE6">气泡 6-7 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_BUBBLE7">气泡 &gt; 7 (mm)</system:String>
+    <system:String x:Key="HOME_LABEL_TOTAL_BUBBLES">总气泡</system:String>
+    <system:String x:Key="HOME_LABEL_CURRENT_RESULT">目前的结果</system:String>
+    <system:String x:Key="HOME_LABEL_BUTTON_RESET">重设</system:String>
+
+    <system:String x:Key="HOME_MSG_YIELD_RESET">产量重设</system:String>
+    <system:String x:Key="HOME_MSG_STATISTIC_RESET">统计重设</system:String>
+
+    <!-- ############################# -->
+    <!-- ###### OEE Info Module ###### -->
+    <!-- ############################# -->
+    <!-- Others -->
+    <system:String x:Key="OEE_INFO_SCREEN_TITLE">OEE-CN</system:String>
+    <!-- Labels -->
+    <system:String x:Key="OEE_INFO_LABEL_MACHINE_NAME">机器名称</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_START_DATE_TIME">开始日期时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_TOTAL_QUANTITY_IN">输入总量</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_TOTAL_QUANTITY_OUT">输出总量</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_OPERATOR_ID">操作员号码</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_SYSTEM_UP_TIME">系统运行时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_OPERATION_TIME">操作时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_DOWN_TIME">故障时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_IDLE_TIME">闲置时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_TOTAL_PASS">通过总计</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_TOTAL_FAIL">失败总计</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_SOFT_JAM">软卡住</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_HARD_JAM">硬卡住</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_CURRENT_MTBA">机器所需辅助间隔时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_CURRENT_MTBF">平均故障间隔时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_AVAILABILITY">可用率 （%）</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_PERFORMANCE_RATE">实际出品率 (%)</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_THROUGHPUT_PERFORMANCE_RATE">吞吐量实际出品率 (%)</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_EFFICIENCY_RATE">效率比 (%)</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_YIELD">产量 (%)</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_UPH">UPH</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_START_DATE">开始日期</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_START_TIME">开始时间</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_OEE">OEE (%)</system:String>
+    <system:String x:Key="OEE_INFO_LABEL_IDEAL_CYCLE_TIME">理想的周期时间</system:String>
+    
+
+
+    <!-- ##################################### -->
+    <!-- ###### OEE Info Details Module ###### -->
+    <!-- ##################################### -->
+    <!-- Labels -->
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_MACHINE_NAME">机器名称</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_LOADING_TIME">装载时间</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_OPERATION_TIME">操作时间</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_DOWN_TIME">故障时间</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_IDLE_TIME">闲置时间</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_TOTAL_PASS">通过总计</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_TOTAL_QUANTITY_OUT">总输出数量</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_SOFT_JAM">Soft Jam-CN</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_HARD_JAM">Hard Jam-CN</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_CURRENT_MTBA">机器所需辅助间隔时间</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_CURRENT_MTBF">平均故障间隔时间</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_AVAILABILITY">可用率 （%）</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_PERFORMANCE_RATE">实际出品率 (%)</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_EFFICIENCY_RATE">效率比 (%)</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_START_DATE">开始日期</system:String>
+    <system:String x:Key="OEE_INFO_DETAILS_LABEL_START_TIME">开始时间</system:String>
+
+    <!--Buttons-->
+    <system:String x:Key="OEE_BUTTON_SAVE_LOG">保存日志和重设</system:String>
+    <system:String x:Key="OEE_MSG_SAVE_LOG">保存OEE</system:String>
+    
+    <!-- ################################ -->
+    <!-- ###### Maintenance Module ###### -->
+    <!-- ################################ -->
+    <!-- other-->
+    <system:String x:Key="USER_MANAGEMENT_SCREEN_TITLE">用户管理</system:String>
+    <system:String x:Key="MIDDLEWARE_SCREEN_TITLE">Middleware-CN</system:String>
+    <system:String x:Key="PRODUCT_SCREEN_TITLE">产品</system:String>
+    <!-- Labels -->
+    <system:String x:Key="MAINTENANCE_LABEL_USERNAME">用户名</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_OLD_PASSWORD">旧密码</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_NEW_PASSWORD">新密码</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_PASSWORD">密码</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_GROUP_NAME">组的名称</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_PRODUCT_NAME">产品名称</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_PRODUCT_TEMPLATE">产品模版</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_ACTIVE">激活</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_STATION_ID">站点ID</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_STATION_NAME">站点名称</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_IP_ADDRESS">IP地址</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_PORT">端口</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_PATH">路径</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_SOFTWARE_VERSION">软件版本</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_MAC_ADDRESS">Mac 地址</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_TIMEOUT_BOX_ID">时出-盒子 ID</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_TIMEOUT_UPC">时出-UPC</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_TIMEOUT_SEND_UPC_FAIL">时出-发送UPC失败</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_TIMEOUT_SEND_PASS_OR_FAIL">时出-发送通过 / Fail</system:String>
+    <system:String x:Key="MAINTENANCE_LABEL_WRITE_TO_FILE">写入文件</system:String>
+
+    <!-- Error Messages -->
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PASSWORD_IS_EMPTY">密码不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_USERNAME_IS_EMPTY">用户名不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_GROUP_NAME_IS_EMPTY">组的名称不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_USERNAME_IS_EXIST">用户名已经存在。</system:String>
+
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_INVALID_SAVE">保存功能无效!</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_INVALID_DELETE">删除功能无效!</system:String>
+
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PRODUCTNAME_IS_EMPTY">产品名称不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PRODUCTTEMPLATE_IS_EMPTY">产品模版不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ACTIVE_IS_EMPTY">激活不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PRODUCTNAME_IS_EXIST">产品名称已经存在。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PRODUCTTEMPLATE_IS_MoreThan2000">产品模版长度超过2000个字符</system:String>
+
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_STATIONID_IS_EMPTY">站点ID不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_STATIONNAME_IS_EMPTY">站点名称不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_IPADDRESS_IS_EMPTY">IP 地址不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PORT_IS_EMPTY">端口不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_PATH_IS_EMPTY">路径不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_SOFTWAREVERSION_IS_EMPTY">软件版本不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_MACADDRESS_IS_EMPTY">MAC 地址不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTBOX_IS_EMPTY">时出盒子ID不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTUPC_IS_EMPTY">时出UPC不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTUPCFAIL_IS_EMPTY">时出失败 不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTPF_IS_EMPTY">时出成功/失败 不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTBOX_NUMBER_INVALID">时出盒子 ID 只接受数字</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTUPC_NUMBER_INVALID">时出 UPC 只接受数字</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTUPCFAIL_NUMBER_INVALID">时出失败 只接受数字</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_TIMEOUTPF_NUMBER_INVALID">时出成功/失败 只接受数字</system:String>
+
+    <!-- Confirmation Message -->
+    <system:String x:Key="MAINTENANCE_CONFIRM_DELETE">删除记录？</system:String>
+    <system:String x:Key="MAINTENANCE_SAVE_SUCCESS">保存数据成功</system:String>
+    <system:String x:Key="MAINTENANCE_SAVE_FAIL">保存数据失败</system:String>
+    <system:String x:Key="MAINTENANCE_DELETE_SUCCESS">删除数据成功</system:String>
+    <system:String x:Key="MAINTENANCE_DELETE_FAIL">删除数据失败</system:String>
+    <system:String x:Key="MAINTENANCE_CONFIRM_CLEAR">清除所有记录?</system:String>
+    <system:String x:Key="MAINTENANCE_CLEAR_SUCCESS">清除数据成功</system:String>
+    <system:String x:Key="MAINTENANCE_CLEAR_FAIL">清除数据失败</system:String>
+
+    <!-- ######################## -->
+    <!-- ###### Log Module ###### -->
+    <!-- ######################## -->
+    <!-- other-->
+    <system:String x:Key="LOG_SCREEN_TITLE">记录</system:String>
+    <!-- Labels -->
+    <system:String x:Key="LOG_LABEL_LOGDATETIME">记录日期时间</system:String>
+    <system:String x:Key="LOG_LABEL_LOGDESC">描述</system:String>
+    <system:String x:Key="LOG_LABEL_LOGUSER">用户</system:String>
+
+    <!-- ########################## -->
+    <!-- ###### Alarm Module ###### -->
+    <!-- ########################## -->
+    <!-- other-->
+    <system:String x:Key="ALARM_SCREEN_TITLE">警报</system:String>
+    <system:String x:Key="ALARM_LOG_SCREEN_TITLE">警报 记录</system:String>
+    <!-- Labels -->
+    <system:String x:Key="ALARM_LABEL_ALARM_CODE">报警信号码</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_DATETIME">报警日期时间</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_DESC">描述</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_STATION">站点</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_COUNT">计数</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_RETRY">警报重试数量</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_JAM">警报故障</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_REQPASSWORD">报警所需的密码</system:String>
+    <system:String x:Key="ALARM_LABEL_ALARM_ACTION">报警行动</system:String>
+
+    <!-- Error Messages -->
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ALARMCODE_IS_EMPTY">报警信号码不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ALARMDESC_IS_EMPTY">描述不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ALARMACTION_IS_EMPTY">报警行动不能为空。</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ALARMCODE_IS_EXIST">报警信号码已存在</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ALARMRETRY_NUMBER_INVALID">警报重试数量只接受数字</system:String>
+    <system:String x:Key="MAINTENANCE_ERROR_MSG_ALARMRETRY_IS_EMPTY">警报重试数量不能为空。</system:String>
+
+    <!-- ########################## -->
+    <!-- ###### Alert Module ###### -->
+    <!-- ########################## -->
+    <!-- other-->
+    <system:String x:Key="ALERT_SCREEN_TITLE">警报设置</system:String>
+    <!-- Labels -->
+    <system:String x:Key="ALERT_LABEL_UPC_CONTINUOUS_FAIL">UPC 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_UPC_NO_OFF_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_CONTINUOUS_FAIL">中间设备连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_NO_OFF_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_FNB_CONTINUOUS_FAIL">F&amp;B 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_FNB_NO_OFF_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_2D_BARCODE_CONTINUOUS_FAIL">2D 条形码连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_2D_BARCODE_NO_OFF_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_OQC_CONTINUOUS_FAIL">出货检验连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_OQC_NO_OFF_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_BOXID_QUERY_TO_SFS_CONTINUOUS_BOX_FAILURE">Send BoxID Query To SFS (1SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_BOXID_QUERY_TO_SFS_CONTINUOUS_BOX_FAILURE_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_QUERY_UPC_FROM_SFS_CONTINUOUS_BOX_FAILURE">Query UPC From SFS (1SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_QUERY_UPC_FROM_SFS_CONTINUOUS_BOX_FAILURE_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_FAIL_UPC_QUERY_TO_SFS_CONTINUOUS_BOX_FAILURE">Send Fail UPC Query To SFS (1SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_FAIL_UPC_QUERY_TO_SFS_CONTINUOUS_BOX_FAILURE_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_INSPECTION_RESULT_QUERY_TO_SFS_CONTINUOUS_BOX_FAILURE">Send Inspection Result Query To SFS (1SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_INSPECTION_RESULT_QUERY_TO_SFS_CONTINUOUS_BOX_FAILURE_RETRY">重试</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_BOXID_QUERY_TO_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Send BoxID Query To SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_QUERY_UPC_FROM_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Query UPC From SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_FAIL_UPC_QUERY_TO_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Send Fail UPC Query To SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
+    <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_SEND_INSPECTION_RESULT_QUERY_TO_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Send Inspection Result Query To SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
+    
+    <!-- ######################## -->
+    <!-- ###### UserAccess ###### -->
+    <!-- ######################## -->
+    <!-- other-->
+    <system:String x:Key="USER_ACCESS_SCREEN_TITLE">用户访问</system:String>
+    <!-- Labels -->
+    <system:String x:Key="USER_ACCESS_LABEL_MODULE">模</system:String>
+    <system:String x:Key="USER_ACCESS_LABEL_VISION">目检</system:String>
+    <system:String x:Key="USER_ACCESS_LABEL_MACHINE_SETTING">机器设置</system:String>
+    <system:String x:Key="USER_ACCESS_LABEL_RECIPE_SETTING">食谱设置</system:String>
+    <system:String x:Key="USER_ACCESS_LABEL_STATISTIC">统计</system:String>
+    
+    <!-- ################### -->
+    <!-- ###### Yield ###### -->
+    <!-- ################### -->
+    <!-- other-->
+    <system:String x:Key="YIELD_SCREEN_TITLE">产量</system:String>
+
+    <!-- ######################### -->
+    <!-- ###### ConfigTCPIP ###### -->
+    <!-- ######################### -->
+    <!-- other-->
+    <system:String x:Key="CONFIG_TCPIP_SCREEN_TITLE">TCP/IP</system:String>
+    <system:String x:Key="CONFIG_TCPIP_CLIENT_SCREEN_TITLE">客户 TCP/IP</system:String>
+    <system:String x:Key="CONFIG_TCPIP_SERVER_SCREEN_TITLE">服务器 TCP/IP</system:String>
+    <!-- Labels -->
+    <system:String x:Key="CONFIG_TCPIP_LABEL_REMOTE_SERVER_IP">远程服务器IP</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_REMOTE_SERVER_PORT">远程服务器端口</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_REMOTE_SERVER_PORT2">远程服务器端口2</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_LOCAL_INTERFACE">本机接口</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_LOCAL_IP">本机IP</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_LOCAL_PORT">本机端口</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_SERVER_IP">服务器 IP</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_SERVER_PORT">服务器端口</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_CONNECT">连接</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_DISCONNECT">断开</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_SEND">发送</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_CLEAR">清除</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_MESSAGE">信息</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_MESSAGE_RECEIVED">收到消息</system:String>
+    <system:String x:Key="CONFIG_TCPIP_LABEL_CONNECTED_USERS">已连接用户</system:String>
+
+    <!-- Status Messages -->
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_CONNECTED">已连接</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_CONNECTING">连接中</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_DISCONNECTED">已断开</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_LISTENING">收听中</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_SAVED_SUCCESSFUL">成功保存</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_REMOTE_SERVER">远程服务器</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_SERVER">服务器</system:String>
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_LOCAL">本机</system:String>
+
+    <!-- Error Messages -->
+    <system:String x:Key="CONFIG_TCPIP_ERROR_MSG_INVALID_IP">IP错误</system:String>
+    <system:String x:Key="CONFIG_TCPIP_ERROR_MSG_INVALID_PORT">端口错误</system:String>
+    <system:String x:Key="CONFIG_TCPIP_ERROR_MSG_INVALID_INTERFACE">接口错误</system:String>
+
+    <!-- ##################### -->
+    <!-- ###### Setting ###### -->
+    <!-- ##################### -->
+    <!-- other-->
+    <system:String x:Key="SETTING_WINDOW_TITLE">设置</system:String>
+    <!-- Labels -->
+    <system:String x:Key="SETTING_LABEL_SPEED">速度</system:String>
+    <system:String x:Key="SETTING_LABEL_APPLICATOR_1">卷带机1</system:String>
+    <system:String x:Key="SETTING_LABEL_APPLICATOR_2">卷带机2</system:String>
+    <system:String x:Key="SETTING_LABEL_CALIBRATE">校准</system:String>
+    <system:String x:Key="SETTING_LABEL_ENABLE">启用卷带机</system:String>
+    <system:String x:Key="SETTING_LABEL_DISABLE">禁用卷带机</system:String>
+    <system:String x:Key="SETTING_LABEL_Z_OFFSET">Z偏移</system:String>
+    <system:String x:Key="SETTING_LABEL_CALIBRATE_APP1">校准卷带机1</system:String>
+    <system:String x:Key="SETTING_LABEL_CALIBRATE_APP2">校准卷带机2</system:String>
+    <system:String x:Key="SETTING_LABEL_ENGINEERING_MODE">工程师模式</system:String>
+    <system:String x:Key="SETTING_LABEL_NUMBER_UNIT_CYCLES">手套变更单位周期 (4,000 - 65,000)</system:String>
+    <system:String x:Key="SETTING_LABEL_VISION_CONT_FAIL">视觉连续失败数</system:String>
+    <system:String x:Key="SETTING_LABEL_ROBOT_SPEED">机械手速度</system:String>
+    <system:String x:Key="SETTING_LABEL_GLOVE_CYCLE_COUNT">复位周期</system:String>
+    <system:String x:Key="SETTING_LABEL_GLOVE_CYCLE_BUTTON">复位周期按钮</system:String>
+
+    <!-- Status Messages -->
+    <system:String x:Key="SETTING_STATUS_MSG_SAVED_SUCCESSFUL">成功保存</system:String>
+    <system:String x:Key="SETTING_STATUS_MSG_BUTTON_GLOVE_CYCLE_CLICKED">复位按钮点击手套周期</system:String>
+
+    <system:String x:Key="SETTING_LABEL_BARCODE_BUTTON">条码的通按钮</system:String>
+    <system:String x:Key="SETTING_LABEL_BARCODE_ENABLE_BYPASS">启用条形码结果的通</system:String>
+    <system:String x:Key="SETTING_LABEL_BARCODE_DISABLE_BYPASS">禁用条形码结果通</system:String>
+
+    <!-- Button -->
+    <system:String x:Key="SETTING_BUTTON_UPDATE">更新</system:String>
+    <system:String x:Key="SETTING_STATUS_MSG_BUTTON_BYPASS_CLICKED">点击条码结果绕行</system:String>
+    <system:String x:Key="SETTING_ERROR_VCFC_MSG">请输入值1-99.</system:String>
+    <system:String x:Key="SETTING_ERROR_GLOVE_MSG">请输入值4000-65000.</system:String>
+    <system:String x:Key="SETTING_WARN_SAVE_MSG">保存警告：Z-偏移量将受到影响。您确定要继续吗？</system:String>
+    <system:String x:Key="SETTING_MSG_VISION_FAIL_EMPTY">视觉连续故障数不能为空。</system:String>
+    <system:String x:Key="SETTING_MSG_GLOVE_CYCLE_EMPTY">手套单位周期必须不能为空。</system:String>
+
+    <!-- ##################### -->
+    <!-- ###### Version ###### -->
+    <!-- ##################### -->
+    <!-- Labels -->
+    <system:String x:Key="VERSION_WINDOW_TITLE">版本</system:String>
+    <system:String x:Key="VERSION_LABEL_SYSTEM">系统</system:String>
+    <system:String x:Key="VERSION_LABEL_VERSION">版本</system:String>
+    <system:String x:Key="VERSION_LABEL_COPYRIGHTED">版权</system:String>
+    <system:String x:Key="VERSION_LABEL_WARNING">警告</system:String>
+
+    <!-- ##################### -->
+    <!-- ###### About/Alert/Warning ###### -->
+    <!-- ##################### -->
+    <system:String x:Key="ALERT_LIST_WINDOW_TITLE">讯号清单</system:String>
+    <system:String x:Key="WARNING_LIST_WINDOW_TITLE">警告清单</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_ALERT_CODE">讯号编号</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_ACTION">行动</system:String>
+    <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_WARNING_CODE">警告编号</system:String>
+    <system:String x:Key="MAIN_WINDOW_MENU_TITLE_ABOUT">关于</system:String>
+
+    <!-- BK 20130218-->
+    <system:String x:Key="SHIFT_LABEL_SHIFT1">轮班 1</system:String>
+    <system:String x:Key="SHIFT_LABEL_SHIFT2">轮班 2</system:String>
+    <system:String x:Key="SHIFT_LABEL_SHIFT3">轮班 3</system:String>
+    <system:String x:Key="SHIFT_TITLE">轮班</system:String>
+    <system:String x:Key="SHIFT_TREE_VIEW_ITEM"> 轮班</system:String>
+    <system:String x:Key="SHIFT_OUTPUT_LOG">选择"轮班"</system:String>
+
+    <!-- Applicator Status -->
+    <system:String x:Key="MAIN_WINDOW_APPLICATOR_READY">预备</system:String>
+    <system:String x:Key="MAIN_WINDOW_APPLICATOR_NOT_READY">不预备</system:String>
+    <system:String x:Key="MAIN_WINDOW_APPLICATOR_ERROR">错误</system:String>
+    <system:String x:Key="MAIN_WINDOW_APPLICATOR_FINISHED">完</system:String>
+    <!-- End of Applicator Status -->
+
+    <system:String x:Key="HELP_ERR_MSG_FILE_NOT_FOUND">图像文件未找到。\n请确保文件被放置在 \Images\PickArm_Help\“</system:String>
+
+
+</ResourceDictionary>

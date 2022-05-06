@@ -1,0 +1,27 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PentagonHMI" GeneratedClassName="FactoryRestore">
+  <Profiles />
+  <Settings>
+    <Setting Name="LogoutTimeSec" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="ServerIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">191.168.0.236</Value>
+    </Setting>
+    <Setting Name="ServerPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1100</Value>
+    </Setting>
+    <Setting Name="LocalInterface" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LocalPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1100</Value>
+    </Setting>
+    <Setting Name="VisionPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F:\CommunicationHMI\</Value>
+    </Setting>
+    <Setting Name="VisionLogPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">F:\CommunicationHMI\Log</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -1,0 +1,340 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucASRS"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.ChildControls"
+             mc:Ignorable="d" >
+
+
+    <!--<Canvas HorizontalAlignment="Left" VerticalAlignment="Center" Name="CanvasMOBOASRS" Width="280" Height="550" Background="White" >
+        <Image  Width="280" Height="550"  Stretch="Fill" Source="/HMI;component/Images/ASRSModel.jpg"/>-->
+    <UserControl.Resources>
+        <Style TargetType="Image">
+            <Setter Property="Width" Value="275"/>
+            <Setter Property="Height" Value="550"/>
+        </Style>
+ 
+        <Style TargetType="Canvas">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="275"/>
+            <Setter Property="Height" Value="550"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="40 0 0 0"/>
+        </Style>
+
+        <Style x:Key="ASRS" TargetType="Label">
+            <Setter Property="Margin" Value="0,0,-82,0"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="OrangeRed"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <!--<Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Label}">
+                        <Border Name="Border" CornerRadius="2" BorderThickness="1"
+                    BorderBrush="Black">
+                            <ContentPresenter Margin="2" 
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center" 
+                                 RecognizesAccessKey="True"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" 
+                          Property="BorderBrush" Value="Black"/>
+                            </Trigger>
+                                    <Trigger Property="IsPressed" Value="true">
+                                        <Setter TargetName="Border" 
+                          Property="BorderBrush" Value="Black"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter-->
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid >
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" Content="ASRS" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,2,2,0"/>
+
+            <Grid Grid.Row="2" Grid.Column="0" Margin="-30 0 0 0" >
+                <Canvas Name="CanvasMOBOASRS">
+
+                    <Image Source="/HMI;component/Images/ASRSModel.jpg"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0"/>
+                        <TextBlock Text="F" FontSize="40"/>
+
+                        <Label Style="{DynamicResource ASRS}" Name="R1_C1" Grid.Row="4" Grid.Column="1"  Margin="0,44,-82,0" >1</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R2_C1" Grid.Row="5" Grid.Column="1"  >2</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R3_C1" Grid.Row="6" Grid.Column="1"  >3</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R4_C1" Grid.Row="7" Grid.Column="1"  >4</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R5_C1" Grid.Row="8" Grid.Column="1"  >5</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R6_C1" Grid.Row="9" Grid.Column="1"  >6</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R7_C1" Grid.Row="10" Grid.Column="1"  >7</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R8_C1" Grid.Row="11" Grid.Column="1"  >8</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R9_C1" Grid.Row="12" Grid.Column="1"  >9</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R10_C1" Grid.Row="13" Grid.Column="1"  >10</Label>
+                    </Grid>
+                </Canvas>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Canvas>
+                    <Image Source="/HMI;component/Images/ASRSModel.jpg"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0" />
+                        <TextBlock Text="E"/>
+
+                        <Label Style="{DynamicResource ASRS}" Name="R1_C2" Grid.Row="2" Grid.Column="1"  Margin="0,44,-82,0" >1</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R2_C2" Grid.Row="3" Grid.Column="1"  >2</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R3_C2" Grid.Row="4" Grid.Column="1"  >3</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R4_C2" Grid.Row="5" Grid.Column="1"  >4</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R5_C2" Grid.Row="6" Grid.Column="1"  >5</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R6_C2" Grid.Row="7" Grid.Column="1"  >6</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R7_C2"  Grid.Row="8" Grid.Column="1"  >7</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R8_C2" Grid.Row="9" Grid.Column="1"  >8</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R9_C2" Grid.Row="10" Grid.Column="1"  >9</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R10_C2" Grid.Row="11" Grid.Column="1"  >10</Label>
+                    </Grid>
+                </Canvas>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="2">
+                <Canvas>
+                    <Image Source="/HMI;component/Images/ASRSModel.jpg"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0"  Margin="0" />
+                        <TextBlock Text="D" />
+
+                        <Label Style="{DynamicResource ASRS}" Name="R1_C3" Grid.Row="2" Grid.Column="1"  Margin="0,44,-82,0" >1</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R2_C3" Grid.Row="3" Grid.Column="1"  >2</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R3_C3" Grid.Row="4" Grid.Column="1"  >3</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R4_C3" Grid.Row="5" Grid.Column="1"  >4</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R5_C3" Grid.Row="6" Grid.Column="1"  >5</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R6_C3" Grid.Row="7" Grid.Column="1"  >6</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R7_C3"  Grid.Row="8" Grid.Column="1"  >7</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R8_C3" Grid.Row="9" Grid.Column="1"  >8</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R9_C3" Grid.Row="10" Grid.Column="1"  >9</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R10_C3" Grid.Row="11" Grid.Column="1"  >10</Label>
+                    </Grid>
+                </Canvas>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="3">
+                <Canvas>
+                    <Image Source="/HMI;component/Images/ASRSModel.jpg"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0" />
+                        <TextBlock Text="C"/>
+
+                        <Label Style="{DynamicResource ASRS}" Name="R1_C4" Grid.Row="2" Grid.Column="1"  Margin="0,44,-82,0" >1</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R2_C4" Grid.Row="3" Grid.Column="1"  >2</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R3_C4" Grid.Row="4" Grid.Column="1"  >3</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R4_C4" Grid.Row="5" Grid.Column="1"  >4</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R5_C4" Grid.Row="6" Grid.Column="1"  >5</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R6_C4" Grid.Row="7" Grid.Column="1"  >6</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R7_C4"  Grid.Row="8" Grid.Column="1"  >7</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R8_C4" Grid.Row="9" Grid.Column="1"  >8</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R9_C4" Grid.Row="10" Grid.Column="1"  >9</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R10_C4" Grid.Row="11" Grid.Column="1"  >10</Label>
+                    </Grid>
+                </Canvas>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="4">
+                <Canvas>
+                    <Image Source="/HMI;component/Images/ASRSModel.jpg" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0" />
+                        <TextBlock Text="B"/>
+
+                        <Label Style="{DynamicResource ASRS}" Name="R1_C5" Grid.Row="2" Grid.Column="1"  Margin="0,44,-82,0" >1</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R2_C5" Grid.Row="3" Grid.Column="1"  >2</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R3_C5" Grid.Row="4" Grid.Column="1"  >3</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R4_C5" Grid.Row="5" Grid.Column="1"  >4</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R5_C5" Grid.Row="6" Grid.Column="1"  >5</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R6_C5" Grid.Row="7" Grid.Column="1"  >6</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R7_C5" Grid.Row="8" Grid.Column="1"  >7</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R8_C5" Grid.Row="9" Grid.Column="1"  >8</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R9_C5" Grid.Row="10" Grid.Column="1"  >9</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R10_C5" Grid.Row="11" Grid.Column="1"  >10</Label>
+                    </Grid>
+                </Canvas>
+            </Grid>
+            <Grid  Grid.Row="2" Grid.Column="5">
+                <Canvas>
+                    <Image Source="/HMI;component/Images/ASRSModel.jpg"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0"/>
+                        <TextBlock Text="A" />
+
+                        <Label Style="{DynamicResource ASRS}" Name="R1_C6" Grid.Row="2" Grid.Column="1"  Margin="0,44,-82,0" >1</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R2_C6" Grid.Row="3" Grid.Column="1"  >2</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R3_C6" Grid.Row="4" Grid.Column="1"  >3</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R4_C6" Grid.Row="5" Grid.Column="1"  >4</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R5_C6" Grid.Row="6" Grid.Column="1"  >5</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R6_C6" Grid.Row="7" Grid.Column="1"  >6</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R7_C6"  Grid.Row="8" Grid.Column="1"  >7</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R8_C6" Grid.Row="9" Grid.Column="1"  >8</Label>
+                        <Label Style="{DynamicResource ASRS}" Name="R9_C6" Grid.Row="10" Grid.Column="1"  >9</Label>
+                        <Label Style="{DynamicResource ASRS}"  Name="R10_C6" Grid.Row="11" Grid.Column="1"  >10</Label>
+                    </Grid>
+                </Canvas>
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6" VerticalAlignment="Top" HorizontalAlignment="Right" Height="80" Width="500">
+                <StackPanel Margin="0 0 30 0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" FontSize="18" Content="Current ASRS Stock : "/>
+                    <TextBox Name="ASRSQtyTB" VerticalAlignment="Top" Width="60" Height="28" FontSize="26" Padding="0 -5 0 0" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" IsReadOnly="True">NA</TextBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

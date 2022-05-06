@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="PentagonHMI.Views.ComponentLifeCycle.ucComponentLifeCycle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:PentagonHMI.UserControls" 
+             mc:Ignorable="d">
+    <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Component Life Cycle">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Pogo Pin" FontSize="20">
+                <StackPanel>
+                    <UniformGrid Rows="1" Margin="5">
+                        <StackPanel Margin="0 0 5 0">
+                            <Label Content="Current Count"/>
+                            <Label Content="Life Cycle Count Limit"/>
+                            <Button Name="Edit1" Content="Adjust Limit" Padding="5 3 5 4" FontSize="14" HorizontalAlignment="Right" Margin="0 5 0 0" Click="Edit1_Click"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBox Name="PogoCurrentCount" IsReadOnly="True" Margin="0 4"/>
+                            <TextBox Name="PogoMaxCount" IsReadOnly="True" Margin="0 4"/>
+                            <TextBox Name="NewPogoMaxCount"  Margin="0 4"/>
+                        </StackPanel>
+                    </UniformGrid>
+                    <Button Name="btn_Reset" Content="Reset" Click="Btn_Reset_Click" Margin="5" Padding="5"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Visibility="Collapsed" Grid.Column="1" Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Pogo Block" FontSize="20">
+                <StackPanel>
+                    <UniformGrid Rows="1" Margin="5">
+                        <StackPanel Margin="0 0 5 0">
+                            <Label Content="Current Count"/>
+                            <Label Content="Life Cycle Count Limit"/>
+                            <Button Name="Edit2" Content="Adjust Limit" Padding="5 3 5 4" FontSize="14" HorizontalAlignment="Right" Margin="0 5 0 0" Click="Edit2_Click"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBox Name="PogoCurrentCount2"  IsReadOnly="True" Margin="0 4"/>
+                            <TextBox Name="PogoMaxCount2"  IsReadOnly="True" Margin="0 4"/>
+                            <TextBox Name="NewPogoMaxCount2" Margin="0 4"/>
+                        </StackPanel>
+                    </UniformGrid>
+                    <Button Click="Btn_Reset2_Click" Content="Reset" Margin="5" Padding="5"/>
+                </StackPanel>
+            </GroupBox>
+
+            <Border Name="loginScreen" Height="200" Width="450" VerticalAlignment="Center" Grid.RowSpan="3" HorizontalAlignment="Center" CornerRadius=" 12,12,12,12" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}"  
+                    Grid.Row="0" Grid.ColumnSpan="3" Background="White" 
+                    Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*" />
+                        <ColumnDefinition Width="417*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Label x:Name="lblTitle" Content="Security Verification" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Padding="30,2,2,0" Grid.ColumnSpan="2" />
+                    <Grid Grid.Row="1" Margin="0,5,0,0" Grid.ColumnSpan="2">
+                        <StackPanel VerticalAlignment="Top">
+                            <TextBlock Height="23" Name="txtBlockInstructions" Text="{DynamicResource LOGIN_TEXTBLOCK_INSTRUCTIONS}" Margin="5" />
+                            <uc:UCLabelTextboxErrorMessage x:Name="ucUsername" ucLabelErrorContent="" ucLabelTitleContent="{DynamicResource LOGIN_LABEL_USERNAME}"  />
+                            <uc:UCLabelTextboxErrorMessage x:Name="ucPassword" ucLabelErrorContent="" ucLabelTitleContent="{DynamicResource LOGIN_LABEL_PASSWORD}" isPassword="True"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                        <Grid Margin="0,5,0,0">
+                            <Button Content="Continue to Print" Margin="0,0,88,0" Name="btnSignIn" Width="150" Click="btnLogIn_Click" HorizontalAlignment="Right" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}" IsDefault="True" Height="23" VerticalAlignment="Top" />
+                            <Button HorizontalAlignment="Right" Margin="0,0,6,0" Name="btnCancel" Width="76" Height="23" VerticalAlignment="Top" Click="btnCancel_Click" Content="{DynamicResource LOGIN_BUTTON_CANCEL}" Background="{DynamicResource NormalBackgroundBrush}" Foreground="{DynamicResource ResourceKey=NormalForegroundBrush}" Style="{DynamicResource styGlassButton}"/>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Border>
+
+        </Grid>
+    </GroupBox>
+
+
+</UserControl>

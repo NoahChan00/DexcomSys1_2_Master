@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "8f5da805-2672-4b79-b437-4d7c3996d3db": {
+      "ProjectGuid": "8f5da805-2672-4b79-b437-4d7c3996d3db",
+      "DisplayName": "PentagonHMI",
+      "ColorIndex": 0
+    },
+    "bf2e43e0-5a7b-4295-ad34-612f3ed8db6a": {
+      "ProjectGuid": "bf2e43e0-5a7b-4295-ad34-612f3ed8db6a",
+      "DisplayName": "SimpleDatabase",
+      "ColorIndex": 1
+    },
+    "10b4f65e-8879-41e0-89a6-f14e8087f424": {
+      "ProjectGuid": "10b4f65e-8879-41e0-89a6-f14e8087f424",
+      "DisplayName": "Utilities",
+      "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "47974cd8-f796-4db9-b4a0-4d6a8bd203a1": {
+      "ProjectGuid": "47974cd8-f796-4db9-b4a0-4d6a8bd203a1",
+      "DisplayName": "SimpleOPC",
+      "ColorIndex": 3
+    },
+    "c2e5d2ae-ac30-4ac7-97dc-70b71784ed05": {
+      "ProjectGuid": "c2e5d2ae-ac30-4ac7-97dc-70b71784ed05",
+      "DisplayName": "VanillaDB",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

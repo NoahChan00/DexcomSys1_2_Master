@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucOrderChecking"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.ChildControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Column="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+        <Label Grid.Row="0" Content="Order Checking" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,2,2,0"/>
+            <Grid Grid.Row="1">
+            <TextBlock Name="ScanBarcodeBlock" VerticalAlignment="Center" FontSize="20" Margin="0" Padding="10,5,2,0" ><Bold> Please Scan Barcode : </Bold>
+                <TextBox Name="txtBarcode" VerticalAlignment="Center" Width="200" Background="LightGray" FontSize="20" KeyUp="txtBarcode_KeyUp" />
+                <Button Name="btnSubmit" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{DynamicResource styGlassButton}" Background="LightGray" Foreground="{DynamicResource NormalForegroundBrush}" Width="135" Height="30" Margin="5" Padding="0,0,0,10" Content="Submit" FontSize="20" Click="btnSubmit_Click" />
+                <TextBox Name="txtBarcodeScanned" VerticalAlignment="Center" Width="200" Background="LightGray" FontSize="20" IsReadOnly="True" />
+            </TextBlock>
+            
+        </Grid>
+        <Border Grid.Row="2" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,0,0"/>
+        <ScrollViewer Grid.Row="3">
+        <Grid Grid.Row="3">
+                <TabControl>
+                    <TabItem Header="Order">
+                        <DataGrid Name="gridOrder" CanUserAddRows="false" ItemsSource="{Binding}"/>
+                    </TabItem>
+                    <TabItem Header="Part Installed">
+                        <DataGrid Name="gridInstall" CanUserAddRows="false" ItemsSource="{Binding}"/>
+                    </TabItem>
+                    <TabItem Header="Part Reject">
+                        <DataGrid Name="gridReject" CanUserAddRows="False" ItemsSource="{Binding}"/>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
+ 

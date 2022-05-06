@@ -1,0 +1,46 @@
+﻿<Window x:Class="PentagonHMI.SignInView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PentagonHMI"
+        xmlns:userControls="clr-namespace:PentagonHMI.UserControls"
+        x:Name="SignInWindow" Height="300" ResizeMode="NoResize" ShowInTaskbar="False"
+        TextElement.FontSize="16" TextElement.FontWeight="Regular" TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto" Topmost="True" Width="500" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" Loaded="signInWindow_Loaded" Closing="signInWindow_Closing">
+
+    <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Sign In">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                       Style="{StaticResource ValueTextBlockStyle}"
+                       Text="Please enter your credentials to proceed."/>
+            
+            <userControls:UCLabelTextboxErrorMessage Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                                     x:Name="Username" ucLabelErrorContent=""
+                                                     ucLabelTitleContent="Username"/>
+
+            <userControls:UCLabelTextboxErrorMessage Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                                     x:Name="Password" isPassword="True" ucLabelErrorContent=""
+                                                     ucLabelTitleContent="Password" VerticalAlignment="Top"/>
+            
+            <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource ButtonStyle}" x:Name="SignInButton"
+                    Content="Sign In" HorizontalAlignment="Right" Click="signInButton_Click"/>
+            
+            <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonStyle}"
+                    x:Name="CancelButton" Content="Cancel" Click="cancelButton_Click"/>
+        </Grid>
+    </GroupBox>
+
+</Window>

@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="PentagonHMI.UserControls.UCLabelTitleLabelDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Name="ucLabelTitleLabelDisplay"
+             d:DesignHeight="30" d:DesignWidth="300">
+    <Grid>
+        <Label Name="ucLabelTitle" HorizontalAlignment="Left" Width="98" Content="{Binding ElementName=ucLabelTitleLabelDisplay, Path=ucLabelTitleContent}" FontWeight="Bold"/>
+        <Label Content="Label" Name="ucLabelDisplay" Margin="98,0,0,0"  />
+    </Grid>
+</UserControl>

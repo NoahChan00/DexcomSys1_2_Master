@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="PentagonHMI.ChildControls.ucEngineering"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PentagonHMI.ChildControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="10 10 10 20"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="TabItem">
+            <!--<Setter Property="Visibility" Value="Collapsed"/>-->
+            <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+        </Style>
+        <Style TargetType="Button">
+            <EventSetter Event="Click" Handler="General_Click"/>
+        </Style>
+        <Style TargetType="ToggleButton">
+            <EventSetter Event="Click" Handler="EM_MouseClick"/>
+            <Setter Property="DockPanel.Dock" Value="Top"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Margin" Value="10 2 10 2"/>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Label Margin="0" Background="Red" Content="Engineering Mode (OFF)" FontSize="18" FontWeight="Bold" Height="40" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="300"/>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Label Margin="0" Background="LimeGreen" Content="Engineering Mode (ON)" FontSize="18" FontWeight="Bold" Height="40" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Width="300"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <!--<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">-->
+    <Border CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="15" />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Style="{DynamicResource styTopPenalBlue}" Content="Engineering" FontSize="18" Height="30" Padding="30,2,2,0" />
+            <TabControl Name="EngineeringTabControl" FontSize="20" Margin="5,12,5,5" BorderBrush="Gainsboro"  VirtualizingPanel.IsVirtualizing="true" Grid.Row="1">
+                <TabItem Header="Taping Station">
+                    <StackPanel>
+                        <Border HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="200" FontSize="18" VerticalAlignment="Top" Content="Taping Station"/>
+                                <StackPanel>
+                                    <Button Name="btn_Taping_Reset" Width="150" Margin="5" Height="50" Content="Reset" Tag="T_Reset"/>
+                                    <Button Name="btn_Taping_Home" Width="150" Margin="5" Height="50" Content="Home" Tag="T_Home"/>
+                                    <Button Name="btn_Taping_Cycle" Width="150" Margin="5" Height="50" Content="Cycle" Tag="T_Cycle"/>
+                                    <Button Name="btn_Taping_Cut" Width="150" Margin="5" Height="50" Content="Cut" Tag="T_Cut"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Programming Station">
+                    <StackPanel>
+                        <Border HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="200" FontSize="18" VerticalAlignment="Top" Content="Programming Station"/>
+                                <StackPanel>
+                                    <Button Name="btn_Program_Reset" Width="150" Margin="5" Height="50" Content="Reset" Tag="P_Reset"/>
+                                    <Button Name="btn_Program_Home" Width="150" Margin="5" Height="50" Content="Home" Tag="P_Home"/>
+                                    <Button Name="btn_Program_Cycle" Width="150" Margin="5" Height="50" Content="Cycle" Tag="P_Cycle"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Index Station">
+                    <StackPanel>
+                        <Border HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="200" FontSize="18" VerticalAlignment="Top" Content="Index Station"/>
+                                <StackPanel>
+                                    <Button Name="btn_Index_Reset" Width="250" Margin="5" Height="50" Content="Reset" Tag="I_Reset"/>
+                                    <Button Name="btn_Index_Home" Width="250" Margin="5" Height="50" Content="Home" Tag="I_Home"/>
+                                    <Button Name="btn_Index_Cycle" Width="250" Margin="5" Height="50" Content="Cycle" Tag="I_Cycle"/>
+                                    <Button Name="btn_Index_Left2Right" Width="250" Margin="5" Height="50" Content="Indexer Left to Right" Tag="I_Left2Right"/>
+                                    <Button Name="btn_Index_2LeftGripper" Width="250" Margin="5" Height="50" Content="Indexer to Left Gripper" Tag="I_LeftGripper"/>
+                                    <Button Name="btn_Index_2RightGripper" Width="250" Margin="5" Height="50" Content="Indexer to Right Gripper" Tag="I_RightGripper"/>
+                                    <Button Name="btn_Index_Correction" Width="250" Margin="5" Height="50" Content="Indexer Index Correction" Tag="I_Correction"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Vision Station">
+                    <StackPanel>
+                        <Border HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Width="200" FontSize="18" VerticalAlignment="Top" Content="Vision Station"/>
+                                <StackPanel>
+                                    <Button Name="btn_Vision_Reset" Width="150" Margin="5" Height="50" Content="Reset" Tag="V_Reset"/>
+                                    <Button Name="btn_Vision_Home" Width="150" Margin="5" Height="50" Content="Home" Tag="V_Home"/>
+                                    <Button Name="btn_Vision_Cycle" Width="150" Margin="5" Height="50" Content="Cycle" Tag="V_Cycle"/>
+                                    <Button Name="btn_Vision_FirstChipDetect" Width="150" Margin="5" Height="50" Content="FirstChipDetect" Tag="V_FirstChipDetect"/>
+                                    <Button Name="btn_Vision_Calibrate" Width="150" Margin="5" Height="50" Content="Calibrate" Tag="V_Calibrate"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </TabItem>
+                <!--<TabItem Header="Others">
+                    <Button Content="Printer Manual Trigger" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Padding="15"/>
+                </TabItem>-->
+            </TabControl>
+            <ToggleButton Name="tgb_EN" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        </Grid>
+    </Border>
+    <!--</ScrollViewer>-->
+</UserControl>

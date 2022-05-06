@@ -1,0 +1,293 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using Logix;
+using System.IO;
+using GalaSoft.MvvmLight;
+using System.Windows.Media;
+
+namespace PentagonHMI.Arcadia_Modules
+{
+    public partial class ucLifterMain : UserControl
+    {
+        LogicClasses.Main _Main;
+        Tag Tag_MaterialName;
+        Tag Tag_RackIndexNo;
+        Tag Tag_RackRFIDTag;
+        Tag Tag_MaxIndex;
+        string Tag_WriteRFID;
+        string Tag_SlotLoaded;
+        string Tag_SlotDisabled;
+        string Tag_SkipRack;
+        string Tag_UpdateIndex_bool;
+        string Path = string.Empty;
+        string str_EditRackID = "Edit RFID Tag";
+        string str_UpdateRackID = "Update RFID Tag";
+        string str_Edit = "Edit";
+        string str_Update = "Update";
+        int LastMaxSlot = 0;
+
+
+        int LastCurrent = -1;
+        List<RackSlotModel> lst_RSM = new List<RackSlotModel>();
+        Dictionary<string, BitmapImage> Dic_MaterialName_Image = new Dictionary<string, BitmapImage>();
+
+        public ucLifterMain()
+        {
+            InitializeComponent();
+        }
+
+        public void Setup(ref LogicClasses.Main main, int Zone, bool Front)
+        {
+            try
+            {
+                _Main = main;
+                _Main.Home_OnUpdate += new LogicClasses.Main.onHomeUpdateHandler(Update);
+
+                //PLC Address
+                string IsFront = Front ? "Front" : "Back";
+                Info.OPC.TagGroups.Lifter.AddTag(Tag_MaterialName = new Tag { Name = $"{IsFront}End_Lifter.str_MaterialNameZ{Zone}", DataType = Logix.Tag.ATOMIC.STRING });
+                Info.OPC.TagGroups.Lifter.AddTag(Tag_RackIndexNo = new Tag { Name = $"{IsFront}End_Lifter.int_RackIndexNoZ{Zone}", DataType = Logix.Tag.ATOMIC.INT });
+                Info.OPC.TagGroups.Lifter.AddTag(Tag_RackRFIDTag = new Tag { Name = $"{IsFront}End_Lifter.str_RackRFIDTagZ{Zone}", DataType = Logix.Tag.ATOMIC.STRING });
+                Info.OPC.TagGroups.Lifter.AddTag(Tag_MaxIndex = new Tag { Name = $"{(IsFront == "Front" ? "F" : "B")}RZ2{(Zone == 1 ? "A" : "B")}_Rack_MaxIndex", DataType = Logix.Tag.ATOMIC.INT });
+                Tag_WriteRFID = $"{IsFront}End_Lifter.bool_WriteRFIDZ{Zone}";
+                Tag_SlotLoaded = $"{IsFront}End_Lifter.bool_SlotLoadedZ{Zone}";
+                Tag_SlotDisabled = $"{IsFront}End_Lifter.bool_SlotDisabledZ{Zone}";
+                Tag_SkipRack = $"{IsFront}End_Lifter.bool_SkipRackZ{Zone}";
+                Tag_UpdateIndex_bool = $"{IsFront}End_Lifter.bool_UpdateIndexZ{Zone}";
+                tbx_CurrentRackID.Text = _Main.OPC.Read<string>(Tag_RackRFIDTag.Name);
+                btn_UpdateRFIDtag.Content = str_EditRackID;
+                btn_Loaded.Background = RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Loaded];
+                btn_Disabled.Background = RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Disabled];
+                //Image Path
+                Func<string, object> GetItem = (x) => _Main.dt_Config.Select().Where(y => y["Item"].ToString().ToUpper() == x.ToUpper()).First()["Info"];
+                Path = @GetItem("LifterImagePath").ToString();
+
+                cbx_CurrentSlotIndex.Visibility = Visibility.Collapsed;
+
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
+            };
+        }
+
+        private void Update()
+        {
+            try
+            {
+                for (int n = 0; n < Info.OPC.TagGroups.Lifter.Count; n++)
+                {
+                    Tag Temp = Info.OPC.TagGroups.Lifter.Tags[n] as Tag;
+                    _Main.OPC.ReadTag(ref Temp, Temp.DataType);
+                }
+                //_Main.MyPLC.GroupRead(Info.OPC.TagGroups.Lifter);
+                Dispatcher.Invoke(() => UpdateUI());
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
+            };
+        }
+
+        string CurrentRack;
+        private void UpdateUI()
+        {
+            bool IsOperator = _Main.UserAccessLevel.ToUpper() == "OPERATOR";
+
+            if (IsOperator)
+            {
+                btn_UpdateRFIDtag.IsEnabled = false;
+            }
+            else
+            {
+                btn_UpdateRFIDtag.IsEnabled = true;
+            }
+
+            foreach (Tag _tag in Info.OPC.TagGroups.Lifter.Tags)
+            {
+                if (_tag.Name == Tag_MaterialName.Name)
+                {
+                    if (CurrentRack != _tag.ToTagString())
+                    {
+                        CurrentRack = _tag.ToTagString();
+                        BitmapImage img;
+                        Img_CurrentRackInLifter.Source = null;
+                        if (Dic_MaterialName_Image.TryGetValue(CurrentRack.ToUpper(), out img))
+                            Img_CurrentRackInLifter.Source = img;
+                        else
+                        {
+                            string Imgpath = Path + CurrentRack;
+                            if (File.Exists(Imgpath + ".png"))
+                            {
+                                Dic_MaterialName_Image.Add(CurrentRack.ToUpper(), new BitmapImage(new Uri(Imgpath + ".png")));
+                                Img_CurrentRackInLifter.Source = Dic_MaterialName_Image[CurrentRack.ToUpper()];
+                            }
+                        }
+                        tbx_CurrentRackInLifter.Text = _tag.ToTagString();
+                    }
+                }
+                else if (_tag.Name == Tag_MaxIndex.Name)
+                {
+                    int NewMaxSlot = Convert.ToInt32(_tag.Value?.ToString() ?? "0");
+                    if (NewMaxSlot != LastMaxSlot)
+                    {
+                        lst_RSM = new List<RackSlotModel>();
+                        LastMaxSlot = NewMaxSlot;
+                        for (int n = 1; n <= NewMaxSlot; n++)
+                            lst_RSM.Add(new RackSlotModel { RackIndex = n.ToString(), Status = RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Clean] });
+                        itmctrl_RackLayout.ItemsSource = lst_RSM;
+                        cbx_CurrentSlotIndex.ItemsSource = lst_RSM.Select(x => x.RackIndex);
+                    }
+                }
+                else if (_tag.Name == Tag_RackIndexNo.Name)
+                {
+                    tbx_CurrentRackIndexNumber.Text = _tag.ToTagString();
+                    int n;
+                    if (int.TryParse(_tag.ToTagString(), out n) && lst_RSM.Count >= n)
+                    {
+                        --n;
+                        lst_RSM[n].Status = lst_RSM[n].Status == lst_RSM[n].bk_clr ? RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Current] : lst_RSM[n].bk_clr;
+                        if (LastCurrent != n)
+                        {
+                            LastCurrent = n;
+                            if (n == 0) lst_RSM.ForEach(x => x.Status = x.bk_clr = RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Clean]);
+                            else { lst_RSM[n - 1].Status = lst_RSM[n - 1].bk_clr; }
+                        }
+                    }
+                }
+                else if (_tag.Name == Tag_RackRFIDTag.Name && IsOperator)
+                    tbx_CurrentRackID.Text = _tag.ToTagString();
+            }
+        }
+
+        private void CurrentSlotStatus_Click(object sender, RoutedEventArgs e)
+        {
+            Label btn = sender as Label;//            Button btn = sender as Button;
+            string Key = btn.Tag.ToString().ToUpper();
+            RackSlotModel.StsClr Stat = RackSlotModel.StsClr.Clean;
+
+            switch (Key)
+            {
+                case "LOAD":
+                    Stat = RackSlotModel.StsClr.Loaded;
+                    _Main.OPC.Write(Tag_SlotLoaded, true);
+                    break;
+                case "DISABLED":
+                    Stat = RackSlotModel.StsClr.Disabled;
+                    _Main.OPC.Write(Tag_SlotDisabled, true);
+                    break;
+                case "SKIP":
+                    _Main.OPC.Write(Tag_SkipRack, true);
+                    return;
+            }
+
+            lst_RSM[LastCurrent].Status = RackSlotModel.Dic_Sts_Clr[Stat];
+            lst_RSM[LastCurrent].bk_clr = lst_RSM[LastCurrent].Status;
+        }
+
+        private void UpdateRFIDtag_Click(object sender, RoutedEventArgs e)
+        {
+            if (btn_UpdateRFIDtag.Content.ToString() == str_EditRackID)
+            {
+                tbx_CurrentRackID.IsEnabled = true;
+                btn_UpdateRFIDtag.Content = str_UpdateRackID;
+            }
+            else if (btn_UpdateRFIDtag.Content.ToString() == str_UpdateRackID)
+            {
+                tbx_CurrentRackID.IsEnabled = false;
+                btn_UpdateRFIDtag.Content = str_EditRackID;
+
+                _Main.OPC.Read<string>(Tag_RackRFIDTag.Name);
+                if (_Main.OPC.Write(Tag_RackRFIDTag.Name, tbx_CurrentRackID.Text, typeof(string)))
+                    if (!_Main.OPC.Write(Tag_WriteRFID, true))
+                        tbx_CurrentRackID.Text = _Main.OPC.Read<string>(Tag_RackRFIDTag.Name);
+            }
+        }
+
+        private void Rack_Index_Update_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn.Content.ToString() == str_Edit)
+            {
+                btn.Content = str_Update;
+                cbx_CurrentSlotIndex.Visibility = Visibility.Visible;
+            }
+            else if (btn.Content.ToString() == str_Update)
+            {
+                btn.Content = str_Edit;
+                cbx_CurrentSlotIndex.Visibility = Visibility.Collapsed;
+                int n;
+                if (int.TryParse(cbx_CurrentSlotIndex.SelectedValue?.ToString(), out n))
+                {
+                    _Main.OPC.Write(Tag_RackIndexNo.Name, n, typeof(Int16));
+                    _Main.OPC.Write(Tag_UpdateIndex_bool, true);
+                }
+            }
+        }
+    }
+
+    public static class Extension
+    {
+        public static string ToTagString(this Tag _tag)
+        {
+            return _tag?.Value?.ToString() ?? string.Empty;
+        }
+    }
+
+    public class RackSlotModel : ViewModelBase
+    {
+        //Status
+        private string rackIndex = string.Empty;
+        public string RackIndex
+        {
+            get { return rackIndex; }
+            set
+            {
+                if (rackIndex != value)
+                {
+                    rackIndex = value;
+                    RaisePropertyChanged(nameof(RackIndex));
+                }
+            }
+        }
+
+        public enum StsClr
+        {
+            Loaded,
+            Disabled,
+            Current,
+            Clean
+        }
+
+        public static Dictionary<StsClr, Brush> Dic_Sts_Clr = new Dictionary<StsClr, Brush>
+        {
+            [StsClr.Clean] = Brushes.White,
+            [StsClr.Disabled] = Brushes.Gray,
+            [StsClr.Current] = Brushes.Yellow,
+            [StsClr.Loaded] = Brushes.SpringGreen,
+
+        };
+
+        private Brush status = Brushes.White;
+        public Brush Status
+        {
+            get { return status; }
+            set
+            {
+                if (status != value)
+                {
+                    status = value;
+                    RaisePropertyChanged(nameof(Status));
+                }
+            }
+        }
+
+        public Brush bk_clr { get; set; } = Brushes.White;
+    }
+
+}

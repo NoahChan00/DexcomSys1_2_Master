@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="PentagonHMI.YieldView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PentagonHMI"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:userControls="clr-namespace:PentagonHMI.UserControls">
+
+    <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Quality">
+        <Grid>
+        <userControls:UcData x:Name="YieldUserControl"/>
+        <lvc:PieChart Visibility="Collapsed" Name="PieYield" Margin="5" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieInfo}"/>
+        </Grid>
+    </GroupBox>
+
+</UserControl>
