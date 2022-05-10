@@ -73,7 +73,7 @@ namespace PentagonHMI.LogicClasses
             {
                 TgrpIn = new TagGroup();
                 TgrpOut = new TagGroup();
-                string Select = "SELECT LEFT([TAGNAME], LEN([TAGNAME]) - 2) AS 'DATA' FROM [GDB].[DBO].[IO] " +
+                string Select = "SELECT LEFT([TAGNAME], LEN([TAGNAME]) - 2) AS 'DATA' FROM [gdb_DexcomSystem1].[DBO].[IO] " +
                       "WHERE [STATIONID] = 1 AND [IO] = '{0}' AND [TAGINDEX]%8 = 0 GROUP BY LEFT([TAGNAME], LEN([TAGNAME]) -2)," +
                       "[TAGINDEX] ORDER BY CAST([TAGINDEX] AS INT)";
                 DataTable DTI = _Main.SQLer.Exec_DTSelect(string.Format(Select, 'I'));

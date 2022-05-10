@@ -157,7 +157,7 @@ namespace PentagonHMI
                     _Main.HasTorqueDriver = true;
                     TorqueDriver = new Tcpip_ArcadiaTorqueDriver(ref _Main);
 
-                    DataTable dtDriver = _Main.SQLer.Exec_DTSelect("SELECT TagName FROM [gdb].[dbo].[IO] WHERE DisplayName LIKE '%Driver Start'");
+                    DataTable dtDriver = _Main.SQLer.Exec_DTSelect("SELECT TagName FROM [gdb_DexcomSystem1].[dbo].[IO] WHERE DisplayName LIKE '%Driver Start'");
                     if (dtDriver.Rows.Count > 0)
                         _Main.TorqueDriverStartTag = dtDriver.Rows[0][0].ToString();
 

@@ -192,7 +192,7 @@ namespace PentagonHMI.LogicClasses
                 //if (GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.ARCADIA_Main)
                 if (GlobalFunctions.ProjectType == ProjectType.ARCADIA || GlobalFunctions.ProjectType == ProjectType.TLA)
                 {
-                    MainSQLer = new SQLCarrier(GlobalFunctions.ServerName, "gdb", false);
+                    MainSQLer = new SQLCarrier(GlobalFunctions.ServerName, "gdb_DexcomSystem1", false);
                     //MainSQLer = new SQLCarrier("DESKTOP-MAIN", "gdb", true, "123321", "sa");
                 }
 

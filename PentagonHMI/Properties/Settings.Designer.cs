@@ -12,7 +12,7 @@ namespace PentagonHMI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -98,8 +98,8 @@ namespace PentagonHMI.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False;Data Source = UN-FT-CL1-P1729\\SQLEXPRESS02;Integrat" +
-            "ed Security = true; Initial Catalog = gdb;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False;Data Source =UM-FS-CV-SQLPSS;Integrated Security = " +
+            "true; Initial Catalog = gdb_DexcomSystem1;")]
         public string DatabaseConnectionString {
             get {
                 return ((string)(this["DatabaseConnectionString"]));
@@ -120,7 +120,7 @@ namespace PentagonHMI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("UN-FT-CL1-P1729\\SQLEXPRESS02")]
+        [global::System.Configuration.DefaultSettingValueAttribute("191.168.0.171")]
         public string ServerName {
             get {
                 return ((string)(this["ServerName"]));
