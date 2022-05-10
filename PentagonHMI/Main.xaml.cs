@@ -893,10 +893,10 @@ namespace PentagonHMI
                         if (!file.Contains("_BK_"))
                         {
                             FileInfo info = new FileInfo(file);
-                            if ((info.Length / 1024 / 1024) > 95)
+                            if ((info.Length / 1024 / 1024) > 90)
                             {
                                 string ext = Path.GetExtension(file);
-                                File.Move(file, Path.ChangeExtension(file, null) + $"_BK_{DateTime.Now.ToString("yyyy-MMM-dd_HH.mm.ss.fff")}{ext}");
+                                File.Move(file, Path.ChangeExtension(file, null) + $"_BK_{DateTime.Now.ToString("yyyy-MMM-dd_HHmm.ss.fff")}{ext}");
                             }
                         }
 
@@ -928,7 +928,7 @@ namespace PentagonHMI
                     var totalspace = Ddrive.TotalSize;
                     var freespace = Ddrive.AvailableFreeSpace;
 
-                    if ((freespace / totalspace * 100) < 20)
+                    if ((Convert.ToDouble(freespace) / totalspace * 100) < 20)
                     {
                         filePaths = Directory.GetFiles(FileLogger.DefaultLocation);
                         if (filePaths.Where(x => x.Contains(LogsPrefix)).Count() > 3)

@@ -19,11 +19,12 @@ namespace SimpleDatabase
         public SQLCarrier(string ServerName, string InitialCatalog = "HMI", bool PersistSecurityInfo = false,
             string Password = "NA", string UserID = "NA")
         {
-            Str_ConnectionString =
-                $"Persist Security Info = {(PersistSecurityInfo ? $"True;User ID = {UserID};Password = {Password};" : "False;")}" +
-                $"Data Source = {ServerName};" +
-                $"Integrated Security = true; " +
-                $"Initial Catalog = {InitialCatalog};";
+            //Str_ConnectionString =
+            //    $"Persist Security Info = {(PersistSecurityInfo ? $"True;User ID = {UserID};Password = {Password};" : "False;")}" +
+            //    $"Data Source = {ServerName};" +
+            //    $"Integrated Security = true; " +
+            //    $"Initial Catalog = {InitialCatalog};";
+            Str_ConnectionString = "Persist Security Info = False;Data Source = 191.168.0.171;Integrated Security = False; Initial Catalog = gdb_DexcomSystem1;User ID=sa;Password=Pss123321!;";
         }
 
         public bool isConnected()
