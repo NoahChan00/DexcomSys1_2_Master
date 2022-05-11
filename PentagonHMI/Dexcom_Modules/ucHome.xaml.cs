@@ -152,10 +152,10 @@ namespace PentagonHMI.ChildControls
                     lbl_lot_OprID.Content = OPCore.Read<string>(Tag_OprID_str20);
                     lbl_lot_DUTID.Content = OPCore.Read<string>(Tag_DUTID_str20);
                     lbl_lot_BtyType.Content = OPCore.Read<string>(Tag_BatteryType_dint);
-                    lbl_lot_Firmware.Content = OPCore.Read<string>(Tag_Firmware_str20);
-                    lbl_lot_Days2Exp.Content = OPCore.Read<string>(Tag_DaysExpire_int);
-                    lbl_lot_MDate.Content = OPCore.Read<string>(Tag_ManufactureDate_str20);
-                    lbl_lot_Exp.Content = OPCore.Read<string>(Tag_Expiration_str20);
+                    //lbl_lot_Firmware.Content = OPCore.Read<string>(Tag_Firmware_str20);
+                    //lbl_lot_Days2Exp.Content = OPCore.Read<string>(Tag_DaysExpire_int);
+                    //lbl_lot_MDate.Content = OPCore.Read<string>(Tag_ManufactureDate_str20);
+                    //lbl_lot_Exp.Content = OPCore.Read<string>(Tag_Expiration_str20);
 
                     //Quality
                     double QualityPercent = OPCore.Read<int>(Tag_Quality) * 100;

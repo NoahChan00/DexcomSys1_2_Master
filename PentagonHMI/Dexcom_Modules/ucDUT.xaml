@@ -78,6 +78,8 @@
                                                         <TextBlock FontSize="15" Text="{Binding TotalPass}" HorizontalAlignment="Center"/>
                                                         <Separator/>
                                                         <TextBlock FontSize="15" Text="{Binding TotalFail}" HorizontalAlignment="Center"/>
+                                                        <Separator/>
+                                                        <TextBlock FontSize="15" Text="{Binding Yield}" HorizontalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>

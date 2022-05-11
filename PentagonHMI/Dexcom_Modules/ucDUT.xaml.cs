@@ -62,6 +62,7 @@ namespace PentagonHMI.ChildControls
                     Length = Num,
                     TagTotalPass = dr["TotalPass"].ToString(),
                     TagTotalFail = dr["TotalFail"].ToString(),
+                    TagYield = (dr ["TotalPass"] ).ToString(),
                     //TagStatus = dr["Status"].ToString()
                 };
 
@@ -82,13 +83,15 @@ namespace PentagonHMI.ChildControls
                     {
                         var TotalPasses = OPCore.Read<string[]>(DUT.TagTotalPass, typeof(string), DUT.Length);
                         var TotalFails = OPCore.Read<string[]>(DUT.TagTotalFail, typeof(string), DUT.Length);
-                        var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
+                        var Yields = OPCore.Read<string[]>(DUT.TagYield, typeof(string), DUT.Length);
+                        //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
 
                         for (int i = 0; i < DUT.Sockets.Count; i++)
                         {
                             DUT.Sockets[i].TotalPass = TotalPasses[i];
                             DUT.Sockets[i].TotalFail = TotalFails[i];
-                            DUT.Sockets[i].Background = Dic_ResultColor[Statuses[i]];
+                            
+                            //DUT.Sockets[i].Background = Dic_ResultColor[Statuses[i]];
                         }
                     }
                 }
@@ -126,9 +129,11 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-        public string TagStatus { get; set; }
+        //public string TagStatus { get; set; }
         public string TagTotalPass { get; set; }
         public string TagTotalFail { get; set; }
+
+        public string TagYield { get; set; }
         public int Length { get; set; }
 
 
@@ -173,6 +178,7 @@ namespace PentagonHMI.ChildControls
                 {
                     totalPass = value;
                     RaisePropertyChanged(nameof(TotalPass));
+                    RaisePropertyChanged(nameof(Yield));
                 }
             }
         }
@@ -187,8 +193,25 @@ namespace PentagonHMI.ChildControls
                 {
                     totalFail = value;
                     RaisePropertyChanged(nameof(TotalFail));
+                    RaisePropertyChanged(nameof(Yield));
                 }
             }
+        }
+
+        public string Yield
+        {
+            get 
+            {
+                var p = Convert.ToInt32(TotalPass);
+                var f = Convert.ToInt32(TotalFail);
+
+                var result = p + f;
+
+                return result.ToString();
+            }
+
+
+
         }
     }
 
