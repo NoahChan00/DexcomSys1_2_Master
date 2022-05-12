@@ -886,7 +886,7 @@ namespace PentagonHMI
                 if (!File.Exists(ZipPath) && Directory.Exists(LastMonthLog))
                     ZipFile.CreateFromDirectory(LastMonthLog, ZipPath);
 
-                //FileSize > 100mb split log file
+                //FileSize > 90mb split log file
                 string[] folderPaths = Directory.GetDirectories(FileLogger.DefaultLocation_Time);
                 foreach (string folder in folderPaths)
                     foreach (string file in Directory.GetFiles(folder))
