@@ -210,7 +210,7 @@ namespace PentagonHMI
                         ResetWrite = "HMI_Tags.ResetButton";
                         InitializeRead = "MC_System_Tags.MachineRunning";
                         InitializeWrite = "MC_System_Tags.MachineInit";
-                        
+
                         if (_Main.MachineName.ToUpper() == "FINAL INSPECTION")
                         {
                             StartRead = "OutPnP_HMI_Tags.StartButton";
@@ -484,6 +484,10 @@ namespace PentagonHMI
                     {
                         controlPanelToggleModel.ControlPanelToggleTag.Value = Convert.ToBoolean(toggleButton.IsChecked);
                         _Main.MyPLC.WriteTag(controlPanelToggleModel.ControlPanelToggleTag);
+                    }
+                    else
+                    {
+                        toggleButton.IsChecked = !toggleButton.IsChecked;
                     }
                 }
             }

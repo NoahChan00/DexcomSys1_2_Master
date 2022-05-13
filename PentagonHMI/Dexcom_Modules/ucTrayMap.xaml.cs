@@ -70,10 +70,10 @@ namespace PentagonHMI.ChildControls
             ugrd_LeftTray.Columns = Col;
             ugrd_RightTray.Rows = Row;
             ugrd_RightTray.Columns = Col;
-            pcba_lot_track.Rows = Row;
-            pcba_lot_track.Columns = Col;
-            bat_slot_track.Rows = Row;
-            bat_slot_track.Columns = Col;
+            //pcba_lot_track.Rows = Row;
+            //pcba_lot_track.Columns = Col;
+            //bat_slot_track.Rows = Row;
+            //bat_slot_track.Columns = Col;
 
 
             int total = Row * Col;
