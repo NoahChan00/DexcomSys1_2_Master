@@ -10,7 +10,7 @@ namespace PentagonHMI.Info
     {
 
         public static string ServerName => @Classes.GlobalFunctions.ServerName;
-        public static string DatabaseName => "gdb";
+        public static string DatabaseName => "gdb_DexcomSystem1";
 
         public static class Select
         {

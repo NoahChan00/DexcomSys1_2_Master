@@ -51,7 +51,7 @@ namespace PentagonHMI
             //Left Rack
             dic_EngMajor.Add(LR_tg_StationJogMode, new Control
             {
-                AccessGroups = new string[] { "technician", "egineer" },
+                AccessGroups = new string[] { "technician", "engineer" },
                 Conditions = new string[] { "" },
                 DisplayPanel = LR_tg_StationJogMode,
                 Module = ModuleNames[0],

@@ -6,37 +6,195 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Border MinWidth="200" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 0 1 1" BorderThickness="2">
+
+            <Border Grid.Row="0" MinWidth="400" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
                 <StackPanel>
-                    <Label Content="Lot Mode" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <TextBlock x:Name="tbk_Lotmode" MinHeight="50" Text="Non-Commercial" FontSize="20" HorizontalAlignment="Center" Padding="10"/>
+                    <Label Content="Lot Control" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <UniformGrid Grid.Row="1" Columns="2">
+                        <StackPanel>
+                            <Button Click="Purge_Click" FontSize="20" Content="Purge Lot" Margin="10" Padding="10"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Button Click="End_Click" FontSize="20" Content="End Lot" Margin="10" Padding="10"/>
+                        </StackPanel>
+                    </UniformGrid>
                 </StackPanel>
             </Border>
 
-            <Border Grid.Row="1" MinWidth="200" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
+            <Border Grid.Row="1" MinWidth="400" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
                 <StackPanel>
-                    <Label Content="Lot Control" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <Label Content="Prompt Box" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                     <StackPanel>
-                        <Button Click="Purge_Click" FontSize="20" Content="Purge Lot" Margin="10" Padding="10"/>
-                        <Button Click="End_Click" FontSize="20" Content="End Lot" Margin="10 0 10 10" Padding="10"/>
+                        <ToggleButton x:Name="ControlPanelToggleButton" Content="{Binding ControlPanelToggleName}"
+                                  Height="48" IsChecked="{Binding ControlPanelToggleStatus}" Margin="10"
+                                  IsEnabled="{Binding ControlPanelToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                  Click="controlPanelToggleButton_Click">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}">
+                                    <Setter Property="ContentTemplate">
+                                        <Setter.Value>
+                                            <DataTemplate>
+                                                <Label Background="Red" Content="End Lot" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold"/>
+                                            </DataTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="ContentTemplate">
+                                                <Setter.Value>
+                                                    <DataTemplate>
+                                                        <Label Background="LimeGreen" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Content="Continue" FontSize="18"
+                                                               FontWeight="Bold"/>
+                                                    </DataTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="False">
+                                            <Setter Property="Background"
+                                                Value="{Binding ControlPanelToggleStatusOffColor}"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="True">
+                                            <Setter Property="Background"
+                                                Value="{Binding ControlPanelToggleStatusOnColor}"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
                     </StackPanel>
                 </StackPanel>
             </Border>
 
-            <Border Grid.Row="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
+            <!--<Border Grid.Row="1" MinWidth="200" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 0 1 1" BorderThickness="2">
+                <StackPanel>
+                    <Label Content="Lot Mode" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <TextBlock x:Name="tbk_Lotmode" MinHeight="50" Text="Non-Commercial" FontSize="20" HorizontalAlignment="Center" Padding="10"/>
+                </StackPanel>
+            </Border>-->
+
+            <Grid Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                    <StackPanel>
+                        <Label Content="Quality" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                        <lvc:PieChart Name="Pie_Quality" Height="380" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!--<Border Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0 1 0" BorderThickness="2">
+                <StackPanel>
+                    <Label Content="DUT Presence" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <UniformGrid Columns="3">
+                        <Label Name="lbl_dut_LdPnP" Content="Loader PnP" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_Gantry" Content="Gantry" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_TestShuttle" Content="Test Shuttle" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_TopLaserShuttle" Content="Top Laser Shuttle" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_BtmLaserShuttle" Content="Bottom Laser Shuttle" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_UnldPnP" Content="Unloader PnP" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_LTrayTransfer" Content="Left Tray Transfer" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                        <Label Name="lbl_dut_RTrayTransfer" Content="Right Tray Transfer" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
+                    </UniformGrid>
+                </StackPanel>
+            </Border>-->
+
+            <!--<Grid Grid.Column="2" Grid.ColumnSpan="2" Row="2" Grid.RowSpan="2">
+                <UniformGrid Grid.Row="1" Columns="3">
+                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Content="TOPM#1 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                            <TextBlock Name="tbk_top1_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Separator/>
+                            <TextBlock Name="tbk_top1_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Content="TOPM#2 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                            <TextBlock Name="tbk_top2_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Separator/>
+                            <TextBlock Name="tbk_top2_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Content="TOPM#3 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                            <TextBlock Name="tbk_top3_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Separator/>
+                            <TextBlock Name="tbk_top3_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Content="TOPM#4 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                            <TextBlock Name="tbk_top4_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Separator/>
+                            <TextBlock Name="tbk_top4_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Content="TOPM#5 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                            <TextBlock Name="tbk_top5_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Separator/>
+                            <TextBlock Name="tbk_top5_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                        <StackPanel>
+                            <Label Content="TOPM#6 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                            <TextBlock Name="tbk_top6_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Separator/>
+                            <TextBlock Name="tbk_top6_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+            </Grid>-->
+
+            <!--<UniformGrid Rows="2" Grid.Column="3" Grid.RowSpan="2">
+                <Border  CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0 1 1" BorderThickness="2">
+                    <StackPanel>
+                        <Label Content="TnR#1 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                        <TextBlock Name="lbl_tnr1_Sts" Text="Leader Processing" FontSize="20" Margin="5" Padding="5" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0 1 1" BorderThickness="2">
+                    <StackPanel>
+                        <Label Content="TnR#2 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                        <TextBlock Name="lbl_tnr2_Sts" Text="Post Leader Processing" FontSize="20" Margin="5" Padding="5" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+            </UniformGrid>-->
+
+            <Border Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
+                <StackPanel>
+                    <Label Content="Vision" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <Grid x:Name="grd_KeyenceVision"/>
+                </StackPanel>
+            </Border>
+
+            <!--<Border Grid.Column="4" Grid.Row="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                     <UniformGrid Columns="2">
@@ -60,110 +218,7 @@
                         <Label Name="lbl_lot_Exp" Content="15 Apr 2021" FontSize="15"/>
                     </UniformGrid>
                 </StackPanel>
-            </Border>
-
-            <Border Grid.Column="1" Grid.RowSpan="3" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0 1 0" BorderThickness="2">
-                <StackPanel>
-                    <Label Content="DUT Presence" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <UniformGrid Columns="1">
-                        <Label Name="lbl_dut_LdPnP" Content="Loader PnP" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_Gantry" Content="Gantry" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_TestShuttle" Content="Test Shuttle" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_TopLaserShuttle" Content="Top Laser Shuttle" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_BtmLaserShuttle" Content="Bottom Laser Shuttle" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_UnldPnP" Content="Unloader PnP" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_LTrayTransfer" Content="Left Tray Transfer" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                        <Label Name="lbl_dut_RTrayTransfer" Content="Right Tray Transfer" Padding="10" MinHeight="50" VerticalContentAlignment="Center" Margin="10 5" FontSize="20" BorderBrush="Black" BorderThickness="1"/>
-                    </UniformGrid>
-                </StackPanel>
-            </Border>
-
-            <UniformGrid Rows="1" Grid.Column="2">
-                <Border  CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0 1 1" BorderThickness="2">
-                    <StackPanel>
-                        <Label Content="TnR#1 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <TextBlock Name="lbl_tnr1_Sts" Text="Leader Processing" FontSize="20" Margin="5" Padding="5" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0 1 1" BorderThickness="2">
-                    <StackPanel>
-                        <Label Content="TnR#2 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <TextBlock Name="lbl_tnr2_Sts" Text="Post Leader Processing" FontSize="20" Margin="5" Padding="5" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Border>
-            </UniformGrid>
-
-            <Grid Grid.Column="2" Grid.Row="1" Grid.RowSpan="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                    <StackPanel>
-                        <Label Content="Quality" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <lvc:PieChart Name="Pie_Quality" Height="200"/>
-                    </StackPanel>
-                </Border>
-
-                <UniformGrid Grid.Row="1" Columns="2">
-                        <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                            <StackPanel>
-                                <Label Content="TOPM#1 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                            <TextBlock Name="tbk_top1_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Separator/>
-                            <TextBlock Name="tbk_top1_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                            <StackPanel>
-                                <Label Content="TOPM#2 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                            <TextBlock Name="tbk_top2_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Separator/>
-                            <TextBlock Name="tbk_top2_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                            <StackPanel>
-                                <Label Content="TOPM#3 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                            <TextBlock Name="tbk_top3_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Separator/>
-                            <TextBlock Name="tbk_top3_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                            <StackPanel>
-                                <Label Content="TOPM#4 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                            <TextBlock Name="tbk_top4_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Separator/>
-                            <TextBlock Name="tbk_top4_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                            <StackPanel>
-                                <Label Content="TOPM#5 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                            <TextBlock Name="tbk_top5_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Separator/>
-                            <TextBlock Name="tbk_top5_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                        <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
-                            <StackPanel>
-                                <Label Content="TOPM#6 Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                            <TextBlock Name="tbk_top6_Sts" Text="Test in Progress" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                <Separator/>
-                            <TextBlock Name="tbk_top6_Err" Text="Error Code" FontSize="15" Padding="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </StackPanel>
-                        </Border>
-                    </UniformGrid>
-            </Grid>
-
-
-            <Border Grid.Column="3" Grid.RowSpan="3" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
-                <StackPanel>
-                    <Label Content="Vision" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <Grid x:Name="grd_KeyenceVision"/>
-                </StackPanel>
-            </Border>
+            </Border>-->
         </Grid>
     </ScrollViewer>
 </UserControl>

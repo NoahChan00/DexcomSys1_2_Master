@@ -9,12 +9,12 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="0"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
 
-            <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+            <!--<Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Soc" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="16" Padding="7 5 5 0" />
                     <Border Margin="5 2" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1" Height="50">
@@ -51,27 +51,20 @@
                         <TextBlock FontSize="15" Text="11" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     </Border>
                 </StackPanel>
-            </Border>
+            </Border>-->
 
-            <Border Grid.Column="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="5,0,5,0" BorderThickness="2">
-                <StackPanel>
-                    <Label Content="Legends" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                    <StackPanel Width="240" Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                </StackPanel>
-            </Border>
-
-            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <ItemsControl x:Name="ItmC_Sockets" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Rows="1" />
+                            <UniformGrid Columns="4" Rows="2" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius=" 14,14,14,14" MinWidth="180" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                            <Border CornerRadius=" 14,14,14,14" MinHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,15,15" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                                    <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="188,2,2,0" />
                                     <ItemsControl ItemsSource="{Binding Sockets}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -82,9 +75,13 @@
                                             <DataTemplate>
                                                 <Border Margin="5 2 5 0" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1">
                                                     <StackPanel Background="{Binding Background}" Height="50">
-                                                        <TextBlock FontSize="15" Text="{Binding Barcode}" HorizontalAlignment="Center"/>
+                                                        <TextBlock FontSize="15" Text="{Binding TotalPass}" HorizontalAlignment="Center"/>
                                                         <Separator/>
-                                                        <TextBlock FontSize="15" Text="{Binding VirtualID}" HorizontalAlignment="Center"/>
+                                                        <TextBlock FontSize="15" Text="{Binding TotalFail}" HorizontalAlignment="Center"/>
+                                                        <Separator/>
+                                                        <TextBlock FontSize="15" Text="{Binding Yield}" HorizontalAlignment="Center"/>
+                                                        <Separator/>
+                                                        <TextBlock FontSize="15" Text="Hello" HorizontalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>
@@ -96,6 +93,13 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
+
+            <!--<Border Grid.Column="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="5,0,5,0" BorderThickness="2">
+                <StackPanel>
+                    <Label Content="Legends" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                    <StackPanel Width="240" Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Border>-->
         </Grid>
     </ScrollViewer>
 </UserControl>

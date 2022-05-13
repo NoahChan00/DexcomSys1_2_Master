@@ -16,8 +16,8 @@ namespace SimpleDatabase
             DT_Select
         }
 
-        public SQLCarrier(string ServerName, string InitialCatalog = "HMI", bool PersistSecurityInfo = false,
-            string Password = "NA", string UserID = "NA")
+        public SQLCarrier(string ServerName, string InitialCatalog = "gdb_DexcomSystem1", bool PersistSecurityInfo = false,
+            string Password = "Pss123321!", string UserID = "sa")
         {
             //Str_ConnectionString =
             //    $"Persist Security Info = {(PersistSecurityInfo ? $"True;User ID = {UserID};Password = {Password};" : "False;")}" +

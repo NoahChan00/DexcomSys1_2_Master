@@ -855,7 +855,7 @@ namespace PentagonHMI.ChildControls
         {
             dt_OffDay = _Main.SQLer.Exec_DTSelect(@"SELECT [ID], CONVERT(VARCHAR(10), [StartDay], 111) as 'Start',
             CONVERT(VARCHAR(10), [EndDay], 111) as 'End'
-            FROM [gdb].[dbo].[NonScheduledDownTime] Where [Type] = 'Day' ORDER BY [ID]");
+            FROM [gdb_DexcomSystem1].[dbo].[NonScheduledDownTime] Where [Type] = 'Day' ORDER BY [ID]");
             if (dt_OffDay != null)
             {
                 dgd_OffDay.ItemsSource = dt_OffDay.AsDataView();
