@@ -65,16 +65,16 @@
                         <!--<Button x:Name="btn_ServerTest" Click="Server_Toggle" Grid.Row="1" Grid.Column="4" Content="Demo Server On/Off" Margin="2 0"/>-->
 
                         <TextBlock Grid.Row="3" Grid.Column="1" Margin="5" FontSize="20" Text="Lot Size"/>
-                        <TextBox x:Name="tbx_LotSize" Padding="5 0" PreviewTextInput="OnlyInt" Grid.Row="3" Grid.Column="2" Width="250" FontSize="20"/>
-                        <!--<Num:NumUpDown x:Name="tbx_LotSize" MouseDown="NControl_Click" Padding="5 0" Grid.Row="3" Grid.Column="2" Width="250" FontSize="20" Minimum="1" Maximum="999999999"/>-->
+                        <!--<TextBox x:Name="tbx_LotSize" Padding="5 0" PreviewTextInput="OnlyInt" Grid.Row="3" Grid.Column="2" Width="250" FontSize="20"/>-->
+                        <Num:NumUpDown x:Name="LR_num_LotSize" MouseDown="NControl_Click" Padding="5 0" Grid.Row="3" Grid.Column="2" Width="250" FontSize="20" Minimum="0" Maximum="99999"/>
 
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="5" FontSize="20" Text="Operator ID"/>
                         <TextBox x:Name="tbx_OprID" Grid.Row="5" Padding="5 0" Grid.Column="2" Width="250" MaxLength="20" FontSize="20"/>
 
                         <TextBlock Grid.Row="7" Grid.Column="1" Margin="5" FontSize="20" Text="DUT ID"/>
                         <Grid Grid.Row="7" Grid.Column="2">
-                            <TextBox x:Name="tbx_onlineDUT" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20"/>
-                            <ComboBox x:Name="cbx_offlineDUT" FontSize="20" Width="250" Visibility="Hidden"/>
+                            <TextBox x:Name="tbx_onlineDUT" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20" IsReadOnly="True"/>
+                            <ComboBox x:Name="cbx_offlineDUT" FontSize="20" Width="250" Visibility="Hidden" IsEditable ="False" IsReadOnly="True" IsEnabled ="False"/>
                         </Grid>
 
                         <TextBlock Grid.Row="9" Grid.Column="1" Margin="5" FontSize="20" Text="Battery Type"/>
@@ -82,7 +82,6 @@
                             <TextBox x:Name="tbx_onlineBtrytype" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20"/>
                             <ComboBox x:Name="cbx_offlineBtrytype" FontSize="20" Width="250" Visibility="Hidden"/>
                         </Grid>
-
 
                         <!--<TextBlock Grid.Row="11" Grid.Column="1" Margin="5" FontSize="20" Text="Firmware Version"/>
                         <Grid Grid.Row="11" Grid.Column="2">

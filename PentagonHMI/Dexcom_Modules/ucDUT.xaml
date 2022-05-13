@@ -53,18 +53,18 @@
                 </StackPanel>
             </Border>-->
 
-            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
                 <ItemsControl x:Name="ItmC_Sockets" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Columns="8" Rows="1" />
+                            <UniformGrid Columns="4" Rows="2" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius=" 14,14,14,14" MaxHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,30" BorderThickness="2">
+                            <Border CornerRadius=" 14,14,14,14" MinHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,15,15" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="80,2,2,0" />
+                                    <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="188,2,2,0" />
                                     <ItemsControl ItemsSource="{Binding Sockets}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -80,6 +80,8 @@
                                                         <TextBlock FontSize="15" Text="{Binding TotalFail}" HorizontalAlignment="Center"/>
                                                         <Separator/>
                                                         <TextBlock FontSize="15" Text="{Binding Yield}" HorizontalAlignment="Center"/>
+                                                        <Separator/>
+                                                        <TextBlock FontSize="15" Text="Hello" HorizontalAlignment="Center"/>
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>

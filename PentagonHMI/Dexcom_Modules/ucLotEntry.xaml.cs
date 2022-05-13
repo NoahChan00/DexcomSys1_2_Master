@@ -10,6 +10,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using System.Text.RegularExpressions;
 using System.Data;
+using PentagonHMI.Modules.NumUpDown;
 
 namespace PentagonHMI.ChildControls
 {
@@ -21,6 +22,7 @@ namespace PentagonHMI.ChildControls
         List<string> lst_DUTID = new List<string>();
         List<string> lst_FirmwareVersion = new List<string>();
 
+        private Dictionary<object, Control> dic_EngMajor;
 
         private LogicClasses.Main _Main;
 
@@ -70,11 +72,11 @@ namespace PentagonHMI.ChildControls
                     for (int n = 0; n < values.Length; n++)
                         lst_DUTID.Add(values[n]);
                 }
-                else if (dr["Name"].ToString() == "FirmwareVersion")
-                {
-                    for (int n = 0; n < values.Length; n++)
-                        lst_FirmwareVersion.Add(values[n]);
-                }
+                //else if (dr["Name"].ToString() == "FirmwareVersion")
+                //{
+                //    for (int n = 0; n < values.Length; n++)
+                //        lst_FirmwareVersion.Add(values[n]);
+                //}
             }
 
             cbx_offlineBtrytype.DisplayMemberPath = "Key";
@@ -180,7 +182,7 @@ namespace PentagonHMI.ChildControls
                 MessageBox.Show("Lot ID Not Defined");
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(tbx_LotSize.Text))
+            else if /*string.IsNullOrWhiteSpace*/(LR_num_LotSize.Value == null)
             {
                 MessageBox.Show("Lot Size Not Defined");
                 return;
@@ -233,7 +235,7 @@ namespace PentagonHMI.ChildControls
             }
 
             OPCore.Write(Tag_LotID_str, tbx_LotID.Text, typeof(string));
-            OPCore.Write(Tag_LotQty_dint, tbx_LotSize.Text, typeof(Int32));
+            OPCore.Write(Tag_LotQty_dint, LR_num_LotSize.Value, typeof(Int32));
             OPCore.Write(Tag_OprID_str20, tbx_OprID.Text, typeof(string));
             //OPCore.Write(Tag_DayToExp_int, tbx_day2Exp.Text, typeof(int));
             if (ServerOn)
@@ -252,11 +254,10 @@ namespace PentagonHMI.ChildControls
             //OPCore.Write(Tag_NewLot_bool, true);
         }
 
-        //private void NControl_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        //{
-        //    if (dic_EngMajor.TryGetValue(sender, out var model))
-        //        OPCore.Write(model.PLCAddress, (sender as NumUpDown).Value, typeof(int));
-        //}
+        private void NControl_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+                OPCore.Write(Tag_LotQty_dint, (sender as NumUpDown).Value, typeof(int));
+        }
 
         bool test_ServerOn = false;
         private void Server_Toggle(object sender, RoutedEventArgs e)

@@ -50,7 +50,7 @@ namespace PentagonHMI.ChildControls
             Col = OPCore.Read<int>(Tag_TrayCol);
 #else
             Row = 10;
-            Col = 6;
+            Col = 10;
 #endif
 
             BrushConverter bc = new BrushConverter();
@@ -70,12 +70,19 @@ namespace PentagonHMI.ChildControls
             ugrd_LeftTray.Columns = Col;
             ugrd_RightTray.Rows = Row;
             ugrd_RightTray.Columns = Col;
+            pcba_lot_track.Rows = Row;
+            pcba_lot_track.Columns = Col;
+            bat_slot_track.Rows = Row;
+            bat_slot_track.Columns = Col;
+
 
             int total = Row * Col;
             for (int t = 1; t <= total; t++)
             {
                 ugrd_LeftTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
                 ugrd_RightTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                pcba_SlotTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                bat_SlotTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
             }
         }
 
@@ -88,6 +95,8 @@ namespace PentagonHMI.ChildControls
                 {
                     var LAry = OPCore.Read<int[]>(Tag_L_TopVision, typeof(int), 100);
                     var RAry = OPCore.Read<int[]>(Tag_R_TopVision, typeof(int), 100);
+                    var PCBAray = OPCore.Read<int[]>(Tag_L_TopVision, typeof(int), 100);
+                    var BatAray = OPCore.Read<int[]>(Tag_R_TopVision, typeof(int), 100);
 
                     if (LAry != null)
                         foreach (var item in ugrd_LeftTray.Children)
@@ -98,6 +107,22 @@ namespace PentagonHMI.ChildControls
                             tb.Background = Dic_ResultColor[result];
                         }
                     if (RAry != null)
+                        foreach (var item in ugrd_RightTray.Children)
+                        {
+                            TextBlock tb = item as TextBlock;
+                            string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                            tb.Text = result;
+                            tb.Background = Dic_ResultColor[result];
+                        }
+                    if (PCBAray != null)
+                        foreach (var item in ugrd_LeftTray.Children)
+                        {
+                            TextBlock tb = item as TextBlock;
+                            string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                            tb.Text = result;
+                            tb.Background = Dic_ResultColor[result];
+                        }
+                    if (BatAray != null)
                         foreach (var item in ugrd_RightTray.Children)
                         {
                             TextBlock tb = item as TextBlock;

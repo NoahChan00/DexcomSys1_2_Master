@@ -62,7 +62,7 @@ namespace PentagonHMI.ChildControls
                     Length = Num,
                     TagTotalPass = dr["TotalPass"].ToString(),
                     TagTotalFail = dr["TotalFail"].ToString(),
-                    TagYield = (dr ["TotalPass"] ).ToString(),
+                    TagYield = (dr ["Yield"] ).ToString(),
                     //TagStatus = dr["Status"].ToString()
                 };
 
@@ -79,18 +79,24 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
+
                     foreach (var DUT in DUTs)
                     {
+#if !DEBUG
                         var TotalPasses = OPCore.Read<string[]>(DUT.TagTotalPass, typeof(string), DUT.Length);
                         var TotalFails = OPCore.Read<string[]>(DUT.TagTotalFail, typeof(string), DUT.Length);
                         var Yields = OPCore.Read<string[]>(DUT.TagYield, typeof(string), DUT.Length);
                         //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
-
+#else                   
+                        var TotalPasses = new string[] { "2", "4", "6", "8", "10","12", "14", "16" };
+                        var TotalFails = new string[] { "1", "3", "5", "7", "9", "11", "13", "15" };
+                        var Yields = new string[] { "22", "44", "66", "88", "11", "33", "55", "77"};
+#endif
                         for (int i = 0; i < DUT.Sockets.Count; i++)
                         {
                             DUT.Sockets[i].TotalPass = TotalPasses[i];
                             DUT.Sockets[i].TotalFail = TotalFails[i];
-                            
+                            DUT.Sockets[i].Yield = Yields[i];
                             //DUT.Sockets[i].Background = Dic_ResultColor[Statuses[i]];
                         }
                     }
@@ -132,7 +138,6 @@ namespace PentagonHMI.ChildControls
         //public string TagStatus { get; set; }
         public string TagTotalPass { get; set; }
         public string TagTotalFail { get; set; }
-
         public string TagYield { get; set; }
         public int Length { get; set; }
 
@@ -178,7 +183,7 @@ namespace PentagonHMI.ChildControls
                 {
                     totalPass = value;
                     RaisePropertyChanged(nameof(TotalPass));
-                    RaisePropertyChanged(nameof(Yield));
+                    //RaisePropertyChanged(nameof(Yield));
                 }
             }
         }
@@ -193,25 +198,39 @@ namespace PentagonHMI.ChildControls
                 {
                     totalFail = value;
                     RaisePropertyChanged(nameof(TotalFail));
-                    RaisePropertyChanged(nameof(Yield));
+                    //RaisePropertyChanged(nameof(Yield));
                 }
             }
         }
 
+        //private string yield = "Yield";
+        //public string Yield
+        //{
+        //    get { return yield; }
+
+        //    set 
+        //    {
+        //        int x = 100;
+        //        var p = Convert.ToInt32(TotalPass);
+        //        var f = Convert.ToInt32(TotalFail);
+
+        //        var result = (p - f) * 100;
+        //    }
+        //}
+
+        private string yield = "Yield";
         public string Yield
         {
-            get 
+            get { return yield; }
+
+            set
             {
-                var p = Convert.ToInt32(TotalPass);
-                var f = Convert.ToInt32(TotalFail);
-
-                var result = p + f;
-
-                return result.ToString();
+                if (yield != value)
+                {
+                    yield = value;
+                    RaisePropertyChanged(nameof(Yield));
+                }
             }
-
-
-
         }
     }
 
