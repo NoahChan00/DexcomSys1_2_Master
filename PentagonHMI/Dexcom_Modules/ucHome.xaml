@@ -190,7 +190,9 @@
             <Border Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Vision" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <Grid x:Name="grd_KeyenceVision"/>
+                    <Grid x:Name="grd_KeyenceVision">
+                        <Image Source="/HMI_QPP;component/Images/QPP_Turret_50.jpeg"/>
+                    </Grid>
                 </StackPanel>
             </Border>
 

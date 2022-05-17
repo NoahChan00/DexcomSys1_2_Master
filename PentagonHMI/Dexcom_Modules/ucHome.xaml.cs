@@ -8,6 +8,7 @@ using SimpleDatabase;
 using System.Reflection;
 using LiveCharts;
 using LiveCharts.Wpf;
+using System.Windows.Media.Imaging;
 
 namespace PentagonHMI.ChildControls
 {
@@ -17,6 +18,9 @@ namespace PentagonHMI.ChildControls
         SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
 
         private LogicClasses.Main _Main;
+        
+        //Show Turret Image
+        public BitmapImage ImageToShow { get; set; }
 
         //General
         const string Home = "Home";

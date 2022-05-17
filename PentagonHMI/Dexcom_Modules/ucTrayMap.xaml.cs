@@ -29,7 +29,8 @@ namespace PentagonHMI.ChildControls
         const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
         const string Tag_L_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
         const string Tag_R_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
-        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType"; 
+
         int Row = 0;
         int Col = 0;
         int PRow = 0;
@@ -66,7 +67,7 @@ namespace PentagonHMI.ChildControls
             PRow = 9;
             PCol = 10;
 
-            var Battery_Type = 5;  
+            var Battery_Type = 6;  
 
             switch(Battery_Type)
             {
