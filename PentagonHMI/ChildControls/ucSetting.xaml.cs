@@ -281,7 +281,7 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                DataTable DT = DBCall.Shift_Select("", _Main.StationID, ref ErrMsg);
+                DataTable DT = DBCall.Shift_Select(" ", _Main.StationID, ref ErrMsg);
 
                 foreach (DataRow DR in DT.Rows)
                 {

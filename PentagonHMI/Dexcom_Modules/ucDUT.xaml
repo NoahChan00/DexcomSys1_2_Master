@@ -53,7 +53,7 @@
                 </StackPanel>
             </Border>-->
 
-            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
                 <ItemsControl x:Name="ItmC_Sockets" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -74,15 +74,18 @@
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Border Margin="5 2 5 0" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1">
-                                                    <StackPanel Background="{Binding Background}" Height="50">
+                                                    <StackPanel Background="{Binding Background}" Height="Auto">
                                                         <TextBlock FontSize="15" Text="{Binding TotalPass}" HorizontalAlignment="Center"/>
                                                         <Separator/>
                                                         <TextBlock FontSize="15" Text="{Binding TotalFail}" HorizontalAlignment="Center"/>
                                                         <Separator/>
                                                         <TextBlock FontSize="15" Text="{Binding Yield}" HorizontalAlignment="Center"/>
                                                         <Separator/>
-                                                        <TextBlock FontSize="15" Text="Hello" HorizontalAlignment="Center"/>
-                                                    </StackPanel>
+                                                        <StackPanel>
+                                                            <TextBlock FontSize="15" Text="Socket Disable" HorizontalAlignment="Center"/>
+                                                            <ToggleButton Name="SocketDisable" MouseLeftButtonDown="TControl_Click" Height="30"/>
+                                                        </StackPanel>
+                                                        </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

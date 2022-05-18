@@ -485,6 +485,10 @@ namespace PentagonHMI
                         controlPanelToggleModel.ControlPanelToggleTag.Value = Convert.ToBoolean(toggleButton.IsChecked);
                         _Main.MyPLC.WriteTag(controlPanelToggleModel.ControlPanelToggleTag);
                     }
+                    else
+                    {
+                        toggleButton.IsChecked = !toggleButton.IsChecked;
+                    }
                 }
             }
             catch (Exception exception)

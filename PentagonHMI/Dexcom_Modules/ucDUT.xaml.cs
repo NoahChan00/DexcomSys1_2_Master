@@ -21,6 +21,12 @@ namespace PentagonHMI.ChildControls
 
         ObservableCollection<DUTModel> DUTs = new ObservableCollection<DUTModel>();
         Dictionary<int, Brush> Dic_ResultColor = new Dictionary<int, Brush>();
+        private readonly Dictionary<object, Control> dic_EngMajor;
+
+        private struct Control
+        {
+            public string PLCAddress;    
+        }
 
         public ucDUT(LogicClasses.Main main)
         {
@@ -59,16 +65,16 @@ namespace PentagonHMI.ChildControls
                 DUTModel DTM = new DUTModel
                 {
                     Name = dr["Name"].ToString(),
-                    Length = Num,
+                    //Length = Num,
                     TagTotalPass = dr["TotalPass"].ToString(),
                     TagTotalFail = dr["TotalFail"].ToString(),
                     TagYield = (dr ["Yield"] ).ToString(),
                     //TagStatus = dr["Status"].ToString()
                 };
 
-                for (int num = 0; num < Num; num++)
-                    DTM.Sockets.Add(new SubDUTModel());
-
+                //for (int num = 0; num < Num; num++)
+                //    DTM.Sockets.Add(new SubDUTModel());
+                DTM.Sockets.Add(new SubDUTModel());                
                 DUTs.Add(DTM);
             }
         }
@@ -116,6 +122,12 @@ namespace PentagonHMI.ChildControls
         public void Dispose()
         {
             _Main.DUTPageOn = false;
+        }
+
+        private void TControl_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (dic_EngMajor.TryGetValue(sender, out var model))
+                OPCore.Write(model.PLCAddress, (sender as ToggleButton).IsChecked);
         }
     }
 

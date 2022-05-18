@@ -9,6 +9,7 @@ using System.Reflection;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Media.Imaging;
+using PentagonHMI.Info;
 
 namespace PentagonHMI.ChildControls
 {
@@ -115,6 +116,7 @@ namespace PentagonHMI.ChildControls
         {
             InitializeComponent();
             _Main = main;
+
 #if !DEBUG
             if (!OPCore.Connect(Info.OPC.IP)) return;
 #endif
@@ -241,5 +243,6 @@ namespace PentagonHMI.ChildControls
             FileLogger.logButton(Home, "Prompt", MethodBase.GetCurrentMethod().ToString());
             OPCore.Write(Tag_PromptBox_bool, true);
         }
+
     }
 }

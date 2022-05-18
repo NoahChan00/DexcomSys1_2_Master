@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:mahApps="http://metro.mahapps.com/winfx/xaml/controls"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
 
@@ -94,7 +95,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
+
                 <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
                     <StackPanel>
                         <Label Content="Quality" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
@@ -189,9 +190,269 @@
 
             <Border Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <StackPanel>
-                    <Label Content="Vision" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <Label Content="Station Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                     <Grid x:Name="grd_KeyenceVision">
-                        <Image Source="/HMI_QPP;component/Images/QPP_Turret_50.jpeg"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- Legend -->
+                            <StackPanel>
+                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center">
+                                    <UniformGrid Columns="1" VerticalAlignment="Top">
+                                        <Button BorderBrush="Gray" Content="No Unit"/>
+                                        <Button BorderBrush="Blue" Content="Not Tested"/>
+                                        <Button BorderBrush="Green" Content="Pass"/>
+                                        <Button BorderBrush="Red" Content="Fail"/>
+                                    </UniformGrid>
+                                </GroupBox>
+
+                                <GroupBox Header="Total Pass" Height="130">
+                                    <lvc:Gauge x:Name="TotalPassGauge"/>
+                                </GroupBox>
+
+                                <GroupBox Header="Total Fail" Height="130">
+                                    <lvc:Gauge x:Name="TotalFailGauge"/>
+                                </GroupBox>
+
+                                <GroupBox Header="Yield" Height="130">
+                                    <lvc:Gauge x:Name="TotalYieldGauge"/>
+                                </GroupBox>
+                            </StackPanel>
+
+
+                            <!-- DUT Socket Status -->
+                            <GroupBox Grid.Column="1">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0 45">
+                                        <Image Source="D:\Source\HMI_Team\Dexcom_System1_2\PentagonHMI\Images\MainHMI\Turret.png" SnapsToDevicePixels="True" Width="400" Height="500"/>
+
+                                        <Canvas Visibility="Visible">
+                                            <StackPanel Canvas.Top="220" Canvas.Left="-460">
+                                                <StackPanel>
+                                                    <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <TextBlock Text="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                </StackPanel>
+
+                                                <UniformGrid>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="EarpieceStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="EarpieceStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="380" Canvas.Left="-410">
+                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <UniformGrid Columns="2">
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="450" Canvas.Left="-244">
+                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <TextBlock Text="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <UniformGrid Columns="2">
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="HeightInspectionStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="HeightInspectionStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="380" Canvas.Left="-55">
+                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <TextBlock Text="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <UniformGrid>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="CrimpingStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="CrimpingStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="220" Canvas.Left="-10">
+                                                <StackPanel>
+                                                    <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <TextBlock Text="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                </StackPanel>
+
+                                                <UniformGrid Columns="2">
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="ReuseStn_Button_1"/>
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="ReuseStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="80" Canvas.Left="-55">
+                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <TextBlock Text="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+
+                                                <UniformGrid Columns="2">
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="VisionStn_Button_1"/>
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="VisionStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="-25" Canvas.Left="-232">
+                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <TextBlock Text="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <UniformGrid Columns="2">
+                                                    <Button Height="30" Width="30" Background="Red" BorderBrush="Transparent" x:Name="RejectStn_Button_1" Content="A"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="RejectStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+
+                                            <StackPanel Canvas.Top="80" Canvas.Left="-410">
+                                                <StackPanel>
+                                                    <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <TextBlock Text="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                </StackPanel>
+
+                                                <UniformGrid Columns="2">
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="PassStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="PassStn_Button_2"/>
+                                                </UniformGrid>
+                                            </StackPanel>
+                                        </Canvas>
+                                    </WrapPanel>
+
+                                    <!-- DUT Socket Status Table -->
+                                    <ItemsControl x:Name="ItemsControl_SocketStatus"
+                                             Grid.Row="1"
+                                             Margin="0 0 0 0"
+                                             VirtualizingPanel.VirtualizationMode="Recycling"
+                                             VirtualizingPanel.IsVirtualizing="True">
+
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <VirtualizingStackPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Data Type Title -->
+                                                    <VirtualizingStackPanel Grid.Row="1" Grid.Column="0">
+                                                        <Border BorderThickness="1" BorderBrush="Black">
+                                                            <TextBlock Text="{Binding NestHeader}" HorizontalAlignment="Center"/>
+                                                        </Border>
+
+                                                        <Border BorderThickness="1" BorderBrush="Black">
+                                                            <TextBlock Text="{Binding SocketDisableTitle}" HorizontalAlignment="Center"/>
+                                                        </Border>
+
+                                                        <Border BorderThickness="1" BorderBrush="Black">
+                                                            <TextBlock Text="{Binding TotalPassTitle}" HorizontalAlignment="Center"/>
+                                                        </Border>
+
+                                                        <Border BorderThickness="1" BorderBrush="Black">
+                                                            <TextBlock Text="{Binding TotalFailTitle}" HorizontalAlignment="Center"/>
+                                                        </Border>
+
+                                                        <Border BorderThickness="1" BorderBrush="Black">
+                                                            <TextBlock Text="{Binding TotalYieldTitle}" HorizontalAlignment="Center"/>
+                                                        </Border>
+                                                    </VirtualizingStackPanel>
+
+                                                    <ItemsControl x:Name="ItemsControlSocketDetails"
+                                                     VirtualizingPanel.IsVirtualizing="True"
+                                                     VirtualizingPanel.VirtualizationMode="Recycling"
+                                                     ItemsSource="{Binding SocketModelList}"
+                                                      Grid.Row="0" Grid.RowSpan="2" Grid.Column="1">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <VirtualizingStackPanel Orientation="Horizontal"/>
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <DockPanel>
+                                                                    <VirtualizingStackPanel MinWidth="43">
+                                                                        <Border BorderBrush="Black" BorderThickness="1" Background="Yellow">
+                                                                            <TextBlock Text="{Binding SocketName_1}"
+                                                                           FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding CheckedValueStatus_1}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding IsCheckedTagAddress_1}"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding TotalPass_1}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding TotalPassTagAddress_1}"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding TotalFail_1}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding TotalFailTagAddress_1}"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding Yield_1}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding YieldTagAddress_1}"/>
+                                                                        </Border>
+
+                                                                    </VirtualizingStackPanel>
+
+                                                                    <VirtualizingStackPanel MinWidth="43">
+                                                                        <Border BorderBrush="Black" BorderThickness="1" Background="Yellow">
+                                                                            <TextBlock Text="{Binding SocketName_2}"
+                                                                                   FontWeight="Bold" HorizontalAlignment="Center"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding CheckedValueStatus_2}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding IsCheckedTagAddress_2}"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding TotalPass_2}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding TotalPassTagAddress_2}"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding TotalFail_2}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding TotalFailTagAddress_2}"/>
+                                                                        </Border>
+
+                                                                        <Border BorderBrush="Black" BorderThickness="1">
+                                                                            <TextBlock Text="{Binding Yield_2}" 
+                                                                                   HorizontalAlignment="Center"
+                                                                                   Uid="{Binding YieldTagAddress_2}"/>
+                                                                        </Border>
+                                                                    </VirtualizingStackPanel>
+                                                                </DockPanel>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
                     </Grid>
                 </StackPanel>
             </Border>
