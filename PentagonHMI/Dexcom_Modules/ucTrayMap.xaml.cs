@@ -29,7 +29,9 @@ namespace PentagonHMI.ChildControls
         const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
         const string Tag_L_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
         const string Tag_R_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
-        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType"; 
+        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        const string Tag_L_Slot = "Tray_Shuttle_Left_Slot_Tracking";
+        const string Tag_R_Slot = "Tray_Shuttle_Right_Slot_Tracking";
 
         int Row = 0;
         int Col = 0;
@@ -37,6 +39,7 @@ namespace PentagonHMI.ChildControls
         int PCol = 0;
         int BRow = 0;
         int BCol = 0;
+        int BatType = 0;
 
         Dictionary<string, Brush> Dic_ResultColor = new Dictionary<string, Brush>();
 
@@ -60,7 +63,7 @@ namespace PentagonHMI.ChildControls
             PCol = OPCore.Read<int>(Tag_TrayCol);
             BRow = OPCore.Read<int>(Tag_TrayRow);
             BCol = OPCore.Read<int>(Tag_TrayCol);
-            var Battery_Type = OPCore.Read<int>(Tag_Btry_dint);
+            BatType = OPCore.Read<int>(Tag_Btry_dint);
 #else
             Row = 4;
             Col = 4;
@@ -208,7 +211,7 @@ namespace PentagonHMI.ChildControls
         private void ChangeTray_Click(object sender, RoutedEventArgs e)
         {
             string tag = (sender as Button).Tag.ToString();
-            OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_R_ChangeTray : tag == "battery" ? Tag_R_ChangeTray : "", true);
+            OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : "", true);
         }
 
         private void Purge_Click(object sender, DependencyPropertyChangedEventArgs e)

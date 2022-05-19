@@ -46,7 +46,7 @@
                         <ToggleButton x:Name="ControlPanelToggleButton" Content="{Binding ControlPanelToggleName}"
                                   Height="48" IsChecked="{Binding ControlPanelToggleStatus}" Margin="10"
                                   IsEnabled="{Binding ControlPanelToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                                  Click="controlPanelToggleButton_Click">
+                                  Click="promptToggleButton_Click">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}">
                                     <Setter Property="ContentTemplate">
@@ -188,6 +188,13 @@
                 </Border>
             </UniformGrid>-->
 
+            <Border Grid.Column="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="5,0,5,0" BorderThickness="2">
+                <StackPanel>
+                    <Label Content="Legends" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                    <StackPanel Width="240" Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Border>
+            
             <Border Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Station Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
@@ -198,6 +205,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+
                             <!-- Legend -->
                             <StackPanel>
                                 <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center">
@@ -377,6 +385,7 @@
                                                                 <VirtualizingStackPanel Orientation="Horizontal"/>
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
+
                                                         <ItemsControl.ItemTemplate>
                                                             <DataTemplate>
                                                                 <DockPanel>
@@ -409,7 +418,6 @@
                                                                                    HorizontalAlignment="Center"
                                                                                    Uid="{Binding YieldTagAddress_1}"/>
                                                                         </Border>
-
                                                                     </VirtualizingStackPanel>
 
                                                                     <VirtualizingStackPanel MinWidth="43">

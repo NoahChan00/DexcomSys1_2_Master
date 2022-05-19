@@ -29,13 +29,14 @@ namespace PentagonHMI.ChildControls
         const string Tag_LotID_str = "Lot_Info.HMI_LotID";
         const string Tag_LotQty_dint = "Lot_Info.HMI_Lot_Quantity";
         const string Tag_OprID_str20 = "Lot_Info.HMI_OperatorID";
-        const string Tag_DUTID_str20 = "RecipeParams.DUTid";
+        const string Tag_DUTID_str20 = "Lot_Info.New_Lot_Created";
         const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
+        //const string Tag_DUTID_str20 = "RecipeParams.DUTid";
         //const string Tag_FirmwareVersion_str20 = "RecipeParams.FirmwareVersion";
         //const string Tag_DayToExp_int = "Lot_Info.HMI_DaysToExpired";
         //const string Tag_ManufactureDate_str20 = "Lot_Info.HMI_ManufactureDate";
         //const string Tag_Exp_str20 = "Lot_Info.HMI_Expiration_Date";
-        //const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
         //const string Tag_LotCreated_bool = "Lot_Info.New_Lot_Created";
         //const string Tag_Mode_Commercial_bool = "Lot_Info.HMI_Commercial_Mode";
         //const string Tag_Mode_NonCommercial_bool = "Lot_Info.HMI_NonCommercial_Mode";
@@ -251,7 +252,7 @@ namespace PentagonHMI.ChildControls
                 //OPCore.Write(Tag_FirmwareVersion_str20, cbx_offlineFirmwareVersion.SelectedValue.ToString(), typeof(string));
             }
             //OPCore.Write(Tag_Exp_str20, DateTime.Now.AddDays(Convert.ToInt16(tbx_day2Exp.Text)).ToString("yyMMdd"), typeof(string));
-            //OPCore.Write(Tag_NewLot_bool, true);
+            OPCore.Write(Tag_NewLot_bool, true);
         }
 
         private void NControl_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)

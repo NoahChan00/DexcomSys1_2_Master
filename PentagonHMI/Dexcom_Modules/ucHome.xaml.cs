@@ -112,6 +112,23 @@ namespace PentagonHMI.ChildControls
             [8] = "Idle",
         };
 
+        //Station Status
+        const string Tag_Station1_Stat = "Station_1.DUT_Status";
+        const string Tag_Station2_Stat = "Station_2_DUT_Status";
+        const string Tag_Station3_Stat = "Station_3_DUT_Status";
+        const string Tag_Station4_Stat = "Station_4_DUT_Status";
+        const string Tag_Station5_Stat = "Station_5_DUT_Status";
+        const string Tag_Station6_Stat = "Station_6_DUT_Status";
+        const string Tag_Station7_Stat = "Station_7_DUT_Status";
+        const string Tag_Station8_Stat = "Station_8_DUT_Status";
+        Dictionary<int, string> dic_StationDUTStatus = new Dictionary<int, string>
+        {
+            [0] = "No Unit",
+            [1] = "Not Tested",
+            [10] = "Pass",
+            [11] = "Fail",
+        };
+
         public ucHome(LogicClasses.Main main)
         {
             InitializeComponent();
@@ -208,6 +225,16 @@ namespace PentagonHMI.ChildControls
                     //tbk_top5_Err.Text = OPCore.Read<int>(Tag_Top5ErrCode_int).ToString();
                     //tbk_top6_Err.Text = OPCore.Read<int>(Tag_Top6ErrCode_int).ToString();
 
+                    //Station Status
+                    OPCore.Read<int>(Tag_Station1_Stat);
+                    OPCore.Read<int>(Tag_Station2_Stat);
+                    OPCore.Read<int>(Tag_Station3_Stat);
+                    OPCore.Read<int>(Tag_Station4_Stat);
+                    OPCore.Read<int>(Tag_Station5_Stat);
+                    OPCore.Read<int>(Tag_Station6_Stat);
+                    OPCore.Read<int>(Tag_Station7_Stat);
+                    OPCore.Read<int>(Tag_Station8_Stat);
+
                 }
                 catch (Exception exception)
                 {
@@ -238,7 +265,7 @@ namespace PentagonHMI.ChildControls
             OPCore.Write(Tag_PurgeLot_bool, true);
         }
 
-        private void controlPanelToggleButton_Click(object sender, RoutedEventArgs e)
+        private void promptToggleButton_Click(object sender, RoutedEventArgs e)
         {
             FileLogger.logButton(Home, "Prompt", MethodBase.GetCurrentMethod().ToString());
             OPCore.Write(Tag_PromptBox_bool, true);

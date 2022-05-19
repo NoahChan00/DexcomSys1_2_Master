@@ -9,6 +9,7 @@ using SimpleDatabase;
 using System.Data;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace PentagonHMI.ChildControls
@@ -21,12 +22,39 @@ namespace PentagonHMI.ChildControls
 
         ObservableCollection<DUTModel> DUTs = new ObservableCollection<DUTModel>();
         Dictionary<int, Brush> Dic_ResultColor = new Dictionary<int, Brush>();
-        private readonly Dictionary<object, Control> dic_EngMajor;
 
-        private struct Control
-        {
-            public string PLCAddress;    
-        }
+        //General
+        const string DUT = "DUT";
+
+        //Turret Total Pass Tag
+        const string Tag_TurretA_Pass = "TurretNest_A_DUT.TotalPass";
+        const string Tag_TurretB_Pass = "TurretNest_B_DUT.TotalPass";
+        const string Tag_TurretC_Pass = "TurretNest_C_DUT.TotalPass";
+        const string Tag_TurretD_Pass = "TurretNest_D_DUT.TotalPass";
+        const string Tag_TurretE_Pass = "TurretNest_E_DUT.TotalPass";
+        const string Tag_TurretF_Pass = "TurretNest_F_DUT.TotalPass";
+        const string Tag_TurretG_Pass = "TurretNest_G_DUT.TotalPass";
+        const string Tag_TurretH_Pass = "TurretNest_H_DUT.TotalPass";
+
+        //Turret Total Fail Tag
+        const string Tag_TurretA_Fail = "TurretNest_A_DUT.TotalFail";
+        const string Tag_TurretB_Fail = "TurretNest_B_DUT.TotalFail";
+        const string Tag_TurretC_Fail = "TurretNest_C_DUT.TotalFail";
+        const string Tag_TurretD_Fail = "TurretNest_D_DUT.TotalFail";
+        const string Tag_TurretE_Fail = "TurretNest_E_DUT.TotalFail";
+        const string Tag_TurretF_Fail = "TurretNest_F_DUT.TotalFail";
+        const string Tag_TurretG_Fail = "TurretNest_G_DUT.TotalFail";
+        const string Tag_TurretH_Fail = "TurretNest_H_DUT.TotalFail";
+
+        //Socket Disable Tag
+        const string Tag_SocketDisableA_bool = "HMI_Disable_Socket_A";
+        const string Tag_SocketDisableB_bool = "HMI_Disable_Socket_B";
+        const string Tag_SocketDisableC_bool = "HMI_Disable_Socket_C";
+        const string Tag_SocketDisableD_bool = "HMI_Disable_Socket_D";
+        const string Tag_SocketDisableE_bool = "HMI_Disable_Socket_E";
+        const string Tag_SocketDisableF_bool = "HMI_Disable_Socket_F";
+        const string Tag_SocketDisableG_bool = "HMI_Disable_Socket_G";
+        const string Tag_SocketDisableH_bool = "HMI_Disable_Socket_H";
 
         public ucDUT(LogicClasses.Main main)
         {
@@ -61,11 +89,12 @@ namespace PentagonHMI.ChildControls
 
             foreach (DataRow dr in dtDUT.Rows)
             {
-                int Num = Convert.ToInt32(dr["Length"]);
+                //int Num = Convert.ToInt32(dr["Length"]);
                 DUTModel DTM = new DUTModel
                 {
                     Name = dr["Name"].ToString(),
                     //Length = Num,
+                    //TagTotalPass = Convert.ToInt32(dr["TotalPass"]),
                     TagTotalPass = dr["TotalPass"].ToString(),
                     TagTotalFail = dr["TotalFail"].ToString(),
                     TagYield = (dr ["Yield"] ).ToString(),
@@ -89,7 +118,7 @@ namespace PentagonHMI.ChildControls
                     foreach (var DUT in DUTs)
                     {
 #if !DEBUG
-                        var TotalPasses = OPCore.Read<string[]>(DUT.TagTotalPass, typeof(string), DUT.Length);
+                        var TotalPasses = OPCore.Read<int[]>(DUT.TagTotalPass, typeof(int), DUT.Length);
                         var TotalFails = OPCore.Read<string[]>(DUT.TagTotalFail, typeof(string), DUT.Length);
                         var Yields = OPCore.Read<string[]>(DUT.TagYield, typeof(string), DUT.Length);
                         //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
@@ -124,10 +153,10 @@ namespace PentagonHMI.ChildControls
             _Main.DUTPageOn = false;
         }
 
-        private void TControl_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void socketToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if (dic_EngMajor.TryGetValue(sender, out var model))
-                OPCore.Write(model.PLCAddress, (sender as ToggleButton).IsChecked);
+            FileLogger.logButton(DUT, "Socket Disable", MethodBase.GetCurrentMethod().ToString());
+            OPCore.Write(Tag_SocketDisableA_bool, true);
         }
     }
 
@@ -148,10 +177,10 @@ namespace PentagonHMI.ChildControls
         }
 
         //public string TagStatus { get; set; }
+        //public int Length { get; set; }
         public string TagTotalPass { get; set; }
         public string TagTotalFail { get; set; }
         public string TagYield { get; set; }
-        public int Length { get; set; }
 
 
         private ObservableCollection<SubDUTModel> sockets = new ObservableCollection<SubDUTModel>();
@@ -215,21 +244,6 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-        //private string yield = "Yield";
-        //public string Yield
-        //{
-        //    get { return yield; }
-
-        //    set 
-        //    {
-        //        int x = 100;
-        //        var p = Convert.ToInt32(TotalPass);
-        //        var f = Convert.ToInt32(TotalFail);
-
-        //        var result = (p - f) * 100;
-        //    }
-        //}
-
         private string yield = "Yield";
         public string Yield
         {
@@ -237,11 +251,11 @@ namespace PentagonHMI.ChildControls
 
             set
             {
-                if (yield != value)
-                {
-                    yield = value;
-                    RaisePropertyChanged(nameof(Yield));
-                }
+                int x = 100;
+                var p = Convert.ToInt32(TotalPass);
+                var f = Convert.ToInt32(TotalFail);
+
+                var result = (Convert.ToDouble(TotalPass) / Convert.ToDouble(TotalFail)) * x;
             }
         }
     }

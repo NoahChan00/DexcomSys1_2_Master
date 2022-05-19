@@ -62,9 +62,9 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius=" 14,14,14,14" MinHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,15,15" BorderThickness="2">
+                            <Border CornerRadius=" 14,14,14,14" MinHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="15,0,15,10" BorderThickness="2">
                                 <StackPanel>
-                                    <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="188,2,2,0" />
+                                    <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" HorizontalContentAlignment="Center" Padding="30,2,2,0" />
                                     <ItemsControl ItemsSource="{Binding Sockets}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -73,7 +73,7 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Margin="5 2 5 0" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1">
+                                                <!--<Border Margin="5 2 5 0" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1">
                                                     <StackPanel Background="{Binding Background}" Height="Auto">
                                                         <TextBlock FontSize="15" Text="{Binding TotalPass}" HorizontalAlignment="Center"/>
                                                         <Separator/>
@@ -86,6 +86,74 @@
                                                             <ToggleButton Name="SocketDisable" MouseLeftButtonDown="TControl_Click" Height="30"/>
                                                         </StackPanel>
                                                         </StackPanel>
+                                                </Border>-->
+
+                                                <Border Margin="5 2 5 0" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1" MaxHeight="500">
+                                                    <StackPanel>
+                                                        <UniformGrid Columns="2">
+                                                            <Label Content="Total Pass:" FontSize="15" Background="LightGray"/>
+                                                            <Label Name="lbl_TotalPass" Content="{Binding TotalPass}" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" Foreground="Green"/>
+                                                            <Label Content="Total Fail:" FontSize="15" Background="LightGray"/>
+                                                            <Label Name="lbl_TotalFail" Content="{Binding TotalFail}" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" Foreground="Red"/>
+                                                            <Label Content="Yield:" FontSize="15" Background="LightGray"/>
+                                                            <Label Name="lbl_Yield" Content="{Binding Yield}" HorizontalContentAlignment="Center" FontSize="15" FontWeight="Bold" Foreground="Gray"/>
+                                                            <Label Content="Socket Disable:" FontSize="15" Background="LightGray"/>
+                                                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                                                <!--<TextBlock FontSize="10" Text="Off" VerticalAlignment="Center" Padding="7 5"/>
+                                                                -->
+                                                                <!--<ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L"/>-->
+                                                                <!--
+                                                                <ToggleButton Style="{StaticResource ToggleButtonStyle}" Name="SocketDisable" MouseLeftButtonDown="TControl_Click" Height="20" Width="50"/>
+                                                                <TextBlock FontSize="10" Text="On" VerticalAlignment="Center" Padding="7 5"/>-->
+                                                                <ToggleButton x:Name="ControlPanelToggleButton" Content="{Binding ControlPanelToggleName}"
+                                                                              Height="30" IsChecked="{Binding ControlPanelToggleStatus}" Margin="2"
+                                                                              IsEnabled="{Binding ControlPanelToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                                                              Click="socketToggleButton_Click">
+                                                                    <ToggleButton.Style>
+                                                                        <Style TargetType="{x:Type ToggleButton}">
+                                                                            <Setter Property="ContentTemplate">
+                                                                                <Setter.Value>
+                                                                                    <DataTemplate>
+                                                                                        <Label Background="Red" Content="Disable" 
+                                                                                               HorizontalContentAlignment="Center" 
+                                                                                               VerticalContentAlignment="Center" 
+                                                                                               HorizontalAlignment="Stretch" 
+                                                                                               VerticalAlignment="Stretch" 
+                                                                                               FontSize="10" FontWeight="Bold"/>
+                                                                                    </DataTemplate>
+                                                                                </Setter.Value>
+                                                                            </Setter>
+                                                                            <Style.Triggers>
+                                                                                <Trigger Property="IsChecked" Value="True">
+                                                                                    <Setter Property="ContentTemplate">
+                                                                                        <Setter.Value>
+                                                                                            <DataTemplate>
+                                                                                                <Label Background="LimeGreen" 
+                                                                                                       HorizontalAlignment="Stretch" 
+                                                                                                       HorizontalContentAlignment="Center" 
+                                                                                                       VerticalContentAlignment="Center" 
+                                                                                                       VerticalAlignment="Stretch" 
+                                                                                                       Content="Enable" FontSize="10"
+                                                                                                       FontWeight="Bold"/>
+                                                                                            </DataTemplate>
+                                                                                        </Setter.Value>
+                                                                                    </Setter>
+                                                                                </Trigger>
+                                                                                <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="False">
+                                                                                    <Setter Property="Background"
+                                                                                            Value="{Binding ControlPanelToggleStatusOffColor}"/>
+                                                                                </DataTrigger>
+                                                                                <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="True">
+                                                                                    <Setter Property="Background"
+                                                                                            Value="{Binding ControlPanelToggleStatusOnColor}"/>
+                                                                                </DataTrigger>
+                                                                            </Style.Triggers>
+                                                                        </Style>
+                                                                    </ToggleButton.Style>
+                                                                </ToggleButton>
+                                                            </StackPanel>
+                                                        </UniformGrid>
+                                                    </StackPanel>
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
