@@ -43,9 +43,9 @@
                 <StackPanel>
                     <Label Content="Prompt Box" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                     <StackPanel>
-                        <ToggleButton x:Name="ControlPanelToggleButton" Content="{Binding ControlPanelToggleName}"
-                                  Height="48" IsChecked="{Binding ControlPanelToggleStatus}" Margin="10"
-                                  IsEnabled="{Binding ControlPanelToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        <ToggleButton x:Name="PromptToggleButton" Content="{Binding PromptToggleName}"
+                                  Height="48" IsChecked="{Binding PromptToggleStatus}" Margin="10"
+                                  IsEnabled="{Binding PromptToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                   Click="promptToggleButton_Click">
                             <ToggleButton.Style>
                                 <Style TargetType="{x:Type ToggleButton}">
@@ -67,13 +67,13 @@
                                                 </Setter.Value>
                                             </Setter>
                                         </Trigger>
-                                        <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="False">
+                                        <DataTrigger Binding="{Binding PromptToggleStatus}" Value="False">
                                             <Setter Property="Background"
-                                                Value="{Binding ControlPanelToggleStatusOffColor}"/>
+                                                Value="{Binding PromptToggleStatusOffColor}"/>
                                         </DataTrigger>
-                                        <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="True">
+                                        <DataTrigger Binding="{Binding PromptToggleStatus}" Value="True">
                                             <Setter Property="Background"
-                                                Value="{Binding ControlPanelToggleStatusOnColor}"/>
+                                                Value="{Binding PromptToggleStatusOnColor}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
@@ -188,12 +188,12 @@
                 </Border>
             </UniformGrid>-->
 
-            <Border Grid.Column="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="5,0,5,0" BorderThickness="2">
-                <StackPanel>
+            <!--<Border Grid.Column="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="5,0,5,0" BorderThickness="2">
+                <StackPanel Margin="0,0,0,-2">
                     <Label Content="Legends" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                    <StackPanel Width="240" Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    <StackPanel Width="240" Background="White" Name="StationStatLegends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
                 </StackPanel>
-            </Border>
+            </Border>-->
             
             <Border Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <StackPanel>
@@ -208,7 +208,7 @@
 
                             <!-- Legend -->
                             <StackPanel>
-                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center">
+                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center" Width="101">
                                     <UniformGrid Columns="1" VerticalAlignment="Top">
                                         <Button BorderBrush="Gray" Content="No Unit"/>
                                         <Button BorderBrush="Blue" Content="Not Tested"/>
@@ -217,17 +217,17 @@
                                     </UniformGrid>
                                 </GroupBox>
 
-                                <GroupBox Header="Total Pass" Height="130">
+                                <!--<GroupBox Header="Total Pass" Height="130">
                                     <lvc:Gauge x:Name="TotalPassGauge"/>
-                                </GroupBox>
+                                </GroupBox>-->
 
-                                <GroupBox Header="Total Fail" Height="130">
+                                <!--<GroupBox Header="Total Fail" Height="130">
                                     <lvc:Gauge x:Name="TotalFailGauge"/>
-                                </GroupBox>
+                                </GroupBox>-->
 
-                                <GroupBox Header="Yield" Height="130">
+                                <!--<GroupBox Header="Yield" Height="130">
                                     <lvc:Gauge x:Name="TotalYieldGauge"/>
-                                </GroupBox>
+                                </GroupBox>-->
                             </StackPanel>
 
 
@@ -240,7 +240,7 @@
                                     </Grid.RowDefinitions>
 
                                     <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0 45">
-                                        <Image Source="D:\Source\HMI_Team\Dexcom_System1_2\PentagonHMI\Images\MainHMI\Turret.png" SnapsToDevicePixels="True" Width="400" Height="500"/>
+                                        <Image Source="D:\Source\HMI_Team\Dexcom_System1_2\PentagonHMI\Images\MainHMI\Turret.png" SnapsToDevicePixels="True" Width="400" Height="557"/>
 
                                         <Canvas Visibility="Visible">
                                             <StackPanel Canvas.Top="220" Canvas.Left="-460">
@@ -255,16 +255,22 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="380" Canvas.Left="-410">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                                                <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                                                <UniformGrid Columns="2">
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_1"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_2"/>
-                                                </UniformGrid>
+                                            <StackPanel Canvas.Top="380" Canvas.Left="-410" HorizontalAlignment="Center" Height="66" VerticalAlignment="Top">
+                                                <StackPanel Background="{Binding Background}" Height="50">
+                                                    <!--<TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <Separator/>
+                                                    <TextBlock Text="DUT Station Status" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                                                    <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                    <UniformGrid Columns="2">
+                                                        <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_1"/>
+                                                        <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_2"/>
+                                                    </UniformGrid>
+                                                </StackPanel>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="450" Canvas.Left="-244">
+                                            <StackPanel Canvas.Top="450" Canvas.Left="-234">
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid Columns="2">
@@ -328,7 +334,7 @@
                                     </WrapPanel>
 
                                     <!-- DUT Socket Status Table -->
-                                    <ItemsControl x:Name="ItemsControl_SocketStatus"
+                                    <!--<ItemsControl x:Name="ItemsControl_SocketStatus"
                                              Grid.Row="1"
                                              Margin="0 0 0 0"
                                              VirtualizingPanel.VirtualizationMode="Recycling"
@@ -352,7 +358,7 @@
                                                         <RowDefinition Height="*"/>
                                                     </Grid.RowDefinitions>
 
-                                                    <!-- Data Type Title -->
+                                                    --><!-- Data Type Title --><!--
                                                     <VirtualizingStackPanel Grid.Row="1" Grid.Column="0">
                                                         <Border BorderThickness="1" BorderBrush="Black">
                                                             <TextBlock Text="{Binding NestHeader}" HorizontalAlignment="Center"/>
@@ -457,7 +463,7 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                    </ItemsControl>-->
                                 </Grid>
                             </GroupBox>
                         </Grid>

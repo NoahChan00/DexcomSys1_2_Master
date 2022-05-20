@@ -30,8 +30,10 @@ namespace PentagonHMI.ChildControls
         const string Tag_L_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
         const string Tag_R_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
         const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
-        const string Tag_L_Slot = "Tray_Shuttle_Left_Slot_Tracking";
-        const string Tag_R_Slot = "Tray_Shuttle_Right_Slot_Tracking";
+        const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
+        const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking"; //Length 90
+        const string Tag_L_Slot = "Tray_Shuttle_Left_Slot_Tracking";//Length 16
+        const string Tag_R_Slot = "Tray_Shuttle_Right_Slot_Tracking";//Length 16
 
         int Row = 0;
         int Col = 0;
@@ -70,9 +72,9 @@ namespace PentagonHMI.ChildControls
             PRow = 9;
             PCol = 10;
 
-            var Battery_Type = 6;  
+            BatType = 6;  
 
-            switch(Battery_Type)
+            switch(BatType)
             {
                 //Maxell
                 case 2:
@@ -148,8 +150,8 @@ namespace PentagonHMI.ChildControls
                 {
                     var LAry = OPCore.Read<int[]>(Tag_L_TopVision, typeof(int), 100);
                     var RAry = OPCore.Read<int[]>(Tag_R_TopVision, typeof(int), 100);
-                    var PCBAray = OPCore.Read<int[]>(Tag_L_TopVision, typeof(int), 100);
-                    var BatAray = OPCore.Read<int[]>(Tag_R_TopVision, typeof(int), 100);
+                    var PCBAray = OPCore.Read<int[]>(Tag_PCBA_Slot, typeof(int), 100);
+                    var BatAray = OPCore.Read<int[]>(Tag_Btry_Slot, typeof(int), 100);
 
 
                     if (LAry != null)

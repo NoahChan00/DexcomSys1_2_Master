@@ -118,7 +118,7 @@ namespace PentagonHMI.ChildControls
                     foreach (var DUT in DUTs)
                     {
 #if !DEBUG
-                        var TotalPasses = OPCore.Read<int[]>(DUT.TagTotalPass, typeof(int), DUT.Length);
+                        var TotalPasses = OPCore.Read<string[]>(DUT.TagTotalPass, typeof(string), DUT.Length);
                         var TotalFails = OPCore.Read<string[]>(DUT.TagTotalFail, typeof(string), DUT.Length);
                         var Yields = OPCore.Read<string[]>(DUT.TagYield, typeof(string), DUT.Length);
                         //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
@@ -251,11 +251,17 @@ namespace PentagonHMI.ChildControls
 
             set
             {
-                int x = 100;
-                var p = Convert.ToInt32(TotalPass);
-                var f = Convert.ToInt32(TotalFail);
+                //int x = 100;
+                //var p = Convert.ToInt32(TotalPass);
+                //var f = Convert.ToInt32(TotalFail);
 
-                var result = (Convert.ToDouble(TotalPass) / Convert.ToDouble(TotalFail)) * x;
+                //var result = (Convert.ToDouble(TotalPass) / Convert.ToDouble(TotalFail)) * x;
+                //RaisePropertyChanged(nameof(result));
+                if (Yield != value)
+                {
+                    yield =value + "%";
+                    RaisePropertyChanged(nameof(Yield));
+                }
             }
         }
     }

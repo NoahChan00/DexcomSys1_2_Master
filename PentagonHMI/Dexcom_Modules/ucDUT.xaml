@@ -85,7 +85,7 @@
                                                             <TextBlock FontSize="15" Text="Socket Disable" HorizontalAlignment="Center"/>
                                                             <ToggleButton Name="SocketDisable" MouseLeftButtonDown="TControl_Click" Height="30"/>
                                                         </StackPanel>
-                                                        </StackPanel>
+                                                    </StackPanel>
                                                 </Border>-->
 
                                                 <Border Margin="5 2 5 0" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1" MaxHeight="500">

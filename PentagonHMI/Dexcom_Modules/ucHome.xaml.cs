@@ -9,6 +9,9 @@ using System.Reflection;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Media.Imaging;
+using System.Data;
+using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 using PentagonHMI.Info;
 
 namespace PentagonHMI.ChildControls
@@ -121,13 +124,8 @@ namespace PentagonHMI.ChildControls
         const string Tag_Station6_Stat = "Station_6_DUT_Status";
         const string Tag_Station7_Stat = "Station_7_DUT_Status";
         const string Tag_Station8_Stat = "Station_8_DUT_Status";
-        Dictionary<int, string> dic_StationDUTStatus = new Dictionary<int, string>
-        {
-            [0] = "No Unit",
-            [1] = "Not Tested",
-            [10] = "Pass",
-            [11] = "Fail",
-        };
+        ObservableCollection<DUTStationStatModel> DUTs = new ObservableCollection<DUTStationStatModel>();
+        Dictionary<int, Brush> Dic_StationStatColor = new Dictionary<int, Brush>();
 
         public ucHome(LogicClasses.Main main)
         {
@@ -139,6 +137,8 @@ namespace PentagonHMI.ChildControls
 #endif
             Initialize();
             main.Home_OnUpdate += HomeUpdate;
+
+
         }
 
         private void Initialize()
@@ -159,8 +159,22 @@ namespace PentagonHMI.ChildControls
 #else
             //grd_KeyenceVision.Children.Add(new ucKeyenceVision(_Main));
 #endif
-        }
 
+            //BrushConverter bc = new BrushConverter();
+            //DataTable dtDUTLegends = SQLer.Exec_DTSelect("SELECT * FROM DUTStation_Status");
+            //foreach (DataRow dr in dtDUTLegends.Rows)
+            //{
+            //    Dic_StationStatColor.Add(Convert.ToInt32(dr["Status"]), (Brush)bc.ConvertFromString(dr["Colour"].ToString()));
+            //    StationStatLegends.Children.Add(new TextBlock
+            //    {
+            //        FontSize = 15,
+            //        Text = dr["Status"].ToString() + " " + dr["Description"].ToString(),
+            //        Background = Dic_StationStatColor[Convert.ToInt32(dr["Status"])],
+            //        Padding = new Thickness(15, 2, 15, 2),
+            //        Margin = new Thickness(2)
+            //    });
+            //}
+        }
 
         private void HomeUpdate()
         {
@@ -226,16 +240,88 @@ namespace PentagonHMI.ChildControls
                     //tbk_top6_Err.Text = OPCore.Read<int>(Tag_Top6ErrCode_int).ToString();
 
                     //Station Status
-                    OPCore.Read<int>(Tag_Station1_Stat);
-                    OPCore.Read<int>(Tag_Station2_Stat);
-                    OPCore.Read<int>(Tag_Station3_Stat);
-                    OPCore.Read<int>(Tag_Station4_Stat);
-                    OPCore.Read<int>(Tag_Station5_Stat);
-                    OPCore.Read<int>(Tag_Station6_Stat);
-                    OPCore.Read<int>(Tag_Station7_Stat);
-                    OPCore.Read<int>(Tag_Station8_Stat);
+                    var Stat1 = OPCore.Read<int>(Tag_Station1_Stat, typeof(int));
+                    var Stat2 = OPCore.Read<int>(Tag_Station2_Stat, typeof(int));
+                    var Stat3 = OPCore.Read<int>(Tag_Station3_Stat, typeof(int));
+                    var Stat4 = OPCore.Read<int>(Tag_Station4_Stat, typeof(int));
+                    var Stat5 = OPCore.Read<int>(Tag_Station5_Stat, typeof(int));
+                    var Stat6 = OPCore.Read<int>(Tag_Station6_Stat, typeof(int));
+                    var Stat7 = OPCore.Read<int>(Tag_Station7_Stat, typeof(int));
+                    var Stat8 = OPCore.Read<int>(Tag_Station8_Stat, typeof(int));
 
+                    //    if (Stat1 != null)
+                    //        foreach (var item in ugrd_LeftTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat1[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat2 != null)
+                    //        foreach (var item in ugrd_RightTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat2[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat3 != null)
+                    //        foreach (var item in pcba_SlotTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat3[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat4 != null)
+                    //        foreach (var item in bat_SlotTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat4[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat5 != null)
+                    //        foreach (var item in bat_SlotTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat5[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat6 != null)
+                    //        foreach (var item in bat_SlotTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat6[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat7 != null)
+                    //        foreach (var item in bat_SlotTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat7[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
+
+                    //    if (Stat8 != null)
+                    //        foreach (var item in bat_SlotTray.Children)
+                    //        {
+                    //            TextBlock tb = item as TextBlock;
+                    //            string status = Stat8[Convert.ToInt32(tb.Tag) - 1].ToString();
+                    //            tb.Text = status;
+                    //            tb.Background = Dic_StatusColor[status];
+                    //        }
                 }
+
                 catch (Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
@@ -251,6 +337,23 @@ namespace PentagonHMI.ChildControls
         public void Dispose()
         {
             _Main.HomePageON = false;
+        }
+
+        public class DUTStationStatModel : ViewModelBase
+        {
+            private Brush background = Brushes.Gray;
+            public Brush Background
+            {
+                get { return background; }
+                set
+                {
+                    if (background != value)
+                    {
+                        background = value;
+                        RaisePropertyChanged(nameof(Background));
+                    }
+                }
+            }
         }
 
         private void End_Click(object sender, RoutedEventArgs e)
