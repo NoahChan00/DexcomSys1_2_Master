@@ -47,7 +47,7 @@ namespace PentagonHMI.ChildControls
             _Main = main;
 #if !DEBUG
             if (!OPCore.Connect(Info.OPC.IP)) return;
-            btn_ServerTest.Visibility = Visibility.Collapsed;
+            //btn_ServerTest.Visibility = Visibility.Collapsed;
 #endif
             Initialize();
             main.OnLotUpdate += Update;

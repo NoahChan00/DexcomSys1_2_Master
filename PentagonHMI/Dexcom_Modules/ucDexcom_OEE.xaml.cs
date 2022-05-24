@@ -241,17 +241,35 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Shift_OEE_DINT_IdealRunTime.Name,
                            Group =  Grouping.sec
                         },
+                        // new InfoBlockModel
+                        //{
+                        //   Title = "Total Pass",
+                        //   Key =  Tag_Shift_OEE_DINT_Total_Pass.Name,
+                        //   Group =  Grouping.number
+                        //},
+                        // new InfoBlockModel
+                        //{
+                        //   Title = "Total Fail",
+                        //   Key = Tag_Shift_OEE_DINT_Total_Fail.Name,
+                        //   Group =  Grouping.number
+                        //},
                          new InfoBlockModel
                         {
-                           Title = "Total Pass",
-                           Key =  Tag_Shift_OEE_DINT_Total_Pass.Name,
-                           Group =  Grouping.number
+                           Title = "Performance",
+                           Key = Tag_Shift_OEE_DINT_Performance.Name,
+                           Group =  Grouping.percent
                         },
                          new InfoBlockModel
                         {
-                           Title = "Total Fail",
-                           Key = Tag_Shift_OEE_DINT_Total_Fail.Name,
-                           Group =  Grouping.number
+                           Title = "Quality",
+                           Key = Tag_Shift_OEE_DINT_Quality.Name,
+                           Group =  Grouping.percent
+                        },
+                         new InfoBlockModel
+                        {
+                           Title = "OEE",
+                           Key = Tag_Shift_OEE_DINT_OEE.Name,
+                           Group = Grouping.number 
                         },
                     },
                 };
@@ -301,20 +319,20 @@ namespace PentagonHMI.ChildControls
                         },
                         new InfoBlockModel
                         {
-                           Title = "Scheduled Down Time",
+                           Title = "Schedule Downtime",
                            Key = Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
                         new InfoBlockModel
                         {
-                           Title = "Unscheduled Down Time",
+                           Title = "Unschedule Downtime",
                            Key = Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
 
                         },
                         new InfoBlockModel
                         {
-                           Title = "Non Scheduled Time",
+                           Title = "Non Schedule",
                            Key = Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
@@ -354,18 +372,24 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Lot_OEE_dint_SprintUPH.Name,
                            Group =  Grouping.sec
                         },
-                         new InfoBlockModel
+                        new InfoBlockModel
                         {
-                           Title = "Total Pass",
-                           Key =  Tag_Lot_OEE_dint_Total_Pass.Name,
-                           Group =  Grouping.number
+                           Title = "Quality",
+                           Key = Tag_Lot_OEE_dint_Quality.Name,
+                           Group =  Grouping.percent
                         },
-                         new InfoBlockModel
-                        {
-                           Title = "Total Fail",
-                           Key = Tag_Lot_OEE_dint_Total_Fail.Name,
-                           Group =  Grouping.number
-                        },
+                        // new InfoBlockModel
+                        //{
+                        //   Title = "Total Pass",
+                        //   Key =  Tag_Lot_OEE_dint_Total_Pass.Name,
+                        //   Group =  Grouping.number
+                        //},
+                        // new InfoBlockModel
+                        //{
+                        //   Title = "Total Fail",
+                        //   Key = Tag_Lot_OEE_dint_Total_Fail.Name,
+                        //   Group =  Grouping.number
+                        //},
                     }
                 };
             }

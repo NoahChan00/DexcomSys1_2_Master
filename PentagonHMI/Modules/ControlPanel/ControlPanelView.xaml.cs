@@ -210,7 +210,7 @@ namespace PentagonHMI
                         ResetWrite = "HMI_Tags.ResetButton";
                         InitializeRead = "MC_System_Tags.MachineRunning";
                         InitializeWrite = "MC_System_Tags.MachineInit";
-                        
+
                         if (_Main.MachineName.ToUpper() == "FINAL INSPECTION")
                         {
                             StartRead = "OutPnP_HMI_Tags.StartButton";
