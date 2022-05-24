@@ -201,14 +201,14 @@
                     <Grid x:Name="grd_KeyenceVision">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="300"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
 
                             <!-- Legend -->
                             <StackPanel>
-                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center" Width="101">
+                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center" Width="250">
                                     <UniformGrid Columns="1" VerticalAlignment="Top">
                                         <Button BorderBrush="Gray" Content="No Unit"/>
                                         <Button BorderBrush="Blue" Content="Not Tested"/>
@@ -243,7 +243,7 @@
                                         <Image Source="D:\Source\HMI_Team\Dexcom_System1_2\PentagonHMI\Images\MainHMI\Turret.png" SnapsToDevicePixels="True" Width="400" Height="557"/>
 
                                         <Canvas Visibility="Visible">
-                                            <StackPanel Canvas.Top="220" Canvas.Left="-460">
+                                            <StackPanel Canvas.Top="250" Canvas.Left="-460">
                                                 <StackPanel>
                                                     <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                     <TextBlock Text="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -255,22 +255,16 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="380" Canvas.Left="-410" HorizontalAlignment="Center" Height="66" VerticalAlignment="Top">
-                                                <StackPanel Background="{Binding Background}" Height="50">
-                                                    <!--<TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                                                    <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                                                    <Separator/>
-                                                    <TextBlock Text="DUT Station Status" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-                                                    <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                                                    <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
-                                                    <UniformGrid Columns="2">
-                                                        <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_1"/>
-                                                        <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_2"/>
-                                                    </UniformGrid>
-                                                </StackPanel>
+                                            <StackPanel Canvas.Top="400" Canvas.Left="-420">
+                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                                <UniformGrid Columns="2">
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_2"/>
+                                                </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="450" Canvas.Left="-234">
+                                            <StackPanel Canvas.Top="480" Canvas.Left="-234">
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid Columns="2">
@@ -279,7 +273,7 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="380" Canvas.Left="-55">
+                                            <StackPanel Canvas.Top="400" Canvas.Left="-45">
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid>
@@ -288,7 +282,7 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="220" Canvas.Left="-10">
+                                            <StackPanel Canvas.Top="250" Canvas.Left="0">
                                                 <StackPanel>
                                                     <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                     <TextBlock Text="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
@@ -300,7 +294,7 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="80" Canvas.Left="-55">
+                                            <StackPanel Canvas.Top="100" Canvas.Left="-55">
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
 
@@ -310,7 +304,7 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="-25" Canvas.Left="-232">
+                                            <StackPanel Canvas.Top="0" Canvas.Left="-234">
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid Columns="2">
@@ -319,7 +313,7 @@
                                                 </UniformGrid>
                                             </StackPanel>
 
-                                            <StackPanel Canvas.Top="80" Canvas.Left="-410">
+                                            <StackPanel Canvas.Top="100" Canvas.Left="-410">
                                                 <StackPanel>
                                                     <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                     <TextBlock Text="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
