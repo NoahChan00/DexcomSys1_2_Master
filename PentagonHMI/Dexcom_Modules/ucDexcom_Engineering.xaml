@@ -209,7 +209,7 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
-                                    <TextBlock Text="Statoin Cycle Mode : " Width="200"/>
+                                    <TextBlock Text="Station Cycle Mode : " Width="200"/>
                                     <ToggleButton Name="LR_tg_StationCycleMode" MouseLeftButtonDown="TControl_Click"/>
                                 </StackPanel>
 

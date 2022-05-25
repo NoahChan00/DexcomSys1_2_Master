@@ -97,7 +97,7 @@ namespace PentagonHMI.ChildControls
                     //TagTotalPass = Convert.ToInt32(dr["TotalPass"]),
                     TagTotalPass = dr["TotalPass"].ToString(),
                     TagTotalFail = dr["TotalFail"].ToString(),
-                    TagYield = (dr ["Yield"] ).ToString(),
+                    TagYield = (dr ["Yield"] ).ToString()
                     //TagStatus = dr["Status"].ToString()
                 };
 
@@ -118,14 +118,14 @@ namespace PentagonHMI.ChildControls
                     foreach (var DUT in DUTs)
                     {
 #if !DEBUG
-                        var TotalPasses = OPCore.Read<string[]>(DUT.TagTotalPass, typeof(string), DUT.Length);
-                        var TotalFails = OPCore.Read<string[]>(DUT.TagTotalFail, typeof(string), DUT.Length);
+                        var TotalPasses = OPCore.Read<string[]>(DUT.Tag_TurretA_Pass, typeof(string), DUT.Length);
+                        var TotalFails = OPCore.Read<string[]>(DUT.Tag_TurretA_Fail, typeof(string), DUT.Length);
                         var Yields = OPCore.Read<string[]>(DUT.TagYield, typeof(string), DUT.Length);
                         //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
 #else                   
                         var TotalPasses = new string[] { "2", "4", "6", "8", "10","12", "14", "16" };
                         var TotalFails = new string[] { "1", "3", "5", "7", "9", "11", "13", "15" };
-                        var Yields = new string[] { "22", "44", "66", "88", "11", "33", "55", "77"};
+                        var Yields = new string[] { "22", "44", "66", "88", "11", "33", "55", "77" };
 #endif
                         for (int i = 0; i < DUT.Sockets.Count; i++)
                         {
@@ -156,7 +156,14 @@ namespace PentagonHMI.ChildControls
         private void socketToggleButton_Click(object sender, RoutedEventArgs e)
         {
             FileLogger.logButton(DUT, "Socket Disable", MethodBase.GetCurrentMethod().ToString());
-            OPCore.Write(Tag_SocketDisableA_bool, true);
+            OPCore.Write(Tag_SocketDisableA_bool, false);
+            OPCore.Write(Tag_SocketDisableB_bool, false);
+            OPCore.Write(Tag_SocketDisableC_bool, false);
+            OPCore.Write(Tag_SocketDisableD_bool, false);
+            OPCore.Write(Tag_SocketDisableE_bool, false);
+            OPCore.Write(Tag_SocketDisableF_bool, false);
+            OPCore.Write(Tag_SocketDisableG_bool, false);
+            OPCore.Write(Tag_SocketDisableH_bool, false);
         }
     }
 
@@ -259,7 +266,7 @@ namespace PentagonHMI.ChildControls
                 //RaisePropertyChanged(nameof(result));
                 if (Yield != value)
                 {
-                    yield =value + "%";
+                    yield = value + "%";
                     RaisePropertyChanged(nameof(Yield));
                 }
             }

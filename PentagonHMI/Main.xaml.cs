@@ -32,7 +32,7 @@ namespace PentagonHMI
 
     public enum StationType
     {
-        ISLAND_00,
+        SYSTEM_01,
         ARCADIA_Main,
         VISION,
         NA,
@@ -134,8 +134,8 @@ namespace PentagonHMI
 
                 _Main = new LogicClasses.Main();
 
-                //lbl_HMIVersion.Content = Assembly.GetExecutingAssembly().GetName().Version;
-                string PLCversion = _Main.OPC.Read<string>("HMI_PLCVersion");
+                lbl_HMIVersion.Content = Assembly.GetExecutingAssembly().GetName().Version;
+                //string PLCversion = _Main.OPC.Read<string>("HMI_PLCVersion");
                 string Visversion = _Main.OPC.Read<string>("HMI_VisionVersion");
 
                 //lbl_PLCVersion.Content = string.IsNullOrWhiteSpace(PLCversion)? "V1.0.0.0": PLCversion;
