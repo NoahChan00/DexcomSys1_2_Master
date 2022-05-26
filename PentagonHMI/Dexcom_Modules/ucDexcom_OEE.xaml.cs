@@ -1,21 +1,25 @@
-﻿using System.Windows.Controls;
-using GalaSoft.MvvmLight;
-using System;
-using System.Collections.ObjectModel;
+﻿using GalaSoft.MvvmLight;
 using LiveCharts;
 using LiveCharts.Wpf;
-using System.Windows.Media;
 using Logix;
-using System.Linq;
+using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Utilities;
 
 namespace PentagonHMI.ChildControls
 {
     public partial class ucDexcom_OEE : UserControl, IDisposable
     {
         Controller ctrl = new Controller(Info.OPC.IP);
-        public Func<ChartPoint, string> PointLabel { get; set; }
+        public Func<ChartPoint, string> PointLabel
+        {
+            get; set;
+        }
         private LogicClasses.Main _Main;
         public OEEModel OEEList = new OEEModel();
         private Brush Color1 = Brushes.MediumSeaGreen;
@@ -269,7 +273,7 @@ namespace PentagonHMI.ChildControls
                         {
                            Title = "OEE",
                            Key = Tag_Shift_OEE_DINT_OEE.Name,
-                           Group = Grouping.number 
+                           Group = Grouping.number
                         },
                     },
                 };
@@ -541,19 +545,19 @@ namespace PentagonHMI.ChildControls
                     item.Value = FormatString(item.Group, _tag.Value);
             };
 
-            if(OEEGrp == OEEType.Shift)
+            if (OEEGrp == OEEType.Shift)
             {
                 Productive = Tag_Shift_OEE_DINT_MachineProductiveTimeAccSec.ToDouble();
                 Standby = Tag_Shift_OEE_DINT_MachineStandbyTimeAccSec.ToDouble();
                 Engineering = Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec.ToDouble();
 
-                Shift =  Tag_Shift_OEE_DINT_MachineUpTimeAccSec.ToDouble();
+                Shift = Tag_Shift_OEE_DINT_MachineUpTimeAccSec.ToDouble();
                 NonSchedule = Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec.ToDouble();
 
                 TotalPass = Tag_Shift_OEE_DINT_Total_Pass.ToDouble();
                 TotalFail = Tag_Shift_OEE_DINT_Total_Fail.ToDouble();
             }
-            else if(OEEGrp == OEEType.Lot)
+            else if (OEEGrp == OEEType.Lot)
             {
                 Productive = Tag_Lot_OEE_dint_MachineProductiveTimeAccSec.ToDouble();
                 Standby = Tag_Lot_OEE_dint_MachineStandbyTimeAccSec.ToDouble();
@@ -567,7 +571,13 @@ namespace PentagonHMI.ChildControls
             }
 
             IdealCycleTime = _Main.IdealCycleTime;
-            OEEList.OEEInfo.First(x => x.Title == "Ideal Cycle Time").Value = FormatString(Grouping.sec, _Main.IdealCycleTime);
+            //<<<<<
+            //OEEList.OEEInfo.First(x => x.Title == "Ideal Cycle Time").Value = FormatString(Grouping.sec, _Main.IdealCycleTime);
+            //=====
+            InfoBlockModel model = OEEList.OEEInfo.FirstOrDefault(x => x.Title.Contains("Ideal Cycle Time"));
+            if (model != null)
+                model.Value = FormatString(Grouping.sec, IdealCycleTime);
+            //>>>>>
 
             TotalCount = TotalPass + TotalFail;
 
@@ -669,30 +679,45 @@ namespace PentagonHMI.ChildControls
 
         private string FormatString(Grouping grouping, object Value)
         {
-            string strValue = Value?.ToString() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(strValue)) return strValue;
+            try
+            {
+                string strValue = Value?.ToString() ?? string.Empty;
+                if (string.IsNullOrWhiteSpace(strValue))
+                    return strValue;
 
-            if (grouping.Equals(Grouping.sec))
-            {
-                TimeSpan Ts = TimeSpan.FromSeconds(Convert.ToDouble(strValue));
-                int DayHours = Ts.Days * 24;
-                return string.Format("{0:D2}h:{1:D2}m:{2:D2}s", Ts.Hours + DayHours, Ts.Minutes, Ts.Seconds);
+                if (grouping.Equals(Grouping.sec))
+                {
+                    TimeSpan Ts = TimeSpan.FromSeconds(Convert.ToDouble(strValue));
+                    int DayHours = Ts.Days * 24;
+                    return string.Format("{0:D2}h:{1:D2}m:{2:D2}s", Ts.Hours + DayHours, Ts.Minutes, Ts.Seconds);
+                }
+                else if (grouping.Equals(Grouping.number))
+                {
+                    return strValue;
+                }
+                else if (grouping.Equals(Grouping.stringtime))
+                {
+                    try
+                    {
+                        return string.IsNullOrWhiteSpace(strValue) ? "" : new DateTime(Convert.ToInt32(strValue.Substring(0, 4)),
+                            Convert.ToInt32(strValue.Substring(4, 2)),
+                            Convert.ToInt32(strValue.Substring(6, 2)),
+                            Convert.ToInt32(strValue.Substring(8, 2)),
+                            Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
+                    }
+                    catch (Exception)
+                    {
+                        return "Error DateTime";
+                    }
+                }
+                else if (grouping.Equals(Grouping.percent))
+                {
+                    return Math.Round(Convert.ToDouble(strValue), 2).ToString() + "%";
+                }
             }
-            else if (grouping.Equals(Grouping.number))
+            catch (Exception e)
             {
-                return strValue;
-            }
-            else if (grouping.Equals(Grouping.stringtime))
-            {
-                return string.IsNullOrWhiteSpace(strValue) ? "" : new DateTime(Convert.ToInt32(strValue.Substring(0, 4)),
-                             Convert.ToInt32(strValue.Substring(4, 2)),
-                             Convert.ToInt32(strValue.Substring(6, 2)),
-                             Convert.ToInt32(strValue.Substring(8, 2)),
-                             Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
-            }
-            else if (grouping.Equals(Grouping.percent))
-            {
-                return Math.Round(Convert.ToDouble(strValue), 2).ToString() + "%";
+                FileLogger.logError(e.Message, e.StackTrace);
             }
             return "NA";
         }
@@ -770,7 +795,10 @@ namespace PentagonHMI.ChildControls
             private ObservableCollection<PieChartBlockModel> _PieChartInfo = new ObservableCollection<PieChartBlockModel>();
             public ObservableCollection<PieChartBlockModel> PieChartInfo
             {
-                get { return _PieChartInfo; }
+                get
+                {
+                    return _PieChartInfo;
+                }
                 set
                 {
                     if (_PieChartInfo != value)
@@ -784,7 +812,10 @@ namespace PentagonHMI.ChildControls
             private ObservableCollection<InfoBlockModel> _oeeinfo = new ObservableCollection<InfoBlockModel>();
             public ObservableCollection<InfoBlockModel> OEEInfo
             {
-                get { return _oeeinfo; }
+                get
+                {
+                    return _oeeinfo;
+                }
                 set
                 {
                     if (_oeeinfo != value)
@@ -798,14 +829,23 @@ namespace PentagonHMI.ChildControls
 
         public class PieChartBlockModel : ViewModelBase
         {
-            public OEEChart Chart { get; set; }
-            public string Formula { get; set; }
+            public OEEChart Chart
+            {
+                get; set;
+            }
+            public string Formula
+            {
+                get; set;
+            }
 
             private string _Title = "NA";
 
             public string Title
             {
-                get { return _Title; }
+                get
+                {
+                    return _Title;
+                }
                 set
                 {
                     if (_Title != value)
@@ -819,7 +859,10 @@ namespace PentagonHMI.ChildControls
             private string _Value = "NA";
             public string Value
             {
-                get { return _Value; }
+                get
+                {
+                    return _Value;
+                }
                 set
                 {
                     if (_Value != value)
@@ -833,7 +876,10 @@ namespace PentagonHMI.ChildControls
             private SeriesCollection _PieInfo = new SeriesCollection();
             public SeriesCollection PieInfo
             {
-                get { return _PieInfo; }
+                get
+                {
+                    return _PieInfo;
+                }
                 set
                 {
                     if (_PieInfo != value)
@@ -847,13 +893,22 @@ namespace PentagonHMI.ChildControls
 
         public class InfoBlockModel : ViewModelBase
         {
-            public string Key { get; set; }
-            public Grouping Group { get; set; }
+            public string Key
+            {
+                get; set;
+            }
+            public Grouping Group
+            {
+                get; set;
+            }
 
             private string _Title = string.Empty;
             public string Title
             {
-                get { return _Title; }
+                get
+                {
+                    return _Title;
+                }
                 set
                 {
                     if (_Title != value)
@@ -867,7 +922,10 @@ namespace PentagonHMI.ChildControls
             private string _Value = "NA";
             public string Value
             {
-                get { return _Value; }
+                get
+                {
+                    return _Value;
+                }
                 set
                 {
                     if (_Value != value)
