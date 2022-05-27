@@ -241,7 +241,7 @@
                 </StackPanel>
             </Border>
 
-            <ComboBox Name="cbx_Selected" SelectionChanged="ModuleSeletion" HorizontalAlignment="Right" FontWeight="Bold" Padding="10" FontSize="20" VerticalAlignment="Top" Margin="20 5" Width="300"/>
+            <ComboBox Name="cbx_Selected" SelectionChanged="ModuleSelection" HorizontalAlignment="Right" FontWeight="Bold" Padding="10" FontSize="20" VerticalAlignment="Top" Margin="20 5" Width="300"/>
 
         </Grid>
     </ScrollViewer>

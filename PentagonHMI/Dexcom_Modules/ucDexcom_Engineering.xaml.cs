@@ -123,7 +123,7 @@ namespace PentagonHMI
                 OPCore.Write(model.PLCAddress, (sender as NumUpDown).Value, typeof(int));
         }
 
-        private void ModuleSeletion(object sender, SelectionChangedEventArgs e)
+        private void ModuleSelection(object sender, SelectionChangedEventArgs e)
         {
             ModuleNow = cbx_Selected?.SelectedValue?.ToString() ?? "";
             tbc_Main.SelectedIndex = cbx_Selected.SelectedIndex;
