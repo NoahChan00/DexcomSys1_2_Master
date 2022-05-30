@@ -10,7 +10,7 @@ namespace PentagonHMI
 {
     public class TagName
     {
-        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         public Dictionary<string, string> Dic_Key_Address = new Dictionary<string, string>();
         public TagName()
         {

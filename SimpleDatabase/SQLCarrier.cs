@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Data;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 
@@ -16,15 +16,15 @@ namespace SimpleDatabase
             DT_Select
         }
 
-        public SQLCarrier(string ServerName, string InitialCatalog = "gdb_DexcomSystem1", bool PersistSecurityInfo = false,
-            string Password = "Pss123321!", string UserID = "sa")
+        public SQLCarrier(string ServerName = "127.0.0.1", string InitialCatalog = "gdb_DexcomSystem1", bool IntegratedSecurity = true, bool PersistSecurityInfo = false,
+            string UserID = "", string Password = "")
         {
-            //Str_ConnectionString =
-            //    $"Persist Security Info = {(PersistSecurityInfo ? $"True;User ID = {UserID};Password = {Password};" : "False;")}" +
-            //    $"Data Source = {ServerName};" +
-            //    $"Integrated Security = true; " +
-            //    $"Initial Catalog = {InitialCatalog};";
-            Str_ConnectionString = "Persist Security Info = False;Data Source = 191.168.0.171;Integrated Security = False; Initial Catalog = gdb_DexcomSystem1;User ID=sa;Password=Pss123321!;";
+            Str_ConnectionString =
+                $"Persist Security Info = {(PersistSecurityInfo ? "True;" : "False;")}" +
+                $"Integrated Security = {(IntegratedSecurity ? "True;" : $"False;User ID = {UserID};Password = {Password};")}" +
+                $"Data Source = {ServerName};" +
+                $"Initial Catalog = {InitialCatalog};";
+            //Str_ConnectionString = "Persist Security Info = False;Data Source = 191.168.0.171;Integrated Security = False; Initial Catalog = gdb_DexcomSystem1;User ID=sa;Password=Pss123321!;";
         }
 
         public bool isConnected()
@@ -34,7 +34,8 @@ namespace SimpleDatabase
                 using (SqlConnection Conn = new SqlConnection(Str_ConnectionString))
                 {
                     Conn.Open();
-                    if (Conn.State == ConnectionState.Open) return true;
+                    if (Conn.State == ConnectionState.Open)
+                        return true;
                 }
             }
             catch { }
@@ -108,7 +109,8 @@ namespace SimpleDatabase
 
         private T SQLAccess<T>(string strCmd, SQLMode mode)
         {
-            SqlTransaction Tran = null; object obj_Result = default;
+            SqlTransaction Tran = null;
+            object obj_Result = default;
             try
             {
                 using (SqlConnection Conn = new SqlConnection(Str_ConnectionString))

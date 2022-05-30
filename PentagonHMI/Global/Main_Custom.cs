@@ -18,7 +18,7 @@ namespace PentagonHMI
     {
         private LogicClasses.Main _Main;
         private VanillaDB.DataDBCall DBCall;
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
+        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         string Connstr = Properties.Settings.Default.DatabaseConnectionString.ToString();
         private Dictionary<string, string> shuttleBarcodeDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> robotGripperDictionary = new Dictionary<string, string>();

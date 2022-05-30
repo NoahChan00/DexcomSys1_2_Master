@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Logix;
+using PentagonHMI.UserControls;
+using SimpleDatabase;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.IO;
-using Logix;
-using System.Collections.Generic;
-using PentagonHMI.UserControls;
-using System.Data;
 using System.Windows.Controls.Primitives;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Reflection;
-using SimpleDatabase;
 using Utilities;
 
 namespace PentagonHMI.ChildControls
@@ -19,7 +19,7 @@ namespace PentagonHMI.ChildControls
     {
         #region Fields
         Dictionary<int, UCMotorPage> MotorPages = new Dictionary<int, UCMotorPage>();
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
+        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         LogicClasses.Main _MainConnection;
         string ErrMsg = string.Empty;
         string strMotor => "MotorPage";
@@ -247,7 +247,7 @@ namespace PentagonHMI.ChildControls
                             Homing = dr["Homing"].ToString().Trim(),
                             ErrorID = dr["ErrorID"].ToString().Trim(),
 
-                            Proportion = string.IsNullOrWhiteSpace(dr["Proportion"].ToString().Trim())? 1 : Convert.ToDouble(dr["Proportion"].ToString()),
+                            Proportion = string.IsNullOrWhiteSpace(dr["Proportion"].ToString().Trim()) ? 1 : Convert.ToDouble(dr["Proportion"].ToString()),
                             NegMax = string.IsNullOrWhiteSpace(dr["NegMax"].ToString().Trim()) ? -1000000 : (int)dr["NegMax"],
                             PosMax = string.IsNullOrWhiteSpace(dr["PosMax"].ToString().Trim()) ? 1000000 : (int)dr["PosMax"],
                             SpeedMax = string.IsNullOrWhiteSpace(dr["SpeedMax"].ToString().Trim()) ? 100 : (int)dr["SpeedMax"],
@@ -292,7 +292,8 @@ namespace PentagonHMI.ChildControls
             "Select [DisplayName],[IO], [TagName]," +
             $"(Select Count(*) from Motor_IO b where b.StationID = {StationID} and MotorAxis = {MotorAxis} " +
             $"and TagName = a.TagName) as 'Check' From IO a Where a.StationID = {StationID} ");
-            foreach (DataColumn col in dt.Columns) col.ReadOnly = false;
+            foreach (DataColumn col in dt.Columns)
+                col.ReadOnly = false;
             return dt;
         }
 

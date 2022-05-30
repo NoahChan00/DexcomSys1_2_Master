@@ -34,6 +34,7 @@ namespace PentagonHMI.Classes
             }
         }
 
+        /// Hardcode database name.
         /// <summary>
         /// INSERT INTO [gdb].[dbo].[TorqueDriverModel] (Name,Value,DataType)
         /// 

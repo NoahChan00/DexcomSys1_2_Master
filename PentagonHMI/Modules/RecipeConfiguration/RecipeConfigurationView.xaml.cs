@@ -1,10 +1,8 @@
-﻿using PentagonHMI.Info;
-using SimpleDatabase;
+﻿using SimpleDatabase;
 using SimpleOPC;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Utilities;
@@ -21,7 +19,7 @@ namespace PentagonHMI
         private List<RecipeConfigurationMPNModel> editRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
         private List<RecipeConfigurationMPNModel> currentRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
         private List<RecipeConfigurationModel> recipeConfigurationList = new List<RecipeConfigurationModel>();
-        private SQLCarrier sQLCarrier = new SQLCarrier(SQL.ServerName, SQL.DatabaseName);
+        private SQLCarrier sQLCarrier = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         private const string mPNListTagName = "HMI_Recipe_MPN_List_Recipe[{0},{1}]";
         #endregion
 
@@ -61,7 +59,7 @@ namespace PentagonHMI
             {
                 editRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
                 EditMPNListDataGrid.ItemsSource = editRecipeConfigurationMPNList;
-                
+
                 currentRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
                 CurrentMPNListDataGrid.ItemsSource = currentRecipeConfigurationMPNList;
             }
@@ -70,13 +68,13 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void initializeRecipeConfiguration()
         {
             try
             {
                 recipeConfigurationList = new List<RecipeConfigurationModel>();
-                
+
                 DataTable dataTable = sQLCarrier.Exec_DTSelect(
                     $"SELECT [{nameof(RecipeConfigurationModel.RecipeName)}]," +
                     $"[{nameof(RecipeConfigurationModel.MPNMaxCount)}]," +
@@ -99,7 +97,7 @@ namespace PentagonHMI
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
-                
+
                 RecipeConfigurationComboBox.ItemsSource = recipeConfigurationList;
                 RecipeConfigurationComboBox.SelectedIndex = 0;
             }
@@ -202,7 +200,7 @@ namespace PentagonHMI
         private void saveSettingsButton_Click(object sender, RoutedEventArgs e)
         {
             bool value = true;
-            
+
             try
             {
                 for (int i = 0; i < editRecipeConfigurationMPNList.Count; i++)
@@ -236,7 +234,7 @@ namespace PentagonHMI
                     RecipeConfigurationComboBox.SelectedIndex = -1;
                     RecipeConfigurationComboBox.SelectedIndex = currentRecipeConfigurationComboBoxSelectedIndex;
                 }
-                
+
                 MessageBox.Show(value == true ? "Settings saved." : "Failed to save settings.");
             }
             catch (Exception exception)

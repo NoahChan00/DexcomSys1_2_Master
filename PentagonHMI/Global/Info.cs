@@ -1,6 +1,4 @@
 ﻿using Logix;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace PentagonHMI.Info
@@ -10,7 +8,11 @@ namespace PentagonHMI.Info
     {
 
         public static string ServerName => @Classes.GlobalFunctions.ServerName;
-        public static string DatabaseName => "gdb_DexcomSystem1";
+        public static string DatabaseName => @Classes.GlobalFunctions.DatabaseName;
+        public static bool IntegratedSecurity => Classes.GlobalFunctions.IntegratedSecurity;
+        public static bool PersistSecurityInfo => Classes.GlobalFunctions.PersistSecurityInfo;
+        public static string UserID => @Classes.GlobalFunctions.UserID;
+        public static string Password => @Classes.GlobalFunctions.Password;
 
         public static class Select
         {
@@ -70,7 +72,7 @@ namespace PentagonHMI.Info
         {
             public static TagGroup Setting = new TagGroup { MyObject = Key.Setting, Active = false };
             public static TagGroup OEE = new TagGroup { MyObject = Key.OEE, Active = false };
-            public static TagGroup Lifter = new TagGroup { MyObject = Key.Lifter, Active = true};
+            public static TagGroup Lifter = new TagGroup { MyObject = Key.Lifter, Active = true };
             public static TagGroup TStation = new TagGroup { MyObject = Key.TStation, Active = false };
         }
     }

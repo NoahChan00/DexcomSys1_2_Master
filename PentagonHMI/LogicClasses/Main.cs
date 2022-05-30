@@ -20,7 +20,7 @@ namespace PentagonHMI.LogicClasses
         public TagName TN = new TagName();
         public Main_Custom Custom;
         public INGEAR_Opc OPC = new INGEAR_Opc();
-        public SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
+        public SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         public SQLCarrier MainSQLer;
         public DataTable dt_Config;
         public MachineInformationView machineInformationView = null;
@@ -192,7 +192,7 @@ namespace PentagonHMI.LogicClasses
                 //if (GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.ARCADIA_Main)
                 if (GlobalFunctions.ProjectType == ProjectType.ARCADIA || GlobalFunctions.ProjectType == ProjectType.TLA)
                 {
-                    MainSQLer = new SQLCarrier(GlobalFunctions.ServerName, "gdb_DexcomSystem1", false);
+                    MainSQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
                     //MainSQLer = new SQLCarrier("DESKTOP-MAIN", "gdb", true, "123321", "sa");
                 }
 

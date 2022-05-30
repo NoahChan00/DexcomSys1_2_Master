@@ -1,12 +1,13 @@
-﻿using System;
+﻿using SimpleDatabase;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
-using System.Threading;
-using System.Windows;
-using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Net.NetworkInformation;
-using SimpleDatabase;
+using System.Threading;
+using System.Windows;
 
 namespace PentagonHMI.Classes
 {
@@ -29,7 +30,13 @@ namespace PentagonHMI.Classes
         public static string TotalLifter = Properties.Settings.Default.TotalLifter.ToString();
         public static ProjectType ProjectType = (ProjectType)System.Enum.Parse(typeof(ProjectType), Properties.Settings.Default.ProjectType, true);
         public static StationType StationType = (StationType)System.Enum.Parse(typeof(StationType), Properties.Settings.Default.StationType, true);
-        public static string ServerName = Properties.Settings.Default.ServerName.ToString();
+        public static SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString.ToString());
+        public static string ServerName = sqlConnectionStringBuilder.DataSource;
+        public static string DatabaseName = sqlConnectionStringBuilder.InitialCatalog;
+        public static bool IntegratedSecurity = sqlConnectionStringBuilder.IntegratedSecurity;
+        public static bool PersistSecurityInfo = sqlConnectionStringBuilder.PersistSecurityInfo;
+        public static string UserID = sqlConnectionStringBuilder.UserID;
+        public static string Password = sqlConnectionStringBuilder.Password;
         public static string FeatureFlag = Properties.Settings.Default.FeatureFlag.ToString();
         public static string ScannerIP = Properties.Settings.Default.ScannerIP.ToString();
         public static string ScannerPort = Properties.Settings.Default.ScannerPort.ToString();
@@ -46,7 +53,8 @@ namespace PentagonHMI.Classes
         //public static string PalletRejectInt = "ON";// PentagonHMI.Properties.Settings.Default.PalletRejectInt.ToString();
         #endregion
 
-        public static SQLCarrier aSQL = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
+        public static SQLCarrier aSQL = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+
         public static void LoadErrorList()
         {
             //string ErrMsg = "";
@@ -60,11 +68,11 @@ namespace PentagonHMI.Classes
 
                 dtalarm = aSQL.Exec_DTSelect($"SELECT [AlmCode],[AlmType],[ModuleCode],[AlmDesc],[AlmAction] FROM [Alarms_List] WHERE [StationID] = {StationName}");
 
-                if(dtalarm != null)
-                foreach (DataRow row in dtalarm.Rows)
-                {
-                    ErrorListDict.Add(Convert.ToInt32(row["AlmCode"]), row["ModuleCode"] + ";" + row["AlmDesc"] + ";" + row["AlmAction"]);
-                }
+                if (dtalarm != null)
+                    foreach (DataRow row in dtalarm.Rows)
+                    {
+                        ErrorListDict.Add(Convert.ToInt32(row["AlmCode"]), row["ModuleCode"] + ";" + row["AlmDesc"] + ";" + row["AlmAction"]);
+                    }
 
                 ds.Clear();
 
@@ -113,12 +121,18 @@ namespace PentagonHMI.Classes
             //Load PLC IP address
             switch (LocalIP)
             {
-                case "191.168.3.44": return "191.168.3.114";
-                case "191.168.3.45": return "191.168.3.114";
-                case "191.168.3.1": return "191.168.3.141";
-                case "191.168.3.2": return "191.168.3.142";
-                case "191.168.3.3": return "191.168.3.143";
-                case "192.168.3.1": return "192.168.3.100";
+                case "191.168.3.44":
+                    return "191.168.3.114";
+                case "191.168.3.45":
+                    return "191.168.3.114";
+                case "191.168.3.1":
+                    return "191.168.3.141";
+                case "191.168.3.2":
+                    return "191.168.3.142";
+                case "191.168.3.3":
+                    return "191.168.3.143";
+                case "192.168.3.1":
+                    return "192.168.3.100";
 
                 default:
                     {
@@ -143,7 +157,7 @@ namespace PentagonHMI.Classes
         public static void SetLanguageDictionary()
         {
             ResourceDictionary dictResource = new ResourceDictionary();
-         //   bool IsVer2BellyBand = IsVersion2BB();
+            //   bool IsVer2BellyBand = IsVersion2BB();
 
             //App.Current.Resources.MergedDictionaries.Clear();
             switch (Thread.CurrentThread.CurrentCulture.ToString())
@@ -174,9 +188,9 @@ namespace PentagonHMI.Classes
                     break;
             }
 
-           
 
-   
+
+
             if (dictResource != null)
             {
                 dictResource = null;
@@ -184,8 +198,8 @@ namespace PentagonHMI.Classes
         }
         #endregion
 
-    
 
-     
+
+
     }
 }

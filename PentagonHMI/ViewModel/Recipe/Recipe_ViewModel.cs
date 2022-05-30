@@ -5,7 +5,8 @@ namespace PentagonHMI.ViewModel.Recipe
 {
     class Recipe_ViewModel
     {
-        private static SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, "COCO");
+        // Previously using Database COCO, pending verify
+        private static SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
 
         public static DataTable GetFamily_OutputPartNumber()
         {
