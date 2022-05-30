@@ -44,6 +44,7 @@ namespace PentagonHMI.ChildControls
         int BatType = 0;
 
         Dictionary<string, Brush> Dic_ResultColor = new Dictionary<string, Brush>();
+        Dictionary<int, string> Dic_TrayMapSize = new Dictionary<int, string>();
 
         public ucTrayMap(LogicClasses.Main main)
         {
@@ -99,7 +100,7 @@ namespace PentagonHMI.ChildControls
 #endif
 
             BrushConverter bc = new BrushConverter();
-            DataTable dt = SQLer.Exec_DTSelect("Select * From TrayMapColor");
+            DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
             foreach (DataRow dr in dt.Rows)
             {
                 Dic_ResultColor.Add(dr["result"].ToString(), (Brush)bc.ConvertFromString(dr["color"].ToString()));
@@ -110,6 +111,8 @@ namespace PentagonHMI.ChildControls
                     Background = Dic_ResultColor[dr["result"].ToString()]
                 });
             }
+
+            DataTable datatable = SQLer.Exec_DTSelect("SELECT * FROM TrayMap");
 
             ugrd_LeftTray.Rows = Row;
             ugrd_LeftTray.Columns = Col;

@@ -16,8 +16,7 @@
                 <Color x:Key="Color.MedtronicBranding.MedtronicBlue">#004B87</Color>
                 <Color x:Key="Color.MedtronicBranding.CobaltBlue">#0085CA</Color>
 
-                <Style x:Key="ToggleButtonContentTextbox"
-               TargetType="TextBlock">
+                <Style x:Key="ToggleButtonContentTextbox" TargetType="TextBlock">
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="VerticalAlignment" Value="Stretch" />
                 </Style>
@@ -32,18 +31,18 @@
                 <TextBlock x:Key="OffContent"
                    Style="{StaticResource ToggleButtonContentTextbox}"
                    Text="Off" />
-                <Style x:Key="OnContentControl"
-               TargetType="ContentControl">
+                <Style x:Key="OnContentControl" TargetType="ContentControl">
                     <Setter Property="HorizontalAlignment" Value="Center" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <TextBlock FontFamily="Wingdings 2"
-                                   FontSize="24"
-                                   FontWeight="Bold"
-                                   Foreground="White"
-                                   Style="{StaticResource ToggleButtonContentTextbox}"/>
+                                <TextBlock
+                                       FontSize="14"
+                                       FontWeight="Bold"
+                                       Foreground="White"
+                                       Text="ON"
+                                       Style="{StaticResource ToggleButtonContentTextbox}"/>
                                 <!--Text="P" />-->
                             </ControlTemplate>
                         </Setter.Value>
@@ -51,15 +50,18 @@
                     <Setter Property="VerticalAlignment" Value="Center" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                 </Style>
-                <Style x:Key="OffContentControl"
-               TargetType="ContentControl">
+                <Style x:Key="OffContentControl" TargetType="ContentControl">
                     <Setter Property="HorizontalAlignment" Value="Center" />
                     <Setter Property="HorizontalContentAlignment" Value="Center" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <TextBlock FontSize="24"
+                                <TextBlock
+                                   FontSize="14"
                                    Foreground="White"
+                                   FontWeight="Bold"
+                                   Text="OFF"
+                                   Padding="7"
                                    Style="{StaticResource ToggleButtonContentTextbox}"/>
                                 <!--Text="X" />-->
                             </ControlTemplate>

@@ -27,12 +27,12 @@ namespace PentagonHMI.LogicClasses
         public TcpIpServer PLCEventLogListener = null;
 
         public string UserAccessLevel = "Operator";
-        public string MachineStatus = "NA";
-        public string MachineName = "NA";
+        public string MachineStatus = "N/A";
+        public string MachineName = "N/A";
         public double IdealCycleTime = 0;
         public string VisionIP = string.Empty;
         public string CheckPath = "";
-        public string Cur_ShiftID = "NA";
+        public string Cur_ShiftID = "N/A";
         public Dictionary<int, string> Dic_Reject_Index_Reason = new Dictionary<int, string>();
         public bool OFFDay = false;
         private string StationUPHTag = "OEE_Tags.dint_Hourly_UPH[0]";

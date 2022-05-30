@@ -9,7 +9,7 @@ using System.Reflection;
 using LiveCharts;
 using LiveCharts.Wpf;
 using System.Windows.Media.Imaging;
-using System.Data;
+using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
 using PentagonHMI.Info;
@@ -18,18 +18,24 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucHome : UserControl, IDisposable
     {
+
+        #region PrivateFields
+        private ControlPanelModel promptPanelModel = new ControlPanelModel();
+        private LogicClasses.Main _Main;
+        #endregion
+
         SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
         SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
 
         private LogicClasses.Main _Main;
-        
+
         //Show Turret Image
         public BitmapImage ImageToShow { get; set; }
 
         //General
         const string Home = "Home";
 
-        //Lot 
+        //Lot
         const string Tag_PurgeLot_bool = "Lot_Info.HMI_Purge_Lot_Bit";
         const string Tag_EndLot_bool = "Lot_Info.HMI_End_Lot_Bit";
         const string Tag_LotMode_int = "Lot_Info.HMI_Lot_Mode";
@@ -370,8 +376,18 @@ namespace PentagonHMI.ChildControls
 
         private void promptToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            FileLogger.logButton(Home, "Prompt", MethodBase.GetCurrentMethod().ToString());
-            OPCore.Write(Tag_PromptBox_bool, true);
+            bool check = OPCore.Read<bool>(Tag_PurgeLot_bool, typeof(bool));
+
+            if (check != false)
+            {
+                FileLogger.logButton(Home, "End Lot", MethodBase.GetCurrentMethod().ToString());
+                OPCore.Write(Tag_PromptBox_bool, true);
+            }
+            else
+            {
+                FileLogger.logButton(Home, "Continue", MethodBase.GetCurrentMethod().ToString());
+                OPCore.Write(Tag_PromptBox_bool, false);
+            }
         }
 
     }

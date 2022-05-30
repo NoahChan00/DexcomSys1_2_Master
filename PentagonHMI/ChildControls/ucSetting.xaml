@@ -256,6 +256,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
+        
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Border CornerRadius="16,16,16,16"  BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="2" Margin="0,0,0,0">
@@ -368,7 +369,6 @@
                                                 </DataGrid.Columns>
                                             </DataGrid>
                                         </StackPanel>
-
                                     </StackPanel>
                                 </Border>
 
@@ -451,10 +451,8 @@
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
-                        
                     </StackPanel>
                 </ScrollViewer>
-
             </Grid>
         </Border>
     </ScrollViewer>

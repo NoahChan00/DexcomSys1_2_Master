@@ -42,18 +42,18 @@ namespace PentagonHMI
         {
             ModuleNames = new List<string>()
             {
-                "Left Rack","Right Rack",
+                "System_1","System_2",
             };
             cbx_Selected.ItemsSource = ModuleNames;
 
             dic_EngMajor = new Dictionary<object, Control>();
 
-            //Left Rack
-            dic_EngMajor.Add(LR_tg_StationJogMode, new Control
+            //PCBA Robot
+            dic_EngMajor.Add(PCBA_tg_StationJogMode, new Control
             {
                 AccessGroups = new string[] { "technician", "engineer" },
                 Conditions = new string[] { "" },
-                DisplayPanel = LR_tg_StationJogMode,
+                DisplayPanel = PCBA_tg_StationJogMode,
                 Module = ModuleNames[0],
                 PLCAddress = "HMI_StationJogMode.LeftRack",
             });
@@ -123,7 +123,7 @@ namespace PentagonHMI
                 OPCore.Write(model.PLCAddress, (sender as NumUpDown).Value, typeof(int));
         }
 
-        private void ModuleSeletion(object sender, SelectionChangedEventArgs e)
+        private void ModuleSelection(object sender, SelectionChangedEventArgs e)
         {
             ModuleNow = cbx_Selected?.SelectedValue?.ToString() ?? "";
             tbc_Main.SelectedIndex = cbx_Selected.SelectedIndex;
