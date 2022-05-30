@@ -551,7 +551,7 @@
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="Event Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
 
-                        <StackPanel Name="RejectIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="Reject" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed"  Name="RejectIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="Reject" Margin="5" Orientation="Vertical">
                             <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="Reject History"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
@@ -581,27 +581,27 @@
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="OEE Shift Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
 
-                        <StackPanel Name="TestCSVIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="TESTCSV" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed" Name="TestCSVIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="TESTCSV" Margin="5" Orientation="Vertical">
                             <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="Test CSV Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
 
-                        <StackPanel Name="TestStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="TESTSTN" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed" Name="TestStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="TESTSTN" Margin="5" Orientation="Vertical">
                             <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="Test Stn Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
 
-                        <StackPanel Name="LaserStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="LASERSTN" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed" Name="LaserStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="LASERSTN" Margin="5" Orientation="Vertical">
                             <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="Laser Stn Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
 
-                        <StackPanel Name="UnldStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="UNLDSTN" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed" Name="UnldStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="UNLDSTN" Margin="5" Orientation="Vertical">
                             <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="Unld Stn Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
 
-                        <StackPanel Name="TnRStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="TNRSTN" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed" Name="TnRStnIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="TNRSTN" Margin="5" Orientation="Vertical">
                             <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold"  Text="TnR Stn Log"  VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
@@ -616,7 +616,7 @@
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="UPH Log" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
                         
-                        <StackPanel Visibility="Collapsed" Name="DryrunIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="Dryrun" Margin="5" Orientation="Vertical">
+                        <StackPanel Name="DryrunIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="Dryrun" Margin="5" Orientation="Vertical">
                             <Image Margin=" 5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="Dryrun Log" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel> 
