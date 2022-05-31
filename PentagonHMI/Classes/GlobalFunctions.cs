@@ -43,7 +43,7 @@ namespace PentagonHMI.Classes
         public static string LocalIP = Properties.Settings.Default.localIP.ToString();
         public static string LocalPort = Properties.Settings.Default.LocalPort.ToString();
         public static string login_Timeout = Properties.Settings.Default.LogoutTimeSec.ToString();
-        public static string PLC_IPAddress = "193.168.3.2"; //Properties.Settings.Default.PLC_IPAddress.ToString(); 
+        public static string PLC_IPAddress = Properties.Settings.Default.PLC_IPAddress.ToString(); 
         public static string PLC_Path = Properties.Settings.Default.PLC_Path.ToString();
         public static string PLC_Timeout = Properties.Settings.Default.PLC_Timeout.ToString();
         public static string OEEIdealCycleTimeSec = Properties.Settings.Default.OEEIdealCycleTimeSec.ToString();
