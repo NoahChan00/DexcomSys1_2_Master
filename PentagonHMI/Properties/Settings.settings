@@ -76,7 +76,7 @@
       <Value Profile="(Default)">193.168.3.3</Value>
     </Setting>
     <Setting Name="PLC_Timeout" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">3000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

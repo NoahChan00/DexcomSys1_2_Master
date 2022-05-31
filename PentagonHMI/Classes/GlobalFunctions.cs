@@ -22,7 +22,7 @@ namespace PentagonHMI.Classes
         public static bool StartLot = false;
         public static string LotID = "";
         public static VanillaDB.DataDBCall DBCall = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString.ToString());
-        public static OleDbConnection gl_conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory() + @"\Database.mdb");
+        //public static OleDbConnection gl_conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory() + @"\Database.mdb");
         public static string StationName = Properties.Settings.Default.Station.ToString();
         public static string SubStationName = Properties.Settings.Default.SubStation.ToString();
         public static string Lifter1Station = Properties.Settings.Default.Lifter1Station.ToString();

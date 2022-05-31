@@ -300,7 +300,7 @@ namespace PentagonHMI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3000")]
         public string PLC_Timeout {
             get {
                 return ((string)(this["PLC_Timeout"]));
