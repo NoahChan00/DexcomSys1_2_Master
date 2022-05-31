@@ -63,6 +63,16 @@ namespace PentagonHMI.Enum
             Barcode,TicMark,OQC
         }
 
+        public enum EngineeringTabs
+        {
+            PCBARobot,
+            BatteryRobot,
+            UnloadRobot,
+            PCBARack,
+            BatteryRack,
+            RotaryTable
+
+        }
      
     }
 }
