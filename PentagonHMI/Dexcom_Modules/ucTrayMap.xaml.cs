@@ -59,15 +59,15 @@ namespace PentagonHMI.ChildControls
 
         private void Initialize()
         {
-#if !DEBUG
-            Row = OPCore.Read<int>(Tag_TrayRow);
-            Col = OPCore.Read<int>(Tag_TrayCol);
-            PRow = OPCore.Read<int>(Tag_TrayRow);
-            PCol = OPCore.Read<int>(Tag_TrayCol);
-            BRow = OPCore.Read<int>(Tag_TrayRow);
-            BCol = OPCore.Read<int>(Tag_TrayCol);
-            BatType = OPCore.Read<int>(Tag_Btry_dint);
-#else
+//#if !DEBUG
+//            Row = OPCore.Read<int>(Tag_TrayRow);
+//            Col = OPCore.Read<int>(Tag_TrayCol);
+//            PRow = OPCore.Read<int>(Tag_TrayRow);
+//            PCol = OPCore.Read<int>(Tag_TrayCol);
+//            BRow = OPCore.Read<int>(Tag_TrayRow);
+//            BCol = OPCore.Read<int>(Tag_TrayCol);
+//            BatType = OPCore.Read<int>(Tag_Btry_dint);
+//#else
             Row = 4;
             Col = 4;
             PRow = 9;
@@ -97,7 +97,7 @@ namespace PentagonHMI.ChildControls
                     break;
             }
 
-#endif
+//#endif
 
             BrushConverter bc = new BrushConverter();
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
