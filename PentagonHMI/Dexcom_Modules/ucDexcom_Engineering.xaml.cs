@@ -46,18 +46,18 @@ namespace PentagonHMI
         {
             ModuleNames = new List<string>()
             {
-                "System_1","System_2",
+                "System_01","System_02",
             };
             cbx_Selected.ItemsSource = ModuleNames;
 
             dic_EngMajor = new Dictionary<object, Control>();
 
             //PCBA Robot
-            dic_EngMajor.Add(PCBARobot_tg_StationJogMode, new Control
+            dic_EngMajor.Add(InputRobot_tg_StationJogMode, new Control
             {
                 AccessGroups = new string[] { "technician", "engineer" },
                 Conditions = new string[] { "" },
-                DisplayPanel = PCBARobot_tg_StationJogMode,
+                DisplayPanel = InputRobot_tg_StationJogMode,
                 Module = ModuleNames[0],
                 PLCAddress = "HMI_StationJogMode.LeftRack",
             });
@@ -140,6 +140,21 @@ namespace PentagonHMI
                         BtryRack_tg_StationInitDone.IsChecked = initDone;
                         break;
 
+                    case EngineeringTabs.InputRobot:
+                        InputRobot_tg_StationInitDone.IsChecked = initDone;
+                        break;
+
+                    case EngineeringTabs.OutputRobot:
+                        OutputRobot_tg_StationInitDone.IsChecked = initDone;
+                        break;
+
+                    case EngineeringTabs.InputRack:
+                        InputRack_tg_StationInitDone.IsChecked = initDone;
+                        break;
+
+                    case EngineeringTabs.OutputRack:
+                        OutputRack_tg_StationInitDone.IsChecked = initDone;
+                        break;
                 }
             }
 
@@ -186,6 +201,7 @@ namespace PentagonHMI
         }
         #endregion
 
+
         #region Battery_Robot
         private void BtryRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -212,6 +228,13 @@ namespace PentagonHMI
             OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_ColumnNo.Name, (sender as NumUpDown).Value);
         }
 
+        private void BtryRobot_cmb_BtryType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cmb = sender as ComboBox;
+            handle = !cmb.IsDropDownOpen;
+            Handle();
+        }
+
         private void BtryRobot_PlaceTurret_Click(object sender, RoutedEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_PlaceToTurret.Name, true);
@@ -222,6 +245,7 @@ namespace PentagonHMI
             OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_StationStartInit.Name, true);
         }
         #endregion
+
 
         #region Unload_Robot
         private void UnloadRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -265,6 +289,7 @@ namespace PentagonHMI
         }
         #endregion
 
+
         #region PCBA_Rack
         private void PCBARack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
@@ -281,6 +306,7 @@ namespace PentagonHMI
             OPCore.Write(EngineeringPLCTags.Engr_PCBARack_StationStartInit.Name, true);
         }
         #endregion
+
 
         #region Battery_Rack
         private void BtryRack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -299,12 +325,131 @@ namespace PentagonHMI
         }
         #endregion
 
+
         #region Rotary_Table
         private void RotaryTable_TurretIndex_Click(object sender, RoutedEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_RotaryTable_TurretIndex.Name, true);
         }
         #endregion
+
+
+        #region Input_Robot
+        private void InputRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_JogMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void InputRobot_StationCycleMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_StationCycleMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void InputRobot_PickFromLeft_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_PickFromLeft.Name, true);
+        }
+
+        private void InputRobot_PickFromRight_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_PickFromRight.Name, true);
+        }
+
+        private void InputRobot_num_RowNo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_RowNo.Name, (sender as NumUpDown).Value);
+        }
+
+        private void InputRobot_num_ColNo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_ColumnNo.Name, (sender as NumUpDown).Value);
+        }
+
+        private void InputRobot_PlaceTurret_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_PlaceToTurret.Name, true);
+        }
+
+        private void InputRobot_StartInit_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRobot_StationStartInit.Name, true);
+        }
+        #endregion
+
+
+        #region Output_Robot
+        private void OutputRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_JogMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void OutputRobot_StationCycleMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_StationCycleMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void OutputRobot_PickFromTurret_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_PickFromTurret.Name, true);
+        }
+
+        private void OutputRobot_num_RowNo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_RowNo.Name, (sender as NumUpDown).Value);
+        }
+
+        private void OutputRobot_num_ColNo_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_ColumnNo.Name, (sender as NumUpDown).Value);
+        }
+
+        private void OutputRobot_PlaceToTray_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_PlaceToTray.Name, true);
+        }
+
+        private void OutputRobot_StartInit_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_StationStartInit.Name, true);
+        }
+        #endregion
+
+
+        #region Input_Rack
+        private void InputRack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRack_JogMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void InputRack_StationCycleMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRack_StationCycleMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void InputRack_StartInit_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_InputRack_StationStartInit.Name, true);
+        }
+        #endregion
+
+
+        #region Output_Rack
+        private void OutputRack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRack_JogMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void OutputRack_StationCycleMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRack_StationCycleMode.Name, (sender as ToggleButton).IsChecked);
+        }
+
+        private void OutputRack_StartInit_Click(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write(EngineeringPLCTags.Engr_OutputRack_StationStartInit.Name, true);
+        }
+        #endregion
+
 
         //private void Control_Click(object sender, RoutedEventArgs e)
         //{
@@ -326,7 +471,44 @@ namespace PentagonHMI
         private void ModuleSelection(object sender, SelectionChangedEventArgs e)
         {
             ModuleNow = cbx_Selected?.SelectedValue?.ToString() ?? "";
-            tbc_Main.SelectedIndex = cbx_Selected.SelectedIndex;
+
+            if (ModuleNow != "System_01")
+            {
+                tbc_Sub.SelectedIndex = cbx_Selected.SelectedIndex;
+                tbc_Sub.Visibility = Visibility.Visible;
+                tbc_Main.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                tbc_Main.SelectedIndex = cbx_Selected.SelectedIndex;
+                tbc_Main.Visibility = Visibility.Visible;
+                tbc_Sub.Visibility = Visibility.Collapsed;
+              
+            }
+
+        }
+
+        private bool handle = true;
+        private void BtryRobot_cmb_BtryType_DropDownClosed (object sender, EventArgs e)
+        {
+            if (handle)Handle();
+            handle = true;
+        }
+
+        private void Handle()
+        {
+            switch (BtryRobot_cbx_Btrytype.SelectedItem.ToString().Split(new string[] { ":" }, StringSplitOptions.None).Last())
+            {
+                case "Maxell":
+                    OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
+                    break;
+                case "Panansonic":
+                    OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
+                    break;
+                case "Murata":
+                    OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
+                    break;
+            }
         }
     }
 }

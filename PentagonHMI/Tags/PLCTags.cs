@@ -57,8 +57,45 @@ namespace PentagonHMI.Tags
         public static Logix.Tag Engr_BtryRack_StationStartInit = new Logix.Tag { Name = $"System1_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
         #endregion
 
+        #region Input_Robot
+        public static Logix.Tag Engr_InputRobot_JogMode = new Logix.Tag { Name = $"HMI_StationJogMode_InputRobot", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_StationCycleMode = new Logix.Tag { Name = $"HMI_StationCycleMode_InputRobot", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_StationInitStatus = new Logix.Tag { Name = $"System2_MC_Tag.MachineInitDone", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_StationStartInit = new Logix.Tag { Name = $"System2_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_PickFromLeft = new Logix.Tag { Name = $"HMI_Input_PickFromLShuttle", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_PickFromRight = new Logix.Tag { Name = $"HMI_Input_PickFromRShuttle", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_PlaceToTurret = new Logix.Tag { Name = $"HMI_Input_PlaceToTurret", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRobot_RowNo = new Logix.Tag { Name = $"HMI_Input_RowNo", DataType = Logix.Tag.ATOMIC.INT };
+        public static Logix.Tag Engr_InputRobot_ColumnNo = new Logix.Tag { Name = $"HMI_Input_ColumnNo", DataType = Logix.Tag.ATOMIC.INT };
+        #endregion
+
+        #region Output_Robot
+        public static Logix.Tag Engr_OutputRobot_JogMode = new Logix.Tag { Name = $"HMI_StationJogMode_OutputRobot", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRobot_StationCycleMode = new Logix.Tag { Name = $"HMI_StationCycleMode_OutputRobot", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRobot_StationInitStatus = new Logix.Tag { Name = $"System2_MC_Tag.MachineInitDone", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRobot_StationStartInit = new Logix.Tag { Name = $"System2_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRobot_PickFromTurret = new Logix.Tag { Name = $"HMI_Output_PickFromTurret", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRobot_PlaceToTray = new Logix.Tag { Name = $"HMI_Output_PlaceToTray", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRobot_RowNo = new Logix.Tag { Name = $"HMI_Output_RowNo", DataType = Logix.Tag.ATOMIC.INT };
+        public static Logix.Tag Engr_OutputRobot_ColumnNo = new Logix.Tag { Name = $"HMI_Output_ColumnNo", DataType = Logix.Tag.ATOMIC.INT };
+        #endregion
+
+        #region Input_Rack
+        public static Logix.Tag Engr_InputRack_JogMode = new Logix.Tag { Name = $"HMI_StationJogMode_InputRack", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRack_StationCycleMode = new Logix.Tag { Name = $"HMI_StationCycleMode_InputRack", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRack_StationInitStatus = new Logix.Tag { Name = $"System2_MC_Tag.MachineInitDone", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_InputRack_StationStartInit = new Logix.Tag { Name = $"System2_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
+        #endregion
+
+        #region Output_Rack
+        public static Logix.Tag Engr_OutputRack_JogMode = new Logix.Tag { Name = $"HMI_StationJogMode_OutputRack", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRack_StationCycleMode = new Logix.Tag { Name = $"HMI_StationCycleMode_OutputRack", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRack_StationInitStatus = new Logix.Tag { Name = $"System2_MC_Tag.MachineInitDone", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_OutputRack_StationStartInit = new Logix.Tag { Name = $"System2_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
+        #endregion
+
         #region Rotary_Table
-        public static Logix.Tag Engr_RotaryTable_TurretIndex = new Logix.Tag { Name = $"HMI_Turret_Index", DataType=Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Engr_RotaryTable_TurretIndex = new Logix.Tag { Name = $"HMI_Turret_Index", DataType = Logix.Tag.ATOMIC.BOOL };
         #endregion
     }
 }

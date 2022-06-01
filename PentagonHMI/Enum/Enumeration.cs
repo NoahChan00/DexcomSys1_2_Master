@@ -70,7 +70,11 @@ namespace PentagonHMI.Enum
             UnloadRobot,
             PCBARack,
             BatteryRack,
-            RotaryTable
+            RotaryTable,
+            InputRobot,
+            OutputRobot,
+            InputRack,
+            OutputRack
 
         }
      
