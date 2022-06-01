@@ -288,7 +288,7 @@ namespace PentagonHMI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("193.168.3.3")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.3.3")]
         public string PLC_IPAddress {
             get {
                 return ((string)(this["PLC_IPAddress"]));

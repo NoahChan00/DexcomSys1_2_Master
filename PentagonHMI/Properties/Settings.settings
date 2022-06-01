@@ -73,7 +73,7 @@
       <Value Profile="(Default)">System_02</Value>
     </Setting>
     <Setting Name="PLC_IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">193.168.3.3</Value>
+      <Value Profile="(Default)">192.168.3.3</Value>
     </Setting>
     <Setting Name="PLC_Timeout" Type="System.String" Scope="User">
       <Value Profile="(Default)">3000</Value>
