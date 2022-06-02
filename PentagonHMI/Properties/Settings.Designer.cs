@@ -239,17 +239,6 @@ namespace PentagonHMI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False;Data Source = UN-FP-CL-P2451\\SQLEXPRESS;Integrated " +
-            "Security = True; Initial Catalog = gdb_DexcomSystem2;")]
-        public string DatabaseConnectionString {
-            get {
-                return ((string)(this["DatabaseConnectionString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("D:\\HMI\\Logs")]
@@ -307,6 +296,17 @@ namespace PentagonHMI.Properties {
             }
             set {
                 this["PLC_Timeout"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False; Data Source = 191.168.0.171; Integrated Security =" +
+            " False; Initial Catalog = gdb_DexcomSystem1; User ID=sa; Password=Pss123321!;")]
+        public string DatabaseConnectionString {
+            get {
+                return ((string)(this["DatabaseConnectionString"]));
             }
         }
     }

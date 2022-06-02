@@ -35,6 +35,7 @@ namespace PentagonHMI
         {
             InitializeComponent();
             _Main = main;
+
 #if !DEBUG
             if (!OPCore.Connect(Info.OPC.IP)) return;
 #endif

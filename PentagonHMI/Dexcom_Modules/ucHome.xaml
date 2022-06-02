@@ -240,7 +240,7 @@
                                     </Grid.RowDefinitions>
 
                                     <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0 45">
-                                        <Image Source="D:\Source\HMI_Team\Dexcom_System1_2\PentagonHMI\Images\MainHMI\Turret.png" SnapsToDevicePixels="True" Width="400" Height="557"/>
+                                        <Image Source="/Images/MainHMI/Turret.png" SnapsToDevicePixels="True" Width="400" Height="557"/>
 
                                         <Canvas Visibility="Visible">
                                             <StackPanel Canvas.Top="250" Canvas.Left="-460">
