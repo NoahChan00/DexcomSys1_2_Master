@@ -8,6 +8,7 @@ using System.IO;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows;
+using Utilities;
 
 namespace PentagonHMI.Classes
 {
@@ -51,9 +52,23 @@ namespace PentagonHMI.Classes
         //public static string CalibrationFlag = "ON";//PentagonHMI.Properties.Settings.Default.CalibrationFlag.ToString();
         //public static string PickRetryPrompt = "ON";// PentagonHMI.Properties.Settings.Default.PickRetryPrompt.ToString();
         //public static string PalletRejectInt = "ON";// PentagonHMI.Properties.Settings.Default.PalletRejectInt.ToString();
+        
+        public static MachineNameType MachineName = MachineNameType.System_01; // Global variable to determine system 1 or system 2
         #endregion
 
         public static SQLCarrier aSQL = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+
+
+        public enum MachineNameType
+        {
+            System_01, System_02
+        }
+        public static void LoadMachineName()
+        {
+            var machineName = aSQL.Exec_Scalar<string>("SELECT Info FROM dbo.Config WHERE Item = 'MachineName'");
+            // If fail to get legit value or connection fail, default to System_01;
+            MachineName = (machineName == MachineNameType.System_02.ToString()) ? MachineNameType.System_02 : MachineNameType.System_01;
+        }
 
         public static void LoadErrorList()
         {

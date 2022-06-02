@@ -150,6 +150,7 @@ namespace PentagonHMI
                 };
 
                 GlobalFunctions.LoadErrorList();
+                GlobalFunctions.LoadMachineName();
 
                 UpdateConfig();
 
