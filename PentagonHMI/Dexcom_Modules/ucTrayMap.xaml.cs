@@ -36,10 +36,12 @@ namespace PentagonHMI.ChildControls
         const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking";//Length 16
         
         //System 2 - Tray Map HMI
-        const string Tag_L_Input_Slot = "Tray_Input_Left_Slot_Tracking";//Length 16
-        const string Tag_R_Input_Slot = "Tray_Input_Right_Slot_Tracking";//Length 16
-        const string Tag_Output_Slot = "Tray_Output_Slot_Tracking";//Length 60
-        const string Output_Change_Tray = "HMI_Output_ReqChangeTray";
+        // New tag from 1.3
+        // PLC tag need index operator, they start from, ignore 0 for this project
+        const string Tag_L_Input_Slot = "LShuttle_Slot_Tracking[1]";//Length 16
+        const string Tag_R_Input_Slot = "RShuttle_Slot_Tracking[1]";//Length 16
+        const string Tag_Output_Slot = "UnloadTray_Slot_Tracking[1]";//Length 60
+        const string Output_Change_Tray = "HMI_Output_ReqChangeTray[1]";
 
         int Row = 0;
         int Col = 0;
@@ -114,12 +116,13 @@ namespace PentagonHMI.ChildControls
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
             foreach (DataRow dr in dt.Rows)
             {
-                Dic_ResultColor.Add(dr["result"].ToString(), (Brush)bc.ConvertFromString(dr["color"].ToString()));
+                //dr["result"] using nchar instead of varchar, trailing white space x 9
+                Dic_ResultColor.Add(dr["result"].ToString().Trim(), (Brush)bc.ConvertFromString(dr["color"].ToString()));
                 Legends.Children.Add(new TextBlock
                 {
                     FontSize = 15,
-                    Text = dr["result"].ToString() + " " + dr["description"].ToString(),
-                    Background = Dic_ResultColor[dr["result"].ToString()]
+                    Text = dr["result"].ToString().Trim() + " " + dr["description"].ToString(),
+                    Background = Dic_ResultColor[dr["result"].ToString().Trim()]
                 });
             }
 
@@ -179,13 +182,13 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
-                    var LAry = OPCore.Read<int[]>(Tag_L_TopVision, typeof(int), 100);
-                    var RAry = OPCore.Read<int[]>(Tag_R_TopVision, typeof(int), 100);
-                    var PCBAry = OPCore.Read<int[]>(Tag_PCBA_Slot, typeof(int), 100);
-                    var BatAry = OPCore.Read<int[]>(Tag_Btry_Slot, typeof(int), 100);
-                    var InputL = OPCore.Read<int[]>(Tag_L_Input_Slot, typeof(int), 100);
-                    var InputR = OPCore.Read<int[]>(Tag_R_Input_Slot, typeof(int), 100);
-                    var OutputAry = OPCore.Read<int[]>(Tag_Output_Slot, typeof(int), 100);
+                    var LAry = OPCore.Read<short[]>(Tag_L_TopVision, typeof(short), 100);
+                    var RAry = OPCore.Read<short[]>(Tag_R_TopVision, typeof(short), 100);
+                    var PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), 100);
+                    var BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), 100);
+                    var InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), 16);
+                    var InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), 16);
+                    var OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), 60);
 
 
                     //if (LAry != null)

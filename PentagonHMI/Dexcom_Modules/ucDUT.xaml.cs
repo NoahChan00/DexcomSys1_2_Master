@@ -63,12 +63,13 @@ namespace PentagonHMI.ChildControls
                 DUTModel DTM = new DUTModel
                 {
                     Name = dr["Name"].ToString(),
+                    // not at db
                     //Length = Num,
                     //TagTotalPass = Convert.ToInt32(dr["TotalPass"]),
-                    TagTotalPass = dr["TotalPass"].ToString(),
-                    TagTotalFail = dr["TotalFail"].ToString(),
-                    TagYield = dr["Yield"].ToString(),
-                    TagSocketDisable = dr["Socket_Disable"].ToString() 
+                    //TagTotalPass = dr["TotalPass"].ToString(),
+                    //TagTotalFail = dr["TotalFail"].ToString(),
+                    //TagYield = dr["Yield"].ToString(),
+                    //TagSocketDisable = dr["Socket_Disable"].ToString() 
                     //TagStatus = dr["Status"].ToString()
                 };
 

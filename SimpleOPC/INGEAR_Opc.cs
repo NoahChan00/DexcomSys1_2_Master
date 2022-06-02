@@ -18,17 +18,14 @@ namespace SimpleOPC
         private static Dictionary<Type, Tag.ATOMIC> Dic_Type_IngearType = new Dictionary<Type, Tag.ATOMIC>
         {
             [typeof(Boolean)] = Tag.ATOMIC.BOOL,
-            [typeof(bool)] = Tag.ATOMIC.BOOL,
-            [typeof(int)] = Tag.ATOMIC.INT,
+            [typeof(Double)] = Tag.ATOMIC.REAL,
             [typeof(Int16)] = Tag.ATOMIC.INT,
             [typeof(Int32)] = Tag.ATOMIC.DINT,
             [typeof(Int64)] = Tag.ATOMIC.LINT,
-            [typeof(object)] = Tag.ATOMIC.OBJECT,
-            [typeof(Single)] = Tag.ATOMIC.REAL,
+            [typeof(Object)] = Tag.ATOMIC.OBJECT,
             [typeof(SByte)] = Tag.ATOMIC.SINT,
+            [typeof(Single)] = Tag.ATOMIC.REAL,
             [typeof(String)] = Tag.ATOMIC.STRING,
-            [typeof(string)] = Tag.ATOMIC.STRING,
-            [typeof(double)] = Tag.ATOMIC.REAL,
         };
 
         public EventHandler OPCUpdate;

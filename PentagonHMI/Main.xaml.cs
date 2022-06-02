@@ -238,7 +238,8 @@ namespace PentagonHMI
 
                 WarningStartsAt = Convert.ToInt32(GetItem("WarningStartsAt").ToString());
                 HasPrinter = Convert.ToBoolean(GetItem("HasPrinter").ToString());
-                _Main.HasRackStatus = Convert.ToBoolean(GetItem("HasRackStatus").ToString());
+                // Not found from Db
+                //_Main.HasRackStatus = Convert.ToBoolean(GetItem("HasRackStatus").ToString());
 
                 if (ProjectType.LIFTER == GlobalFunctions.ProjectType ||
                     (ProjectType.ARCADIA == GlobalFunctions.ProjectType && StationType.VISION == GlobalFunctions.StationType) ||
@@ -509,7 +510,8 @@ namespace PentagonHMI
                 if(EnumWBool != null)
                 warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
 
-#if DEBUG
+#if !DEBUG
+#else
                 alarmLst = "1,2";
                 warningLst = "1,4";
 #endif
