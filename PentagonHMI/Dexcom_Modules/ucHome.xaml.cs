@@ -154,14 +154,13 @@ namespace PentagonHMI.ChildControls
               new PieSeries { Title = "_", Fill = Brushes.Gray, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
             };
 
-#if DEBUG
+#if !DEBUG
+            //grd_KeyenceVision.Children.Add(new ucKeyenceVision(_Main));
+#else
             //Quality
             double QualityPercent = 0.6 * 100;
             Pie_Quality.Series[0].Values[0] = QualityPercent.To2Dcml();
             Pie_Quality.Series[1].Values[0] = 100 - QualityPercent.To2Dcml();
-
-#else
-            //grd_KeyenceVision.Children.Add(new ucKeyenceVision(_Main));
 #endif
 
             //BrushConverter bc = new BrushConverter();
