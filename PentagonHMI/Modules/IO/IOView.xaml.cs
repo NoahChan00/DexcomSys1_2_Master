@@ -25,7 +25,7 @@ namespace PentagonHMI
         };
         private Logix.Tag engineeringModeTag = new Logix.Tag
         {
-            Name = "MC_System_Tags.EngineeringMode",
+            Name = "System2_MC_Tag.EngineeringMode",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
         #endregion

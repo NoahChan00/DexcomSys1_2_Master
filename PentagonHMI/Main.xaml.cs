@@ -33,6 +33,7 @@ namespace PentagonHMI
     public enum StationType
     {
         SYSTEM_01,
+        SYSTEM_02,
         ARCADIA_Main,
         VISION,
         NA,
@@ -149,6 +150,7 @@ namespace PentagonHMI
                 };
 
                 GlobalFunctions.LoadErrorList();
+                GlobalFunctions.LoadMachineName();
 
                 UpdateConfig();
 

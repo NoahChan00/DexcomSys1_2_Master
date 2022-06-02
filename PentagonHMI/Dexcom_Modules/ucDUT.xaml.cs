@@ -89,9 +89,9 @@ namespace PentagonHMI.ChildControls
                     foreach (var DUT in DUTs)
                     {
 #if !DEBUG
-                        var TotalPasses = OPCore.Read<int>(DUT.TagTotalPass, typeof(int));
-                        var TotalFails = OPCore.Read<int>(DUT.TagTotalFail, typeof(int));
-                        var Yields = OPCore.Read<int>(DUT.TagYield, typeof(int));
+                        var TotalPasses = OPCore.Read<int[]>(DUT.TagTotalPass, typeof(int));
+                        var TotalFails = OPCore.Read<int[]>(DUT.TagTotalFail, typeof(int));
+                        var Yields = OPCore.Read<int[]>(DUT.TagYield, typeof(int));
                         var SocketsDisable = OPCore.Read<bool>(DUT.TagSocketDisable, typeof(bool));
                         //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
 #else                   
@@ -101,9 +101,9 @@ namespace PentagonHMI.ChildControls
 #endif
                         for (int i = 0; i < DUT.Sockets.Count; i++)
                         {
-                            DUT.Sockets[i].TotalPass = TotalPasses[i];
-                            DUT.Sockets[i].TotalFail = TotalFails[i];
-                            DUT.Sockets[i].Yield = Yields[i];
+                            DUT.Sockets[i].TotalPass = TotalPasses[i].ToString();
+                            DUT.Sockets[i].TotalFail = TotalFails[i].ToString();
+                            DUT.Sockets[i].Yield = Yields[i].ToString();
                             //DUT.Sockets[i].Background = Dic_ResultColor[Statuses[i]];
                         }
                     }

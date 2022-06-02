@@ -8,6 +8,7 @@ using System.IO;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows;
+using Utilities;
 
 namespace PentagonHMI.Classes
 {
@@ -22,7 +23,7 @@ namespace PentagonHMI.Classes
         public static bool StartLot = false;
         public static string LotID = "";
         public static VanillaDB.DataDBCall DBCall = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString.ToString());
-        public static OleDbConnection gl_conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory() + @"\Database.mdb");
+        //public static OleDbConnection gl_conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory() + @"\Database.mdb");
         public static string StationName = Properties.Settings.Default.Station.ToString();
         public static string SubStationName = Properties.Settings.Default.SubStation.ToString();
         public static string Lifter1Station = Properties.Settings.Default.Lifter1Station.ToString();
@@ -43,7 +44,7 @@ namespace PentagonHMI.Classes
         public static string LocalIP = Properties.Settings.Default.localIP.ToString();
         public static string LocalPort = Properties.Settings.Default.LocalPort.ToString();
         public static string login_Timeout = Properties.Settings.Default.LogoutTimeSec.ToString();
-        public static string PLC_IPAddress = "193.168.3.2"; //Properties.Settings.Default.PLC_IPAddress.ToString(); 
+        public static string PLC_IPAddress = Properties.Settings.Default.PLC_IPAddress.ToString(); 
         public static string PLC_Path = Properties.Settings.Default.PLC_Path.ToString();
         public static string PLC_Timeout = Properties.Settings.Default.PLC_Timeout.ToString();
         public static string OEEIdealCycleTimeSec = Properties.Settings.Default.OEEIdealCycleTimeSec.ToString();
@@ -51,9 +52,23 @@ namespace PentagonHMI.Classes
         //public static string CalibrationFlag = "ON";//PentagonHMI.Properties.Settings.Default.CalibrationFlag.ToString();
         //public static string PickRetryPrompt = "ON";// PentagonHMI.Properties.Settings.Default.PickRetryPrompt.ToString();
         //public static string PalletRejectInt = "ON";// PentagonHMI.Properties.Settings.Default.PalletRejectInt.ToString();
+        
+        public static MachineNameType MachineName = MachineNameType.System_01; // Global variable to determine system 1 or system 2
         #endregion
 
         public static SQLCarrier aSQL = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+
+
+        public enum MachineNameType
+        {
+            System_01, System_02
+        }
+        public static void LoadMachineName()
+        {
+            var machineName = aSQL.Exec_Scalar<string>("SELECT Info FROM dbo.Config WHERE Item = 'MachineName'");
+            // If fail to get legit value or connection fail, default to System_01;
+            MachineName = (machineName == MachineNameType.System_02.ToString()) ? MachineNameType.System_02 : MachineNameType.System_01;
+        }
 
         public static void LoadErrorList()
         {

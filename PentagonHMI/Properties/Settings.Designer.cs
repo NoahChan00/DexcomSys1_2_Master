@@ -12,7 +12,7 @@ namespace PentagonHMI.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -95,29 +95,6 @@ namespace PentagonHMI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False;Data Source =UM-FS-CV-SQLPSS;Integrated Security = " +
-            "true; Initial Catalog = gdb_DexcomSystem1;")]
-        public string DatabaseConnectionString {
-            get {
-                return ((string)(this["DatabaseConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\HMI\\")]
-        public string LogLocation {
-            get {
-                return ((string)(this["LogLocation"]));
-            }
-            set {
-                this["LogLocation"] = value;
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("191.168.0.171")]
@@ -175,18 +152,6 @@ namespace PentagonHMI.Properties {
             }
             set {
                 this["TotalLifter"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ARCADIA")]
-        public string ProjectType {
-            get {
-                return ((string)(this["ProjectType"]));
-            }
-            set {
-                this["ProjectType"] = value;
             }
         }
         
@@ -274,9 +239,56 @@ namespace PentagonHMI.Properties {
             }
         }
         
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False;Data Source = UN-FP-CL-P2451\\SQLEXPRESS;Integrated " +
+            "Security = True; Initial Catalog = gdb_DexcomSystem2;")]
+        public string DatabaseConnectionString {
+            get {
+                return ((string)(this["DatabaseConnectionString"]));
+            }
+        }
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("193.168.3.02")]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\HMI\\Logs")]
+        public string LogLocation {
+            get {
+                return ((string)(this["LogLocation"]));
+            }
+            set {
+                this["LogLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Dexcom")]
+        public string ProjectType {
+            get {
+                return ((string)(this["ProjectType"]));
+            }
+            set {
+                this["ProjectType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("System_02")]
+        public string StationType {
+            get {
+                return ((string)(this["StationType"]));
+            }
+            set {
+                this["StationType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.3.3")]
         public string PLC_IPAddress {
             get {
                 return ((string)(this["PLC_IPAddress"]));
@@ -295,18 +307,6 @@ namespace PentagonHMI.Properties {
             }
             set {
                 this["PLC_Timeout"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("ARCADIA_MAIN")]
-        public string StationType {
-            get {
-                return ((string)(this["StationType"]));
-            }
-            set {
-                this["StationType"] = value;
             }
         }
     }
