@@ -402,6 +402,7 @@
     <Compile Include="Modules\TLA_MainConveyorView.xaml.cs">
       <DependentUpon>TLA_MainConveyorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tags\PLCTags.cs" />
     <Compile Include="UserControls\UCAlarmTable.xaml.cs">
       <DependentUpon>UCAlarmTable.xaml</DependentUpon>
     </Compile>

@@ -6,7 +6,7 @@
              xmlns:Num ="clr-namespace:PentagonHMI.Modules.NumUpDown"
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
-    
+
     <UserControl.Resources>
         <Style TargetType="{x:Type ToggleButton}">
             <Style.Resources>
@@ -19,7 +19,7 @@
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
                     <Setter Property="VerticalAlignment" Value="Stretch" />
                 </Style>
-                
+
                 <SolidColorBrush x:Key="ToggleButtonFalseBackground"
                                  Color="{StaticResource Color.Additional.LightGrey}" />
                 <SolidColorBrush x:Key="ToggleButtonTrueBackground"
@@ -48,7 +48,7 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    
+
                     <Setter Property="VerticalAlignment" Value="Center" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                 </Style>
@@ -74,8 +74,8 @@
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                 </Style>
             </Style.Resources>
-            
-            <EventSetter Event="Click" Handler="Control_Click"/>
+
+            <!--<EventSetter Event="Click" Handler="Control_Click"/>-->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -86,7 +86,7 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition Width="{Binding ElementName=TopRow, Path=ActualHeight}" />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Grid.RowDefinitions>
                                     <RowDefinition x:Name="TopRow" />
                                     <RowDefinition />
@@ -101,7 +101,7 @@
                                     Height="{Binding ElementName=MainRow, Path=ActualHeight}"
                                     HorizontalAlignment="Left"
                                     Fill="{StaticResource ToggleButtonTrueBackground}" />
-                                
+
                                 <Ellipse 
                                     x:Name="BackgroundEllipse2"
                                     Grid.Row="0"
@@ -112,7 +112,7 @@
                                     Height="{Binding ElementName=MainRow, Path=ActualHeight}"
                                     HorizontalAlignment="Right"
                                     Fill="{StaticResource ToggleButtonFalseBackground}" />
-                                
+
                                 <Border 
                                     x:Name="BackgroundBorder"
                                     Grid.Row="0"
@@ -120,17 +120,17 @@
                                     Grid.Column="1"
                                     Background="{StaticResource ToggleButtonTrueBackground}" />
                             </Grid>
-                            
+
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition x:Name="AnimationWidth" />
                                     <ColumnDefinition Width="{Binding ElementName=MainRow, Path=ActualHeight}" />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Border x:Name="AnimationSizeBorder" Grid.Column="0" />
                                 <ContentControl Grid.Column="0" Style="{StaticResource OnContentControl}" />
                             </Grid>
-                            
+
                             <Grid HorizontalAlignment="Stretch">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="{Binding ElementName=MainRow, Path=ActualHeight}" />
@@ -139,7 +139,7 @@
 
                                 <ContentControl Grid.Column="1" Style="{StaticResource OffContentControl}" />
                             </Grid>
-                            
+
                             <Grid Background="Transparent">
                                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                                     <Border Width="{Binding ElementName=AnimationSizeBorder, Path=ActualWidth}" />
@@ -152,7 +152,7 @@
                                 </StackPanel>
                             </Grid>
                         </Grid>
-                        
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="False">
                                 <Setter TargetName="BackgroundBorder" Property="Background" Value="{StaticResource ToggleButtonFalseBackground}" />
@@ -172,7 +172,7 @@
                 <StackPanel>
                     <Label Content="Engineering Module" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                     <StackPanel Width="240" Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    <TabControl Name="tbc_Main">
+                    <TabControl Name="tbc_Main" Visibility="Collapsed">
                         <TabItem Header="PCBA Robot" FontSize="20" Visibility="Visible" Tag="PCBARobot">
                             <Grid Margin="30 20 0 0">
                                 <Grid.RowDefinitions>
@@ -193,7 +193,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
@@ -205,49 +205,49 @@
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
-                                
+
+
                                 <Label FontSize="30" FontWeight="Bold" Content="PCBA ROBOT" BorderThickness="0 0 0 2" BorderBrush="Gray"/>
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                                     <TextBlock Text="Station Jog Mode : " Width="200"/>
-                                    <ToggleButton Name="PCBA_tg_StationJogMode" MouseLeftButtonDown="TControl_Click" Height="30"/>
+                                    <ToggleButton Name="PCBARobot_tg_StationJogMode" MouseLeftButtonDown="PCBARobot_StationJogMode_Control_Click" Height="30" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
                                     <TextBlock Text="Station Cycle Mode : " Width="200"/>
-                                    <ToggleButton Name="PCBA_tg_StationCycleMode" MouseLeftButtonDown="TControl_Click" />
+                                    <ToggleButton Name="PCBARobot_tg_StationCycleMode" MouseLeftButtonDown="PCBARobot_StationCycleMode_Control_Click" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="6" Orientation="Horizontal">
-                                    <Button x:Name="PCBA_btn_PickTray" Padding="30 10" Grid.Row="0" Content="Pick From Tray" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="PCBARobot_btn_PickTray" Padding="30 10" Grid.Row="0" Content="Pick From Tray" Background="LimeGreen" Width="275" Click="PCBARobot_PickTray_Click" />
                                 </StackPanel>
 
                                 <UniformGrid Rows="1" Grid.Row="8">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="PCBA_num_PickTray_Row" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="PCBARobot_num_PickTray_Row" Minimum="1" Maximum="100" Width="200" MouseDown="PCBARobot_num_ColNo_MouseDown" />
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="10">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="PCBA_num_PickTray_Col" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="PCBARobot_num_PickTray_Col" Minimum="1" Maximum="100" Width="200" MouseDown="PCBARobot_num_ColNo_MouseDown" />
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="12" Orientation="Horizontal">
-                                    <Button x:Name="PCBA_btn_PlaceTurret" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="PCBARobot_btn_PlaceTurret" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="275" Click="PCBARobot_PlaceTurret_Click"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
-                                    <TextBlock Name="PCBA_FadingText" FontWeight="DemiBold">
-                                        Press 'Start Button' to Continue.
-                                        
-                                        <!-- Animates the text block's opacity. -->
+                                    <TextBlock Name="PCBARobot_FadingText" FontWeight="DemiBold">
+                                        Press 'Start Button' to Continue.                                      
+                                         
+                                        <!--Animates the text block's opacity.-->
                                         <TextBlock.Triggers>
                                             <EventTrigger RoutedEvent="TextBlock.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation
-                                                            Storyboard.TargetName="PCBA_FadingText"
+                                                            Storyboard.TargetName="PCBARobot_FadingText"
                                                             Storyboard.TargetProperty="(TextBlock.Opacity)"
                                                             From="1.0" To="0.0" Duration="0:0:1" 
                                                             AutoReverse="True" RepeatBehavior="Forever" />
@@ -260,15 +260,15 @@
 
                                 <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
                                     <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
-                                    <ToggleButton Name="PCBA_tg_StationInitDone" Width="30" Height="30"/>
+                                    <ToggleButton Name="PCBARobot_tg_StationInitDone" Width="30" Height="30"/>
                                 </StackPanel>
 
-                                <Button x:Name="PCBA_btn_StartInit" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+                                <Button x:Name="PCBARobot_btn_StartInit" Click="PCBARobot_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
 
                             </Grid>
                         </TabItem>
 
-                        <TabItem Header="Battery Robot" FontSize="20" Visibility="Visible" Tag="BatteryRobot">
+                        <TabItem Header="Battery Robot" FontSize="20" Visibility="Visible" Tag="BtryRobot">
                             <Grid Margin="30 20 0 0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -293,7 +293,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="300"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -305,48 +305,48 @@
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                                     <TextBlock Text="Station Jog Mode : " Width="200"/>
-                                    <ToggleButton Name="Btry_tg_StationJogMode" MouseLeftButtonDown="TControl_Click" Height="30"/>
+                                    <ToggleButton Name="BtryRobot_tg_StationJogMode" MouseLeftButtonDown="BtryRobot_StationJogMode_Control_Click" Height="30"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
                                     <TextBlock Text="Station Cycle Mode : " Width="200"/>
-                                    <ToggleButton Name="Btry_tg_StationCycleMode" MouseLeftButtonDown="TControl_Click" />
+                                    <ToggleButton Name="BtryRobot_tg_StationCycleMode" MouseLeftButtonDown="BtryRobot_StationCycleMode_Control_Click" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="6" Orientation="Horizontal">
-                                    <Button x:Name="Btry_btn_PickTray" Padding="30 10" Grid.Row="0" Content="Pick From Tray" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="BtryRobot_btn_PickTray" Click="BtryRobot_PickTray_Click" Padding="30 10" Grid.Row="0" Content="Pick From Tray" Background="LimeGreen" Width="275" />
                                 </StackPanel>
 
                                 <UniformGrid Rows="1" Grid.Row="8">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="Btry_num_PickTray_Row" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="BtryRobot_num_PickTray_Row" MouseDown="BtryRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="10">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="Btry_num_PickTray_Col" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="BtryRobot_num_PickTray_Col" MouseDown="BtryRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="12">
                                     <TextBlock Text="Battery Type : " Width="300"/>
-                                    <ComboBox x:Name="Btry_cbx_Btrytype" FontSize="20" Width="200" Visibility="Visible"/>
+                                    <ComboBox x:Name="BtryRobot_cbx_Btrytype" SelectionChanged="BtryRobot_cmb_BtryType_SelectionChanged" FontSize="20" Width="200" Visibility="Visible"/>
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="14" Orientation="Horizontal">
-                                    <Button x:Name="Btry_btn_PlaceTurret" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="BtryRobot_btn_PlaceTurret" Click="BtryRobot_PlaceTurret_Click" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="275" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
-                                    <TextBlock Name="Btry_FadingText" FontWeight="DemiBold">
+                                    <TextBlock Name="BtryRobot_FadingText" FontWeight="DemiBold">
                                         Press 'Start Button' to Continue.
-                                        
-                                        <!-- Animates the text block's opacity. -->
+                                                                               
+                                        <!--Animates the text block's opacity.-->
                                         <TextBlock.Triggers>
                                             <EventTrigger RoutedEvent="TextBlock.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation
-                                                            Storyboard.TargetName="Btry_FadingText"
+                                                            Storyboard.TargetName="BtryRobot_FadingText"
                                                             Storyboard.TargetProperty="(TextBlock.Opacity)"
                                                             From="1.0" To="0.0" Duration="0:0:1" 
                                                             AutoReverse="True" RepeatBehavior="Forever" />
@@ -359,10 +359,10 @@
 
                                 <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
                                     <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
-                                    <ToggleButton Name="Btry_tg_StationInitDone" Width="30" Height="30"/>
+                                    <ToggleButton Name="BtryRobot_tg_StationInitDone" Width="30" Height="30"/>
                                 </StackPanel>
 
-                                <Button x:Name="Btry_btn_StartInit" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+                                <Button x:Name="BtryRobot_btn_StartInit" Click="BtryRobot_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
 
                             </Grid>
                         </TabItem>
@@ -392,59 +392,59 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="300"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Label FontSize="30" FontWeight="Bold" Content="UNLOAD ROBOT" BorderThickness="0 0 0 2" BorderBrush="Gray" />
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                                     <TextBlock Text="Station Jog Mode : " Width="200"/>
-                                    <ToggleButton Name="UR_tg_StationJogMode" MouseLeftButtonDown="TControl_Click" Height="30"/>
+                                    <ToggleButton Name="UnloadRobot_tg_StationJogMode" MouseLeftButtonDown="UnloadRobot_StationJogMode_Control_Click" Height="30"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
                                     <TextBlock Text="Station Cycle Mode : " Width="200"/>
-                                    <ToggleButton Name="UR_tg_StationCycleMode" MouseLeftButtonDown="TControl_Click" />
+                                    <ToggleButton Name="UnloadRobot_tg_StationCycleMode" MouseLeftButtonDown="UnloadRobot_StationCycleMode_Control_Click" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="6" Orientation="Horizontal">
-                                    <Button x:Name="UR_btn_PickTurret" Padding="30 10" Grid.Row="0" Content="Pick From Tray" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="UnloadRobot_btn_PickTurret" Click="UnloadRobot_PickTurret_Click" Padding="30 10" Grid.Row="0" Content="Pick From Tray" Background="LimeGreen" Width="275" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="8" Orientation="Horizontal">
-                                    <Button x:Name="UR_btn_PlaceLeft" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="UnloadRobot_btn_PlaceLeft" Click="UnloadRobot_PlaceLeft_Click" Padding="30 10" Content="Place To Left Shuttle" Background="LimeGreen" Width="275" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="10" Orientation="Horizontal">
-                                    <Button x:Name="UR_btn_PlaceRight" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="275" />
+                                    <Button x:Name="UnloadRobot_btn_PlaceRight" Click="UnloadRobot_PlaceRight_Click" Padding="30 10" Content="Place To Right Shuttle" Background="LimeGreen" Width="275" />
                                 </StackPanel>
 
                                 <UniformGrid Rows="1" Grid.Row="12">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="UR_num_PickTray_Row" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="UnloadRobot_num_PickTray_Row" MouseDown="UnloadRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="14">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="UR_num_PickTray_Col" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="UnloadRobot_num_PickTray_Col" MouseDown="UnloadRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
-                                    <TextBlock Name="UR_FadingText" FontWeight="DemiBold">
+                                    <TextBlock Name="UnloadRobot_FadingText" FontWeight="DemiBold">
                                         Press 'Start Button' to Continue.
                                         
-                                        <!-- Animates the text block's opacity. -->
+                                        <!--Animates the text block's opacity.-->
                                         <TextBlock.Triggers>
                                             <EventTrigger RoutedEvent="TextBlock.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation
-                                                            Storyboard.TargetName="UR_FadingText"
+                                                            Storyboard.TargetName="UnloadRobot_FadingText"
                                                             Storyboard.TargetProperty="(TextBlock.Opacity)"
                                                             From="1.0" To="0.0" Duration="0:0:1" 
                                                             AutoReverse="True" RepeatBehavior="Forever" />
@@ -457,10 +457,10 @@
 
                                 <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
                                     <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
-                                    <ToggleButton Name="UR_tg_StationInitDone" Width="30" Height="30"/>
+                                    <ToggleButton Name="UnloadRobot_tg_StationInitDone" Width="30" Height="30"/>
                                 </StackPanel>
 
-                                <Button x:Name="UR_btn_StartInit" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+                                <Button x:Name="UnloadRobot_btn_StartInit" Click="UnloadRobot_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
 
                             </Grid>
                         </TabItem>
@@ -490,7 +490,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="637"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -502,25 +502,25 @@
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                                     <TextBlock Text="Station Jog Mode : " Width="200"/>
-                                    <ToggleButton Name="PR_tg_StationJogMode" MouseLeftButtonDown="TControl_Click" Height="30"/>
+                                    <ToggleButton Name="PCBARack_tg_StationJogMode" MouseLeftButtonDown="PCBARack_StationJogMode_Control_Click" Height="30"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
                                     <TextBlock Text="Station Cycle Mode : " Width="200"/>
-                                    <ToggleButton Name="PR_tg_StationCycleMode" MouseLeftButtonDown="TControl_Click" />
+                                    <ToggleButton Name="PCBARack_tg_StationCycleMode" MouseLeftButtonDown="PCBARack_StationCycleMode_Control_Click" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
-                                    <TextBlock Name="PR_FadingText" FontWeight="DemiBold">
+                                    <TextBlock Name="PCBARack_FadingText" FontWeight="DemiBold">
                                         Press 'Start Button' to Continue.
-                                        
-                                        <!-- Animates the text block's opacity. -->
+                                                                                 
+                                        <!--Animates the text block's opacity.-->
                                         <TextBlock.Triggers>
                                             <EventTrigger RoutedEvent="TextBlock.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation
-                                                            Storyboard.TargetName="PR_FadingText"
+                                                            Storyboard.TargetName="PCBARack_FadingText"
                                                             Storyboard.TargetProperty="(TextBlock.Opacity)"
                                                             From="1.0" To="0.0" Duration="0:0:1" 
                                                             AutoReverse="True" RepeatBehavior="Forever" />
@@ -533,15 +533,15 @@
 
                                 <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
                                     <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
-                                    <ToggleButton Name="PR_tg_StationInitDone" Width="30" Height="30"/>
+                                    <ToggleButton Name="PCBARack_tg_StationInitDone" Width="30" Height="30"/>
                                 </StackPanel>
 
-                                <Button x:Name="PCBARack_btn_StartInit" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+                                <Button x:Name="PCBARack_btn_StartInit" Click="PCBARack_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
 
                             </Grid>
                         </TabItem>
 
-                        <TabItem Header="Battery Rack" FontSize="20" Visibility="Visible" Tag="BatteryRack">
+                        <TabItem Header="Battery Rack" FontSize="20" Visibility="Visible" Tag="BtryRack">
                             <Grid Margin="30 20 0 0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -566,37 +566,37 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="637"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="100"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Label FontSize="30" FontWeight="Bold" Content="BATTERY RACK" BorderThickness="0 0 0 2" BorderBrush="Gray" />
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal">
                                     <TextBlock Text="Station Jog Mode : " Width="200"/>
-                                    <ToggleButton Name="BR_tg_StationJogMode" MouseLeftButtonDown="TControl_Click" Height="30"/>
+                                    <ToggleButton Name="BtryRack_tg_StationJogMode" MouseLeftButtonDown="BtryRack_StationJogMode_Control_Click" Height="30"/>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
                                     <TextBlock Text="Station Cycle Mode : " Width="200"/>
-                                    <ToggleButton Name="BR_tg_StationCycleMode" MouseLeftButtonDown="TControl_Click" />
+                                    <ToggleButton Name="BtryRack_tg_StationCycleMode" MouseLeftButtonDown="BtryRack_StationCycleMode_Control_Click" />
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
-                                    <TextBlock Name="BR_FadingText" FontWeight="DemiBold">
-                                        Press 'Start Button' to Continue.
-                                        
-                                        <!-- Animates the text block's opacity. -->
+                                    <TextBlock Name="BtryRack_FadingText" FontWeight="DemiBold">
+                                        Press 'Start Button' to Continue.                                        
+                                         
+                                        <!--Animates the text block's opacity.-->
                                         <TextBlock.Triggers>
                                             <EventTrigger RoutedEvent="TextBlock.Loaded">
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation
-                                                            Storyboard.TargetName="BR_FadingText"
+                                                            Storyboard.TargetName="BtryRack_FadingText"
                                                             Storyboard.TargetProperty="(TextBlock.Opacity)"
                                                             From="1.0" To="0.0" Duration="0:0:1" 
                                                             AutoReverse="True" RepeatBehavior="Forever" />
@@ -608,11 +608,11 @@
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
-                                    <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
-                                    <ToggleButton Name="BR_tg_StationInitDone" Width="30" Height="30"/>
+                                    <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center" />
+                                    <ToggleButton Name="BtryRack_tg_StationInitDone" Width="30" Height="30" />
                                 </StackPanel>
 
-                                <Button x:Name="BR_btn_StartInit" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+                                <Button x:Name="BtryRack_btn_StartInit" Click="BtryRack_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
 
                             </Grid>
                         </TabItem>
@@ -649,11 +649,396 @@
                                     <ColumnDefinition Width="30"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Label FontSize="30" FontWeight="Bold" Content="ROTARY TABLE" BorderThickness="0 0 0 2" BorderBrush="Gray" />
 
                                 <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                    <Button x:Name="RT_btn_TurretIndex" Grid.Column="4" Padding="30 10" Grid.Row="0" Content="Turret Index" />
+                                    <Button x:Name="S1_RotaryTable_btn_TurretIndex" Click="RotaryTable_TurretIndex_Click" Grid.Column="4" Padding="30 10" Grid.Row="0" Content="Turret Index" />
+                                </StackPanel>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+                    <TabControl Name="tbc_Sub" Visibility="Collapsed">
+                        <TabItem Header="Input Robot" FontSize="20" Visibility="Visible" Tag="InputRobot">
+                            <Grid Margin="30 20 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+
+                                <Label FontSize="30" FontWeight="Bold" Content="INPUT ROBOT" BorderThickness="0 0 0 2" BorderBrush="Gray"/>
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock Text="Station Jog Mode : " Width="200"/>
+                                    <ToggleButton Name="InputRobot_tg_StationJogMode" MouseLeftButtonDown="InputRobot_StationJogMode_Control_Click" Height="30" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                    <TextBlock Text="Station Cycle Mode : " Width="200"/>
+                                    <ToggleButton Name="InputRobot_tg_StationCycleMode" MouseLeftButtonDown="InputRobot_StationCycleMode_Control_Click" />
+                                </StackPanel>
+
+                                <UniformGrid Rows="1" Grid.Row="6">
+                                    <Button x:Name="InputRobot_btn_PickFromLeft" Padding="30 10" Grid.Row="0" Content="Pick From Left Shuttle" Background="LimeGreen" Click="InputRobot_PickFromLeft_Click" Margin="0,0,12,0" />
+                                    <Button x:Name="InputRobot_btn_PickFromRight" Padding="30 10" Grid.Row="0" Content="Pick From Right Shuttle" Background="LimeGreen" Click="InputRobot_PickFromRight_Click" Margin="12,0,0,0" />
+                                </UniformGrid>
+
+                                <UniformGrid Rows="1" Grid.Row="8">
+                                    <TextBlock Text="Pick Tray Row Number : " Width="300"/>
+                                    <Num:NumUpDown x:Name="InputRobot_num_RowNo" Minimum="1" Maximum="100" Width="200" MouseDown="InputRobot_num_RowNo_MouseDown" />
+                                </UniformGrid>
+
+                                <UniformGrid Rows="1" Columns="2" Grid.Row="10">
+                                    <TextBlock Text="Pick Tray Column Number : " Width="300"/>
+                                    <Num:NumUpDown x:Name="InputRobot_num_ColNo" Minimum="1" Maximum="100" Width="200" MouseDown="InputRobot_num_ColNo_MouseDown"/>
+                                </UniformGrid>
+
+                                <StackPanel Grid.Row="12" Orientation="Horizontal">
+                                    <Button x:Name="InputRobot_btn_PlaceTurret" Padding="30 10" Content="Place To Turret" Background="LimeGreen" Width="288" Click="InputRobot_PlaceTurret_Click" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
+                                    <TextBlock Name="InputRobot_FadingText" FontWeight="DemiBold">
+                                        Press 'Start Button' to Continue.
+                                        
+                                         <!--Animates the text block's opacity.-->
+                                        <TextBlock.Triggers>
+                                            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="InputRobot_FadingText"
+                                                            Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                            From="1.0" To="0.0" Duration="0:0:1" 
+                                                            AutoReverse="True" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
+                                    <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
+                                    <ToggleButton Name="InputRobot_tg_StationInitDone" Width="30" Height="30"/>
+                                </StackPanel>
+
+                                <Button x:Name="InputRobot_btn_StartInit" Click="InputRobot_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Output Robot" FontSize="20" Visibility="Visible" Tag="OutputRobot">
+                            <Grid Margin="30 20 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label FontSize="30" FontWeight="Bold" Content="OUTPUT ROBOT" BorderThickness="0 0 0 2" BorderBrush="Gray" />
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock Text="Station Jog Mode : " Width="200"/>
+                                    <ToggleButton Name="OutputRobot_tg_StationJogMode" MouseLeftButtonDown="OutputRobot_StationJogMode_Control_Click" Height="30"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                    <TextBlock Text="Station Cycle Mode : " Width="200"/>
+                                    <ToggleButton Name="OutputRobot_tg_StationCycleMode" MouseLeftButtonDown="OutputRobot_StationCycleMode_Control_Click" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="6" Orientation="Horizontal">
+                                    <Button x:Name="OutputRobot_btn_PickFromTurret" Click="OutputRobot_PickFromTurret_Click" Padding="30 10" Grid.Row="0" Content="Pick From Turret" Background="LimeGreen" Width="275" />
+                                </StackPanel>
+
+                                <UniformGrid Rows="1" Grid.Row="8">
+                                    <TextBlock Text="Pick Tray Row Number : " Width="300"/>
+                                    <Num:NumUpDown x:Name="OutputRobot_num_PickTray_Row" MouseDown="OutputRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                </UniformGrid>
+
+                                <UniformGrid Rows="1" Columns="2" Grid.Row="10">
+                                    <TextBlock Text="Pick Tray Column Number : " Width="300"/>
+                                    <Num:NumUpDown x:Name="OutputRobot_num_PickTray_Col" MouseDown="OutputRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                </UniformGrid>
+
+                                <StackPanel Grid.Row="12" Orientation="Horizontal">
+                                    <Button x:Name="OutputRobot_btn_PlaceToTray" Click="OutputRobot_PlaceToTray_Click" Padding="30 10" Content="Place To Tray" Background="LimeGreen" Width="275" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
+                                    <TextBlock Name="OutputRobot_FadingText" FontWeight="DemiBold">
+                                        Press 'Start Button' to Continue.
+                                        
+                                         <!--Animates the text block's opacity.-->
+                                        <TextBlock.Triggers>
+                                            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="OutputRobot_FadingText"
+                                                            Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                            From="1.0" To="0.0" Duration="0:0:1" 
+                                                            AutoReverse="True" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
+                                    <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
+                                    <ToggleButton Name="OutputRobot_tg_StationInitDone" Width="30" Height="30"/>
+                                </StackPanel>
+
+                                <Button x:Name="OutputRobot_btn_StartInit" Click="OutputRobot_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Input Rack" FontSize="20" Visibility="Visible" Tag="InputRack">
+                            <Grid Margin="30 20 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="637"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label FontSize="30" FontWeight="Bold" Content="INPUT RACK" BorderThickness="0 0 0 2" BorderBrush="Gray" />
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock Text="Station Jog Mode : " Width="200"/>
+                                    <ToggleButton Name="InputRack_tg_StationJogMode" MouseLeftButtonDown="InputRack_StationJogMode_Control_Click" Height="30"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                    <TextBlock Text="Station Cycle Mode : " Width="200"/>
+                                    <ToggleButton Name="InputRack_tg_StationCycleMode" MouseLeftButtonDown="InputRack_StationCycleMode_Control_Click" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
+                                    <TextBlock Name="InputRack_FadingText" FontWeight="DemiBold">
+                                        Press 'Start Button' to Continue.
+                                        
+                                         <!--Animates the text block's opacity.-->
+                                        <TextBlock.Triggers>
+                                            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="InputRack_FadingText"
+                                                            Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                            From="1.0" To="0.0" Duration="0:0:1" 
+                                                            AutoReverse="True" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
+                                    <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center"/>
+                                    <ToggleButton Name="InputRack_tg_StationInitDone" Width="30" Height="30"/>
+                                </StackPanel>
+
+                                <Button x:Name="InputRack_btn_StartInit" Click="InputRack_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Output Rack" FontSize="20" Visibility="Visible" Tag="OutputRack">
+                            <Grid Margin="30 20 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="637"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label FontSize="30" FontWeight="Bold" Content="OUTPUT RACK" BorderThickness="0 0 0 2" BorderBrush="Gray" />
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock Text="Station Jog Mode : " Width="200"/>
+                                    <ToggleButton Name="OutputRack_tg_StationJogMode" MouseLeftButtonDown="OutputRack_StationJogMode_Control_Click" Height="30"/>
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                    <TextBlock Text="Station Cycle Mode : " Width="200"/>
+                                    <ToggleButton Name="OutputRack_tg_StationCycleMode" MouseLeftButtonDown="OutputRack_StationCycleMode_Control_Click" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
+                                    <TextBlock Name="OutputRack_FadingText" FontWeight="DemiBold">
+                                        Press 'Start Button' to Continue.
+                                        
+                                         <!--Animates the text block's opacity.-->
+                                        <TextBlock.Triggers>
+                                            <EventTrigger RoutedEvent="TextBlock.Loaded">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="OutputRack_FadingText"
+                                                            Storyboard.TargetProperty="(TextBlock.Opacity)"
+                                                            From="1.0" To="0.0" Duration="0:0:1" 
+                                                            AutoReverse="True" RepeatBehavior="Forever" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
+                                        </TextBlock.Triggers>
+                                    </TextBlock>
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="4" Grid.Row="0" Orientation="Horizontal">
+                                    <TextBlock Text="STATION INIT DONE : " Width="200" VerticalAlignment="Center" />
+                                    <ToggleButton Name="OutputRack_tg_StationInitDone" Width="30" Height="30" />
+                                </StackPanel>
+
+                                <Button x:Name="OutputRack_btn_StartInit" Click="OutputRack_StartInit_Click" Grid.Column="6" Padding="30 10" Grid.Row="0" Content="Machine Start Init" Background="LimeGreen" />
+
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Rotary Table" FontSize="20" Visibility="Visible" Tag="RotaryTable">
+                            <Grid Margin="30 20 0 0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label FontSize="30" FontWeight="Bold" Content="ROTARY TABLE" BorderThickness="0 0 0 2" BorderBrush="Gray" />
+
+                                <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                    <Button x:Name="S2_RotaryTable_btn_TurretIndex" Click="RotaryTable_TurretIndex_Click" Grid.Column="4" Padding="30 10" Grid.Row="0" Content="Turret Index" />
                                 </StackPanel>
                             </Grid>
                         </TabItem>
