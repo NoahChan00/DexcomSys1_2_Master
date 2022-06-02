@@ -22,8 +22,6 @@ namespace PentagonHMI.ChildControls
         List<string> lst_DUTID = new List<string>();
         List<string> lst_FirmwareVersion = new List<string>();
 
-        private Dictionary<object, Control> dic_EngMajor;
-
         private LogicClasses.Main _Main;
 
         const string Tag_LotID_str = "Lot_Info.HMI_LotID";

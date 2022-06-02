@@ -231,9 +231,7 @@ namespace PentagonHMI
 
         private void BtryRobot_cmb_BtryType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox cmb = sender as ComboBox;
-            handle = !cmb.IsDropDownOpen;
-            Handle();
+            OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
         }
 
         private void BtryRobot_PlaceTurret_Click(object sender, RoutedEventArgs e)
@@ -484,31 +482,7 @@ namespace PentagonHMI
                 tbc_Main.SelectedIndex = cbx_Selected.SelectedIndex;
                 tbc_Main.Visibility = Visibility.Visible;
                 tbc_Sub.Visibility = Visibility.Collapsed;
-              
-            }
 
-        }
-
-        private bool handle = true;
-        private void BtryRobot_cmb_BtryType_DropDownClosed (object sender, EventArgs e)
-        {
-            if (handle)Handle();
-            handle = true;
-        }
-
-        private void Handle()
-        {
-            switch (BtryRobot_cbx_Btrytype.SelectedItem.ToString().Split(new string[] { ":" }, StringSplitOptions.None).Last())
-            {
-                case "Maxell":
-                    OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
-                    break;
-                case "Panansonic":
-                    OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
-                    break;
-                case "Murata":
-                    OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_BatteryType.Name, true);
-                    break;
             }
         }
     }
