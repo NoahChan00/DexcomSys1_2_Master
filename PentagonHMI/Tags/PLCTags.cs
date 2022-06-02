@@ -6,6 +6,26 @@ using System.Threading.Tasks;
 
 namespace PentagonHMI.Tags
 {
+    public class System1_MainPLCTags
+    {
+        public static Logix.Tag Sys1_MachineStatus = new Logix.Tag { Name = $"System1_MachineStatus.str_MachineStatus", DataType = Logix.Tag.ATOMIC.STRING };
+        public static Logix.Tag Sys1_EngineerMode = new Logix.Tag { Name = $"System1_MC_Tag.StationJogMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Sys1_StationJogMode = new Logix.Tag { Name = $"System1_MC_Tag.StationJogMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Sys1_StationCycleMode = new Logix.Tag { Name = $"System1_MC_Tag.StationCycleMode", DataType = Logix.Tag.ATOMIC.BOOL};
+        public static Logix.Tag Sys1_MachineSpeed = new Logix.Tag { Name = $"System1_MC_Tag.str_MachineSpeed", DataType = Logix.Tag.ATOMIC.STRING };
+        public static Logix.Tag Sys1_MachineInit = new Logix.Tag { Name = $"System1_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
+    }
+
+    public class System2_MainPLCTags
+    {
+        public static Logix.Tag Sys2_MachineStatus = new Logix.Tag { Name = $"System2_MachineStatus.str_MachineStatus", DataType = Logix.Tag.ATOMIC.STRING };
+        public static Logix.Tag Sys2_EngineerMode = new Logix.Tag { Name = $"System2_MC_Tag.EngineeringMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Sys2_StationJogMode = new Logix.Tag { Name = $"System2_MC_Tag.StationJogMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Sys2_StationCycleMode = new Logix.Tag { Name = $"System2_MC_Tag.StationCycleMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        public static Logix.Tag Sys2_MachineSpeed = new Logix.Tag { Name = $"System2_MC_Tag.str_MachineSpeed", DataType = Logix.Tag.ATOMIC.STRING};
+        public static Logix.Tag Sys2_MachineInit = new Logix.Tag { Name = $"System2_MC_Tag.MachineInit", DataType = Logix.Tag.ATOMIC.BOOL };
+    }
+
     public class EngineeringPLCTags
     {
         #region PCBA_Robot
