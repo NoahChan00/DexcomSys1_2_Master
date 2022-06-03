@@ -50,8 +50,8 @@ namespace PentagonHMI.ChildControls
         int PCol = 0;
         int BRow = 0;
         int BCol = 0;
-        int Out_Row = 0;
-        int Out_Col = 0;
+        int ORow = 0;
+        int OCol = 0;
         int BatType = 0;
 
         Dictionary<string, Brush> Dic_ResultColor = new Dictionary<string, Brush>();
@@ -84,26 +84,28 @@ namespace PentagonHMI.ChildControls
                 ScrollViewerSystem2.Visibility = Visibility.Visible;
 
             }
-#if !DEBUG
-            Row = OPCore.Read<int>(Tag_TrayRow);
-            Col = OPCore.Read<int>(Tag_TrayCol);
-            PRow = OPCore.Read<int>(Tag_TrayRow);
-            PCol = OPCore.Read<int>(Tag_TrayCol);
-            BRow = OPCore.Read<int>(Tag_TrayRow);
-            BCol = OPCore.Read<int>(Tag_TrayCol);
-            BatType = OPCore.Read<int>(Tag_Btry_dint);
-#else
+
+            // Comment due to only island Read the tray size from tag, hmi list not provided tag for System 1 and 2
+            //#if !DEBUG
+            //            Row = OPCore.Read<int>(Tag_TrayRow);
+            //            Col = OPCore.Read<int>(Tag_TrayCol);
+            //            PRow = OPCore.Read<int>(Tag_TrayRow);
+            //            PCol = OPCore.Read<int>(Tag_TrayCol);
+            //            ORow = 10;
+            //            OCol = 6;
+            //            BatType = OPCore.Read<int>(Tag_Btry_dint);
+            //            BRow = OPCore.Read<int>(Tag_TrayRow);
+            //            BCol = OPCore.Read<int>(Tag_TrayCol);
+
+            //#else
 
             Row = 4;
             Col = 4;
             PRow = 9;
             PCol = 10;
-            Out_Row = 10;
-            Out_Col = 6;
+            ORow = 10;
+            OCol = 6;
             BatType = 6;
-#endif
-
-
 
             switch (BatType)
             {
@@ -126,7 +128,6 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Failed to read battery type from PLC.");
                     break;
             }
-
             //#endif
 
             BrushConverter bc = new BrushConverter();
@@ -162,8 +163,8 @@ namespace PentagonHMI.ChildControls
                 input_LeftSlot.Columns = Col;
                 input_RightSlot.Rows = Row;
                 input_RightSlot.Columns = Col;
-                output_Slot.Rows = Out_Row;
-                output_Slot.Columns = Out_Col;
+                output_Slot.Rows = ORow;
+                output_Slot.Columns = OCol;
             }
 
             int total = Row * Col;
@@ -192,7 +193,7 @@ namespace PentagonHMI.ChildControls
                     input_RightSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
 
 
-                    int totalOutput = Out_Row * Out_Col;
+                    int totalOutput = ORow * OCol;
                     for (int i = 1; i < totalOutput; i++)
                     {
                         output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
@@ -211,13 +212,16 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
-                    var LAry = OPCore.Read<short[]>(Tag_L_TopVision, typeof(short), 100);
-                    var RAry = OPCore.Read<short[]>(Tag_R_TopVision, typeof(short), 100);
-                    var PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), 100);
-                    var BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), 100);
-                    var InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), 16);
-                    var InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), 16);
-                    var OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), 60);
+
+                    // System 1
+                    var BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
+                    var PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), PRow * PCol);
+                    var LAry = OPCore.Read<short[]>(Tag_L_TopVision, typeof(short), Row * Col);
+                    var RAry = OPCore.Read<short[]>(Tag_R_TopVision, typeof(short), Row * Col);
+                    // System 2
+                    var InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), Row * Col);
+                    var InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
+                    var OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);
 
 
                     if (GlobalFunctions.IsSystem1)
