@@ -2,13 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.Data.SqlClient;
-using System.IO;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows;
-using Utilities;
 
 namespace PentagonHMI.Classes
 {
@@ -44,7 +41,7 @@ namespace PentagonHMI.Classes
         public static string LocalIP = Properties.Settings.Default.localIP.ToString();
         public static string LocalPort = Properties.Settings.Default.LocalPort.ToString();
         public static string login_Timeout = Properties.Settings.Default.LogoutTimeSec.ToString();
-        public static string PLC_IPAddress = Properties.Settings.Default.PLC_IPAddress.ToString(); 
+        public static string PLC_IPAddress = Properties.Settings.Default.PLC_IPAddress.ToString();
         public static string PLC_Path = Properties.Settings.Default.PLC_Path.ToString();
         public static string PLC_Timeout = Properties.Settings.Default.PLC_Timeout.ToString();
         public static string OEEIdealCycleTimeSec = Properties.Settings.Default.OEEIdealCycleTimeSec.ToString();
@@ -52,13 +49,15 @@ namespace PentagonHMI.Classes
         //public static string CalibrationFlag = "ON";//PentagonHMI.Properties.Settings.Default.CalibrationFlag.ToString();
         //public static string PickRetryPrompt = "ON";// PentagonHMI.Properties.Settings.Default.PickRetryPrompt.ToString();
         //public static string PalletRejectInt = "ON";// PentagonHMI.Properties.Settings.Default.PalletRejectInt.ToString();
-        
+
         public static MachineNameType MachineName = MachineNameType.System_01; // Global variable to determine system 1 or system 2
         #endregion
 
         public static SQLCarrier aSQL = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
 
 
+        // bool as only System 1 and 2
+        public static bool IsSystem1 => MachineName == MachineNameType.System_01;
         public enum MachineNameType
         {
             System_01, System_02

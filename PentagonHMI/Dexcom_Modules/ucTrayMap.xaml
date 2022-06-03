@@ -1,21 +1,20 @@
 ﻿<UserControl x:Class="PentagonHMI.ChildControls.ucTrayMap"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-             mc:Ignorable="d" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
              d:DesignHeight="1080" d:DesignWidth="1920">
     <UserControl.Resources>
-        <!--<TextBlock FontSize="30" Text="2" Padding="10 2" HorizontalAlignment="Center" Background="Red" Margin="1"/>-->
+        <!--<TextBlock FontSize="30" Text="2" Padding="10 2" HorizontalAlignment="Center" Background="Red" Margin="1" />-->
         <Style TargetType="TextBlock">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="15 2"/>
-            <Setter Property="Background" Value="LightGray"/>
-            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Padding" Value="15 2" />
+            <Setter Property="Background" Value="LightGray" />
+            <Setter Property="Margin" Value="2" />
         </Style>
-        <Style TargetType="TextBlock" x:Key="Default"/>
-        <Style 
+        <Style TargetType="TextBlock" x:Key="Default" />
+        <Style
        TargetType="{x:Type ToggleButton}">
 
             <Style.Resources>
@@ -51,7 +50,7 @@
                                    FontSize="24"
                                    FontWeight="Bold"
                                    Foreground="White"
-                                   Style="{StaticResource ToggleButtonContentTextbox}"/>
+                                   Style="{StaticResource ToggleButtonContentTextbox}" />
                                 <!--Text="P" />-->
                             </ControlTemplate>
                         </Setter.Value>
@@ -68,7 +67,7 @@
                             <ControlTemplate>
                                 <TextBlock FontSize="24"
                                    Foreground="White"
-                                   Style="{StaticResource ToggleButtonContentTextbox}"/>
+                                   Style="{StaticResource ToggleButtonContentTextbox}" />
                                 <!--Text="X" />-->
                             </ControlTemplate>
                         </Setter.Value>
@@ -95,8 +94,8 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid Grid.Row="9" Grid.Column="2">
-                                    <TextBox x:Name="tbx_onlineBtrytype" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20"/>
-                                    <ComboBox x:Name="cbx_offlineBtrytype" FontSize="20" Width="250" Visibility="Hidden"/>
+                                    <TextBox x:Name="tbx_onlineBtrytype" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20" />
+                                    <ComboBox x:Name="cbx_offlineBtrytype" FontSize="20" Width="250" Visibility="Hidden" />
                                 </Grid>
 
                                 <Ellipse x:Name="BackgroundEllipse1"
@@ -170,44 +169,43 @@
         </Style>
     </UserControl.Resources>
 
-    <!--<ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
+    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
 
-            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
-                <UniformGrid Columns="2" Rows="2" >
+            <ScrollViewer Grid.Column="1" x:Name="ScrollViewerSystem1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                <UniformGrid Columns="2" Rows="2">
                     <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Label Content="Left Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                             <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="ugrd_LeftTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90"/>
+                                <UniformGrid Name="ugrd_LeftTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90" />
                             </Grid>
                             <Grid Grid.Column="2" Grid.Row="1">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                                    <Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <Button Click="ChangeTray_Click" Tag="R" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="ChangeTray_Click" Tag="R" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
+                                    <TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
                                     </StackPanel>
-
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -216,32 +214,31 @@
                     <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Label Content="Right Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                             <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90"/>
+                                <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90" />
                             </Grid>
 
                             <Grid Grid.Column="2" Grid.Row="1">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                                    <Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <Button Click="ChangeTray_Click" Tag="R" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="ChangeTray_Click" Tag="R" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <TextBlock Text="Purge Right Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
+                                    <TextBlock Text="Purge Right Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
                                     </StackPanel>
-
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -250,31 +247,30 @@
                     <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Label Content="PCBA Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                             <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="pcba_SlotTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30 22"/>
+                                <UniformGrid Name="pcba_SlotTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30 22" />
                             </Grid>
                             <Grid Grid.Column="2" Grid.Row="1">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                                    <Button Click="Reinspect_Click" Tag="pcba" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="Reinspect_Click" Tag="pcba" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <Button Click="ChangeTray_Click" Tag="pcba" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="ChangeTray_Click" Tag="pcba" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
+                                    <TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="pcba"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="pcba" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
                                     </StackPanel>
-
                                 </StackPanel>
                             </Grid>
                         </Grid>
@@ -283,168 +279,155 @@
                     <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
                             </Grid.ColumnDefinitions>
                             <Label Content="Battery Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                             <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20"/>
+                                <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20" />
                             </Grid>
 
                             <Grid Grid.Column="2" Grid.Row="2">
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                                    <Button Click="Reinspect_Click" Tag="battery" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="Reinspect_Click" Tag="battery" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <Button Click="ChangeTray_Click" Tag="battery" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
+                                    <Button Click="ChangeTray_Click" Tag="battery" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
 
-                                    <TextBlock Text="Purge Right Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
+                                    <TextBlock Text="Purge Right Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="battery"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="battery" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
                                     </StackPanel>
-
                                 </StackPanel>
                             </Grid>
                         </Grid>
                     </Border>
-
                 </UniformGrid>
+            </ScrollViewer>
+
+            <ScrollViewer x:Name="ScrollViewerSystem2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="300" />
+                    </Grid.ColumnDefinitions>
+
+                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+                        <UniformGrid Columns="2" Rows="2">
+                            <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="Input Left Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                                    <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <UniformGrid Name="input_LeftSlot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90" />
+                                    </Grid>
+                                    <Grid Grid.Column="2" Grid.Row="1">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                            <!--<Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />-->
+                                            <Button Click="ChangeTray_Click" Tag="inputLeft_Change" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
+                                            <!--<TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                    </StackPanel>-->
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                            <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="Input Right Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                                    <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <UniformGrid Name="input_RightSlot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90" />
+                                    </Grid>
+
+                                    <Grid Grid.Column="2" Grid.Row="1">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                            <!--<Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />-->
+
+                                            <Button Click="ChangeTray_Click" Tag="inputRight_Change" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
+
+                                            <!--<TextBlock Text="Purge Right Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                    </StackPanel>-->
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                            <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                                    <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <UniformGrid Name="output_Slot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100 10" />
+                                    </Grid>
+                                    <Grid Grid.Column="2" Grid.Row="1">
+                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                            <!--<Button Click="Reinspect_Click" Tag="pcba" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />-->
+
+                                            <Button Click="ChangeTray_Click" Tag="output_Change" Content="Change Tray" FontSize="15" Margin="5" Padding="10" />
+
+                                            <!--<TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="pcba" />
+                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}" />
+                                    </StackPanel>-->
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+
+                            <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                                <Grid Visibility="Hidden" />
+                            </Border>
+                        </UniformGrid>
+                    </ScrollViewer>
+                </Grid>
             </ScrollViewer>
 
             <Border Grid.Column="2" MaxWidth="570" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Legends" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                    <StackPanel Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                </StackPanel>
-            </Border>
-        </Grid>
-    </ScrollViewer>-->
-
-    <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="300"/>
-            </Grid.ColumnDefinitions>
-
-            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
-                <UniformGrid Columns="2" Rows="2" >
-                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Input Left Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="input_LeftSlot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90"/>
-                            </Grid>
-                            <Grid Grid.Column="2" Grid.Row="1">
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                                    <!--<Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>-->
-                                    <Button Click="ChangeTray_Click" Tag="inputLeft_Change" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
-                                    <!--<TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                    </StackPanel>-->
-
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Border>
-
-                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Input Right Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="input_RightSlot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90"/>
-                            </Grid>
-
-                            <Grid Grid.Column="2" Grid.Row="1">
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                                    <!--<Button Click="Reinspect_Click" Tag="L" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>-->
-
-                                    <Button Click="ChangeTray_Click" Tag="inputRight_Change" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
-
-                                    <!--<TextBlock Text="Purge Right Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="L"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                    </StackPanel>-->
-
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Border>
-
-                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                            <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <UniformGrid Name="output_Slot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="100 10"/>
-                            </Grid>
-                            <Grid Grid.Column="2" Grid.Row="1">
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
-                                    <!--<Button Click="Reinspect_Click" Tag="pcba" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10"/>-->
-
-                                    <Button Click="ChangeTray_Click" Tag="output_Change" Content="Change Tray" FontSize="15" Margin="5" Padding="10"/>
-
-                                    <!--<TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}"/>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <TextBlock FontSize="15" Text="Off" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                        <ToggleButton Width="75" Height="20" DataContextChanged="Purge_Click" Tag="pcba"/>
-                                        <TextBlock FontSize="15" Text="On" VerticalAlignment="Center" Padding="7 5" Style="{StaticResource Default}"/>
-                                    </StackPanel>-->
-
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </Border>
-
-                    <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                        <Grid Visibility="Hidden" />
-                    </Border>
-
-                </UniformGrid>
-            </ScrollViewer>
-
-            <Border Grid.Column="2" MaxWidth="570" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                <StackPanel>
-                    <Label Content="Legends" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                    <StackPanel Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                    <StackPanel Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" />
                 </StackPanel>
             </Border>
         </Grid>

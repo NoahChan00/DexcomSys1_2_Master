@@ -1,12 +1,13 @@
-﻿using System;
-using System.Windows.Media;
-using System.Windows.Controls;
-using Utilities;
-using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Controls.Primitives;
+﻿using PentagonHMI.Classes;
 using SimpleDatabase;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using Utilities;
 
 namespace PentagonHMI.ChildControls
 {
@@ -34,7 +35,7 @@ namespace PentagonHMI.ChildControls
         const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking"; //Length 90
         const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking";//Length 16
         const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking";//Length 16
-        
+
         //System 2 - Tray Map HMI
         // New tag from 1.3
         // PLC tag need index operator, they start from, ignore 0 for this project
@@ -61,7 +62,8 @@ namespace PentagonHMI.ChildControls
             InitializeComponent();
             _Main = main;
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP)) return;
+            if (!OPCore.Connect(Info.OPC.IP))
+                return;
 #endif
             Initialize();
             main.OnTrayMapUpdate += TrayMapUpdate;
@@ -69,15 +71,28 @@ namespace PentagonHMI.ChildControls
 
         private void Initialize()
         {
-//#if !DEBUG
-//            Row = OPCore.Read<int>(Tag_TrayRow);
-//            Col = OPCore.Read<int>(Tag_TrayCol);
-//            PRow = OPCore.Read<int>(Tag_TrayRow);
-//            PCol = OPCore.Read<int>(Tag_TrayCol);
-//            BRow = OPCore.Read<int>(Tag_TrayRow);
-//            BCol = OPCore.Read<int>(Tag_TrayCol);
-//            BatType = OPCore.Read<int>(Tag_Btry_dint);
-//#else
+
+            if (GlobalFunctions.IsSystem1)
+            {
+                ScrollViewerSystem1.Visibility = Visibility.Visible;
+                ScrollViewerSystem2.Visibility = Visibility.Collapsed;
+
+            }
+            else
+            {
+                ScrollViewerSystem1.Visibility = Visibility.Collapsed;
+                ScrollViewerSystem2.Visibility = Visibility.Visible;
+
+            }
+#if !DEBUG
+            Row = OPCore.Read<int>(Tag_TrayRow);
+            Col = OPCore.Read<int>(Tag_TrayCol);
+            PRow = OPCore.Read<int>(Tag_TrayRow);
+            PCol = OPCore.Read<int>(Tag_TrayCol);
+            BRow = OPCore.Read<int>(Tag_TrayRow);
+            BCol = OPCore.Read<int>(Tag_TrayCol);
+            BatType = OPCore.Read<int>(Tag_Btry_dint);
+#else
 
             Row = 4;
             Col = 4;
@@ -85,10 +100,12 @@ namespace PentagonHMI.ChildControls
             PCol = 10;
             Out_Row = 10;
             Out_Col = 6;
+            BatType = 6;
+#endif
 
-            BatType = 6;  
 
-            switch(BatType)
+
+            switch (BatType)
             {
                 //Maxell
                 case 2:
@@ -110,7 +127,7 @@ namespace PentagonHMI.ChildControls
                     break;
             }
 
-//#endif
+            //#endif
 
             BrushConverter bc = new BrushConverter();
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
@@ -128,50 +145,62 @@ namespace PentagonHMI.ChildControls
 
             DataTable datatable = SQLer.Exec_DTSelect("SELECT * FROM TrayMap");
 
-            //Tray Mapping - System 1
-            //ugrd_LeftTray.Rows = Row;
-            //ugrd_LeftTray.Columns = Col;
-            //ugrd_RightTray.Rows = Row;
-            //ugrd_RightTray.Columns = Col;
-            //pcba_SlotTray.Rows = PRow;
-            //pcba_SlotTray.Columns = PCol;
-            //bat_SlotTray.Rows = BRow;
-            //bat_SlotTray.Columns = BCol;
-
-            //Tray Mapping - System 2
-            input_LeftSlot.Rows = Row;
-            input_LeftSlot.Columns = Col;
-            input_RightSlot.Rows = Row;
-            input_RightSlot.Columns = Col;
-            output_Slot.Rows = Out_Row;
-            output_Slot.Columns = Out_Col;
+            if (GlobalFunctions.IsSystem1)
+            {
+                ugrd_LeftTray.Rows = Row;
+                ugrd_LeftTray.Columns = Col;
+                ugrd_RightTray.Rows = Row;
+                ugrd_RightTray.Columns = Col;
+                pcba_SlotTray.Rows = PRow;
+                pcba_SlotTray.Columns = PCol;
+                bat_SlotTray.Rows = BRow;
+                bat_SlotTray.Columns = BCol;
+            }
+            else
+            {
+                input_LeftSlot.Rows = Row;
+                input_LeftSlot.Columns = Col;
+                input_RightSlot.Rows = Row;
+                input_RightSlot.Columns = Col;
+                output_Slot.Rows = Out_Row;
+                output_Slot.Columns = Out_Col;
+            }
 
             int total = Row * Col;
             for (int t = 1; t <= total; t++)
             {
-                //ugrd_LeftTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
-                //ugrd_RightTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
-                input_LeftSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
-                input_RightSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                if (GlobalFunctions.IsSystem1)
+                {
+                    ugrd_LeftTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                    ugrd_RightTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                    int totalPCBA = PRow * PCol;
+                    for (int tp = 1; tp <= totalPCBA; tp++)
+                    {
+                        pcba_SlotTray.Children.Add(new TextBlock { Tag = tp, Text = "-" });
+                    }
+
+                    int totalBattery = BRow * BCol;
+                    for (int tb = 1; tb <= totalBattery; tb++)
+                    {
+                        bat_SlotTray.Children.Add(new TextBlock { Tag = tb, Text = "-" });
+                    }
+
+                }
+                else
+                {
+                    input_LeftSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                    input_RightSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
+
+
+                    int totalOutput = Out_Row * Out_Col;
+                    for (int i = 1; i < totalOutput; i++)
+                    {
+                        output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
+                    }
+
+                }
             }
 
-            //int totalPCBA = PRow * PCol;
-            //for (int tp = 1; tp <= totalPCBA; tp++)
-            //{
-            //    pcba_SlotTray.Children.Add(new TextBlock { Tag = tp, Text = "-" });
-            //}
-
-            //int totalBattery = BRow * BCol;
-            //for (int tb = 1; tb <= totalBattery; tb++)
-            //{
-            //    bat_SlotTray.Children.Add(new TextBlock { Tag = tb, Text = "-" });
-            //}
-
-            int totalOutput = Out_Row * Out_Col;
-            for (int i = 0; i < totalOutput; i++)
-            {
-                output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
-            }
 
         }
 
@@ -191,64 +220,71 @@ namespace PentagonHMI.ChildControls
                     var OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), 60);
 
 
-                    //if (LAry != null)
-                    //    foreach (var item in ugrd_LeftTray.Children)
-                    //    {
-                    //        TextBlock tb = item as TextBlock;
-                    //        string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //        tb.Text = result;
-                    //        tb.Background = Dic_ResultColor[result];
-                    //    }
-                    //if (RAry != null)
-                    //    foreach (var item in ugrd_RightTray.Children)
-                    //    {
-                    //        TextBlock tb = item as TextBlock;
-                    //        string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //        tb.Text = result;
-                    //        tb.Background = Dic_ResultColor[result];
-                    //    }
-                    //if (PCBAray != null)
-                    //    foreach (var item in pcba_SlotTray.Children)
-                    //    {
-                    //        TextBlock tb = item as TextBlock;
-                    //        string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //        tb.Text = result;
-                    //        tb.Background = Dic_ResultColor[result];
-                    //    }
-                    //if (BatAray != null)
-                    //    foreach (var item in bat_SlotTray.Children)
-                    //    {
-                    //        TextBlock tb = item as TextBlock;
-                    //        string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //        tb.Text = result;
-                    //        tb.Background = Dic_ResultColor[result];
-                    //    }
+                    if (GlobalFunctions.IsSystem1)
+                    {
+                        if (LAry != null)
+                            foreach (var item in ugrd_LeftTray.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if (RAry != null)
+                            foreach (var item in ugrd_RightTray.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if (PCBAry != null)
+                            foreach (var item in pcba_SlotTray.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if (BatAry != null)
+                            foreach (var item in bat_SlotTray.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                    }
 
-                    if (InputL != null)
-                        foreach (var item in input_LeftSlot.Children)
-                        {
-                            TextBlock tb = item as TextBlock;
-                            string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
-                            tb.Text = result;
-                            tb.Background = Dic_ResultColor[result];
-                        }
-                    if (InputR != null)
-                        foreach (var item in input_RightSlot.Children)
-                        {
-                            TextBlock tb = item as TextBlock;
-                            string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
-                            tb.Text = result;
-                            tb.Background = Dic_ResultColor[result];
-                        }
-                    if (OutputAry != null)
-                        foreach (var item in output_Slot.Children)
-                        {
-                            TextBlock tb = item as TextBlock;
-                            // Somehow tb.Tag start from 0 unlike above 2
-                            string result = OutputAry[Convert.ToInt32(tb.Tag)].ToString();
-                            tb.Text = result;
-                            tb.Background = Dic_ResultColor[result];
-                        }
+                    else
+                    {
+
+                        if (InputL != null)
+                            foreach (var item in input_LeftSlot.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if (InputR != null)
+                            foreach (var item in input_RightSlot.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if (OutputAry != null)
+                            foreach (var item in output_Slot.Children)
+                            {
+                                TextBlock tb = item as TextBlock;
+                                // Somehow tb.Tag start from 0 unlike above 2
+                                string result = OutputAry[Convert.ToInt32(tb.Tag)].ToString();
+                                tb.Text = result;
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                    }
                 }
                 catch (Exception exception)
                 {
@@ -276,7 +312,7 @@ namespace PentagonHMI.ChildControls
         private void ChangeTray_Click(object sender, RoutedEventArgs e)
         {
             string tag = (sender as Button).Tag.ToString();
-            OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray  : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
+            OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
         }
 
         private void Purge_Click(object sender, DependencyPropertyChangedEventArgs e)
