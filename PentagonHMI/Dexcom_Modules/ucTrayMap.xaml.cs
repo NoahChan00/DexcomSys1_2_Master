@@ -19,20 +19,20 @@ namespace PentagonHMI.ChildControls
         private LogicClasses.Main _Main;
 
         // Island 0 tag
-        const string Tag_L_Reinspect = "ISL0_LeftRack_HMIReq_InspectTray";
-        const string Tag_R_Reinspect = "ISL0_RightRack_HMIReq_InspectTray";
-        const string Tag_L_ChangeTray = "ISL0_HMI_LeftRack_ReqChangeTray";
-        const string Tag_R_ChangeTray = "ISL0_HMI_RightRack_ReqChangeTray";
-        const string Tag_L_PurgeRack = "ISL0_HMI_LeftRack_PurgeReq";
-        const string Tag_R_PurgeRack = "ISL0_HMI_RightRack_PurgeReq";
-        const string Tag_L_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
-        const string Tag_R_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
+        //const string Tag_L_Reinspect = "ISL0_LeftRack_HMIReq_InspectTray";
+        //const string Tag_R_Reinspect = "ISL0_RightRack_HMIReq_InspectTray";
+        //const string Tag_L_ChangeTray = "ISL0_HMI_LeftRack_ReqChangeTray";
+        //const string Tag_R_ChangeTray = "ISL0_HMI_RightRack_ReqChangeTray";
+        //const string Tag_L_PurgeRack = "ISL0_HMI_LeftRack_PurgeReq";
+        //const string Tag_R_PurgeRack = "ISL0_HMI_RightRack_PurgeReq";
+        //const string Tag_L_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
+        //const string Tag_R_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
 
-        const string Tag_PCBA_ChangeTray = "HMI_PCBA_ReqChangeTray";
-        const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
-        const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
-        const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
-        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        //const string Tag_PCBA_ChangeTray = "HMI_PCBA_ReqChangeTray";
+        //const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
+        //const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
+        //const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
+        //const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
 
         // Dexcom 1 Tag ?
         const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
@@ -220,8 +220,8 @@ namespace PentagonHMI.ChildControls
                     // System 1
                     var BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
                     var PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), PRow * PCol);
-                    var LAry = OPCore.Read<short[]>(Tag_L_TopVision, typeof(short), Row * Col);
-                    var RAry = OPCore.Read<short[]>(Tag_R_TopVision, typeof(short), Row * Col);
+                    var LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
+                    var RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
                     // System 2
                     var InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), Row * Col);
                     var InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
@@ -314,20 +314,21 @@ namespace PentagonHMI.ChildControls
         private void Reinspect_Click(object sender, RoutedEventArgs e)
         {
             string tag = (sender as Button).Tag.ToString();
-            OPCore.Write(tag == "L" ? Tag_L_Reinspect : tag == "R" ? Tag_R_Reinspect : "", true);
+            //OPCore.Write(tag == "L" ? Tag_L_Reinspect : tag == "R" ? Tag_R_Reinspect : "", true);
         }
 
         private void ChangeTray_Click(object sender, RoutedEventArgs e)
         {
             string tag = (sender as Button).Tag.ToString();
-            OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
+            //OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
         }
 
         private void Purge_Click(object sender, DependencyPropertyChangedEventArgs e)
         {
             ToggleButton tbtn = sender as ToggleButton;
             string tag = tbtn.Tag.ToString();
-            OPCore.Write(tag == "L" ? Tag_L_PurgeRack : tag == "R" ? Tag_R_PurgeRack : "", tbtn.IsChecked);
+            // Tag from 0
+            //OPCore.Write(tag == "L" ? Tag_L_PurgeRack : tag == "R" ? Tag_R_PurgeRack : "", tbtn.IsChecked);
 
         }
     }

@@ -21,12 +21,12 @@ namespace PentagonHMI
         private ObservableCollection<IOTypeModel> iOTypeList = new ObservableCollection<IOTypeModel>();
         private Logix.Tag machineRunningTag = new Logix.Tag
         {
-            Name =GlobalFunctions.IsSystem1? "System1_MachineStatus.str_MachineStatus":"System2_MachineStatus.str_MachineStatus",
+            Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
         private Logix.Tag engineeringModeTag = new Logix.Tag
         {
-            Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode":"System2_MC_Tag.EngineeringMode",
+            Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
         #endregion
@@ -37,9 +37,9 @@ namespace PentagonHMI
             try
             {
                 InitializeComponent();
-                
+
                 main = _main;
-                
+
                 if (initializeIO())
                 {
                     main.OnIOUpdate += main_OnIOUpdate;
@@ -58,10 +58,10 @@ namespace PentagonHMI
             try
             {
                 iOTypeList = new ObservableCollection<IOTypeModel>();
-                
+
                 Database database = new Database(Properties.Settings.Default.DatabaseConnectionString);
                 string errorMessage = string.Empty;
-                
+
                 DataTable dataTable = database.ExecuteQueryDT_Select($"SELECT * FROM IO WHERE " +
                     $"StationID = {main.StationID} ORDER BY CAST([TagIndex] AS INT)", ref errorMessage);
                 foreach (DataRow dataRow in dataTable.Rows)
@@ -72,7 +72,7 @@ namespace PentagonHMI
                     object _iOName = dataRow["IO"];
                     object iOToggleTag = dataRow["OutputTagName"];
                     object iOTypeName = dataRow["IOType"];
-                    
+
                     if (iOReadTag != null && iOTagName != null && iOIndexName != null && _iOName != null && iOTypeName != null)
                     {
                         if (!string.IsNullOrEmpty(iOReadTag.ToString()) && !string.IsNullOrEmpty(iOTagName.ToString()) &&
@@ -95,7 +95,7 @@ namespace PentagonHMI
                                 default:
                                     break;
                             }
-                            
+
                             if (!string.IsNullOrEmpty(iOName))
                             {
                                 if (!iOTypeList.ToList().Exists(x => x.IOTypeName == iOTypeName.ToString()))
@@ -163,7 +163,7 @@ namespace PentagonHMI
                                         }
                                     }
                                 }
-                                
+
                                 iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.ToList().Find(
                                     x => x.IOIndexName == iOIndexName.ToString()).IOList.ToList().Find(
                                     x => x.IOName == iOName).IOTagList.Add(iOTagModel);
@@ -171,9 +171,9 @@ namespace PentagonHMI
                         }
                     }
                 }
-                
+
                 IOTabControl.ItemsSource = iOTypeList;
-                
+
                 return true;
             }
             catch (Exception exception)
@@ -200,7 +200,7 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void iOCheckBox_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -241,7 +241,7 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void main_OnIOUpdate()
         {
             try
@@ -253,7 +253,7 @@ namespace PentagonHMI
                     if (machineRunningTag.Value != null)
                     {
                         bool machineRunning = Convert.ToBoolean(machineRunningTag.Value);
-                        
+
                         EngineeringModeToggleButton.Dispatcher.Invoke(new Action(() =>
                         {
                             if (EngineeringModeToggleButton.IsEnabled != !machineRunning)

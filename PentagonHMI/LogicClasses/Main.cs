@@ -1,14 +1,14 @@
 ﻿using Logix;
+using PentagonHMI.Classes;
+using SimpleDatabase;
+using SimpleOPC;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using PentagonHMI.Classes;
-using System.Linq;
-using SimpleOPC;
-using System.IO;
-using SimpleDatabase;
 using Utilities;
 
 namespace PentagonHMI.LogicClasses
@@ -93,7 +93,7 @@ namespace PentagonHMI.LogicClasses
 
         public delegate void onDryrunHandler();
         public event onDryrunHandler OnDryrunUpdate;
-        
+
         public delegate void onTrayMapHandler();
         public event onTrayMapHandler OnTrayMapUpdate;
 
@@ -126,10 +126,10 @@ namespace PentagonHMI.LogicClasses
         public bool IOPageON = false, OEEPageON = false, MotorPageON = false, SettingPageON = false,
             IOLocPageON = false, HomePageON = false, EnPageOn = false, DryRunPageON = false,
             EngineeringPageOn = false, RejectBinDisplayPageOn = false, RackConfigurationPageOn = false,
-            TrayMapPageOn = false, DUTPageOn = false, LotPageOn  = false;
+            TrayMapPageOn = false, DUTPageOn = false, LotPageOn = false;
 
         public bool HasErrorCheck = false, HasStationStatusCheck = false, HasBreakTimeCheck = false, HasLogManagement = false;
-        
+
         public bool HasRackStatus = false;
         #endregion
 
@@ -145,10 +145,22 @@ namespace PentagonHMI.LogicClasses
         public string gUPHprevStr = "";
         public string gUPHcurrStr = "";
         public ProjectType StnType = GlobalFunctions.ProjectType;
-        public virtual string StationID { get; set; }
-        public int UPH { get; set; }
-        public string[] Lst_UPH { get; set; }
-        public Controller MyPLC { get; set; }
+        public virtual string StationID
+        {
+            get; set;
+        }
+        public int UPH
+        {
+            get; set;
+        }
+        public string[] Lst_UPH
+        {
+            get; set;
+        }
+        public Controller MyPLC
+        {
+            get; set;
+        }
         #endregion
 
         #region Methods
@@ -322,9 +334,9 @@ namespace PentagonHMI.LogicClasses
             }
 
         }
-#endregion
+        #endregion
 
-#region Events
+        #region Events
         private void PageLane()
         {
             try
@@ -351,10 +363,10 @@ namespace PentagonHMI.LogicClasses
 
                     if (DryRunPageON && OnDryrunUpdate != null)
                         OnDryrunUpdate?.Invoke();
-                    
+
                     if (TrayMapPageOn)
                         OnTrayMapUpdate?.Invoke();
-                    
+
                     if (DUTPageOn)
                         OnDUTUpdate?.Invoke();
 
@@ -405,13 +417,13 @@ namespace PentagonHMI.LogicClasses
                 bool HasVisionResultLog = false, HasBarcodeResult1Log = false, HasBarcodeResult2Log = false,
                      HasOperatorLoadTime = false, HasInfoTagUpdate = false, HasUpdateOEEShift = false,
                      HasRejectReason = false, HasUPH = false, HasPLCSetTime = false, HasVTCBarcodeInputLog = false,
-                     HasVTCRejectReason = false, HasVTCRackBarcodeLog = false, HasTestCSV = false, HasTesterStnUnitTracker = false, HasLaserStnUnitTracker = false, 
+                     HasVTCRejectReason = false, HasVTCRackBarcodeLog = false, HasTestCSV = false, HasTesterStnUnitTracker = false, HasLaserStnUnitTracker = false,
                      HasUnldStnUnitTracker = false, HasTnRStnUnitTracker = false, HasLotSummary = false;
 
                 switch (GlobalFunctions.ProjectType)
                 {
                     case ProjectType.DEXCOM:
-                        HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck  = HasUpdateOEEShift = HasPLCSetTime = true;
+                        HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck = HasUpdateOEEShift = HasPLCSetTime = true;
                         HasTestCSV = HasTesterStnUnitTracker = HasLaserStnUnitTracker = HasUnldStnUnitTracker = HasTnRStnUnitTracker = HasLotSummary = true;
                         break;
                     case ProjectType.ARCADIA:
@@ -500,28 +512,47 @@ namespace PentagonHMI.LogicClasses
 
                         OnAlwaysUpdate?.Invoke();
 
-                        if (HasPLCSetTime) PLC_SET_TIME();
-                        if (HasUpdateOEEShift) Custom.UpdateOEEShift();
-                        if (HasUPH) Main_GetStationUPH();
-                        if (HasRejectReason) LogRejectReason();
-                        if (HasInfoTagUpdate) Info.OPC.Update();
+                        if (HasPLCSetTime)
+                            PLC_SET_TIME();
+                        if (HasUpdateOEEShift)
+                            Custom.UpdateOEEShift();
+                        if (HasUPH)
+                            Main_GetStationUPH();
+                        if (HasRejectReason)
+                            LogRejectReason();
+                        if (HasInfoTagUpdate)
+                            Info.OPC.Update();
 
-                        if (HasBarcodeResult1Log) Custom.BarcodeResult(1);
-                        if (HasBarcodeResult2Log) Custom.BarcodeResult(2);
-                        if (HasOperatorLoadTime) Custom.HDD_CheckAndLogOperatorLoadTimeTaken();
-                        
-                        if (HasTorqueDriver) TorqueDriverConnectionCheck();
-                        if (HasVTCBarcodeInputLog) Custom.VTCInputBarcode();
-                        if (HasVTCRejectReason) Custom.VTCRejectReason();
-                        if (HasVTCRackBarcodeLog) Custom.VTCRackBarcodeLog();
+                        if (HasBarcodeResult1Log)
+                            Custom.BarcodeResult(1);
+                        if (HasBarcodeResult2Log)
+                            Custom.BarcodeResult(2);
+                        if (HasOperatorLoadTime)
+                            Custom.HDD_CheckAndLogOperatorLoadTimeTaken();
 
-                        if (HasVisionResultLog) VisionResult();
-                        if (HasLotSummary) Custom.LotSummaryCheck();
-                        if (HasTestCSV) Custom.TestCSVCheck();
-                        if (HasTesterStnUnitTracker) Custom.TesterStnUnitTrackerCheck();
-                        if (HasLaserStnUnitTracker) Custom.LaserStnUnitTrackerCheck();
-                        if (HasUnldStnUnitTracker) Custom.UnldStnUnitTrackerCheck();
-                        if (HasTnRStnUnitTracker) Custom.TnRStnUnitTrackerCheck();
+                        if (HasTorqueDriver)
+                            TorqueDriverConnectionCheck();
+                        if (HasVTCBarcodeInputLog)
+                            Custom.VTCInputBarcode();
+                        if (HasVTCRejectReason)
+                            Custom.VTCRejectReason();
+                        if (HasVTCRackBarcodeLog)
+                            Custom.VTCRackBarcodeLog();
+
+                        if (HasVisionResultLog)
+                            VisionResult();
+                        if (HasLotSummary)
+                            Custom.LotSummaryCheck();
+                        if (HasTestCSV)
+                            Custom.TestCSVCheck();
+                        if (HasTesterStnUnitTracker)
+                            Custom.TesterStnUnitTrackerCheck();
+                        if (HasLaserStnUnitTracker)
+                            Custom.LaserStnUnitTrackerCheck();
+                        if (HasUnldStnUnitTracker)
+                            Custom.UnldStnUnitTrackerCheck();
+                        if (HasTnRStnUnitTracker)
+                            Custom.TnRStnUnitTrackerCheck();
                     }
                     catch (Exception exception)
                     {
@@ -543,7 +574,10 @@ namespace PentagonHMI.LogicClasses
                 if (OPC.Read<bool>(Tag_VisionResult))
                 {
                     string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "VisionResult");
-                    if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                    if (!Directory.Exists(LogsPath))
+                    {
+                        Directory.CreateDirectory(LogsPath);
+                    }
                     string _Path = Path.Combine(LogsPath, $"VisionResult_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                     bool HasFile = File.Exists(_Path);
                     using (FileStream stream = new FileStream(_Path,
@@ -610,7 +644,10 @@ namespace PentagonHMI.LogicClasses
             {
                 int PartCount = 8;
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "RejectReason");
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if (!Directory.Exists(LogsPath))
+                {
+                    Directory.CreateDirectory(LogsPath);
+                }
                 string _Path = Path.Combine(LogsPath, $"RejectReason_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                 bool HasFile = File.Exists(_Path);
                 using (FileStream stream = new FileStream(_Path,
@@ -634,7 +671,7 @@ namespace PentagonHMI.LogicClasses
                                     csv.WriteField("Type");
                                     csv.WriteField("Reason");
                                     csv.WriteField("AssetTag");
-                                    
+
                                     if (GlobalFunctions.ProjectType == ProjectType.TLA && MachineName.ToUpper().Contains("FINAL"))
                                     {
                                         csv.WriteField("Barcode");
@@ -689,7 +726,7 @@ namespace PentagonHMI.LogicClasses
                                 }
 
                                 string strRejectReason;
-                                
+
                                 if (OPC.Read<bool>(Tag_IsZoneFail))
                                 {
                                     string rejectConcatString = OPC.Read<string>(Tag_RejectReason);
@@ -1017,7 +1054,9 @@ namespace PentagonHMI.LogicClasses
                 }
             }
             catch (Exception ex)
-            { Utilities.FileLogger.logError(ex.ToString(), "Main_GetStationUPH"); }
+            {
+                Utilities.FileLogger.logError(ex.ToString(), "Main_GetStationUPH");
+            }
         }
 
 
@@ -1052,7 +1091,7 @@ namespace PentagonHMI.LogicClasses
 
                     if (intError == 0)
                         OPC.Write(SyncTimeTag, true);
-                    
+
                     dtNextTimeUpdate = DateTime.Now.AddSeconds(intNextTimeUpdate);
                 }
             }
@@ -1061,7 +1100,7 @@ namespace PentagonHMI.LogicClasses
                 Utilities.FileLogger.logError(ex.ToString(), "Update Datetime Error");
             }
         }
-#endregion
+        #endregion
 
         ~Main()
         {
