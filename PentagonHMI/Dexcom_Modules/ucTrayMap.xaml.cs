@@ -284,7 +284,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 // Somehow tb.Tag start from 0 unlike above 2
-                                string result = OutputAry[Convert.ToInt32(tb.Tag)].ToString();
+                                string result = OutputAry[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Text = result;
                                 tb.Background = Dic_ResultColor[result];
                             }
