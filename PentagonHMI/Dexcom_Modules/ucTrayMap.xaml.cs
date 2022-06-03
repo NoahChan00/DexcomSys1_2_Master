@@ -18,23 +18,27 @@ namespace PentagonHMI.ChildControls
 
         private LogicClasses.Main _Main;
 
+        // Island 0 tag
         const string Tag_L_Reinspect = "ISL0_LeftRack_HMIReq_InspectTray";
         const string Tag_R_Reinspect = "ISL0_RightRack_HMIReq_InspectTray";
         const string Tag_L_ChangeTray = "ISL0_HMI_LeftRack_ReqChangeTray";
         const string Tag_R_ChangeTray = "ISL0_HMI_RightRack_ReqChangeTray";
-        const string Tag_PCBA_ChangeTray = "HMI_PCBA_ReqChangeTray";
-        const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
         const string Tag_L_PurgeRack = "ISL0_HMI_LeftRack_PurgeReq";
         const string Tag_R_PurgeRack = "ISL0_HMI_RightRack_PurgeReq";
-        const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
-        const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
         const string Tag_L_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
         const string Tag_R_TopVision = "ISL0_TopVision_LeftTrayMap[0]";//Length 100;
+
+        const string Tag_PCBA_ChangeTray = "HMI_PCBA_ReqChangeTray";
+        const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
+        const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
+        const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
         const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
-        const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
-        const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking"; //Length 90
-        const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking";//Length 16
-        const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking";//Length 16
+
+        // Dexcom 1 Tag ?
+        const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
+        const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
+        const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking[1]";//Length 16
+        const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking[1]";//Length 16
 
         //System 2 - Tray Map HMI
         // New tag from 1.3
