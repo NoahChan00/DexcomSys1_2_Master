@@ -9,6 +9,7 @@ using System.Data;
 using System.Windows;
 using VanillaDB;
 using System.Reflection;
+using PentagonHMI.Classes;
 
 namespace PentagonHMI.ChildControls
 {
@@ -28,7 +29,9 @@ namespace PentagonHMI.ChildControls
 
         Tag EMTag = new Tag
         {
-            Name = "MC_System_Tags.EngineeringMode",
+            //Name = "MC_System_Tags.EngineeringMode",
+            Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
+
             DataType = Logix.Tag.ATOMIC.BOOL
         };
 

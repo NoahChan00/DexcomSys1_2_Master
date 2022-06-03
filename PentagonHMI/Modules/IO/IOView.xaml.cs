@@ -22,10 +22,12 @@ namespace PentagonHMI
         private Logix.Tag machineRunningTag = new Logix.Tag
         {
             Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
+            //Name = "MC_System_Tags.MachineRunning",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
         private Logix.Tag engineeringModeTag = new Logix.Tag
         {
+            //Name = "MC_System_Tags.EngineeringMode",
             Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
             DataType = Logix.Tag.ATOMIC.BOOL
         };

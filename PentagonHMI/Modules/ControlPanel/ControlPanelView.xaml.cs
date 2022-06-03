@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PentagonHMI.Classes;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -134,7 +135,9 @@ namespace PentagonHMI
                             ControlPanelToggleName = "Engineering Mode",
                             ControlPanelToggleTag = new Logix.Tag
                             {
-                                Name = "MC_System_Tags.EngineeringMode",
+                                //Name = "MC_System_Tags.EngineeringMode",
+                                Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
+
                                 DataType = Logix.Tag.ATOMIC.BOOL
                             },
                             ControlPanelToggleEnableTag = new Logix.Tag

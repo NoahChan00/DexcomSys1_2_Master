@@ -13,7 +13,9 @@ namespace PentagonHMI
         #region PrivateFields
         private List<EngineeringGroupModel> engineeringGroupList = new List<EngineeringGroupModel>();
         private LogicClasses.Main main = null;
-        private readonly Tag engineeringModeTag = new Tag { Name = "MC_System_Tags.EngineeringMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        //private readonly Tag engineeringModeTag = new Tag { Name = "MC_System_Tags.EngineeringMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        private readonly Tag engineeringModeTag = new Tag { Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode", DataType = Logix.Tag.ATOMIC.BOOL };
+
         #endregion
 
         #region Constructor
