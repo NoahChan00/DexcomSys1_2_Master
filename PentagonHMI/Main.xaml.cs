@@ -83,7 +83,7 @@ namespace PentagonHMI
         private ChildControls.ucEventLog LogChild;
         private ChildControls.ucMotor MotorChild;
         private DryRunView dryRunView;
-        private ucDexcom_Engineering DexcomEngineeringView;
+        private ucDexcomEngineering DexcomEngineeringView;
         private ChildControls.ucTrayMap TrayMapView;
         private ChildControls.ucDUT DUTView;
         private ChildControls.ucLotEntry LotView;
@@ -370,7 +370,7 @@ namespace PentagonHMI
             if (HasIOLoc) IOLocationChild = new ChildControls.ucIOLocation(ref _Main);
             Sp_IOLoc.Visibility = HasIOLoc ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasEng) DexcomEngineeringView = new ucDexcom_Engineering(_Main); //engineeringView = new EngineeringView(ref _Main);
+            if (HasEng) DexcomEngineeringView = new ucDexcomEngineering(_Main); //engineeringView = new EngineeringView(ref _Main);
             EngineeringStackPanel.Visibility = HasEng ? Visibility.Visible : Visibility.Collapsed;
 
             //Home Pages

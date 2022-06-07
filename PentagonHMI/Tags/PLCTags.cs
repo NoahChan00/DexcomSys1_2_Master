@@ -37,6 +37,7 @@ namespace PentagonHMI.Tags
         public static Logix.Tag Engr_PCBARobot_PlaceToTurret = new Logix.Tag { Name = $"HMI_PCBA_PlaceToTurret", DataType = Logix.Tag.ATOMIC.BOOL };
         public static Logix.Tag Engr_PCBARobot_RowNo = new Logix.Tag { Name = $"HMI_PCBA_RowNo", DataType = Logix.Tag.ATOMIC.INT };
         public static Logix.Tag Engr_PCBARobot_ColumnNo = new Logix.Tag { Name = $"HMI_PCBA_ColumnNo", DataType = Logix.Tag.ATOMIC.INT };
+
         #endregion
 
         #region Battery_Robot

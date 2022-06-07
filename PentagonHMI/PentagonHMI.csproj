@@ -190,8 +190,8 @@
     <Compile Include="Dexcom_Modules\ucDexcom_OEE.xaml.cs">
       <DependentUpon>ucDexcom_OEE.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Dexcom_Modules\ucDexcom_Engineering.xaml.cs">
-      <DependentUpon>ucDexcom_Engineering.xaml</DependentUpon>
+    <Compile Include="Dexcom_Modules\ucDexcomEngineering.xaml.cs">
+      <DependentUpon>ucDexcomEngineering.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dexcom_Modules\ucDUT.xaml.cs">
       <DependentUpon>ucDUT.xaml</DependentUpon>
@@ -528,7 +528,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Dexcom_Modules\ucDexcom_Engineering.xaml">
+    <Page Include="Dexcom_Modules\ucDexcomEngineering.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

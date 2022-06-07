@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PentagonHMI.ucDexcom_Engineering"
+﻿<UserControl x:Class="PentagonHMI.ucDexcomEngineering"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -225,12 +225,12 @@
 
                                 <UniformGrid Rows="1" Grid.Row="8">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="PCBARobot_num_PickTray_Row" Minimum="1" Maximum="100" Width="200" MouseDown="PCBARobot_num_ColNo_MouseDown" />
+                                    <Num:NumUpDown x:Name="PCBARobot_num_PickTray_Row" Minimum="1" Maximum="100" Width="200" MouseDown="PCBARobot_num_RowNo_MouseDown" ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="10">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="PCBARobot_num_PickTray_Col" Minimum="1" Maximum="100" Width="200" MouseDown="PCBARobot_num_ColNo_MouseDown" />
+                                    <Num:NumUpDown x:Name="PCBARobot_num_PickTray_Col" Minimum="1" Maximum="100" Width="200" MouseDown="PCBARobot_num_ColNo_MouseDown" ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="12" Orientation="Horizontal">
@@ -319,12 +319,14 @@
 
                                 <UniformGrid Rows="1" Grid.Row="8">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="BtryRobot_num_PickTray_Row" MouseDown="BtryRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="BtryRobot_num_PickTray_Row" MouseDown="BtryRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="10">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="BtryRobot_num_PickTray_Col" MouseDown="BtryRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="BtryRobot_num_PickTray_Col" MouseDown="BtryRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="12">
@@ -426,12 +428,14 @@
 
                                 <UniformGrid Rows="1" Grid.Row="12">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="UnloadRobot_num_PickTray_Row" MouseDown="UnloadRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="UnloadRobot_num_PickTray_Row" MouseDown="UnloadRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="14">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="UnloadRobot_num_PickTray_Col" MouseDown="UnloadRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="UnloadRobot_num_PickTray_Col" MouseDown="UnloadRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="2" Grid.Column="4" Orientation="Horizontal">
@@ -713,12 +717,14 @@
 
                                 <UniformGrid Rows="1" Grid.Row="8">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="InputRobot_num_RowNo" Minimum="1" Maximum="100" Width="200" MouseDown="InputRobot_num_RowNo_MouseDown" />
+                                    <Num:NumUpDown x:Name="InputRobot_num_RowNo" Minimum="1" Maximum="100" Width="200" MouseDown="InputRobot_num_RowNo_MouseDown" 
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="10">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="InputRobot_num_ColNo" Minimum="1" Maximum="100" Width="200" MouseDown="InputRobot_num_ColNo_MouseDown"/>
+                                    <Num:NumUpDown x:Name="InputRobot_num_ColNo" Minimum="1" Maximum="100" Width="200" MouseDown="InputRobot_num_ColNo_MouseDown"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="12" Orientation="Horizontal">
@@ -807,12 +813,14 @@
 
                                 <UniformGrid Rows="1" Grid.Row="8">
                                     <TextBlock Text="Pick Tray Row Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="OutputRobot_num_PickTray_Row" MouseDown="OutputRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="OutputRobot_num_PickTray_Row" MouseDown="OutputRobot_num_RowNo_MouseDown" Minimum="1" Maximum="100" Width="200"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <UniformGrid Rows="1" Columns="2" Grid.Row="10">
                                     <TextBlock Text="Pick Tray Column Number : " Width="300"/>
-                                    <Num:NumUpDown x:Name="OutputRobot_num_PickTray_Col" MouseDown="OutputRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"/>
+                                    <Num:NumUpDown x:Name="OutputRobot_num_PickTray_Col" MouseDown="OutputRobot_num_ColNo_MouseDown" Minimum="1" Maximum="100" Width="200"
+                                                   ValueChanged="NumUpDownValueChangedHandler"/>
                                 </UniformGrid>
 
                                 <StackPanel Grid.Row="12" Orientation="Horizontal">

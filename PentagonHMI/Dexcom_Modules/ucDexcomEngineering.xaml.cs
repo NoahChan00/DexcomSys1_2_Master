@@ -1,19 +1,19 @@
-﻿using System;
-using System.Windows.Controls;
-using Utilities;
-using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Controls.Primitives;
-using PentagonHMI.Modules.NumUpDown;
-using System.Linq;
-using PentagonHMI.Tags;
-using static PentagonHMI.Enum.Enumeration;
-using Logix;
+﻿using Logix;
 using PentagonHMI.Classes;
+using PentagonHMI.Modules.NumUpDown;
+using PentagonHMI.Tags;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using Utilities;
+using static PentagonHMI.Enum.Enumeration;
 
 namespace PentagonHMI
 {
-    public partial class ucDexcom_Engineering : UserControl, IDisposable
+    public partial class ucDexcomEngineering : UserControl, IDisposable
     {
         SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
         //SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
@@ -29,9 +29,9 @@ namespace PentagonHMI
 
         private Dictionary<object, Control> dic_EngMajor;
         string ModuleNow = "";
-        private List<Tag> engr_tagList = new List<Tag>();  
+        private List<Tag> engr_tagList = new List<Tag>();
 
-        public ucDexcom_Engineering(LogicClasses.Main main)
+        public ucDexcomEngineering(LogicClasses.Main main)
         {
             InitializeComponent();
             _Main = main;
@@ -74,7 +74,8 @@ namespace PentagonHMI
                         var control = item.Value;
                         var UI = item.Key;
 
-                        if (control.Module != ModuleNow) continue;
+                        if (control.Module != ModuleNow)
+                            continue;
 
                         bool disable = false;
 
@@ -100,9 +101,9 @@ namespace PentagonHMI
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             });
-        }   
+        }
 
-        ~ucDexcom_Engineering()
+        ~ucDexcomEngineering()
         {
             Dispose();
         }
@@ -162,7 +163,7 @@ namespace PentagonHMI
             }
         }
 
-#region PCBA_Robot
+        #region PCBA_Robot
         private void PCBARobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_PCBARobot_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -197,10 +198,10 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_PCBARobot_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Battery_Robot
+        #region Battery_Robot
         private void BtryRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -240,10 +241,10 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_BtryRobot_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Unload_Robot
+        #region Unload_Robot
         private void UnloadRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_UnloadRobot_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -257,7 +258,7 @@ namespace PentagonHMI
         private void UnloadRobot_PickTurret_Click(object sender, RoutedEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_UnloadRobot_PickFromTurret.Name, true);
-        }    
+        }
 
         private void UnloadRobot_PlaceLeft_Click(object sender, RoutedEventArgs e)
         {
@@ -283,10 +284,10 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_UnloadRobot_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region PCBA_Rack
+        #region PCBA_Rack
         private void PCBARack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_PCBARack_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -295,16 +296,16 @@ namespace PentagonHMI
         private void PCBARack_StationCycleMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_PCBARack_StationCycleMode.Name, (sender as ToggleButton).IsChecked);
-        }       
+        }
 
         private void PCBARack_StartInit_Click(object sender, RoutedEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_PCBARack_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Battery_Rack
+        #region Battery_Rack
         private void BtryRack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_BtryRack_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -319,18 +320,18 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_BtryRack_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Rotary_Table
+        #region Rotary_Table
         private void RotaryTable_TurretIndex_Click(object sender, RoutedEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_RotaryTable_TurretIndex.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Input_Robot
+        #region Input_Robot
         private void InputRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_InputRobot_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -370,10 +371,10 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_InputRobot_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Output_Robot
+        #region Output_Robot
         private void OutputRobot_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -408,10 +409,10 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_OutputRobot_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Input_Rack
+        #region Input_Rack
         private void InputRack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_InputRack_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -426,10 +427,10 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_InputRack_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
-#region Output_Rack
+        #region Output_Rack
         private void OutputRack_StationJogMode_Control_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             OPCore.Write(EngineeringPLCTags.Engr_OutputRack_JogMode.Name, (sender as ToggleButton).IsChecked);
@@ -444,7 +445,7 @@ namespace PentagonHMI
         {
             OPCore.Write(EngineeringPLCTags.Engr_OutputRack_StationStartInit.Name, true);
         }
-#endregion
+        #endregion
 
 
         //private void Control_Click(object sender, RoutedEventArgs e)
@@ -476,6 +477,36 @@ namespace PentagonHMI
 
                 tbc_System1.Visibility = Visibility.Visible;
                 tbc_System2.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void NumUpDownValueChangedHandler(object sender, RoutedEventArgs e)
+        {
+            // Dictionary for NumUpDown name => tag_name
+            var dict = new Dictionary<string, string>
+            {
+                // System 1
+                {"PCBARobot_num_PickTray_Row", "HMI_PCBA_RowNo"},
+                {"PCBARobot_num_PickTray_Col", "HMI_PCBA_ColumnNo"},
+                {"BtryRobot_num_PickTray_Row", "HMI_Battery_RowNo"},
+                {"BtryRobot_num_PickTray_Col", "HMI_Battery_ColumnNo"},
+                {"UnloadRobot_num_PickTray_Row", "HMI_Unload_RowNo" },
+                {"UnloadRobot_num_PickTray_Col", "HMI_Unload_ColumnNo"},
+                // System 2
+                {"InputRobot_num_RowNo", "HMI_Input_RowNo"},
+                {"InputRobot_num_ColNo", "HMI_Input_ColumnNo"},
+                {"OutputRobot_num_PickTray_Row", "HMI_Output_RowNo"},
+                {"OutputRobot_num_PickTray_Col", "HMI_Output_ColumnNo"},
+
+            };
+            NumUpDown numUpDown = (NumUpDown)sender;
+            try 
+            {
+                OPCore.Write(dict[numUpDown.Name], numUpDown.Value, typeof(short));
+            }
+            catch(Exception)
+            {
+                ;
             }
         }
     }
