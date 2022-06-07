@@ -637,13 +637,14 @@ namespace PentagonHMI
 
         private void Update_Station_Status()
         {
-            string statustag = "Machine_Status.str_MachineStatus";
+            //string statustag = "Machine_Status.str_MachineStatus";
+            string statustag = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus";
             //if (GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("FINAL"))
             //    statustag = "OutPNP_Machine_Status.str_MachineStatus";
             //else if (GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("CENTRAL"))
             //    statustag = "CenVis_Machine_Status.str_MachineStatus";
 
-            string _Content = _Main.OPC.Read<string>(statustag) ?? "ERROR";//"Machine_Status.str_MachineStatus") ?? "ERROR";
+            string _Content = _Main.OPC.Read<string>(statustag) ?? "ERROR";
 
             _Main.MachineStatus = _Content;
             string _Color = Yellow;
@@ -1289,7 +1290,7 @@ namespace PentagonHMI
                 {
                     if (_Main.MachineStatus.ToUpper() == "IDLE" || _Main.MachineStatus.ToUpper() == "IDLING")
                     {
-                        _Main.OPC.Write("MC_System_Tags.MachineInitDone", false);
+                        _Main.OPC.Write(GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit", false);
                     }
                     else
                     { MessageBox.Show("Cannot re-initialise, machine is not idling."); }

@@ -116,7 +116,7 @@ namespace PentagonHMI
                             ControlPanelActionName = "Machine Initialize",
                             ControlPanelActionTag = new Logix.Tag
                             {
-                                Name = "MC_System_Tags.MachineInit",
+                                Name = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit",
                                 DataType = Logix.Tag.ATOMIC.BOOL
                             },
                             ControlPanelActionEnableTag = new Logix.Tag
@@ -171,8 +171,8 @@ namespace PentagonHMI
                         ResetRead = "HMI_Tags.ResetButton";
                         ResetWrite = "HMI_Tags.ResetButton";
 
-                        InitializeRead = "MC_System_Tags.MachineInit";
-                        InitializeWrite = "MC_System_Tags.MachineInit";
+                        InitializeRead = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit";
+                        InitializeWrite = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit";
 
                         if (_Main.MachineName.ToUpper().Contains("FINAL"))
                         {
@@ -212,7 +212,7 @@ namespace PentagonHMI
                         ResetRead = "Cell_PIO_131:24:O.2";
                         ResetWrite = "HMI_Tags.ResetButton";
                         InitializeRead = "MC_System_Tags.MachineRunning";
-                        InitializeWrite = "MC_System_Tags.MachineInit";
+                        InitializeWrite = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit";
 
                         if (_Main.MachineName.ToUpper() == "FINAL INSPECTION")
                         {
@@ -314,7 +314,7 @@ namespace PentagonHMI
                             ControlPanelToggleName = "Engineering Mode",
                             ControlPanelToggleTag = new Logix.Tag
                             {
-                                Name = "MC_System_Tags.EngineeringMode",
+                                Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
                                 DataType = Logix.Tag.ATOMIC.BOOL
                             },
                             ControlPanelToggleEnableTag = new Logix.Tag

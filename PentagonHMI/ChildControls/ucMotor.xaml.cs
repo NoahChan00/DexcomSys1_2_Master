@@ -1,4 +1,5 @@
 ﻿using Logix;
+using PentagonHMI.Classes;
 using PentagonHMI.UserControls;
 using SimpleDatabase;
 using System;
@@ -50,7 +51,8 @@ namespace PentagonHMI.ChildControls
             PLCController = _MainConnection.MyPLC;
             loadMotorAxisDetails();
 
-            EM = new Tag("MC_System_Tags.EngineeringMode");//_MainConnection.StationID == "0" ? new Tag("bool_EngineerMode") : new Tag("bool_EngineeringMode");
+            //EM = new Tag("MC_System_Tags.EngineeringMode");//_MainConnection.StationID == "0" ? new Tag("bool_EngineerMode") : new Tag("bool_EngineeringMode");
+            EM = new Tag(GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode");
             EM.DataType = Logix.Tag.ATOMIC.BOOL;
 
             MStatus = new Tag("MC_System_Tags.MachineRunning");// _MainConnection.StationID == "0" ? new Tag("Conveyor_Preset.Production_Running") : new Tag("bool_MachineRunning");
