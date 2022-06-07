@@ -172,7 +172,7 @@
                 <StackPanel>
                     <Label Content="Engineering Module" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                     <StackPanel Width="240" Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
-                    <TabControl Name="tbc_Main" Visibility="Collapsed">
+                    <TabControl Name="tbc_System1">
                         <TabItem Header="PCBA Robot" FontSize="20" Visibility="Visible" Tag="PCBARobot">
                             <Grid Margin="30 20 0 0">
                                 <Grid.RowDefinitions>
@@ -659,7 +659,7 @@
                         </TabItem>
                     </TabControl>
 
-                    <TabControl Name="tbc_Sub" Visibility="Collapsed">
+                    <TabControl Name="tbc_System2">
                         <TabItem Header="Input Robot" FontSize="20" Visibility="Visible" Tag="InputRobot">
                             <Grid Margin="30 20 0 0">
                                 <Grid.RowDefinitions>
@@ -1045,9 +1045,6 @@
                     </TabControl>
                 </StackPanel>
             </Border>
-
-            <ComboBox Name="cbx_Selected" SelectionChanged="ModuleSelection" HorizontalAlignment="Right" FontWeight="Bold" Padding="10" FontSize="20" VerticalAlignment="Top" Margin="20 5" Width="300"/>
-
         </Grid>
     </ScrollViewer>
 </UserControl>
