@@ -475,8 +475,8 @@ namespace PentagonHMI
             else
             {
 
-                tbc_System1.Visibility = Visibility.Visible;
-                tbc_System2.Visibility = Visibility.Collapsed;
+                tbc_System1.Visibility = Visibility.Collapsed;
+                tbc_System2.Visibility = Visibility.Visible;
             }
         }
 
