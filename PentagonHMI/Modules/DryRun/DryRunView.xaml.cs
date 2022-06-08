@@ -80,7 +80,7 @@ namespace PentagonHMI
             {
                 dryRunList = new ObservableCollection<DryRunModel>();
                 
-                for (int i = 1; i <= 10; i++)
+                for (int i = 1; i <= 20; i++)
                 {
                     dryRunList.Add(new DryRunModel
                     {
