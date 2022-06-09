@@ -252,7 +252,7 @@
                                                             <Label Name="lbl_Yield" Content="{Binding Yield}" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="Gray"/>
                                                             <Label Content="Socket Disable:" FontSize="20" Background="LightGray"/>
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                                <ToggleButton Height="30" Width="60" Margin="2" Tag="{Binding Key}" IsChecked="{Binding SocketDisable}" Click="socketToggle_Click"/>
+                                                                <ToggleButton Height="30" Width="60" Margin="2" Tag="{Binding Key}" IsChecked="{Binding SocketDisable}" Click="socketToggle_Click" IsEnabled="False"/>
                                                             </StackPanel>
                                                         </UniformGrid>
                                                     </StackPanel>
