@@ -425,9 +425,8 @@
             </ScrollViewer>
 
             <Border Grid.Column="2" MaxWidth="570" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                <StackPanel>
+                <StackPanel Name="Legends">
                     <Label Content="Legends" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                    <StackPanel Background="White" Name="Legends" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right" />
                 </StackPanel>
             </Border>
         </Grid>

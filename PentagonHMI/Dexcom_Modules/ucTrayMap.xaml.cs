@@ -140,11 +140,14 @@ namespace PentagonHMI.ChildControls
             {
                 //dr["result"] using nchar instead of varchar, trailing white space x 9
                 Dic_ResultColor.Add(dr["result"].ToString().Trim(), (Brush)bc.ConvertFromString(dr["color"].ToString()));
-                Legends.Children.Add(new TextBlock
+                Legends.Children.Add(new Button
                 {
+                    Background = Dic_ResultColor[dr["result"].ToString().Trim()],
+                    BorderBrush = Brushes.Black,
+                    Content = dr["result"].ToString().Trim() + ": " + dr["description"].ToString(),
                     FontSize = 15,
-                    Text = dr["result"].ToString().Trim() + " " + dr["description"].ToString(),
-                    Background = Dic_ResultColor[dr["result"].ToString().Trim()]
+                    FontWeight = FontWeights.Bold,
+                    Height = 40
                 });
             }
 
@@ -223,6 +226,7 @@ namespace PentagonHMI.ChildControls
                     var LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
                     var RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
                     // System 2
+                    // Pending 3 more on top
                     var InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), Row * Col);
                     var InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
                     var OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);

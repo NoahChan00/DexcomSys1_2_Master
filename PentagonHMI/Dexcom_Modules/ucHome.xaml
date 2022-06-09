@@ -210,10 +210,10 @@
                             <StackPanel>
                                 <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center" Width="250">
                                     <UniformGrid Columns="1" VerticalAlignment="Top">
-                                        <Button BorderBrush="Gray" Content="No Unit"/>
-                                        <Button BorderBrush="Blue" Content="Not Tested"/>
-                                        <Button BorderBrush="Green" Content="Pass"/>
-                                        <Button BorderBrush="Red" Content="Fail"/>
+                                        <Button Background="Gray" Content="No Unit" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black"/>
+                                        <Button Background="Blue" Content="Not Tested" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black"/>
+                                        <Button Background="Green" Content="Pass" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black"/>
+                                        <Button Background="Red" Content="Fail" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black"/>
                                     </UniformGrid>
                                 </GroupBox>
 
@@ -250,8 +250,8 @@
                                                 </StackPanel>
 
                                                 <UniformGrid>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="EarpieceStn_Button_1"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="EarpieceStn_Button_2"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="EarpieceStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="EarpieceStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -259,8 +259,8 @@
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid Columns="2">
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_1"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="DiamondStn_Button_2"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="DiamondStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="DiamondStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -268,8 +268,8 @@
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid Columns="2">
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="HeightInspectionStn_Button_1"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="HeightInspectionStn_Button_2"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="HeightInspectionStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="HeightInspectionStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -277,8 +277,8 @@
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="CrimpingStn_Button_1"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="CrimpingStn_Button_2"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="CrimpingStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="CrimpingStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -289,8 +289,8 @@
                                                 </StackPanel>
 
                                                 <UniformGrid Columns="2">
-                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="ReuseStn_Button_1"/>
-                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="ReuseStn_Button_2"/>
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="ReuseStn_Button_1"/>
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="ReuseStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -299,8 +299,8 @@
                                                 <TextBlock Text="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
 
                                                 <UniformGrid Columns="2">
-                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="VisionStn_Button_1"/>
-                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Transparent" x:Name="VisionStn_Button_2"/>
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="VisionStn_Button_1"/>
+                                                    <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="VisionStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -308,8 +308,8 @@
                                                 <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <TextBlock Text="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                                 <UniformGrid Columns="2">
-                                                    <Button Height="30" Width="30" Background="Red" BorderBrush="Transparent" x:Name="RejectStn_Button_1" Content="A"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="RejectStn_Button_2"/>
+                                                    <Button Height="30" Width="30" Background="Red" BorderBrush="Black" x:Name="RejectStn_Button_1" Content="A"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="RejectStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
 
@@ -320,8 +320,8 @@
                                                 </StackPanel>
 
                                                 <UniformGrid Columns="2">
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="PassStn_Button_1"/>
-                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Transparent" x:Name="PassStn_Button_2"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="PassStn_Button_1"/>
+                                                    <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="PassStn_Button_2"/>
                                                 </UniformGrid>
                                             </StackPanel>
                                         </Canvas>
