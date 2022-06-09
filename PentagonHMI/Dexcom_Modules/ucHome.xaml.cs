@@ -1,69 +1,76 @@
-﻿using System;
-using System.Windows.Media;
-using System.Windows.Controls;
-using Utilities;
-using System.Windows;
-using System.Collections.Generic;
-using SimpleDatabase;
-using System.Reflection;
+﻿using GalaSoft.MvvmLight;
 using LiveCharts;
 using LiveCharts.Wpf;
-using System.Windows.Media.Imaging;
-using System.Windows.Controls.Primitives;
+using SimpleDatabase;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
-using PentagonHMI.Info;
+using System.Reflection;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Utilities;
 
 namespace PentagonHMI.ChildControls
 {
     public partial class ucHome : UserControl, IDisposable
     {
-
         #region PrivateFields
+
         private ControlPanelModel promptPanelModel = new ControlPanelModel();
         private LogicClasses.Main _Main;
-        #endregion
 
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+        #endregion PrivateFields
+
+        private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
 
         //Show Turret Image
-        public BitmapImage ImageToShow { get; set; }
+        public BitmapImage ImageToShow
+        {
+            get; set;
+        }
 
         //General
-        const string Home = "Home";
+        private const string Home = "Home";
 
         //Lot
-        const string Tag_PurgeLot_bool = "Lot_Info.HMI_Purge_Lot_Bit";
-        const string Tag_EndLot_bool = "Lot_Info.HMI_End_Lot_Bit";
-        const string Tag_LotMode_int = "Lot_Info.HMI_Lot_Mode";
-        Dictionary<int, string> dic_LotMode = new Dictionary<int, string>
+        private const string Tag_PurgeLot_bool = "Lot_Info.HMI_Purge_Lot_Bit";
+
+        private const string Tag_EndLot_bool = "Lot_Info.HMI_End_Lot_Bit";
+        private const string Tag_LotMode_int = "Lot_Info.HMI_Lot_Mode";
+
+        private Dictionary<int, string> dic_LotMode = new Dictionary<int, string>
         {
             [1] = "Commercial",
             [2] = "Non-Commercial"
         };
 
         //PromptBox
-        const string Tag_PromptBox_bool = "Lot_Info.HMI_Pause_Lot_Prompt";
+        private const string Tag_PromptBox_bool = "Lot_Info.HMI_Pause_Lot_Prompt";
 
         //Lot info
-        const string Tag_LotID_str = "Lot_Info.HMI_LotID";
-        const string Tag_LotSize_str = "Lot_Info.HMI_Lot_Quantity";
-        const string Tag_OprID_str20 = "Lot_Info.HMI_OperatorID";
-        const string Tag_DUTID_str20 = "RecipeParams.DUTid";
-        const string Tag_BatteryType_dint = "Lot_Info.HMI_BatteryType";
-        const string Tag_Firmware_str20 = "RecipeParams.FirmwareVersion";
-        const string Tag_DaysExpire_int = "Lot_Info.HMI_DaysToExpired";
-        const string Tag_ManufactureDate_str20 = "Lot_Info.HMI_ManufactureDate";
-        const string Tag_Expiration_str20 = "Lot_Info.HMI_Expiration_Date";
+        private const string Tag_LotID_str = "Lot_Info.HMI_LotID";
+
+        private const string Tag_LotSize_str = "Lot_Info.HMI_Lot_Quantity";
+        private const string Tag_OprID_str20 = "Lot_Info.HMI_OperatorID";
+        private const string Tag_DUTID_str20 = "RecipeParams.DUTid";
+        private const string Tag_BatteryType_dint = "Lot_Info.HMI_BatteryType";
+        private const string Tag_Firmware_str20 = "RecipeParams.FirmwareVersion";
+        private const string Tag_DaysExpire_int = "Lot_Info.HMI_DaysToExpired";
+        private const string Tag_ManufactureDate_str20 = "Lot_Info.HMI_ManufactureDate";
+        private const string Tag_Expiration_str20 = "Lot_Info.HMI_Expiration_Date";
 
         //Quality
-        const string Tag_Quality = "Lot_OEE_Tags.dint_Quality";
+        private const string Tag_Quality = "Lot_OEE_Tags.dint_Quality";
 
         //TnR
-        const string Tag_TnR1Sts_int = "HMI_Tags.TnR1_Status";
-        const string Tag_TnR2Sts_int = "HMI_Tags.TnR2_Status";
-        Dictionary<int, string> dic_TnRStatus = new Dictionary<int, string>
+        private const string Tag_TnR1Sts_int = "HMI_Tags.TnR1_Status";
+
+        private const string Tag_TnR2Sts_int = "HMI_Tags.TnR2_Status";
+
+        private Dictionary<int, string> dic_TnRStatus = new Dictionary<int, string>
         {
             [0] = "Not Init Done",
             [1] = "Init Done",
@@ -79,35 +86,39 @@ namespace PentagonHMI.ChildControls
         };
 
         //DUT Presence
-        const string Tag_LdPnPEmpty_bool = "ISL0_Rbt1DUT_EMPTY";
-        const string Tag_GantryEmpty_bool = "ISL0_Gantry_EMPTY";
-        const string Tag_TestShuttleEmpty_bool = "ISL0_TestStationDUT_EMPTY";
-        const string Tag_TopLaserShuttleEmpty_bool = "ISL0_TopShuttleDUT_EMPTY";
-        const string Tag_BottomLaserShuttleEmpty_bool = "ISL0_BottomShuttleDUT_EMPTY";
-        const string Tag_UldPnPEmpty_bool = "ISL0_Rbt2DUT_EMPTY";
-        const string Tag_LeftTrayTransferEmpty_bool = "ISL0_LeftTrayShuttle_EMPTY";
-        const string Tag_RightTrayTransferEmpty_bool = "ISL0_RightTrayShuttle_EMPTY";
-        Dictionary<bool, Brush> dic_DUTcolor = new Dictionary<bool, Brush>
+        private const string Tag_LdPnPEmpty_bool = "ISL0_Rbt1DUT_EMPTY";
+
+        private const string Tag_GantryEmpty_bool = "ISL0_Gantry_EMPTY";
+        private const string Tag_TestShuttleEmpty_bool = "ISL0_TestStationDUT_EMPTY";
+        private const string Tag_TopLaserShuttleEmpty_bool = "ISL0_TopShuttleDUT_EMPTY";
+        private const string Tag_BottomLaserShuttleEmpty_bool = "ISL0_BottomShuttleDUT_EMPTY";
+        private const string Tag_UldPnPEmpty_bool = "ISL0_Rbt2DUT_EMPTY";
+        private const string Tag_LeftTrayTransferEmpty_bool = "ISL0_LeftTrayShuttle_EMPTY";
+        private const string Tag_RightTrayTransferEmpty_bool = "ISL0_RightTrayShuttle_EMPTY";
+
+        private Dictionary<bool, Brush> dic_DUTcolor = new Dictionary<bool, Brush>
         {
             [true] = Brushes.Gray,
             [false] = Brushes.Yellow,
         };
 
         //Top6 Status
-        const string Tag_Top1Sts_int = "HMI_TOPM1_Status";
-        const string Tag_Top2Sts_int = "HMI_TOPM2_Status";
-        const string Tag_Top3Sts_int = "HMI_TOPM3_Status";
-        const string Tag_Top4Sts_int = "HMI_TOPM4_Status";
-        const string Tag_Top5Sts_int = "HMI_TOPM5_Status";
-        const string Tag_Top6Sts_int = "HMI_TOPM6_Status";
+        private const string Tag_Top1Sts_int = "HMI_TOPM1_Status";
 
-        const string Tag_Top1ErrCode_int = "HMI_TOPM1_ErrorCode";
-        const string Tag_Top2ErrCode_int = "HMI_TOPM2_ErrorCode";
-        const string Tag_Top3ErrCode_int = "HMI_TOPM3_ErrorCode";
-        const string Tag_Top4ErrCode_int = "HMI_TOPM4_ErrorCode";
-        const string Tag_Top5ErrCode_int = "HMI_TOPM5_ErrorCode";
-        const string Tag_Top6ErrCode_int = "HMI_TOPM6_ErrorCode";
-        Dictionary<int, string> dic_TopStatus = new Dictionary<int, string>
+        private const string Tag_Top2Sts_int = "HMI_TOPM2_Status";
+        private const string Tag_Top3Sts_int = "HMI_TOPM3_Status";
+        private const string Tag_Top4Sts_int = "HMI_TOPM4_Status";
+        private const string Tag_Top5Sts_int = "HMI_TOPM5_Status";
+        private const string Tag_Top6Sts_int = "HMI_TOPM6_Status";
+
+        private const string Tag_Top1ErrCode_int = "HMI_TOPM1_ErrorCode";
+        private const string Tag_Top2ErrCode_int = "HMI_TOPM2_ErrorCode";
+        private const string Tag_Top3ErrCode_int = "HMI_TOPM3_ErrorCode";
+        private const string Tag_Top4ErrCode_int = "HMI_TOPM4_ErrorCode";
+        private const string Tag_Top5ErrCode_int = "HMI_TOPM5_ErrorCode";
+        private const string Tag_Top6ErrCode_int = "HMI_TOPM6_ErrorCode";
+
+        private Dictionary<int, string> dic_TopStatus = new Dictionary<int, string>
         {
             [1] = "Disabled",
             [2] = "Self test Fail",
@@ -120,16 +131,17 @@ namespace PentagonHMI.ChildControls
         };
 
         //Station Status
-        const string Tag_Station1_Stat = "Station_1.DUT_Status";
-        const string Tag_Station2_Stat = "Station_2_DUT_Status";
-        const string Tag_Station3_Stat = "Station_3_DUT_Status";
-        const string Tag_Station4_Stat = "Station_4_DUT_Status";
-        const string Tag_Station5_Stat = "Station_5_DUT_Status";
-        const string Tag_Station6_Stat = "Station_6_DUT_Status";
-        const string Tag_Station7_Stat = "Station_7_DUT_Status";
-        const string Tag_Station8_Stat = "Station_8_DUT_Status";
-        ObservableCollection<DUTStationStatModel> DUTs = new ObservableCollection<DUTStationStatModel>();
-        Dictionary<int, Brush> Dic_StationStatColor = new Dictionary<int, Brush>();
+        private const string Tag_Station1_Stat = "Station_1.DUT_Status";
+
+        private const string Tag_Station2_Stat = "Station_2_DUT_Status";
+        private const string Tag_Station3_Stat = "Station_3_DUT_Status";
+        private const string Tag_Station4_Stat = "Station_4_DUT_Status";
+        private const string Tag_Station5_Stat = "Station_5_DUT_Status";
+        private const string Tag_Station6_Stat = "Station_6_DUT_Status";
+        private const string Tag_Station7_Stat = "Station_7_DUT_Status";
+        private const string Tag_Station8_Stat = "Station_8_DUT_Status";
+        private ObservableCollection<DUTStationStatModel> DUTs = new ObservableCollection<DUTStationStatModel>();
+        private Dictionary<int, Brush> Dic_StationStatColor = new Dictionary<int, Brush>();
 
         public ucHome(LogicClasses.Main main)
         {
@@ -137,12 +149,11 @@ namespace PentagonHMI.ChildControls
             _Main = main;
 
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP)) return;
+            if (!OPCore.Connect(Info.OPC.IP))
+                return;
 #endif
             Initialize();
             main.Home_OnUpdate += HomeUpdate;
-
-
         }
 
         private void Initialize()
@@ -242,89 +253,63 @@ namespace PentagonHMI.ChildControls
                     //tbk_top5_Err.Text = OPCore.Read<int>(Tag_Top5ErrCode_int).ToString();
                     //tbk_top6_Err.Text = OPCore.Read<int>(Tag_Top6ErrCode_int).ToString();
 
-                    //Station Status
-                    var Stat1 = OPCore.Read<int>(Tag_Station1_Stat, typeof(int));
-                    var Stat2 = OPCore.Read<int>(Tag_Station2_Stat, typeof(int));
-                    var Stat3 = OPCore.Read<int>(Tag_Station3_Stat, typeof(int));
-                    var Stat4 = OPCore.Read<int>(Tag_Station4_Stat, typeof(int));
-                    var Stat5 = OPCore.Read<int>(Tag_Station5_Stat, typeof(int));
-                    var Stat6 = OPCore.Read<int>(Tag_Station6_Stat, typeof(int));
-                    var Stat7 = OPCore.Read<int>(Tag_Station7_Stat, typeof(int));
-                    var Stat8 = OPCore.Read<int>(Tag_Station8_Stat, typeof(int));
+                    #region Station Status Read
 
-                    //    if (Stat1 != null)
-                    //        foreach (var item in ugrd_LeftTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat1[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                    var stats = new List<int>();
+#if !DEBUG
+                    stats.AddRange(new List<int>{
+                        OPCore.Read<int>(Tag_Station1_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station2_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station3_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station4_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station5_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station6_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station7_Stat, typeof(int)),
+                        OPCore.Read<int>(Tag_Station8_Stat, typeof(int))
+                    });
+#else
+                    stats.AddRange(new List<int> { 0, 1, 10, 11, 0, 1, 10, 11 });
+#endif
 
-                    //    if (Stat2 != null)
-                    //        foreach (var item in ugrd_RightTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat2[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                    var stationsStatus = new List<Button>(){
+                        Station1DutStatus,
+                        Station2DutStatus,
+                        Station3DutStatus,
+                        Station4DutStatus,
+                        Station5DutStatus,
+                        Station6DutStatus,
+                        Station7DutStatus,
+                        Station8DutStatus
+                    };
 
-                    //    if (Stat3 != null)
-                    //        foreach (var item in pcba_SlotTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat3[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                    for (int i = 0; i < stats.Count; i++)
+                    {
+                        switch (stats[i])
+                        {
+                            case 0:
+                                stationsStatus[i].Background = Brushes.Gray;
+                                break;
 
-                    //    if (Stat4 != null)
-                    //        foreach (var item in bat_SlotTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat4[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                            case 1:
+                                stationsStatus[i].Background = Brushes.Blue;
+                                break;
 
-                    //    if (Stat5 != null)
-                    //        foreach (var item in bat_SlotTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat5[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                            case 10:
+                                stationsStatus[i].Background = Brushes.Green;
+                                break;
 
-                    //    if (Stat6 != null)
-                    //        foreach (var item in bat_SlotTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat6[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                            case 11:
+                                stationsStatus[i].Background = Brushes.Red;
+                                break;
 
-                    //    if (Stat7 != null)
-                    //        foreach (var item in bat_SlotTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat7[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                            default:
+                                // not sure what to do
+                                break;
+                        }
+                    }
 
-                    //    if (Stat8 != null)
-                    //        foreach (var item in bat_SlotTray.Children)
-                    //        {
-                    //            TextBlock tb = item as TextBlock;
-                    //            string status = Stat8[Convert.ToInt32(tb.Tag) - 1].ToString();
-                    //            tb.Text = status;
-                    //            tb.Background = Dic_StatusColor[status];
-                    //        }
+                    #endregion Station Status Read
                 }
-
                 catch (Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
@@ -345,9 +330,13 @@ namespace PentagonHMI.ChildControls
         public class DUTStationStatModel : ViewModelBase
         {
             private Brush background = Brushes.Gray;
+
             public Brush Background
             {
-                get { return background; }
+                get
+                {
+                    return background;
+                }
                 set
                 {
                     if (background != value)
@@ -386,6 +375,5 @@ namespace PentagonHMI.ChildControls
                 OPCore.Write(Tag_PromptBox_bool, false);
             }
         }
-
     }
 }
