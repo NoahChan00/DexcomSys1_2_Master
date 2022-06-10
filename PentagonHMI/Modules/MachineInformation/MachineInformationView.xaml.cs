@@ -56,7 +56,7 @@ namespace PentagonHMI
                     {
                         const string DisplayName = "DisplayName";
                         const string InfoType = "InfoType";
-                        Tag _tag = new Tag { Name = dr["TagName"].ToString(), DataType = Dic_Type_LogixType[dr["TagDataType"].ToString().ToUpper()] };
+                        Tag _tag = new Tag { Name = dr["TagName"].ToString().Trim(), DataType = Dic_Type_LogixType[dr["TagDataType"].ToString().ToUpper()] };
 
                         if (dr[InfoType].ToString().ToUpper() == "STATUS")
                         {
