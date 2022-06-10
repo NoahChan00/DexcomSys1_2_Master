@@ -1,8 +1,8 @@
-﻿using System;
-using Logix;
+﻿using Logix;
+using SimpleOPC.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SimpleOPC.Utilities;
 
 namespace SimpleOPC
 {
@@ -17,15 +17,18 @@ namespace SimpleOPC
 
         private static Dictionary<Type, Tag.ATOMIC> Dic_Type_IngearType = new Dictionary<Type, Tag.ATOMIC>
         {
-            [typeof(Boolean)] = Tag.ATOMIC.BOOL,
-            [typeof(Double)] = Tag.ATOMIC.REAL,
-            [typeof(Int16)] = Tag.ATOMIC.INT,
-            [typeof(Int32)] = Tag.ATOMIC.DINT,
-            [typeof(Int64)] = Tag.ATOMIC.LINT,
-            [typeof(Object)] = Tag.ATOMIC.OBJECT,
-            [typeof(SByte)] = Tag.ATOMIC.SINT,
-            [typeof(Single)] = Tag.ATOMIC.REAL,
-            [typeof(String)] = Tag.ATOMIC.STRING,
+            [typeof(bool)] = Tag.ATOMIC.BOOL,
+            [typeof(double)] = Tag.ATOMIC.REAL,
+            [typeof(short)] = Tag.ATOMIC.INT,
+            // Actual ATOMIC.INT is 16 bit, but previous code utilize as int
+            [typeof(int)] = Tag.ATOMIC.INT,
+            //[typeof(int)] = Tag.ATOMIC.DINT,
+            [typeof(long)] = Tag.ATOMIC.LINT,
+            [typeof(object)] = Tag.ATOMIC.OBJECT,
+            [typeof(sbyte)] = Tag.ATOMIC.SINT,
+            [typeof(float)] = Tag.ATOMIC.REAL,
+            [typeof(double)] = Tag.ATOMIC.REAL,
+            [typeof(string)] = Tag.ATOMIC.STRING,
         };
 
         public EventHandler OPCUpdate;
@@ -163,11 +166,11 @@ namespace SimpleOPC
 
         public bool WriteStringTag(string TagName, object Value)
         {
-            Tag _tag = new Tag { Name = TagName, DataType = Tag.ATOMIC.STRING};
+            Tag _tag = new Tag { Name = TagName, DataType = Tag.ATOMIC.STRING };
             Ctr_OPC.ReadTag(_tag);
             try
             {
-                _tag.Value = (Value??string.Empty).ToString();
+                _tag.Value = (Value ?? string.Empty).ToString();
                 if (Ctr_OPC.WriteTag(_tag) == ResultCode.E_SUCCESS && _tag.QualityCode == ResultCode.QUAL_GOOD)
                     return true;
 
@@ -183,8 +186,14 @@ namespace SimpleOPC
         {
             try
             {
-                if (_tag.Controller == null) { _tag.Controller = Ctr_OPC; };
-                if (type != null) { _tag.NetType = type; };
+                if (_tag.Controller == null)
+                {
+                    _tag.Controller = Ctr_OPC;
+                };
+                if (type != null)
+                {
+                    _tag.NetType = type;
+                };
                 _tag.DataType = tagType;
                 if (Ctr_OPC.ReadTag(_tag) == ResultCode.E_SUCCESS && _tag.QualityCode == ResultCode.QUAL_GOOD)
                     return true;
@@ -198,8 +207,12 @@ namespace SimpleOPC
         {
             try
             {
-                if (_tag.Controller == null) { _tag.Controller = Ctr_OPC; };
-                if (value != null) _tag.Value = value;
+                if (_tag.Controller == null)
+                {
+                    _tag.Controller = Ctr_OPC;
+                };
+                if (value != null)
+                    _tag.Value = value;
                 if (Ctr_OPC.WriteTag(_tag) == ResultCode.E_SUCCESS && _tag.QualityCode == ResultCode.QUAL_GOOD)
                     return true;
                 Logger.Warn(string.Format(Logger.Msg.WriteFail, _tag.Name, _tag.Value));
@@ -213,7 +226,8 @@ namespace SimpleOPC
         {
             try
             {
-                if (IsConnected()) return true;
+                if (IsConnected())
+                    return true;
                 lock (Locker)
                 {
                     if (!string.IsNullOrWhiteSpace(IP) && !string.IsNullOrWhiteSpace(Path))
@@ -285,8 +299,10 @@ namespace SimpleOPC
         {
             try
             {
-                if (Dic_TagName_Tag.Count <= 0) throw new Ex.CustomException(string.Format(Ex.Msg.TagListEmpty, nameof(Initialize)));
-                if (Ctr_OPC == null) throw new Ex.CustomException(string.Format(Ex.Msg.ControllerNull, nameof(Initialize), nameof(Connect)));
+                if (Dic_TagName_Tag.Count <= 0)
+                    throw new Ex.CustomException(string.Format(Ex.Msg.TagListEmpty, nameof(Initialize)));
+                if (Ctr_OPC == null)
+                    throw new Ex.CustomException(string.Format(Ex.Msg.ControllerNull, nameof(Initialize), nameof(Connect)));
 
                 if (lst_ScanControllers.Count > 0)
                 {
@@ -323,15 +339,17 @@ namespace SimpleOPC
                         /// Ingear official support recommends us to hold not more than 50 tags per taggroup,
                         /// in order to mitigate changed event miss rate
                         lst_ScanControllers.Add(GetController(DeepClone: true));
-                        if (!IsLast) tagGroup = new TagGroup
-                        {
-                            Controller = lst_ScanControllers.Last(),
-                            Interval = interval,
-                            ScanningMode = TagGroup.SCANMODE.ReadWrite
-                        };
+                        if (!IsLast)
+                            tagGroup = new TagGroup
+                            {
+                                Controller = lst_ScanControllers.Last(),
+                                Interval = interval,
+                                ScanningMode = TagGroup.SCANMODE.ReadWrite
+                            };
                     }
                 }
-                if (StartScanning) StartScan();
+                if (StartScanning)
+                    StartScan();
             }
             catch (Exception ex) { throw ex; }
         }
@@ -369,7 +387,8 @@ namespace SimpleOPC
                 {
                     Controller Ctrler = new Controller { Timeout = Ctr_OPC.Timeout, Path = Ctr_OPC.Path, IPAddress = Ctr_OPC.IPAddress };
                     Ctrler.Connect();
-                    if (!Ctrler.IsConnected) Logger.Warn(Logger.Msg.ControllerConnectionFail);
+                    if (!Ctrler.IsConnected)
+                        Logger.Warn(Logger.Msg.ControllerConnectionFail);
                     return Ctrler;
                 }
                 else

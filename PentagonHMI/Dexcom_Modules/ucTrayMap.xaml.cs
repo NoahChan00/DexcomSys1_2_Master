@@ -32,7 +32,7 @@ namespace PentagonHMI.ChildControls
         //const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
         //const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
         //const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
-        //const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
 
         // Dexcom 1 Tag ?
         const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
@@ -109,7 +109,15 @@ namespace PentagonHMI.ChildControls
             PCol = 10;
             ORow = 10;
             OCol = 6;
+#if !DEBUG
+            if (GlobalFunctions.IsSystem1)
+                BatType = OPCore.Read<int>(Tag_Btry_dint);
+            else
+                BatType = 6;
+#else
+
             BatType = 6;
+#endif
 
             switch (BatType)
             {
@@ -132,7 +140,7 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Failed to read battery type from PLC.");
                     break;
             }
-            //#endif
+//#endif
 
             BrushConverter bc = new BrushConverter();
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
@@ -221,15 +229,15 @@ namespace PentagonHMI.ChildControls
                 {
 
                     // System 1
-                    var BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
-                    var PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), PRow * PCol);
-                    var LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
-                    var RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
+                    var BatAry = OPCore.Read<int[]>(Tag_Btry_Slot, typeof(int), BRow * BCol);
+                    var PCBAry = OPCore.Read<int[]>(Tag_PCBA_Slot, typeof(int), PRow * PCol);
+                    var LAry = OPCore.Read<int[]>(Tag_L_Shuttle_Slot, typeof(int), Row * Col);
+                    var RAry = OPCore.Read<int[]>(Tag_R_Shuttle_Slot, typeof(int), Row * Col);
                     // System 2
                     // Pending 3 more on top
-                    var InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), Row * Col);
-                    var InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
-                    var OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);
+                    var InputL = OPCore.Read<int[]>(Tag_L_Input_Slot, typeof(int), Row * Col);
+                    var InputR = OPCore.Read<int[]>(Tag_R_Input_Slot, typeof(int), Row * Col);
+                    var OutputAry = OPCore.Read<int[]>(Tag_Output_Slot, typeof(int), ORow * OCol);
 
 
                     if (GlobalFunctions.IsSystem1)
