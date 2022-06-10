@@ -54,7 +54,7 @@ namespace SimpleOPC
                 Dic_TagName_Tag = null;
                 OPCUpdate = null;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public void Dispose()
@@ -64,7 +64,7 @@ namespace SimpleOPC
                 DisposeMainBody();
                 GC.SuppressFinalize(this);
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
         #endregion
 
@@ -96,7 +96,7 @@ namespace SimpleOPC
                 }
                 return IsConnected();
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public T Read<T>(string TagName, Type TagType = null, int length = 1)
@@ -118,7 +118,7 @@ namespace SimpleOPC
                 Logger.Warn(string.Format(Logger.Msg.ReadFail, _tag.Name, _tag.Value));
                 return default;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public object Read(string TagName, Type TagType = null, int length = 1)
@@ -139,7 +139,7 @@ namespace SimpleOPC
                 Logger.Warn(string.Format(Logger.Msg.ReadFail, _tag.Name, _tag.Value));
                 return default;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public bool Write(string TagName, object Value, Type TagType = null)
@@ -161,7 +161,7 @@ namespace SimpleOPC
                 Logger.Warn(string.Format(Logger.Msg.WriteFail, _tag.Name, _tag.Value));
                 return false;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public bool WriteStringTag(string TagName, object Value)
@@ -177,7 +177,7 @@ namespace SimpleOPC
                 Logger.Warn(string.Format(Logger.Msg.WriteFail, _tag.Name, _tag.Value));
                 return false;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
             finally { _tag.Dispose(); _tag = null; }
         }
 
@@ -200,7 +200,7 @@ namespace SimpleOPC
                 Logger.Warn(string.Format(Logger.Msg.ReadFail, _tag.Name, _tag.Value));
                 return false;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public bool WriteTag(ref Tag _tag, object value = null)
@@ -218,7 +218,7 @@ namespace SimpleOPC
                 Logger.Warn(string.Format(Logger.Msg.WriteFail, _tag.Name, _tag.Value));
                 return false;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
         #endregion
 
@@ -247,7 +247,7 @@ namespace SimpleOPC
                 }
                 return false;
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public bool Disconnect()
@@ -351,7 +351,7 @@ namespace SimpleOPC
                 if (StartScanning)
                     StartScan();
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
 
         public void StartScan()
@@ -395,7 +395,7 @@ namespace SimpleOPC
                     return Ctr_OPC;
 
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception) { throw; }
         }
         #endregion
     }

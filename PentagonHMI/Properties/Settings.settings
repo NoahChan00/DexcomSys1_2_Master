@@ -74,9 +74,9 @@
     <Setting Name="DatabaseConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionString&gt;Persist Security Info = False; Data Source = 191.168.0.171; Integrated Security = False; Initial Catalog = gdb_DexcomSystem1; User ID=sa; Password=Pss123321!;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;persist security info = false; data source = desktop-915d7n0\sqlexpress; integrated security = true; initial catalog = gdb_dexcomsystem2;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">Persist Security Info = False; Data Source = 191.168.0.171; Integrated Security = False; Initial Catalog = gdb_DexcomSystem1; User ID=sa; Password=Pss123321!;</Value>
+      <Value Profile="(Default)">persist security info = false; data source = desktop-915d7n0\sqlexpress; integrated security = true; initial catalog = gdb_dexcomsystem2;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

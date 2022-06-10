@@ -302,8 +302,8 @@ namespace PentagonHMI.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Persist Security Info = False; Data Source = 191.168.0.171; Integrated Security =" +
-            " False; Initial Catalog = gdb_DexcomSystem1; User ID=sa; Password=Pss123321!;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("persist security info = false; data source = desktop-915d7n0\\sqlexpress; integrat" +
+            "ed security = true; initial catalog = gdb_dexcomsystem2;")]
         public string DatabaseConnectionString {
             get {
                 return ((string)(this["DatabaseConnectionString"]));
