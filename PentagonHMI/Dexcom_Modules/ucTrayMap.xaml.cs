@@ -211,7 +211,7 @@ namespace PentagonHMI.ChildControls
                     input_RightSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
                 }
                 int totalOutput = ORow * OCol;
-                for (int i = 1; i < totalOutput; i++)
+                for (int i = 1; i <= totalOutput; i++)
                 {
                     output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
                 }
