@@ -133,13 +133,13 @@ namespace PentagonHMI.ChildControls
         //Station Status
         private const string Tag_Station1_Stat = "Station_1.DUT_Status";
 
-        private const string Tag_Station2_Stat = "Station_2_DUT_Status";
-        private const string Tag_Station3_Stat = "Station_3_DUT_Status";
-        private const string Tag_Station4_Stat = "Station_4_DUT_Status";
-        private const string Tag_Station5_Stat = "Station_5_DUT_Status";
-        private const string Tag_Station6_Stat = "Station_6_DUT_Status";
-        private const string Tag_Station7_Stat = "Station_7_DUT_Status";
-        private const string Tag_Station8_Stat = "Station_8_DUT_Status";
+        private const string Tag_Station2_Stat = "Station_2.DUT_Status";
+        private const string Tag_Station3_Stat = "Station_3.DUT_Status";
+        private const string Tag_Station4_Stat = "Station_4.DUT_Status";
+        private const string Tag_Station5_Stat = "Station_5.DUT_Status";
+        private const string Tag_Station6_Stat = "Station_6.DUT_Status";
+        private const string Tag_Station7_Stat = "Station_7.DUT_Status";
+        private const string Tag_Station8_Stat = "Station_8.DUT_Status";
         private ObservableCollection<DUTStationStatModel> DUTs = new ObservableCollection<DUTStationStatModel>();
         private Dictionary<int, Brush> Dic_StationStatColor = new Dictionary<int, Brush>();
 
@@ -258,14 +258,14 @@ namespace PentagonHMI.ChildControls
                     var stats = new List<int>();
 #if !DEBUG
                     stats.AddRange(new List<int>{
-                        OPCore.Read<int>(Tag_Station1_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station2_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station3_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station4_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station5_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station6_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station7_Stat, typeof(int)),
-                        OPCore.Read<int>(Tag_Station8_Stat, typeof(int))
+                        OPCore.Read<int>(Tag_Station1_Stat),
+                        OPCore.Read<int>(Tag_Station2_Stat),
+                        OPCore.Read<int>(Tag_Station3_Stat),
+                        OPCore.Read<int>(Tag_Station4_Stat),
+                        OPCore.Read<int>(Tag_Station5_Stat),
+                        OPCore.Read<int>(Tag_Station6_Stat),
+                        OPCore.Read<int>(Tag_Station7_Stat),
+                        OPCore.Read<int>(Tag_Station8_Stat)
                     });
 #else
                     stats.AddRange(new List<int> { 0, 1, 10, 11, 0, 1, 10, 11 });

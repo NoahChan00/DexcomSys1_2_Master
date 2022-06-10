@@ -3,6 +3,7 @@ using SimpleDatabase;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -140,7 +141,7 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Failed to read battery type from PLC.");
                     break;
             }
-//#endif
+            //#endif
 
             BrushConverter bc = new BrushConverter();
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
@@ -228,16 +229,31 @@ namespace PentagonHMI.ChildControls
                 try
                 {
 
-                    // System 1
-                    var BatAry = OPCore.Read<int[]>(Tag_Btry_Slot, typeof(int), BRow * BCol);
-                    var PCBAry = OPCore.Read<int[]>(Tag_PCBA_Slot, typeof(int), PRow * PCol);
-                    var LAry = OPCore.Read<int[]>(Tag_L_Shuttle_Slot, typeof(int), Row * Col);
-                    var RAry = OPCore.Read<int[]>(Tag_R_Shuttle_Slot, typeof(int), Row * Col);
-                    // System 2
-                    // Pending 3 more on top
-                    var InputL = OPCore.Read<int[]>(Tag_L_Input_Slot, typeof(int), Row * Col);
-                    var InputR = OPCore.Read<int[]>(Tag_R_Input_Slot, typeof(int), Row * Col);
-                    var OutputAry = OPCore.Read<int[]>(Tag_Output_Slot, typeof(int), ORow * OCol);
+                    short[] BatAry= default;
+                    short[] PCBAry = default;
+                    short[] LAry = default;
+                    short[] RAry = default;
+
+                    short[] InputL = default;
+                    short[] InputR = default;
+                    short[] OutputAry = default;
+
+
+                    if (GlobalFunctions.IsSystem1)
+                    {
+                        BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
+                        PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), PRow * PCol);
+                        LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
+                        RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
+                    }
+                    else
+                    {
+                        // System 2
+                        // Pending 3 more on top
+                        InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), Row * Col);
+                        InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
+                        OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);
+                    }
 
 
                     if (GlobalFunctions.IsSystem1)

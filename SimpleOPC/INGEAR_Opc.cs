@@ -21,8 +21,8 @@ namespace SimpleOPC
             [typeof(double)] = Tag.ATOMIC.REAL,
             [typeof(short)] = Tag.ATOMIC.INT,
             // Actual ATOMIC.INT is 16 bit, but previous code utilize as int
-            [typeof(int)] = Tag.ATOMIC.INT,
-            //[typeof(int)] = Tag.ATOMIC.DINT,
+            //[typeof(int)] = Tag.ATOMIC.INT,
+            [typeof(int)] = Tag.ATOMIC.DINT,
             [typeof(long)] = Tag.ATOMIC.LINT,
             [typeof(object)] = Tag.ATOMIC.OBJECT,
             [typeof(sbyte)] = Tag.ATOMIC.SINT,
