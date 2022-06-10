@@ -12,39 +12,39 @@
                       VerticalScrollBarVisibility="Disabled">-->
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <ItemsControl Grid.Column="0" ItemsSource="{Binding MachineInformationToggleStatusListView}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <CheckBox Style="{StaticResource IndicatorCheckBoxStyle}" IsHitTestVisible="False"
                                       Content="{Binding MachineInformationToggleStatusName}"
-                                      IsChecked="{Binding MachineInformationToggleStatus}"/>
+                                      IsChecked="{Binding MachineInformationToggleStatus}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
+
                 <ItemsControl Grid.Column="1" ItemsSource="{Binding MachineInformationTextListView}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid Rows="4"/>
+                            <UniformGrid Rows="4" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="110"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" MinWidth="110" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <TextBlock Grid.Column="0" Style="{StaticResource KeyTextBlockStyle}"
-                                           Text="{Binding MachineInformationTextName}"/>
-                                
+                                           Text="{Binding MachineInformationTextName}" />
+
                                 <TextBlock Grid.Column="1" Style="{StaticResource ValueTextBlockStyle}"
-                                           Text="{Binding MachineInformationTextValue, StringFormat={}: {0}}"/>
+                                           Text="{Binding MachineInformationTextValue, StringFormat={}: {0}}" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -52,5 +52,4 @@
             </Grid>
         <!--</ScrollViewer>-->
     </GroupBox>
-
 </UserControl>

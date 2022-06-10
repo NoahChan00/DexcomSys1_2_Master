@@ -13,8 +13,8 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucTrayMap : UserControl, IDisposable
     {
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+        private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
 
         private LogicClasses.Main _Main;
 
@@ -32,34 +32,36 @@ namespace PentagonHMI.ChildControls
         //const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
         //const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
         //const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
-        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
 
         // Dexcom 1 Tag ?
-        const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
-        const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
-        const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking[1]";//Length 16
-        const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking[1]";//Length 16
+        private const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
+
+        private const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
+        private const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking[1]";//Length 16
+        private const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking[1]";//Length 16
 
         //System 2 - Tray Map HMI
         // New tag from 1.3
         // PLC tag need index operator, they start from, ignore 0 for this project
-        const string Tag_L_Input_Slot = "LShuttle_Slot_Tracking[1]";//Length 16
-        const string Tag_R_Input_Slot = "RShuttle_Slot_Tracking[1]";//Length 16
-        const string Tag_Output_Slot = "UnloadTray_Slot_Tracking[1]";//Length 60
-        const string Output_Change_Tray = "HMI_Output_ReqChangeTray[1]";
+        private const string Tag_L_Input_Slot = "LShuttle_Slot_Tracking[1]";//Length 16
 
-        int Row = 0;
-        int Col = 0;
-        int PRow = 0;
-        int PCol = 0;
-        int BRow = 0;
-        int BCol = 0;
-        int ORow = 0;
-        int OCol = 0;
-        int BatType = 0;
+        private const string Tag_R_Input_Slot = "RShuttle_Slot_Tracking[1]";//Length 16
+        private const string Tag_Output_Slot = "UnloadTray_Slot_Tracking[1]";//Length 60
+        private const string Output_Change_Tray = "HMI_Output_ReqChangeTray[1]";
 
-        Dictionary<string, Brush> Dic_ResultColor = new Dictionary<string, Brush>();
-        Dictionary<int, string> Dic_TrayMapSize = new Dictionary<int, string>();
+        private int Row = 0;
+        private int Col = 0;
+        private int PRow = 0;
+        private int PCol = 0;
+        private int BRow = 0;
+        private int BCol = 0;
+        private int ORow = 0;
+        private int OCol = 0;
+        private int BatType = 0;
+
+        private Dictionary<string, Brush> Dic_ResultColor = new Dictionary<string, Brush>();
+        private Dictionary<int, string> Dic_TrayMapSize = new Dictionary<int, string>();
 
         public ucTrayMap(LogicClasses.Main main)
         {
@@ -75,18 +77,15 @@ namespace PentagonHMI.ChildControls
 
         private void Initialize()
         {
-
             if (GlobalFunctions.IsSystem1)
             {
                 ScrollViewerSystem1.Visibility = Visibility.Visible;
                 ScrollViewerSystem2.Visibility = Visibility.Collapsed;
-
             }
             else
             {
                 ScrollViewerSystem1.Visibility = Visibility.Collapsed;
                 ScrollViewerSystem2.Visibility = Visibility.Visible;
-
             }
 
             // Comment due to only island Read the tray size from tag, hmi list not provided tag for System 1 and 2
@@ -136,6 +135,7 @@ namespace PentagonHMI.ChildControls
                     BRow = 9;
                     BCol = 10;
                     break;
+
                 default:
                     MessageBox.Show("Failed to read battery type from PLC.");
                     break;
@@ -200,7 +200,6 @@ namespace PentagonHMI.ChildControls
                 {
                     bat_SlotTray.Children.Add(new TextBlock { Tag = tb, Text = "-" });
                 }
-
             }
             else
             {
@@ -215,10 +214,8 @@ namespace PentagonHMI.ChildControls
                 {
                     output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
                 }
-
             }
         }
-
 
         private void TrayMapUpdate()
         {
@@ -226,7 +223,6 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
-
                     short[] BatAry = default;
                     short[] PCBAry = default;
                     short[] LAry = default;
@@ -235,7 +231,6 @@ namespace PentagonHMI.ChildControls
                     short[] InputL = default;
                     short[] InputR = default;
                     short[] OutputAry = default;
-
 
                     if (GlobalFunctions.IsSystem1)
                     {
@@ -252,7 +247,6 @@ namespace PentagonHMI.ChildControls
                         InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
                         OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);
                     }
-
 
                     if (GlobalFunctions.IsSystem1)
                     {
@@ -291,7 +285,6 @@ namespace PentagonHMI.ChildControls
                     }
                     else
                     {
-
                         if (InputL != null)
                             foreach (var item in input_LeftSlot.Children)
                             {
@@ -354,7 +347,6 @@ namespace PentagonHMI.ChildControls
             string tag = tbtn.Tag.ToString();
             // Tag from 0
             //OPCore.Write(tag == "L" ? Tag_L_PurgeRack : tag == "R" ? Tag_R_PurgeRack : "", tbtn.IsChecked);
-
         }
     }
 }

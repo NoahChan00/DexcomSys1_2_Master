@@ -13,15 +13,15 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucDUT : UserControl, IDisposable
     {
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
-        LogicClasses.Main _Main;
+        private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+        private LogicClasses.Main _Main;
 
-        ObservableCollection<DUTModel> DUTs = new ObservableCollection<DUTModel>();
-        Dictionary<int, Brush> Dic_ResultColor = new Dictionary<int, Brush>();
+        private ObservableCollection<DUTModel> DUTs = new ObservableCollection<DUTModel>();
+        private Dictionary<int, Brush> Dic_ResultColor = new Dictionary<int, Brush>();
 
         //General
-        const string DUT = "DUT";
+        private const string DUT = "DUT";
 
         public ucDUT(LogicClasses.Main main)
         {
@@ -68,7 +68,7 @@ namespace PentagonHMI.ChildControls
             //TagTotalPass = dr["TotalPass"].ToString(),
             //TagTotalFail = dr["TotalFail"].ToString(),
             //TagYield = dr["Yield"].ToString(),
-            //TagSocketDisable = dr["Socket_Disable"].ToString() 
+            //TagSocketDisable = dr["Socket_Disable"].ToString()
             //TagStatus = dr["Status"].ToString()
             //};
 
@@ -79,7 +79,7 @@ namespace PentagonHMI.ChildControls
             {
                 DUTs.Add(new DUTModel() { Name = "TurretNest_" + i, });
             }
-            foreach(var i in DUTs) // Weird logic due to migration from Island 0 to System 1 and System 2
+            foreach (var i in DUTs) // Weird logic due to migration from Island 0 to System 1 and System 2
             {
                 i.Sockets.Add(new SubDUTModel());
             }
@@ -92,7 +92,6 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
-
                     foreach (var DUT in DUTs)
                     {
 #if !DEBUG
@@ -144,6 +143,7 @@ namespace PentagonHMI.ChildControls
     public class DUTModel : ViewModelBase
     {
         private string name = string.Empty;
+
         public string Name
         {
             get
@@ -181,6 +181,7 @@ namespace PentagonHMI.ChildControls
                 return Name + ".Socket_Pass_Qty";
             }
         }
+
         public string TagTotalFail
         {
             get
@@ -188,6 +189,7 @@ namespace PentagonHMI.ChildControls
                 return Name + ".Socket_Fail_Qty";
             }
         }
+
         public string TagYield
         {
             get
@@ -196,8 +198,8 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-
         private ObservableCollection<SubDUTModel> sockets = new ObservableCollection<SubDUTModel>();
+
         public ObservableCollection<SubDUTModel> Sockets
         {
             get
@@ -218,6 +220,7 @@ namespace PentagonHMI.ChildControls
     public class SubDUTModel : ViewModelBase
     {
         private Brush background = Brushes.Gray;
+
         public Brush Background
         {
             get
@@ -235,6 +238,7 @@ namespace PentagonHMI.ChildControls
         }
 
         private string totalPass = "TotalPass";
+
         public string TotalPass
         {
             get
@@ -253,6 +257,7 @@ namespace PentagonHMI.ChildControls
         }
 
         private string totalFail = "TotalFail";
+
         public string TotalFail
         {
             get
@@ -271,6 +276,7 @@ namespace PentagonHMI.ChildControls
         }
 
         private string yield = "Yield";
+
         public string Yield
         {
             get
@@ -295,6 +301,7 @@ namespace PentagonHMI.ChildControls
         }
 
         private bool socketDisable = false;
+
         public bool SocketDisable
         {
             get

@@ -19,18 +19,21 @@ namespace PentagonHMI.ChildControls
     public partial class ucMotor : UserControl, IDisposable
     {
         #region Fields
-        Dictionary<int, UCMotorPage> MotorPages = new Dictionary<int, UCMotorPage>();
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
-        LogicClasses.Main _MainConnection;
-        string ErrMsg = string.Empty;
-        string strMotor => "MotorPage";
-        UCMotorPage PageNow;
+
+        private Dictionary<int, UCMotorPage> MotorPages = new Dictionary<int, UCMotorPage>();
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+        private LogicClasses.Main _MainConnection;
+        private string ErrMsg = string.Empty;
+        private string strMotor => "MotorPage";
+        private UCMotorPage PageNow;
         private string MotorSaveFileName = "MotorAxisRecord_";
-        Controller PLCController = new Controller();
-        Tag EM; Tag MStatus;
-        #endregion
+        private Controller PLCController = new Controller();
+        private Tag EM; private Tag MStatus;
+
+        #endregion Fields
 
         #region Constructor
+
         public ucMotor(ref LogicClasses.Main MainConnection)
         {
             try
@@ -45,8 +48,11 @@ namespace PentagonHMI.ChildControls
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion    
-        void Initialize()
+
+        #endregion Constructor
+
+        private void Initialize()
+
         {
             PLCController = _MainConnection.MyPLC;
             loadMotorAxisDetails();
@@ -87,7 +93,6 @@ namespace PentagonHMI.ChildControls
             public DataTable MotorIOList = new DataTable();
             public ObservableCollection<UCMotorPage.IO> ICollection { get; set; } = new ObservableCollection<UCMotorPage.IO>();
             public ObservableCollection<UCMotorPage.IO> OCollection { get; set; } = new ObservableCollection<UCMotorPage.IO>();
-
         }
 
         public class SavePosition
@@ -139,6 +144,7 @@ namespace PentagonHMI.ChildControls
         }
 
         #region NewMotor
+
         private void EM_MouseClick(object sender, EventArgs e)
         {
             try
@@ -157,9 +163,11 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-        #endregion
+        #endregion NewMotor
+
         #region Events
-        void Motor_OnUpdate()
+
+        private void Motor_OnUpdate()
         {
             try
             {
@@ -177,7 +185,7 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-        void Update()
+        private void Update()
         {
             int index = -1;
             Dispatcher.Invoke(() => index = MotorTab.SelectedIndex);
@@ -187,8 +195,10 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-        #endregion
+        #endregion Events
+
         #region Methods
+
         private void EMchk(bool EMon)
         {
             try
@@ -206,7 +216,8 @@ namespace PentagonHMI.ChildControls
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Methods
 
         public void Dispose()
         {
@@ -214,11 +225,13 @@ namespace PentagonHMI.ChildControls
         }
 
         #region Destructor
+
         ~ucMotor()
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Destructor
 
         private void loadMotorAxisDetails()
         {
@@ -384,7 +397,6 @@ namespace PentagonHMI.ChildControls
                     }
 
                     MessageBox.Show("Saved");
-
                 }
             }
             catch (Exception ex)
@@ -395,7 +407,6 @@ namespace PentagonHMI.ChildControls
 
         private void OpenFileLocation(object sender, EventArgs e)
         {
-
             try
             {
                 string strPath = Path.Combine(FileLogger.DefaultLocation_Time, "Motor");

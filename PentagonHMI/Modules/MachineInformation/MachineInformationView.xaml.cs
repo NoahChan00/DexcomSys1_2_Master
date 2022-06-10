@@ -11,12 +11,15 @@ namespace PentagonHMI
     public partial class MachineInformationView : UserControl
     {
         #region PrivateFields
+
         private MachineInformationModel machineInformationModel = new MachineInformationModel();
         private LogicClasses.Main _Main = null;
         private Dictionary<string, string> Dic_Name_Value = new Dictionary<string, string>();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public MachineInformationView(LogicClasses.Main _main)
         {
             try
@@ -31,9 +34,11 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeMachineInformation()
         {
             try
@@ -105,9 +110,11 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void main_OnAlwaysUpdate()
         {
             try
@@ -151,7 +158,6 @@ namespace PentagonHMI
                     {
                         if (!string.IsNullOrEmpty(x.MachineInformationTextTag.Name))
                         {
-
                             if (x.MachineInformationTextName == "Station" ||
                                 x.MachineInformationTextName == "Site" ||
                                 x.MachineInformationTextName == "Line")
@@ -199,7 +205,6 @@ namespace PentagonHMI
                                 //    }
                                 //    catch
                                 //    {
-
                                 //    }
                                 //}
 
@@ -226,6 +231,7 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

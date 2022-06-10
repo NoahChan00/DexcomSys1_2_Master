@@ -15,61 +15,63 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucDexcom_OEE : UserControl, IDisposable
     {
-        Controller ctrl = new Controller(Info.OPC.IP);
+        private Controller ctrl = new Controller(Info.OPC.IP);
+
         public Func<ChartPoint, string> PointLabel
         {
             get; set;
         }
+
         private LogicClasses.Main _Main;
         public OEEModel OEEList = new OEEModel();
         private Brush Color1 = Brushes.MediumSeaGreen;
         private Brush Color2 = Brushes.DeepSkyBlue;
         private Brush Color3 = Brushes.Orange;
-        string Tag_IdealCycletime = "Shift_OEE_Tags.dint_IdealCycleTime";
+        private string Tag_IdealCycletime = "Shift_OEE_Tags.dint_IdealCycleTime";
 
-        Tag Tag_Shift_OEE_STR_HMI_OEEStartDateTime = new Tag { Name = "Shift_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
-        Tag Tag_Shift_OEE_DINT_MachineUpTimeAccSec = new Tag { Name = "Shift_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MachineStandbyTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineStandbyTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_NoMaterialTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_NoMaterialTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MachineProductiveTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineEngineeringTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineScheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineUnscheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineNonScheduledTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_SoftJam = new Tag { Name = "Shift_OEE_Tags.DINT_SoftJam", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_HardJam = new Tag { Name = "Shift_OEE_Tags.DINT_HardJam", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MTBASec = new Tag { Name = "Shift_OEE_Tags.DINT_MTBASec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_MTBFSec = new Tag { Name = "Shift_OEE_Tags.DINT_MTBFSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_Throughput = new Tag { Name = "Shift_OEE_Tags.DINT_Throughput", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_SprintUPH = new Tag { Name = "Shift_OEE_Tags.DINT_SprintUPH", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_PlannedProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_AvailabilityTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_AvailabilityTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_IdealCycleTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealCycleTime", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_IdealRunTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealRunTime", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_Performance = new Tag { Name = "Shift_OEE_Tags.DINT_Performance", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_Quality = new Tag { Name = "Shift_OEE_Tags.DINT_Quality", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_OEE = new Tag { Name = "Shift_OEE_Tags.DINT_OEE", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_Total_Pass = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Shift_OEE_DINT_Total_Fail = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_STR_HMI_OEEStartDateTime = new Tag { Name = "Shift_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
+        private Tag Tag_Shift_OEE_DINT_MachineUpTimeAccSec = new Tag { Name = "Shift_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MachineStandbyTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineStandbyTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_NoMaterialTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_NoMaterialTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MachineProductiveTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineEngineeringTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineScheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineUnscheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_MachineNonScheduledTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_SoftJam = new Tag { Name = "Shift_OEE_Tags.DINT_SoftJam", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_HardJam = new Tag { Name = "Shift_OEE_Tags.DINT_HardJam", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MTBASec = new Tag { Name = "Shift_OEE_Tags.DINT_MTBASec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_MTBFSec = new Tag { Name = "Shift_OEE_Tags.DINT_MTBFSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Throughput = new Tag { Name = "Shift_OEE_Tags.DINT_Throughput", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_SprintUPH = new Tag { Name = "Shift_OEE_Tags.DINT_SprintUPH", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_PlannedProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_AvailabilityTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_AvailabilityTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_IdealCycleTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealCycleTime", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_IdealRunTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealRunTime", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Performance = new Tag { Name = "Shift_OEE_Tags.DINT_Performance", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Quality = new Tag { Name = "Shift_OEE_Tags.DINT_Quality", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_OEE = new Tag { Name = "Shift_OEE_Tags.DINT_OEE", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Total_Pass = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Total_Fail = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
 
-        Tag Tag_Lot_OEE_str_HMI_OEEStartDateTime = new Tag { Name = "Lot_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
-        Tag Tag_Lot_OEE_dint_MachineUpTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MachineStandbyTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineStandbyTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_NoMaterialTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_NoMaterialTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MachineProductiveTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MachineEngineeringTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineEngineeringTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineScheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineNonScheduledTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_SoftJam = new Tag { Name = "Lot_OEE_Tags.dint_SoftJam", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_HardJam = new Tag { Name = "Lot_OEE_Tags.dint_HardJam", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MTBASec = new Tag { Name = "Lot_OEE_Tags.dint_MTBASec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_MTBFSec = new Tag { Name = "Lot_OEE_Tags.dint_MTBFSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_Throughput = new Tag { Name = "Lot_OEE_Tags.dint_Throughput", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_SprintUPH = new Tag { Name = "Lot_OEE_Tags.dint_SprintUPH", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_Quality = new Tag { Name = "Lot_OEE_Tags.dint_Quality", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_Total_Pass = new Tag { Name = "Lot_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_Lot_OEE_dint_Total_Fail = new Tag { Name = "Lot_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_str_HMI_OEEStartDateTime = new Tag { Name = "Lot_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
+        private Tag Tag_Lot_OEE_dint_MachineUpTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MachineStandbyTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineStandbyTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_NoMaterialTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_NoMaterialTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MachineProductiveTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MachineEngineeringTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineEngineeringTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineScheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineNonScheduledTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_SoftJam = new Tag { Name = "Lot_OEE_Tags.dint_SoftJam", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_HardJam = new Tag { Name = "Lot_OEE_Tags.dint_HardJam", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MTBASec = new Tag { Name = "Lot_OEE_Tags.dint_MTBASec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_MTBFSec = new Tag { Name = "Lot_OEE_Tags.dint_MTBFSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_Throughput = new Tag { Name = "Lot_OEE_Tags.dint_Throughput", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_SprintUPH = new Tag { Name = "Lot_OEE_Tags.dint_SprintUPH", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_Quality = new Tag { Name = "Lot_OEE_Tags.dint_Quality", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_Total_Pass = new Tag { Name = "Lot_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Lot_OEE_dint_Total_Fail = new Tag { Name = "Lot_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
 
         public enum Grouping
         {
@@ -94,6 +96,7 @@ namespace PentagonHMI.ChildControls
         }
 
         private OEEType OEEGrp;
+
         public enum OEEType
         {
             Shift,
@@ -177,7 +180,6 @@ namespace PentagonHMI.ChildControls
                            Title = "Unscheduled Down Time",
                            Key = Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
-
                         },
                         new InfoBlockModel
                         {
@@ -332,7 +334,6 @@ namespace PentagonHMI.ChildControls
                            Title = "Unschedule Downtime",
                            Key = Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
-
                         },
                         new InfoBlockModel
                         {
@@ -511,7 +512,6 @@ namespace PentagonHMI.ChildControls
                          {
                               new PieSeries { Title = "Zone 1", Fill = Color1, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
                               new PieSeries { Title = "Zone 2", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-
                          }
                      }
             };
@@ -519,9 +519,10 @@ namespace PentagonHMI.ChildControls
             DataContext = OEEList;
         }
 
-        double Productive, Standby, Engineering, Shift, NonSchedule, TotalPass, TotalFail,
+        private double Productive, Standby, Engineering, Shift, NonSchedule, TotalPass, TotalFail,
         IdealCycleTime, TotalCount, EquipmentUpTime, OperationTime, Quality, Performance,
         Availability, OEE, Loading, Teep, DeltaTime, IncomingPartFail, IncomingPartFail_Z1, IncomingPartFail_Z2;
+
         private void Update()
         {
             try
@@ -619,58 +620,68 @@ namespace PentagonHMI.ChildControls
                         item.PieInfo[1].Values[0] = Standby.To2Dcml();
                         item.PieInfo[2].Values[0] = Engineering.To2Dcml();
                         break;
+
                     case OEEChart.OperationTime:
                         item.Value = FormatString(Grouping.sec, OperationTime);
                         item.PieInfo[0].Values[0] = (Shift - NonSchedule).To2Dcml();
                         item.PieInfo[1].Values[0] = NonSchedule.To2Dcml();
                         break;
+
                     case OEEChart.Quality:
                         double QualityPercent = Quality * 100;
                         item.Value = FormatString(Grouping.percent, QualityPercent);
                         item.PieInfo[0].Values[0] = QualityPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - QualityPercent.To2Dcml();
                         break;
+
                     case OEEChart.Performance:
                         double PerformancePercent = Performance * 100;
                         item.Value = FormatString(Grouping.percent, PerformancePercent);
                         item.PieInfo[0].Values[0] = PerformancePercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - PerformancePercent.To2Dcml();
                         break;
+
                     case OEEChart.Availability:
                         double AvailabilityPercent = Availability * 100;
                         item.Value = FormatString(Grouping.percent, AvailabilityPercent);
                         item.PieInfo[0].Values[0] = AvailabilityPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - AvailabilityPercent.To2Dcml();
                         break;
+
                     case OEEChart.OEE:
                         double OEEPercent = OEE * 100;
                         item.Value = FormatString(Grouping.percent, OEEPercent);
                         item.PieInfo[0].Values[0] = OEEPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - OEEPercent.To2Dcml();
                         break;
+
                     case OEEChart.Loading:
                         double LoadingPercent = Loading * 100;
                         item.Value = FormatString(Grouping.percent, LoadingPercent);
                         item.PieInfo[0].Values[0] = LoadingPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - LoadingPercent.To2Dcml();
                         break;
+
                     case OEEChart.TEEP:
                         double TeepPercent = Teep * 100;
                         item.Value = FormatString(Grouping.percent, TeepPercent);
                         item.PieInfo[0].Values[0] = TeepPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - TeepPercent.To2Dcml();
                         break;
+
                     case OEEChart.DeltaTime:
                         item.Value = FormatString(Grouping.sec, DeltaTime);
                         item.PieInfo[0].Values[0] = DeltaTime.To2Dcml();
                         item.PieInfo[1].Values[0] = Productive.To2Dcml();
                         item.PieInfo[2].Values[0] = Standby.To2Dcml();
                         break;
+
                     case OEEChart.IncomingPartFail:
                         item.Value = IncomingPartFail.ToString();
                         item.PieInfo[0].Values[0] = IncomingPartFail_Z1;
                         item.PieInfo[1].Values[0] = IncomingPartFail_Z2;
                         break;
+
                     default:
                         break;
                 }
@@ -764,7 +775,6 @@ namespace PentagonHMI.ChildControls
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_OEE);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_OEE", DataType);// Logix.Tag.ATOMIC.DINT };
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Pass);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Total_Pass", DataType);// Logix.Tag.ATOMIC.DINT };
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Fail);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Total_Fail", DataType);// Logix.Tag.ATOMIC.DINT };
-
             }
             else if (OEEGrp == OEEType.Lot)
             {
@@ -789,10 +799,10 @@ namespace PentagonHMI.ChildControls
             }
         }
 
-
         public class OEEModel : ViewModelBase
         {
             private ObservableCollection<PieChartBlockModel> _PieChartInfo = new ObservableCollection<PieChartBlockModel>();
+
             public ObservableCollection<PieChartBlockModel> PieChartInfo
             {
                 get
@@ -810,6 +820,7 @@ namespace PentagonHMI.ChildControls
             }
 
             private ObservableCollection<InfoBlockModel> _oeeinfo = new ObservableCollection<InfoBlockModel>();
+
             public ObservableCollection<InfoBlockModel> OEEInfo
             {
                 get
@@ -833,6 +844,7 @@ namespace PentagonHMI.ChildControls
             {
                 get; set;
             }
+
             public string Formula
             {
                 get; set;
@@ -857,6 +869,7 @@ namespace PentagonHMI.ChildControls
             }
 
             private string _Value = "NA";
+
             public string Value
             {
                 get
@@ -874,6 +887,7 @@ namespace PentagonHMI.ChildControls
             }
 
             private SeriesCollection _PieInfo = new SeriesCollection();
+
             public SeriesCollection PieInfo
             {
                 get
@@ -897,12 +911,14 @@ namespace PentagonHMI.ChildControls
             {
                 get; set;
             }
+
             public Grouping Group
             {
                 get; set;
             }
 
             private string _Title = string.Empty;
+
             public string Title
             {
                 get
@@ -920,6 +936,7 @@ namespace PentagonHMI.ChildControls
             }
 
             private string _Value = "NA";
+
             public string Value
             {
                 get
@@ -936,6 +953,5 @@ namespace PentagonHMI.ChildControls
                 }
             }
         }
-
     }
 }
