@@ -96,10 +96,10 @@ namespace PentagonHMI.ChildControls
                     foreach (var DUT in DUTs)
                     {
 #if !DEBUG
-                        var SocketsDisable = OPCore.Read<bool>(DUT.TagSocketDisable, typeof(bool), 8);
-                        var TotalPasses = OPCore.Read<int>(DUT.TagTotalPass, typeof(int), 8);
-                        var TotalFails = OPCore.Read<int>(DUT.TagTotalFail, typeof(int), 8);
-                        var Yields = OPCore.Read<int>(DUT.TagYield, typeof(int), 8);
+                        var SocketsDisable = OPCore.Read<bool>(DUT.TagSocketDisable);
+                        var TotalPasses = OPCore.Read<int>(DUT.TagTotalPass);
+                        var TotalFails = OPCore.Read<int>(DUT.TagTotalFail);
+                        var Yields = OPCore.Read<int>(DUT.TagYield);
                         //var Statuses = OPCore.Read<int[]>(DUT.TagStatus, typeof(int), DUT.Length);
 #else
                         var SocketsDisable = true;
