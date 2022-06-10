@@ -13,11 +13,12 @@ namespace PentagonHMI
         {
             try
             {
+                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
                 int CurrentProcessID = System.Diagnostics.Process.GetCurrentProcess().Id;
                 string CurrentAssemblyName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
 
                 FileLogger.logEvent(GetType().Name, string.Format("HMI Application started ({0}, ID: {1})", CurrentAssemblyName, CurrentProcessID));
-                
+
                 foreach (System.Diagnostics.Process item in System.Diagnostics.Process.GetProcessesByName(CurrentAssemblyName))
                 {
                     try
@@ -67,6 +68,16 @@ namespace PentagonHMI
             //}
         }
 
-       
+        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            FileLogger.logError(e.Exception.ToString(), "On dispacher unhandled exception - Unknown");
+        }
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (e.ExceptionObject is Exception exception)
+            {
+                FileLogger.logError(exception.ToString(), "Current Domain unhandled exception - Unknown");
+            }
+        }
     }
 }

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converter="clr-namespace:PentagonHMI.Converters"
              xmlns:liveCharts="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
-             StartupUri="Main.xaml" Startup="Application_Startup" Exit="Application_Exit">
+             StartupUri="Main.xaml" Startup="Application_Startup" Exit="Application_Exit"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <Application.Resources>
 
         <ResourceDictionary>
