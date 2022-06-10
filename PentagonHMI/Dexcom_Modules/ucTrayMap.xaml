@@ -311,7 +311,7 @@
                 </UniformGrid>
             </ScrollViewer>
 
-            <ScrollViewer x:Name="ScrollViewerSystem2" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+            <ScrollViewer x:Name="ScrollViewerSystem2" Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0" />

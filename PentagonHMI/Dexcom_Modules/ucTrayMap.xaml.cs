@@ -291,7 +291,6 @@ namespace PentagonHMI.ChildControls
                                 tb.Background = Dic_ResultColor[result];
                             }
                     }
-
                     else
                     {
 
