@@ -177,7 +177,7 @@
                 <ColumnDefinition Width="300" />
             </Grid.ColumnDefinitions>
 
-            <ScrollViewer Grid.Column="1" x:Name="ScrollViewerSystem1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+            <ScrollViewer Grid.Column="1" x:Name="ScrollViewerSystem1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" Visibility="Collapsed">
                 <UniformGrid Columns="2" Rows="2">
                     <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                         <Grid>
@@ -311,14 +311,9 @@
                 </UniformGrid>
             </ScrollViewer>
 
-            <ScrollViewer x:Name="ScrollViewerSystem2" Grid.Column="1" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Visibility="Collapsed">
+            <ScrollViewer x:Name="ScrollViewerSystem2" Grid.Column="1" VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled" Visibility="Visible">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="300" />
-                    </Grid.ColumnDefinitions>
-
                     <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
                         <UniformGrid Columns="2" Rows="2">
                             <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">

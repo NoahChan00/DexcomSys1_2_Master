@@ -3,7 +3,6 @@ using SimpleDatabase;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -108,8 +107,8 @@ namespace PentagonHMI.ChildControls
             Col = 4;
             PRow = 9;
             PCol = 10;
-            ORow = 10;
-            OCol = 6;
+            ORow = 6;
+            OCol = 10;
 #if !DEBUG
             if (GlobalFunctions.IsSystem1)
                 BatType = OPCore.Read<int>(Tag_Btry_dint);
@@ -183,42 +182,41 @@ namespace PentagonHMI.ChildControls
                 output_Slot.Columns = OCol;
             }
 
-            int total = Row * Col;
-            for (int t = 1; t <= total; t++)
+            if (GlobalFunctions.IsSystem1)
             {
-                if (GlobalFunctions.IsSystem1)
+                int total = Row * Col;
+                for (int t = 1; t <= total; t++)
                 {
                     ugrd_LeftTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
                     ugrd_RightTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
-                    int totalPCBA = PRow * PCol;
-                    for (int tp = 1; tp <= totalPCBA; tp++)
-                    {
-                        pcba_SlotTray.Children.Add(new TextBlock { Tag = tp, Text = "-" });
-                    }
-
-                    int totalBattery = BRow * BCol;
-                    for (int tb = 1; tb <= totalBattery; tb++)
-                    {
-                        bat_SlotTray.Children.Add(new TextBlock { Tag = tb, Text = "-" });
-                    }
-
                 }
-                else
+                int totalPCBA = PRow * PCol;
+                for (int tp = 1; tp <= totalPCBA; tp++)
+                {
+                    pcba_SlotTray.Children.Add(new TextBlock { Tag = tp, Text = "-" });
+                }
+                int totalBattery = BRow * BCol;
+                for (int tb = 1; tb <= totalBattery; tb++)
+                {
+                    bat_SlotTray.Children.Add(new TextBlock { Tag = tb, Text = "-" });
+                }
+
+            }
+            else
+            {
+                int total = Row * Col;
+                for (int t = 1; t <= total; t++)
                 {
                     input_LeftSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
                     input_RightSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
-
-
-                    int totalOutput = ORow * OCol;
-                    for (int i = 1; i < totalOutput; i++)
-                    {
-                        output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
-                    }
-
                 }
+                int totalOutput = ORow * OCol;
+                for (int i = 1; i < totalOutput; i++)
+                {
+                    output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
+                }
+
             }
-
-
         }
 
 
@@ -229,7 +227,7 @@ namespace PentagonHMI.ChildControls
                 try
                 {
 
-                    short[] BatAry= default;
+                    short[] BatAry = default;
                     short[] PCBAry = default;
                     short[] LAry = default;
                     short[] RAry = default;
