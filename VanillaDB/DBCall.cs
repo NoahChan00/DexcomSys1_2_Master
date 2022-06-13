@@ -341,9 +341,7 @@ namespace VanillaDB
             try
             {
 
-                //dt = VDB.ExecuteQueryDT("EXEC Proc_Line_User_Select '" + UserName + "'", ref ErrMsg);
-                dt = VDB.ExecuteQueryDT("SELECT * FROM Users", ref ErrMsg);
-
+                dt = VDB.ExecuteQueryDT("EXEC Proc_Line_User_Select '" + UserName + "'", ref ErrMsg);
                 return dt;
 
             }
