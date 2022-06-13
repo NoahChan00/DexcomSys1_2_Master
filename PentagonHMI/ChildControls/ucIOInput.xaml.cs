@@ -1,15 +1,14 @@
-﻿using System;
-using System.Windows.Controls;
-using PentagonHMI.UserControls;
-using Logix;
-using System.Windows.Controls.Primitives;
-using System.Collections.Generic;
+﻿using Logix;
 using PentagonHMI.LogicClasses;
+using PentagonHMI.UserControls;
+using System;
+using System.Collections.Generic;
 using System.Data;
-using System.Windows;
-using VanillaDB;
 using System.Reflection;
-using PentagonHMI.Classes;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using VanillaDB;
 
 namespace PentagonHMI.ChildControls
 {
@@ -30,14 +29,17 @@ namespace PentagonHMI.ChildControls
         Tag EMTag = new Tag
         {
             //Name = "MC_System_Tags.EngineeringMode",
-            Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
+            Name = Tags.MainPage.EngineeringMode.Name,
 
             DataType = Logix.Tag.ATOMIC.BOOL
         };
 
         Dictionary<string, List<UCCheckboxLabelType2>> IOButtonList = new Dictionary<string, List<UCCheckboxLabelType2>>();
         Dictionary<int, Tag> OutputTagList = new Dictionary<int, Logix.Tag>();
-        private IOInput IOInput { get; set; }
+        private IOInput IOInput
+        {
+            get; set;
+        }
 
         public ucIOInput(ref LogicClasses.Main MainConnection, ref IOInput _IOInput)
         {
@@ -113,9 +115,10 @@ namespace PentagonHMI.ChildControls
             try
             {
                 TabControl TC = (TabControl)sender;
-            GOdeeper:
+                GOdeeper:
                 TabItem TI = TC.SelectedItem as TabItem;
-                if (TI == null) return;
+                if (TI == null)
+                    return;
                 if (TI.Header.ToString() != "Input" && TI.Header.ToString() != "Output")
                 {
                     TC = TI.Content as TabControl;
@@ -170,7 +173,10 @@ namespace PentagonHMI.ChildControls
             }
             finally
             {
-                WP = null; TempCBList = null; TNlist = null; SclV = null;
+                WP = null;
+                TempCBList = null;
+                TNlist = null;
+                SclV = null;
             }
 
         }
@@ -264,7 +270,9 @@ namespace PentagonHMI.ChildControls
                 IOInput.WorkTag(ref EMTag) && EMTag.Value?.ToString().ToUpper() == "TRUE"));
             }
             catch (Exception ex)
-            { Utilities.FileLogger.logError(ex.Message, "ModeCheck()"); }
+            {
+                Utilities.FileLogger.logError(ex.Message, "ModeCheck()");
+            }
         }
 
 
@@ -285,7 +293,9 @@ namespace PentagonHMI.ChildControls
                 }
             }
             catch (Exception ex)
-            { Utilities.FileLogger.logError("IO_UPDATE", ex.ToString()); }
+            {
+                Utilities.FileLogger.logError("IO_UPDATE", ex.ToString());
+            }
         }
 
         private void IO_Update(UCCheckboxLabelType2 cbl, bool io)

@@ -215,7 +215,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border CornerRadius=" 14,14,14,14" MinHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="15,0,15,10" BorderThickness="2">
+                            <Border CornerRadius=" 14,14,14,14" MinHeight="300" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0" BorderThickness="2">
                                 <StackPanel>
                                     <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" HorizontalContentAlignment="Center" Padding="30,2,2,0" />
                                     <ItemsControl ItemsSource="{Binding Sockets}">

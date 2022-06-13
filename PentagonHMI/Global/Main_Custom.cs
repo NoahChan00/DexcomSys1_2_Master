@@ -538,8 +538,8 @@ namespace PentagonHMI
         string TotalEmptyPocket = "Lot_Summary.dint_Total_Empty_Pocket";
         string TotalInputRobotPickFail = "Lot_Summary.dint_Total_Pick_Fail";
         string TotalInputRobotPickDrop = "Lot_Summary.dint_Total_Pick_Drop";
-        string ProductionUPH = "Lot_OEE_Tags.dint_ProductionUPH";
-        string SprintUPH = "Lot_OEE_Tags.dint_SprintUPH";
+        string ProductionUPH = Tags.MainPage.dint_ProductionUPH.Name;
+        string SprintUPH = Tags.MainPage.dint_SprintUPH.Name;
         string SoftJam = "Lot_OEE_Tags.dint_SoftJam";
         string HardJam = "Lot_OEE_Tags.dint_HardJam";
         string MTBA = "Lot_OEE_Tags.dint_MTBASec";

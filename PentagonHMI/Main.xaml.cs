@@ -111,7 +111,7 @@ namespace PentagonHMI
         }
         private UserControl ucChildDUT
         {
-            get;set;
+            get; set;
         }
         //For Auto Logout
         internal struct LASTINPUTINFO
@@ -679,7 +679,7 @@ namespace PentagonHMI
         private void Update_Station_Status()
         {
             //string statustag = "Machine_Status.str_MachineStatus";
-            string statustag = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus";
+            string statustag = Tags.MainPage.MachineStatus.Name;           
             //if (GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("FINAL"))
             //    statustag = "OutPNP_Machine_Status.str_MachineStatus";
             //else if (GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("CENTRAL"))
@@ -1178,7 +1178,7 @@ namespace PentagonHMI
                     {
                         ((IDisposable)ucChild).Dispose();
                         ucChild = null;
-                        if(ucChildDUT != null)
+                        if (ucChildDUT != null)
                         {
                             ((IDisposable)ucChildDUT).Dispose();
                         }

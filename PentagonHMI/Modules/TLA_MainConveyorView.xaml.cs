@@ -81,25 +81,25 @@ namespace PentagonHMI
 
                     new Tuple<Logix.Tag, Rectangle, TextBlock, Logix.Controller>(new Logix.Tag
                     {
-                        Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
+                        Name = Tags.MainPage.MachineStatus.Name,
                         DataType = Logix.Tag.ATOMIC.STRING
                     }, CSSDRectangle, CSSDTextBlock, main.CSSDController),
 
                     new Tuple<Logix.Tag, Rectangle, TextBlock, Logix.Controller>(new Logix.Tag
                     {
-                        Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
+                        Name = Tags.MainPage.MachineStatus.Name,
                         DataType = Logix.Tag.ATOMIC.STRING
                     }, DIMMRectangle, DIMMTextBlock, main.DIMMController),
 
                     new Tuple<Logix.Tag, Rectangle, TextBlock, Logix.Controller>(new Logix.Tag
                     {
-                        Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
+                        Name = Tags.MainPage.MachineStatus.Name,
                         DataType = Logix.Tag.ATOMIC.STRING
                     }, PCIERectangle, PCIETextBlock, main.PCIEController),
 
                     new Tuple<Logix.Tag, Rectangle, TextBlock, Logix.Controller>(new Logix.Tag
                     {
-                        Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
+                        Name = Tags.MainPage.MachineStatus.Name,
                         DataType = Logix.Tag.ATOMIC.STRING
                     }, OutPnPRectangle, OutPnPTextBlock, null)
                 };

@@ -127,26 +127,16 @@ namespace PentagonHMI
                         }
                     },
                         ControlPanelToggleList = new List<ControlPanelToggleModel>
-                    {
-                        new ControlPanelToggleModel
                         {
-                            ControlPanelToggleStatusOffColor = Brushes.Silver,
-                            ControlPanelToggleStatusOnColor = Brushes.LawnGreen,
-                            ControlPanelToggleName = "Engineering Mode",
-                            ControlPanelToggleTag = new Logix.Tag
+                            new ControlPanelToggleModel
                             {
-                                //Name = "MC_System_Tags.EngineeringMode",
-                                Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
-
-                                DataType = Logix.Tag.ATOMIC.BOOL
-                            },
-                            ControlPanelToggleEnableTag = new Logix.Tag
-                            {
-                                Name = "MC_System_Tags.MachineRunning",
-                                DataType = Logix.Tag.ATOMIC.BOOL
+                                ControlPanelToggleStatusOffColor = Brushes.Silver,
+                                ControlPanelToggleStatusOnColor = Brushes.LawnGreen,
+                                ControlPanelToggleName = "Engineering Mode",
+                                ControlPanelToggleTag = new Logix.Tag(Tags.MainPage.EngineeringMode.Name, Logix.Tag.ATOMIC.BOOL),
+                                ControlPanelToggleEnableTag = new Logix.Tag("MC_System_Tags.MachineRunning",Logix.Tag.ATOMIC.BOOL)
                             }
                         }
-                    }
                     };
                 }
                 else
@@ -171,8 +161,8 @@ namespace PentagonHMI
                         ResetRead = "HMI_Tags.ResetButton";
                         ResetWrite = "HMI_Tags.ResetButton";
 
-                        InitializeRead = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit";
-                        InitializeWrite = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit";
+                        InitializeRead = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
+                        InitializeWrite = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
 
                         if (_Main.MachineName.ToUpper().Contains("FINAL"))
                         {
@@ -212,7 +202,7 @@ namespace PentagonHMI
                         ResetRead = "Cell_PIO_131:24:O.2";
                         ResetWrite = "HMI_Tags.ResetButton";
                         InitializeRead = "MC_System_Tags.MachineRunning";
-                        InitializeWrite = GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit";
+                        InitializeWrite = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
 
                         if (_Main.MachineName.ToUpper() == "FINAL INSPECTION")
                         {

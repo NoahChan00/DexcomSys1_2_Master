@@ -1,5 +1,4 @@
-﻿using PentagonHMI.Classes;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
@@ -21,16 +20,10 @@ namespace PentagonHMI
         private ObservableCollection<IOTypeModel> iOTypeList = new ObservableCollection<IOTypeModel>();
         private Logix.Tag machineRunningTag = new Logix.Tag
         {
-            Name = GlobalFunctions.IsSystem1 ? "System1_MachineStatus.str_MachineStatus" : "System2_MachineStatus.str_MachineStatus",
-            //Name = "MC_System_Tags.MachineRunning",
+            Name = Tags.MainPage.MachineStatus.Name,            //Name = "MC_System_Tags.MachineRunning",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
-        private Logix.Tag engineeringModeTag = new Logix.Tag
-        {
-            //Name = "MC_System_Tags.EngineeringMode",
-            Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.EngineeringMode" : "System2_MC_Tag.EngineeringMode",
-            DataType = Logix.Tag.ATOMIC.BOOL
-        };
+        private Logix.Tag engineeringModeTag = new Logix.Tag(Tags.MainPage.EngineeringMode.Name, Logix.Tag.ATOMIC.BOOL);
         #endregion
 
         #region Constructors
