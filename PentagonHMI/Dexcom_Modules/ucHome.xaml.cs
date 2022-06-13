@@ -154,6 +154,8 @@ namespace PentagonHMI.ChildControls
 #endif
             Initialize();
             main.Home_OnUpdate += HomeUpdate;
+            // Had to call below statement from here, because we like dependency injection :)
+            GridForDUT.Children.Add(new ucDUT(_Main));
         }
 
         private void Initialize()

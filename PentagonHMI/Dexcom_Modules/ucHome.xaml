@@ -192,20 +192,19 @@
                 </StackPanel>
             </Border>-->
 
-            <Border Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
+            <Border Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Station Status" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                     <Grid x:Name="grd_KeyenceVision">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="300" />
-                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <!-- Legend -->
                             <StackPanel>
-                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center" Width="250">
+                                <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Center" Width="300">
                                     <UniformGrid Columns="1" VerticalAlignment="Top">
                                         <Button Background="Gray" Content="No Unit" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black" />
                                         <Button Background="Blue" Content="Not Tested" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black" />
@@ -213,6 +212,59 @@
                                         <Button Background="Red" Content="Fail" FontSize="15" FontWeight="Bold" Height="40" BorderBrush="Black" />
                                     </UniformGrid>
                                 </GroupBox>
+                                <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0 45">
+                                    <Image Source="/Images/MainHMI/Turret.png" SnapsToDevicePixels="True" />
+
+                                    <Canvas Visibility="Visible">
+                                        <StackPanel Canvas.Top="-15" Canvas.Left="-173">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station1DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="4" Canvas.Left="-93">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="Station2DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="97" Canvas.Left="-55">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="Station3DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="182" Canvas.Left="-93">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station4DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="215" Canvas.Left="-173">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station5DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="182" Canvas.Left="-262">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station6DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="97" Canvas.Left="-294">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station7DutStatus" />
+                                        </StackPanel>
+
+                                        <StackPanel Canvas.Top="4" Canvas.Left="-262">
+                                            <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <TextBlock Text="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
+                                            <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station8DutStatus" />
+                                        </StackPanel>
+                                    </Canvas>
+                                </WrapPanel>
 
                                 <!--<GroupBox Header="Total Pass" Height="130">
                                     <lvc:Gauge x:Name="TotalPassGauge" />
@@ -228,72 +280,8 @@
                             </StackPanel>
 
                             <!-- DUT Socket Status -->
-                            <GroupBox Grid.Column="1">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0 45">
-                                        <Image Source="/Images/MainHMI/Turret.png" SnapsToDevicePixels="True" Width="400" Height="557" />
-
-                                        <Canvas Visibility="Visible">
-                                            <StackPanel Canvas.Top="230" Canvas.Left="-440">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="7" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-
-                                                <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station7DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="380" Canvas.Left="-400">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="6" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station6DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="460" Canvas.Left="-220">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="5" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station5DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="380" Canvas.Left="-60">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="4" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station4DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="230" Canvas.Left="-10">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="3" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-
-                                                <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="Station3DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="80" Canvas.Left="-65">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-
-                                                <Button Width="30" Height="30" Background="Transparent" BorderBrush="Black" x:Name="Station2DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="15" Canvas.Left="-225">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="1" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station1DutStatus" />
-                                            </StackPanel>
-
-                                            <StackPanel Canvas.Top="80" Canvas.Left="-380">
-                                                <TextBlock Text="Station" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <TextBlock Text="8" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" />
-                                                <Button Height="30" Width="30" Background="Transparent" BorderBrush="Black" x:Name="Station8DutStatus" />
-                                            </StackPanel>
-                                        </Canvas>
-                                    </WrapPanel>
-
-                                    <!-- DUT Socket Status Table -->
-                                    <!--<ItemsControl x:Name="ItemsControl_SocketStatus"
+                            <!-- DUT Socket Status Table -->
+                            <!--<ItemsControl x:Name="ItemsControl_SocketStatus"
                                              Grid.Row="1"
                                              Margin="0 0 0 0"
                                              VirtualizingPanel.VirtualizationMode="Recycling"
@@ -318,8 +306,8 @@
                                                     </Grid.RowDefinitions>
 
                                                     -->
-                                    <!-- Data Type Title -->
-                                    <!--
+                            <!-- Data Type Title -->
+                            <!--
                                                     <VirtualizingStackPanel Grid.Row="1" Grid.Column="0">
                                                         <Border BorderThickness="1" BorderBrush="Black">
                                                             <TextBlock Text="{Binding NestHeader}" HorizontalAlignment="Center" />
@@ -425,13 +413,24 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>-->
-                                </Grid>
-                            </GroupBox>
                         </Grid>
                     </Grid>
                 </StackPanel>
             </Border>
 
+            <Border Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
+                <StackPanel>
+                    <Label Content="DUT" Grid.ColumnSpan="3" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+
+                    <GroupBox>
+                        <Grid x:Name="GridForDUT">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </GroupBox>
+                </StackPanel>
+            </Border>
             <!--<Border Grid.Column="4" Grid.Row="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />

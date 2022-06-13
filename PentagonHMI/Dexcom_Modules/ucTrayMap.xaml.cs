@@ -255,7 +255,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (RAry != null)
@@ -263,7 +263,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (PCBAry != null)
@@ -271,7 +271,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (BatAry != null)
@@ -279,7 +279,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                     }
@@ -290,7 +290,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (InputR != null)
@@ -298,7 +298,7 @@ namespace PentagonHMI.ChildControls
                             {
                                 TextBlock tb = item as TextBlock;
                                 string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (OutputAry != null)
@@ -307,7 +307,7 @@ namespace PentagonHMI.ChildControls
                                 TextBlock tb = item as TextBlock;
                                 // Somehow tb.Tag start from 0 unlike above 2
                                 string result = OutputAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = result;
+                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                     }

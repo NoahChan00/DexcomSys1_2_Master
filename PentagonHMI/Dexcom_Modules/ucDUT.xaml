@@ -241,7 +241,7 @@
                                                     </StackPanel>
                                                 </Border>-->
 
-                                                <Border Margin="6 60 6 60" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1" MaxHeight="500">
+                                                <Border Margin="5 5 5 5" BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1" MaxHeight="400">
                                                     <StackPanel>
                                                         <UniformGrid Columns="2">
                                                             <Label Content="Total Pass:" FontSize="20" Background="LightGray"/>
@@ -250,7 +250,7 @@
                                                             <Label Name="lbl_TotalFail" Content="{Binding TotalFail}" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="Red"/>
                                                             <Label Content="Yield:" FontSize="20" Background="LightGray"/>
                                                             <Label Name="lbl_Yield" Content="{Binding Yield}" HorizontalContentAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="Gray"/>
-                                                            <Label Content="Socket Disable:" FontSize="20" Background="LightGray"/>
+                                                            <Label Content="Disable:" FontSize="20" Background="LightGray"/>
                                                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                                                 <ToggleButton Height="30" Width="60" Margin="2" Tag="{Binding Key}" IsChecked="{Binding SocketDisable}" Click="socketToggle_Click" IsEnabled="False"/>
                                                             </StackPanel>

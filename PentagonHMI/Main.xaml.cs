@@ -1,21 +1,20 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using Logix;
+using PentagonHMI.Classes;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using PentagonHMI.Classes;
-using System.Runtime.InteropServices;
-using Logix;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using GalaSoft.MvvmLight.Messaging;
 using Utilities;
-using System.IO.Compression;
-using System.Threading;
 using Shp = System.Windows.Shapes;
-using System.Reflection;
 
 namespace PentagonHMI
 {
@@ -63,8 +62,8 @@ namespace PentagonHMI
         public List<int> AlarmIncluded = new List<int>();
         public List<int> WarningIncluded = new List<int>();
 
-        string[] ErrorCode;
-        string[] WarningCode;
+        private string[] ErrorCode;
+        private string[] WarningCode;
         public static DataTable AlertWarningDt = new DataTable { Columns = { "msgDatetime", "msgErrorCode", "msgError", "msgAction", "msgStation", "msgModule", "msgView" } };
         public DataTable dt_AlarmTable;
         private static DataTable dt_PreAlarmTable;
@@ -72,6 +71,7 @@ namespace PentagonHMI
         public Tag EMtag;
 
         #region Pages
+
         internal LogicClasses.Main _Main;
         private ChildControls.ucOEE_Gen2 OEEChild;
         private ChildControls.ucDexcom_OEE OEEShiftView;
@@ -102,10 +102,17 @@ namespace PentagonHMI
         private DirectorySizeService directorySizeService = null;
         private IOView iOView = null;
         private TLA_MainConveyorView tLA_MainConveyorView = null;
-        #endregion
 
-        private UserControl ucChild { get; set; }
+        #endregion Pages
 
+        private UserControl ucChild
+        {
+            get; set;
+        }
+        private UserControl ucChildDUT
+        {
+            get;set;
+        }
         //For Auto Logout
         internal struct LASTINPUTINFO
         {
@@ -115,12 +122,14 @@ namespace PentagonHMI
 
         [DllImport("User32.dll")]
         private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
-        uint idleTime = 0;
-        static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-        LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+
+        private uint idleTime = 0;
+        private static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
+        private LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
         //End of For Auto Logout
 
         #region Constructor
+
         public Main()
         {
             InitializeComponent();
@@ -181,20 +190,22 @@ namespace PentagonHMI
             }
         }
 
-
         private void _Main_OnAlwaysUpdate()
         {
             try
             {
                 //if (ProjectType.LIFTER != GlobalFunctions.ProjectType)
-                //{ 
-
-                if (_Main.HasStationStatusCheck) Update_Station_Status();
+                //{
+                if (_Main.HasStationStatusCheck)
+                    Update_Station_Status();
                 else
                     Dispatcher.Invoke(() => Status_Border.Visibility = Visibility.Collapsed);
-                if (_Main.HasBreakTimeCheck) BreakTimeOffDay_Check();
-                if (_Main.HasLogManagement) LogFileManagement();
-                if (_Main.HasErrorCheck) CheckErrorList();
+                if (_Main.HasBreakTimeCheck)
+                    BreakTimeOffDay_Check();
+                if (_Main.HasLogManagement)
+                    LogFileManagement();
+                if (_Main.HasErrorCheck)
+                    CheckErrorList();
 
                 Dispatcher.Invoke(() => VersionUpdate());
 
@@ -230,7 +241,7 @@ namespace PentagonHMI
 
                 _Main.MachineName = GetItem("MachineName").ToString();
 
-                Dispatcher.Invoke(new Action(() => lbl_MachineName.Content = _Main.MachineName == "PCIE"? "PCI" : _Main.MachineName));
+                Dispatcher.Invoke(new Action(() => lbl_MachineName.Content = _Main.MachineName == "PCIE" ? "PCI" : _Main.MachineName));
 
                 _Main.VisionIP = GetItem("VisionIP").ToString();
 
@@ -326,40 +337,50 @@ namespace PentagonHMI
                     HasLog = HasMotor = HasEng = HasTrayMap = HasDUT = HasLot = HasPopUp = HasEng = true;
                     HomeView = new ChildControls.ucHome(_Main);
                     break;
+
                 default:
                     break;
             }
 
-
-            if (HasRejectBinDisplay) rejectBinDisplayView = new RejectBinDisplayView(ref _Main, rejectBinCount, rejectBinDisplayStatusTagKey);
+            if (HasRejectBinDisplay)
+                rejectBinDisplayView = new RejectBinDisplayView(ref _Main, rejectBinCount, rejectBinDisplayStatusTagKey);
             RejectBinDisplayStackPanel.Visibility = HasRejectBinDisplay ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasRackConfig) rackConfigurationView = new RackConfigurationView(ref _Main);
+            if (HasRackConfig)
+                rackConfigurationView = new RackConfigurationView(ref _Main);
             RackConfigurationStackPanel.Visibility = HasRackConfig ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasRecipeConfig) recipeConfigurationView = new RecipeConfigurationView(_Main.OPC);
+            if (HasRecipeConfig)
+                recipeConfigurationView = new RecipeConfigurationView(_Main.OPC);
             RecipeConfigurationStackPanel.Visibility = HasRecipeConfig ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasUserAccount) UserAcountChild = new ChildControls.ucUserAccount(ref _Main);
+            if (HasUserAccount)
+                UserAcountChild = new ChildControls.ucUserAccount(ref _Main);
             SP_User.Visibility = HasUserAccount ? Visibility.Visible : Visibility.Collapsed;
 
             //if (HasDryrun) DryrunChild = new ChildControls.ucDryrun(ref _Main);
-            if (HasDryrun) dryRunView = new DryRunView(_Main);
+            if (HasDryrun)
+                dryRunView = new DryRunView(_Main);
             DryrunStackPanel.Visibility = HasDryrun ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasSOEE) OEEShiftView = new ChildControls.ucDexcom_OEE(ref _Main, ChildControls.ucDexcom_OEE.OEEType.Shift);
+            if (HasSOEE)
+                OEEShiftView = new ChildControls.ucDexcom_OEE(ref _Main, ChildControls.ucDexcom_OEE.OEEType.Shift);
             Sp_OEEShift.Visibility = HasSOEE ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasLOEE) OEELotView = new ChildControls.ucDexcom_OEE(ref _Main, ChildControls.ucDexcom_OEE.OEEType.Lot);
+            if (HasLOEE)
+                OEELotView = new ChildControls.ucDexcom_OEE(ref _Main, ChildControls.ucDexcom_OEE.OEEType.Lot);
             Sp_OEELot.Visibility = HasLOEE ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasSetting) SettingChild = new ChildControls.ucSetting(ref _Main);
+            if (HasSetting)
+                SettingChild = new ChildControls.ucSetting(ref _Main);
             Sp_Setting.Visibility = HasSetting ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasLog) LogChild = new ChildControls.ucEventLog(ref _Main);
+            if (HasLog)
+                LogChild = new ChildControls.ucEventLog(ref _Main);
             Sp_Log.Visibility = HasLog ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasMotor) MotorChild = new ChildControls.ucMotor(ref _Main);
+            if (HasMotor)
+                MotorChild = new ChildControls.ucMotor(ref _Main);
             Sp_Motor.Visibility = HasMotor ? Visibility.Visible : Visibility.Collapsed;
 
             //if (HasIO) IOInputChild = new ChildControls.ucIOInput(ref _Main, ref _PreLoadIO);
@@ -367,33 +388,48 @@ namespace PentagonHMI
                 iOView = new IOView(ref _Main);
             Sp_IOList.Visibility = HasIO ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasIOLoc) IOLocationChild = new ChildControls.ucIOLocation(ref _Main);
+            if (HasIOLoc)
+                IOLocationChild = new ChildControls.ucIOLocation(ref _Main);
             Sp_IOLoc.Visibility = HasIOLoc ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasEng) DexcomEngineeringView = new ucDexcomEngineering(_Main); //engineeringView = new EngineeringView(ref _Main);
+            if (HasEng)
+                DexcomEngineeringView = new ucDexcomEngineering(_Main); //engineeringView = new EngineeringView(ref _Main);
             EngineeringStackPanel.Visibility = HasEng ? Visibility.Visible : Visibility.Collapsed;
 
             //Home Pages
-            if (HasZoneLeftVisionRightMainPage) mainView = new MainView(ref _Main);
-            if (HasLifterTab) LifterTabChild = new Arcadia_Modules.ucLifterTab(ref _Main, LifterZone, LifterPosition);
-            if (HasArcadiaConveyorMain) InitializeArcadiaMainLine();
-            if (HasZoneLeftRackRightMainPage) VTCMainPageChild = new VTC_Modules.ucVTC_Main(ref _Main);
+            if (HasZoneLeftVisionRightMainPage)
+                mainView = new MainView(ref _Main);
+            if (HasLifterTab)
+                LifterTabChild = new Arcadia_Modules.ucLifterTab(ref _Main, LifterZone, LifterPosition);
+            if (HasArcadiaConveyorMain)
+                InitializeArcadiaMainLine();
+            if (HasZoneLeftRackRightMainPage)
+                VTCMainPageChild = new VTC_Modules.ucVTC_Main(ref _Main);
 
             //Custom & Frame
-            if (HasPrinter) printerService = new PrinterService(ref _Main);
-            if (HasPLCEvent) _Main.PLCEventLogListener = new TcpIpServer();
-            if (HasPopUp) popUpView = new PopUpView(ref _Main);
+            if (HasPrinter)
+                printerService = new PrinterService(ref _Main);
+            if (HasPLCEvent)
+                _Main.PLCEventLogListener = new TcpIpServer();
+            if (HasPopUp)
+                popUpView = new PopUpView(ref _Main);
 
-            if (HasSignin) signInView = new SignInView(ref _Main);
+            if (HasSignin)
+                signInView = new SignInView(ref _Main);
             SP_Login.Visibility = HasSignin ? Visibility.Visible : Visibility.Collapsed;
             lblCurrUser.Visibility = HasSignin ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasMachineInfo) _Main.machineInformationView = new MachineInformationView(_Main);
-            if (HasControlPanel) controlPanelView = new ControlPanelView(_Main);
+            if (HasMachineInfo)
+                _Main.machineInformationView = new MachineInformationView(_Main);
+            if (HasControlPanel)
+                controlPanelView = new ControlPanelView(_Main);
 
-            if(HasTrayMap) TrayMapView = new ChildControls.ucTrayMap(_Main);
-            if(HasDUT) DUTView = new ChildControls.ucDUT(_Main);
-            if(HasLot) LotView = new ChildControls.ucLotEntry(_Main);
+            if (HasTrayMap)
+                TrayMapView = new ChildControls.ucTrayMap(_Main);
+            if (HasDUT)
+                DUTView = new ChildControls.ucDUT(_Main);
+            if (HasLot)
+                LotView = new ChildControls.ucLotEntry(_Main);
 
             //directorySizeService = new DirectorySizeService(_Main);
 
@@ -426,7 +462,7 @@ namespace PentagonHMI
             this.ChildContainer.Children.Add(_Child);
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object sender, EventArgs e)
         {
             uint envTicks = (uint)Environment.TickCount;
             if (GetLastInputInfo(ref lastInputInfo))
@@ -488,7 +524,8 @@ namespace PentagonHMI
                     this.ucPassword.ucLabelErrorContent = this.TryFindResource("LOGIN_TEXTBLOCK_INVALID").ToString();
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Event
 
@@ -503,12 +540,12 @@ namespace PentagonHMI
             try
             {
                 var EnumBool = ((IEnumerable<bool>)_Main.OPC.Read("MC_System_Tags.ErrorBit[0]", typeof(bool), 2000))?.ToArray();
-                if(EnumBool != null)
-                alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
+                if (EnumBool != null)
+                    alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
 
                 var EnumWBool = ((IEnumerable<bool>)_Main.OPC.Read("MC_System_Tags.WarningBit[0]", typeof(bool), 1000))?.ToArray();
-                if(EnumWBool != null)
-                warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
+                if (EnumWBool != null)
+                    warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
 
 #if !DEBUG
 #else
@@ -521,7 +558,6 @@ namespace PentagonHMI
                     prevwarningLst = warningLst;
                     prevalarmLst = alarmLst;
                 }
-
             }
             catch (Exception ex)
             {
@@ -546,7 +582,7 @@ namespace PentagonHMI
         //}
 
         //string LogSingleBitW = "HMI_Tags.Triger_RecordWarningDuration[{0}]";
-        //var LogBitW = OPC.Read<bool[]>("HMI_Tags.Triger_RecordWarningDuration[1]", typeof(bool), 20); //new bool[20]; LogBitW[2] = LogBitW[3] = LogBitW[7] = true; 
+        //var LogBitW = OPC.Read<bool[]>("HMI_Tags.Triger_RecordWarningDuration[1]", typeof(bool), 20); //new bool[20]; LogBitW[2] = LogBitW[3] = LogBitW[7] = true;
         //var LogErrorW = OPC.Read<short[]>("HMI_Tags.WarningDuration_Log_WarningNumbers[0]", typeof(int), 20);
         //var LogSecW = OPC.Read<int[]>("HMI_Tags.WarningDuration_Sec[0]", typeof(int), 20);
         //foreach (var bit in FindAllIndex(LogBitW, x => x == true))
@@ -563,7 +599,10 @@ namespace PentagonHMI
         private void LogWarningDuration(int ErrCode, int Duration, string[] ErrInfo)
         {
             string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "AlarmWarningDuration");
-            if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+            if (!Directory.Exists(LogsPath))
+            {
+                Directory.CreateDirectory(LogsPath);
+            }
             string _Path = Path.Combine(LogsPath, $"WarningDuration_{DateTime.Today.ToString("yyyy-MM-dd")}.txt");
             bool HasFile = File.Exists(_Path);
             using (FileStream stream = new FileStream(_Path,
@@ -595,13 +634,15 @@ namespace PentagonHMI
                     }
                 }
             }
-
         }
 
         private void LogAlarmDuration(int ErrCode, int Duration, string[] ErrInfo)
         {
             string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "AlarmWarningDuration");
-            if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+            if (!Directory.Exists(LogsPath))
+            {
+                Directory.CreateDirectory(LogsPath);
+            }
             string _Path = System.IO.Path.Combine(LogsPath, $"AlarmDuration_{DateTime.Today.ToString("yyyyMMdd")}.txt");
             bool HasFile = File.Exists(_Path);
             using (FileStream stream = new FileStream(_Path,
@@ -658,6 +699,7 @@ namespace PentagonHMI
                 case "RUN":
                     _Color = Green;
                     break;
+
                 case "DRY RUN":
                 case "DRY-RUN":
                 case "INITIAL":
@@ -668,9 +710,11 @@ namespace PentagonHMI
                 case "IDLE":
                     _Color = Blue;
                     break;
+
                 case "ERROR":
                     _Color = Red;
                     break;
+
                 case "WARNING":
                 case "DISABLED":
                 default:
@@ -691,7 +735,7 @@ namespace PentagonHMI
             //_Color.Equals(Red) ? Brushes.Yellow : Brushes.Snow));
         }
 
-        void _Main_OnError()
+        private void _Main_OnError()
         {
             try
             {
@@ -802,7 +846,6 @@ namespace PentagonHMI
             }
         }
 
-
         //void _Main_OnError()
         //{
         //    try
@@ -867,9 +910,11 @@ namespace PentagonHMI
         //        Utilities.FileLogger.logError(ex.Message, ex.ToString());
         //    }
         //}
-        #endregion
+
+        #endregion Event
 
         #region Method
+
         private void LogFileManagement()
         {
             try
@@ -1007,15 +1052,14 @@ namespace PentagonHMI
                         TimeSpan ts_Start = new TimeSpan(Convert.ToInt32(StartTime[0]), Convert.ToInt32(StartTime[1]), 0);
                         TimeSpan ts_End = new TimeSpan(Convert.ToInt32(EndTime[0]), Convert.ToInt32(EndTime[1]), 0);
                         TimeSpan now = DateTime.Now.TimeOfDay;
-                        if ((now > ts_Start) && (now < ts_End)) ++WithinBreak;
+                        if ((now > ts_Start) && (now < ts_End))
+                            ++WithinBreak;
                     }
             }
 
             //_Main.OPC.Write("OEE_Tags.bool_NonScheduled", WithinBreak > 0);
             _Main.OPC.Write(NonScheduledOEETagName, WithinBreak > 0);
         }
-
-
 
         private bool ErrorMessage(int ErrorCode, out string _strErrorMessage)
         {
@@ -1052,7 +1096,7 @@ namespace PentagonHMI
             return Check;
         }
 
-        void Main_Closed(object sender, EventArgs e)
+        private void Main_Closed(object sender, EventArgs e)
         {
             Dispose();
         }
@@ -1068,15 +1112,17 @@ namespace PentagonHMI
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Method
 
         #region Destructor
+
         ~Main()
         {
             Dispose();
         }
-        #endregion
 
+        #endregion Destructor
 
         private void LogIN_OUT(bool LogIN)
         {
@@ -1105,7 +1151,8 @@ namespace PentagonHMI
             }
         }
 
-        string CurPage = string.Empty; StackPanel SP_Colored;
+        private string CurPage = string.Empty; private StackPanel SP_Colored;
+
         private void SwapPage(string Page)
         {
             try
@@ -1131,6 +1178,10 @@ namespace PentagonHMI
                     {
                         ((IDisposable)ucChild).Dispose();
                         ucChild = null;
+                        if(ucChildDUT != null)
+                        {
+                            ((IDisposable)ucChildDUT).Dispose();
+                        }
                     }
 
                 if (SP_Colored != null)
@@ -1139,18 +1190,16 @@ namespace PentagonHMI
                 switch (Page)
                 {
                     case "HOME":
+                    case "DUT":
                         _Main.HomePageON = true;
                         SP_Colored = SP_Home;
 
                         ucChild = HomeView;
-
-                        //if (ProjectType.LIFTER == GlobalFunctions.ProjectType)
-                        //    ucChild = LifterTabChild;
-                        //else if (ProjectType.VTC == GlobalFunctions.ProjectType)
-                        //    ucChild = VTCMainPageChild;
-                        //else
-                        //    ucChild = mainView;
+                        _Main.DUTPageOn = true;
+                        //SP_Colored = sp_DUT;
+                        ucChildDUT = DUTView;
                         goto default;
+
                     case "IO":
                         _Main.IOPageON = true;
                         SP_Colored = Sp_IOList;
@@ -1222,11 +1271,12 @@ namespace PentagonHMI
                         SP_Colored = sp_Lot;
                         ucChild = LotView;
                         goto default;
-                    case "DUT":
-                        _Main.DUTPageOn = true;
-                        SP_Colored = sp_DUT;
-                        ucChild = DUTView;
-                        goto default;
+                    // DUT Move to main
+                    //case "DUT":
+                    //    _Main.DUTPageOn = true;
+                    //    SP_Colored = sp_DUT;
+                    //    ucChild = DUTView;
+                    //    goto default;
                     case "RACKCONFIGURATION":
                         _Main.RackConfigurationPageOn = true;
                         SP_Colored = RackConfigurationStackPanel;
@@ -1290,15 +1340,18 @@ namespace PentagonHMI
                 {
                     if (_Main.MachineStatus.ToUpper() == "IDLE" || _Main.MachineStatus.ToUpper() == "IDLING")
                     {
-                        _Main.OPC.Write(GlobalFunctions.IsSystem1? "System1_MC_Tag.MachineInit": "System2_MC_Tag.MachineInit", false);
+                        _Main.OPC.Write(GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit", false);
                     }
                     else
-                    { MessageBox.Show("Cannot re-initialise, machine is not idling."); }
+                    {
+                        MessageBox.Show("Cannot re-initialise, machine is not idling.");
+                    }
                 }
             }
         }
 
         #region PrivateMessengerMethods
+
         private void signIn(Tuple<SignInView, string> tuple)
         {
             try
@@ -1323,9 +1376,11 @@ namespace PentagonHMI
         }
 
         //Main Line Layout
-        Dictionary<string, Tuple<Shp.Rectangle, TextBlock>> Dic_EstopName_Tuple_RecTbk;
-        Dictionary<string, TextBlock> Dic_Tagname_TextBlockToFill;
-        Dictionary<string, Brush> Dic_Status_Color = new Dictionary<string, Brush>
+        private Dictionary<string, Tuple<Shp.Rectangle, TextBlock>> Dic_EstopName_Tuple_RecTbk;
+
+        private Dictionary<string, TextBlock> Dic_Tagname_TextBlockToFill;
+
+        private Dictionary<string, Brush> Dic_Status_Color = new Dictionary<string, Brush>
         {
             ["RUNNING"] = Brushes.MediumSeaGreen,
             ["RUN"] = Brushes.MediumSeaGreen,
@@ -1339,9 +1394,9 @@ namespace PentagonHMI
             ["DISABLED"] = Brushes.DimGray,
         };
 
-        TagGroup tgp_Status = new TagGroup();
-        TagGroup tgp_Estop = new TagGroup();
-        TagGroup tgp_General = new TagGroup();
+        private TagGroup tgp_Status = new TagGroup();
+        private TagGroup tgp_Estop = new TagGroup();
+        private TagGroup tgp_General = new TagGroup();
 
         private void InitializeArcadiaMainLine()
         {
@@ -1365,7 +1420,6 @@ namespace PentagonHMI
                 Tuple.Create("FrontEnd_Lifter.str_MachineStatusZ2",Rec_FrontendLifter_Zone2, Tbk_FrontendLifter_Zone2),
                 Tuple.Create("BackEnd_Lifter.str_MachineStatusZ1",Rec_BackendLifter_Zone1, Tbk_BackendLifter_Zone1),
                 Tuple.Create("BackEnd_Lifter.str_MachineStatusZ2",Rec_BackendLifter_Zone2, Tbk_BackendLifter_Zone2),
-
             };
 
             foreach (var item in LstTuple_Tagname_Rec_Tbk)
@@ -1450,7 +1504,8 @@ namespace PentagonHMI
             _Main.Home_OnUpdate += new LogicClasses.Main.onHomeUpdateHandler(MainUpdate);
         }
 
-        IEnumerable<string> IEnum_LastEstopon;
+        private IEnumerable<string> IEnum_LastEstopon;
+
         private void MainUpdate()
         {
             try
@@ -1461,7 +1516,8 @@ namespace PentagonHMI
                 {
                     Brush color;
                     string Status = (item.Value?.ToString() ?? "ERROR").ToUpper();
-                    if (!Dic_Status_Color.TryGetValue(Status, out color)) color = Brushes.Orange;
+                    if (!Dic_Status_Color.TryGetValue(Status, out color))
+                        color = Brushes.Orange;
                     Tuple<Shp.Rectangle, TextBlock> tuple_Rec_Tbk = item.MyObject as Tuple<Shp.Rectangle, TextBlock>;
                     Dispatcher.Invoke(() => tuple_Rec_Tbk.Item1.Fill = color);
                     Dispatcher.Invoke(() => tuple_Rec_Tbk.Item2.Text = Status);
@@ -1507,7 +1563,8 @@ namespace PentagonHMI
             _Main.HomePageON = false;
             SwapPage("OEE");
         }
-        #endregion
+
+        #endregion PrivateMessengerMethods
 
         private void hideTLA_MainConveyorViewButton_Click(object sender, RoutedEventArgs e)
         {
@@ -1524,4 +1581,3 @@ namespace PentagonHMI
         }
     }
 }
-

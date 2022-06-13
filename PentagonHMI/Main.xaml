@@ -243,10 +243,11 @@
                                     <TextBlock Style="{StaticResource Title}" Text="Tray Map"/>
                                 </StackPanel>
                                 
-                                <StackPanel x:Name="sp_DUT" Style="{StaticResource Bord}">
+                                <!--DUT Move to main view-->
+                                <!--<StackPanel x:Name="sp_DUT" Style="{StaticResource Bord}">
                                     <Image Style="{StaticResource ClickIcon}" Source="/HMI;component/Icon/gear.png" Tag="DUT"/>
                                     <TextBlock Style="{StaticResource Title}" Text="DUT"/>
-                                </StackPanel>
+                                </StackPanel>-->
                                 
                                 <StackPanel x:Name="sp_Lot" Style="{StaticResource Bord}">
                                     <Image Style="{StaticResource ClickIcon}" Source="/HMI;component/Icon/gear.png" Tag="LOT"/>
