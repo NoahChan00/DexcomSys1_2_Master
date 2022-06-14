@@ -85,6 +85,7 @@ namespace PentagonHMI
         private DryRunView dryRunView;
         private ucDexcomEngineering DexcomEngineeringView;
         private ChildControls.ucTrayMap TrayMapView;
+        private ChildControls.ucStacker StackerView;
         private ChildControls.ucDUT DUTView;
         private ChildControls.ucLotEntry LotView;
         private ChildControls.ucIOLocation IOLocationChild;
@@ -324,7 +325,7 @@ namespace PentagonHMI
             bool HasPopUp = true, HasSignin = true, HasMachineInfo = true, HasControlPanel = true, HasPLCEvent = true;
             //Custom
             bool HasZoneLeftVisionRightMainPage = false, HasArcadiaConveyorMain = false, HasZoneLeftRackRightMainPage = false,
-                 HasRejectBinDisplay = false, HasRackConfig = false, HasRecipeConfig = false, HasLifterTab = false, HasTrayMap = false,
+                 HasRejectBinDisplay = false, HasRackConfig = false, HasRecipeConfig = false, HasLifterTab = false, HasTrayMap = false, HasStacker = false,
                  HasDUT = false;
 
             int rejectBinCount = 8;
@@ -334,7 +335,7 @@ namespace PentagonHMI
             {
                 case ProjectType.DEXCOM:
                     HasIO = HasUserAccount = HasDryrun = HasSOEE = HasLOEE = HasSetting =
-                    HasLog = HasMotor = HasEng = HasTrayMap = HasDUT = HasLot = HasPopUp = HasEng = true;
+                    HasLog = HasMotor = HasEng = HasTrayMap = HasStacker = HasDUT = HasLot = HasPopUp = HasEng = true;
                     HomeView = new ChildControls.ucHome(_Main);
                     break;
 
@@ -423,9 +424,10 @@ namespace PentagonHMI
                 _Main.machineInformationView = new MachineInformationView(_Main);
             if (HasControlPanel)
                 controlPanelView = new ControlPanelView(_Main);
-
             if (HasTrayMap)
                 TrayMapView = new ChildControls.ucTrayMap(_Main);
+            if (HasStacker)
+                StackerView = new ChildControls.ucStacker(_Main);
             if (HasDUT)
                 DUTView = new ChildControls.ucDUT(_Main);
             if (HasLot)
@@ -1187,6 +1189,8 @@ namespace PentagonHMI
                 if (SP_Colored != null)
                     SP_Colored.Background = Brushes.Transparent;
 
+                // https://en.wikipedia.org/wiki/Goto#Criticism, suspect below logic written way before 21st century
+                // https://en.wikipedia.org/wiki/Structured_programming Please study this before using goto
                 switch (Page)
                 {
                     case "HOME":
@@ -1266,6 +1270,11 @@ namespace PentagonHMI
                         SP_Colored = sp_TrayMap;
                         ucChild = TrayMapView;
                         goto default;
+                    case "STACKER":
+                        _Main.StackerPageOn = true;
+                        SP_Colored = sp_Stacker;
+                        ucChild = StackerView;
+                        goto default;
                     case "LOT":
                         _Main.LotPageOn = true;
                         SP_Colored = sp_Lot;
@@ -1297,7 +1306,7 @@ namespace PentagonHMI
                         LogIN_OUT(false);
                         if (_Main.OPC.Read<bool>(EMtag.Name))
                             if (MessageBox.Show("Engineering Mode On, \n" +
-                                "Do you want to Turn Off the Enggeering Mode Before Log out?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                                "Do you want to Turn Off the Engineering Mode Before Log out?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                                 _Main.OPC.Write(EMtag.Name, false);
                         goto case "COLORING";
                     default:
@@ -1310,6 +1319,7 @@ namespace PentagonHMI
                         SP_Colored.Background = Brushes.DeepSkyBlue;
                         break;
                 }
+
             }
             catch (Exception ex)
             {

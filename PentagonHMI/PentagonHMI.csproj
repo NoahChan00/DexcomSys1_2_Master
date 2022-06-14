@@ -202,6 +202,9 @@
     <Compile Include="Dexcom_Modules\ucHome.xaml.cs">
       <DependentUpon>ucHome.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Dexcom_Modules\ucStacker.xaml.cs">
+      <DependentUpon>ucStacker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dexcom_Modules\ucTrayMap.xaml.cs">
       <DependentUpon>ucTrayMap.xaml</DependentUpon>
     </Compile>
@@ -543,6 +546,10 @@
     <Page Include="Dexcom_Modules\ucHome.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Dexcom_Modules\ucStacker.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Dexcom_Modules\ucTrayMap.xaml">
       <Generator>MSBuild:Compile</Generator>

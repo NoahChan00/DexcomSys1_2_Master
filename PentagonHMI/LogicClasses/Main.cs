@@ -97,6 +97,9 @@ namespace PentagonHMI.LogicClasses
         public delegate void onTrayMapHandler();
         public event onTrayMapHandler OnTrayMapUpdate;
 
+        public delegate void onStackerHandler();
+        public event onStackerHandler OnStackerUpdate;
+
         public delegate void onDUTHandler();
         public event onDUTHandler OnDUTUpdate;
 
@@ -121,16 +124,16 @@ namespace PentagonHMI.LogicClasses
         public delegate void OnRackConfigurationHandler();
         public event OnRackConfigurationHandler OnRackConfigurationUpdate;
 
-        public Utilities.TcpAllenB plc = new Utilities.TcpAllenB();
+        public TcpAllenB plc = new TcpAllenB();
 
-        public bool IOPageON = false, OEEPageON = false, MotorPageON = false, SettingPageON = false,
-            IOLocPageON = false, HomePageON = false, EnPageOn = false, DryRunPageON = false,
-            EngineeringPageOn = false, RejectBinDisplayPageOn = false, RackConfigurationPageOn = false,
-            TrayMapPageOn = false, DUTPageOn = false, LotPageOn = false;
+        public bool IOPageON, OEEPageON, MotorPageON, SettingPageON,
+            IOLocPageON, HomePageON, EnPageOn, DryRunPageON,
+            EngineeringPageOn, RejectBinDisplayPageOn, RackConfigurationPageOn,
+            TrayMapPageOn, StackerPageOn, DUTPageOn, LotPageOn;
 
-        public bool HasErrorCheck = false, HasStationStatusCheck = false, HasBreakTimeCheck = false, HasLogManagement = false;
+        public bool HasErrorCheck, HasStationStatusCheck, HasBreakTimeCheck, HasLogManagement;
 
-        public bool HasRackStatus = false;
+        public bool HasRackStatus;
         #endregion
 
         #region Constructor
@@ -367,6 +370,8 @@ namespace PentagonHMI.LogicClasses
                     if (TrayMapPageOn)
                         OnTrayMapUpdate?.Invoke();
 
+                    if (StackerPageOn)
+                        OnStackerUpdate?.Invoke();
                     if (DUTPageOn)
                         OnDUTUpdate?.Invoke();
 

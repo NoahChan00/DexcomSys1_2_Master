@@ -241,8 +241,6 @@ namespace PentagonHMI.ChildControls
                     }
                     else
                     {
-                        // System 2
-                        // Pending 3 more on top
                         InputL = OPCore.Read<short[]>(Tag_L_Input_Slot, typeof(short), Row * Col);
                         InputR = OPCore.Read<short[]>(Tag_R_Input_Slot, typeof(short), Row * Col);
                         OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);
@@ -338,6 +336,9 @@ namespace PentagonHMI.ChildControls
         private void ChangeTray_Click(object sender, RoutedEventArgs e)
         {
             string tag = (sender as Button).Tag.ToString();
+
+            // Just change tag to PLC address. WHY SO HASSLE!
+            OPCore.Write(tag, true, typeof(bool));
             //OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
         }
 
