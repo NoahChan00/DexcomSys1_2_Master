@@ -181,12 +181,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Left Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="ugrd_LeftTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="ugrd_LeftTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -213,12 +213,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Right Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -246,12 +246,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="PCBA Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="pcba_SlotTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="pcba_SlotTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 25" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -278,12 +278,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Battery Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="140 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="2">
@@ -315,12 +315,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Left Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="input_LeftSlot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="input_LeftSlot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -345,12 +345,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Right Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="input_RightSlot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="input_RightSlot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -378,12 +378,12 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="output_Slot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="140 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="output_Slot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 50" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -411,7 +411,7 @@
 
         <Border Grid.Column="1" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
             <StackPanel Name="Legends">
-                <Label Content="Legends" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
+                <Label Content="Legends" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
             </StackPanel>
         </Border>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using PentagonHMI.Classes;
+﻿using GalaSoft.MvvmLight.Command;
+using PentagonHMI.Classes;
 using SimpleDatabase;
 using System;
 using System.Collections.Generic;
@@ -35,20 +36,17 @@ namespace PentagonHMI.ChildControls
         private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
 
         // Dexcom 1 Tag ?
-        private const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
-
-        private const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
         private const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking[1]";//Length 16
         private const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking[1]";//Length 16
+        private const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
+        private const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
 
         //System 2 - Tray Map HMI
         // New tag from 1.3
         // PLC tag need index operator, they start from, ignore 0 for this project
         private const string Tag_L_Input_Slot = "LShuttle_Slot_Tracking[1]";//Length 16
-
         private const string Tag_R_Input_Slot = "RShuttle_Slot_Tracking[1]";//Length 16
         private const string Tag_Output_Slot = "UnloadTray_Slot_Tracking[1]";//Length 60
-        private const string Output_Change_Tray = "HMI_Output_ReqChangeTray[1]";
 
         private int Row = 0;
         private int Col = 0;
@@ -112,28 +110,30 @@ namespace PentagonHMI.ChildControls
             if (GlobalFunctions.IsSystem1)
                 BatType = OPCore.Read<int>(Tag_Btry_dint);
             else
-                BatType = 6;
+                BatType = 2;
 #else
 
-            BatType = 6;
+            BatType = 2;
 #endif
 
             switch (BatType)
             {
-                //Maxell
+                // Maxell
                 case 2:
                     BRow = 10;
                     BCol = 10;
+                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
                     break;
-                //Panasonic
+                // Panasonic
                 case 5:
                     BRow = 4;
                     BCol = 10;
                     break;
-                //Murata
+                // Murata
                 case 6:
-                    BRow = 9;
-                    BCol = 10;
+                    BRow = 10;
+                    BCol = 5;
+                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
                     break;
 
                 default:
@@ -185,34 +185,90 @@ namespace PentagonHMI.ChildControls
             if (GlobalFunctions.IsSystem1)
             {
                 int total = Row * Col;
-                for (int t = 1; t <= total; t++)
+                for (int i = 1; i <= total; i++)
                 {
-                    ugrd_LeftTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
-                    ugrd_RightTray.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                    ugrd_LeftTray.Children.Add(new Button
+                    {
+                        Tag = Tag_L_Shuttle_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_L_Shuttle_Slot.Replace("1", i.ToString())
+                    });
+                    ugrd_RightTray.Children.Add(new Button
+                    {
+                        Tag = Tag_R_Shuttle_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_R_Shuttle_Slot.Replace("1", i.ToString())
+                    });
                 }
                 int totalPCBA = PRow * PCol;
-                for (int tp = 1; tp <= totalPCBA; tp++)
+                for (int i = 1; i <= totalPCBA; i++)
                 {
-                    pcba_SlotTray.Children.Add(new TextBlock { Tag = tp, Text = "-" });
+                    pcba_SlotTray.Children.Add(new Button
+                    {
+                        Tag = Tag_PCBA_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_PCBA_Slot.Replace("1", i.ToString())
+                    });
                 }
                 int totalBattery = BRow * BCol;
-                for (int tb = 1; tb <= totalBattery; tb++)
+                for (int i = 1; i <= totalBattery; i++)
                 {
-                    bat_SlotTray.Children.Add(new TextBlock { Tag = tb, Text = "-" });
+                    bat_SlotTray.Children.Add(new Button
+                    {
+                        Tag = Tag_Btry_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_Btry_Slot.Replace("1", i.ToString())
+                    });
                 }
             }
             else
             {
                 int total = Row * Col;
-                for (int t = 1; t <= total; t++)
+                for (int i = 1; i <= total; i++)
                 {
-                    input_LeftSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
-                    input_RightSlot.Children.Add(new TextBlock { Tag = t, Text = "-" });
+                    input_LeftSlot.Children.Add(new Button
+                    {
+                        Tag = Tag_L_Input_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_L_Shuttle_Slot.Replace("1", i.ToString())
+                    });
+                    input_RightSlot.Children.Add(new Button
+                    {
+                        Tag = Tag_R_Input_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_R_Input_Slot.Replace("1", i.ToString())
+                    });
                 }
                 int totalOutput = ORow * OCol;
                 for (int i = 1; i <= totalOutput; i++)
                 {
-                    output_Slot.Children.Add(new TextBlock { Tag = i, Text = "-" });
+                    output_Slot.Children.Add(new Button
+                    {
+                        Tag = Tag_Output_Slot.Replace("1", i.ToString()),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_Output_Slot.Replace("1", i.ToString())
+                    });
                 }
             }
         }
@@ -349,5 +405,26 @@ namespace PentagonHMI.ChildControls
             // Tag from 0
             //OPCore.Write(tag == "L" ? Tag_L_PurgeRack : tag == "R" ? Tag_R_PurgeRack : "", tbtn.IsChecked);
         }
+
+        private void ButtonToggleSlotCommand(string tagName)
+        {
+            bool engineeringMode = OPCore.Read<bool>(Tags.MainPage.EngineeringMode.Name);
+
+            if (engineeringMode)
+            {
+                int currentValue = OPCore.Read<short>(tagName);
+                if (currentValue != 0)
+                {
+                    if (MessageBox.Show($"Turn off {tagName}?", "Toggle Slot", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        OPCore.Write(tagName, 0, typeof(short));
+                }
+                else
+                {
+                    if (MessageBox.Show($"Turn on {tagName}?", "Toggle Slot", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        OPCore.Write(tagName, 1, typeof(short));
+                }
+            }
+        }
+
     }
 }

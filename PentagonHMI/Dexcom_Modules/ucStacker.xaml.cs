@@ -1,4 +1,5 @@
-﻿using PentagonHMI.Classes;
+﻿using GalaSoft.MvvmLight.CommandWpf;
+using PentagonHMI.Classes;
 using SimpleDatabase;
 using System;
 using System.Collections.Generic;
@@ -99,9 +100,33 @@ namespace PentagonHMI.ChildControls
                 int total = Row * Column;
                 for (int i = 1; i <= total; i++)
                 {
-                    ugrd_LeftDestacker.Children.Add(new TextBlock { Tag = i, Text = "-" });
-                    ugrd_RightDestacker.Children.Add(new TextBlock { Tag = i, Text = "-" });
-                    ugrd_Stacker.Children.Add(new TextBlock { Tag = i, Text = "-" });
+                    ugrd_LeftDestacker.Children.Insert(0, new Button
+                    {
+                        Tag = TagLeftDestacker.Replace("1", i.ToString()),
+                        Width = 150,
+                        Height = 14,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = TagLeftDestacker.Replace("1", i.ToString())
+                    });
+                    ugrd_RightDestacker.Children.Insert(0, new Button
+                    {
+                        Tag = TagRightDestacker.Replace("1", i.ToString()),
+                        Width = 150,
+                        Height = 14,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = TagRightDestacker.Replace("1", i.ToString())
+                    });
+                    ugrd_Stacker.Children.Insert(0, new Button
+                    {
+                        Tag = TagStacker.Replace("1", i.ToString()),
+                        Width = 150,
+                        Height = 14,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = TagStacker.Replace("1", i.ToString())
+                    });
 
                 }
             }
@@ -182,5 +207,24 @@ namespace PentagonHMI.ChildControls
             OPCore.Write(tag, true, typeof(bool));
         }
 
+        private void ButtonToggleSlotCommand(string tagName)
+        {
+            bool engineeringMode = OPCore.Read<bool>(Tags.MainPage.EngineeringMode.Name);
+
+            if (engineeringMode)
+            {
+                int currentValue = OPCore.Read<short>(tagName);
+                if (currentValue != 0)
+                {
+                    if (MessageBox.Show($"Turn off {tagName}?", "Toggle Slot", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        OPCore.Write(tagName, 0, typeof(short));
+                }
+                else
+                {
+                    if (MessageBox.Show($"Turn on {tagName}?", "Toggle Slot", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                        OPCore.Write(tagName, 1, typeof(short));
+                }
+            }
+        }
     }
 }
