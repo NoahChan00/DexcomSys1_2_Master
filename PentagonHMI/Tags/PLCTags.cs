@@ -29,9 +29,9 @@ namespace PentagonHMI.Tags
         public static Tag HMI_End_Lot_Bit = new Tag("Lot_Info.HMI_End_Lot_Bit", Tag.ATOMIC.BOOL);
         public static Tag HMI_Purge_Lot_Bit = new Tag("Lot_Info.HMI_Purge_Lot_Bit", Tag.ATOMIC.BOOL);
 
-        public static Tag HMI_Pause_Lot_Prompt = new Tag("", Tag.ATOMIC.BOOL);
+        public static Tag HMI_Pause_Lot_Prompt = new Tag("Lot_Info.HMI_Pause_Lot_Prompt", Tag.ATOMIC.BOOL);
 
-        public static Tag dint_Quality = new Tag("", Tag.ATOMIC.DINT); // Data Type not stated int HMI List
+        public static Tag dint_Quality = new Tag("Lot_OEE_Tags.dint_Quality", Tag.ATOMIC.DINT); // Data Type not stated int HMI List
     }
     public class EngineeringPLCTags
     {

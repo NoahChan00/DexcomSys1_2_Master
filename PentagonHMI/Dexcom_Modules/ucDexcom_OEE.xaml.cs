@@ -713,7 +713,7 @@ namespace PentagonHMI.ChildControls
                         return string.IsNullOrWhiteSpace(strValue) ? "" : new DateTime(Convert.ToInt32(strValue.Substring(0, 4)),
                             Convert.ToInt32(strValue.Substring(4, 2)),
                             Convert.ToInt32(strValue.Substring(6, 2)),
-                            Convert.ToInt32(strValue.Substring(8, 2)),
+                            Convert.ToInt32(strValue.Substring(8, 2)), // beware for underscore
                             Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
                     }
                     catch (Exception)

@@ -68,9 +68,15 @@ namespace PentagonHMI
             //}
         }
 
+        /*
+         * Date: 2022-06-13
+         * Author: Leon
+         * Description: Log Unhandled Exception, found on dispatcher and current domain
+         * PS: Someone remove log4net usage 
+         */
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            FileLogger.logError(e.Exception.ToString(), "On dispacher unhandled exception - Unknown");
+            FileLogger.logError(e.Exception.ToString(), "On dispatcher unhandled exception - Unknown");
         }
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
