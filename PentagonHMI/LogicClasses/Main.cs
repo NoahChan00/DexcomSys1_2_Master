@@ -346,8 +346,9 @@ namespace PentagonHMI.LogicClasses
             {
                 while (!cancellationTokenSource.Token.IsCancellationRequested)
                 {
-                    if (HomePageON && Home_OnUpdate != null)
-                        Home_OnUpdate?.Invoke();
+                    //Move to fast lane
+                    //if (HomePageON && Home_OnUpdate != null)
+                    //    Home_OnUpdate?.Invoke();
 
                     if (IOPageON && OnIOUpdate != null)
                         OnIOUpdate?.Invoke();
@@ -405,6 +406,9 @@ namespace PentagonHMI.LogicClasses
             {
                 while (!cancellationTokenSource.Token.IsCancellationRequested)
                 {
+                    if (HomePageON && Home_OnUpdate != null)
+                        Home_OnUpdate?.Invoke();
+
                     OnFastUpdate?.Invoke();
                     cancellationTokenSource.Token.WaitHandle.WaitOne(1);
                 }

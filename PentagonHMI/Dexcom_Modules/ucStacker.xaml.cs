@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using Utilities;
 
@@ -102,12 +103,15 @@ namespace PentagonHMI.ChildControls
                 {
                     ugrd_LeftDestacker.Children.Insert(0, new Button
                     {
-                        Tag =  i.ToString(),
+                        Tag = i.ToString(),
                         Width = 150,
                         Height = 14,
                         Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                        CommandParameter = TagLeftDestacker.Replace("1", i.ToString())
+                        CommandParameter = TagLeftDestacker.Replace("1", i.ToString()),
+                        Content = i.ToString(),
+                        FontSize = 9, 
+                        FontWeight = FontWeights.Bold,
                     });
                     ugrd_RightDestacker.Children.Insert(0, new Button
                     {
@@ -116,7 +120,10 @@ namespace PentagonHMI.ChildControls
                         Height = 14,
                         Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                        CommandParameter = TagRightDestacker.Replace("1", i.ToString())
+                        CommandParameter = TagRightDestacker.Replace("1", i.ToString()),
+                        Content = i.ToString(),
+                        FontSize = 8,
+                        FontWeight = FontWeights.Bold,
                     });
                     // ugrd_Stacker from up to down
                     ugrd_Stacker.Children.Add(new Button
@@ -126,9 +133,11 @@ namespace PentagonHMI.ChildControls
                         Height = 14,
                         Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                        CommandParameter = TagStacker.Replace("1", i.ToString())
+                        CommandParameter = TagStacker.Replace("1", i.ToString()),
+                        Content = i.ToString(),
+                        FontSize = 9,
+                        FontWeight = FontWeights.Bold,
                     });
-
                 }
             }
         }
