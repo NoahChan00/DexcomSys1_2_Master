@@ -616,7 +616,7 @@
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="UPH Log" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel>
                         
-                        <StackPanel Visibility="Visible" Name="DryrunIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="Dryrun" Margin="5" Orientation="Vertical">
+                        <StackPanel Visibility="Collapsed" Name="DryrunIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="Dryrun" Margin="5" Orientation="Vertical">
                             <Image Margin=" 5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png"/>
                             <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="Dryrun Log" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         </StackPanel> 
