@@ -118,7 +118,8 @@ namespace PentagonHMI.ChildControls
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = TagRightDestacker.Replace("1", i.ToString())
                     });
-                    ugrd_Stacker.Children.Insert(0, new Button
+                    // ugrd_Stacker from up to down
+                    ugrd_Stacker.Children.Add(new Button
                     {
                         Tag = i.ToString(),
                         Width = 150,
