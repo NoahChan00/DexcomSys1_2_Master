@@ -225,6 +225,7 @@ namespace SimpleOPC
 
         public bool Connect(string IP, string Path = "0", int Timeout = 3000)
         {
+#if !DEBUG
             try
             {
                 if (IsConnected())
@@ -249,6 +250,9 @@ namespace SimpleOPC
                 return false;
             }
             catch (Exception) { throw; }
+#else
+            return true;
+#endif
         }
 
         public bool Disconnect()
@@ -257,7 +261,7 @@ namespace SimpleOPC
             return IsConnected();
         }
 
-        #region Scanner
+#region Scanner
         public void SetupIndividualScanGroup(int interval = 10)
         {
             IndieTagGroup = new TagGroup
@@ -398,6 +402,6 @@ namespace SimpleOPC
             }
             catch (Exception) { throw; }
         }
-        #endregion
+#endregion
     }
 }
