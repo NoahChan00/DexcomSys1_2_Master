@@ -1288,6 +1288,8 @@ namespace PentagonHMI.ChildControls
                     TorqueDriverResultTabItem.IsSelected = true;
                     DatePickerTorqueDriverResult_SelectedDateChanged(null, null);
                     break;
+                case "DRYRUN":
+                    break;
             }
 
             LogMenu.Visibility = Visibility.Collapsed;
