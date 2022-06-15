@@ -541,6 +541,7 @@ namespace PentagonHMI
         {
             try
             {
+#if !DEBUG
                 var EnumBool = ((IEnumerable<bool>)_Main.OPC.Read("MC_System_Tags.ErrorBit[0]", typeof(bool), 2000))?.ToArray();
                 if (EnumBool != null)
                     alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
@@ -548,8 +549,6 @@ namespace PentagonHMI
                 var EnumWBool = ((IEnumerable<bool>)_Main.OPC.Read("MC_System_Tags.WarningBit[0]", typeof(bool), 1000))?.ToArray();
                 if (EnumWBool != null)
                     warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
-
-#if !DEBUG
 #else
                 alarmLst = "1,2";
                 warningLst = "1,4";
