@@ -542,13 +542,13 @@ namespace PentagonHMI
             try
             {
 #if !DEBUG
-                var EnumBool = ((IEnumerable<bool>)_Main.OPC.Read(GlobalFunctions.IsSystem1 ?
-                    "MC_System_Tags.ErrorBit[0]" : "System2_MC_Tag_ErrorCondBit[1]", typeof(bool), 2000))?.ToArray();
+                var EnumBool = _Main.OPC.Read<bool[]>(GlobalFunctions.IsSystem1 ?
+                    "MC_System_Tags.ErrorBit[0]" : "System2_MC_Tag.ErrorCondBit[1]", typeof(bool), 2000);
                 if (EnumBool != null)
                     alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
 
-                var EnumWBool = ((IEnumerable<bool>)_Main.OPC.Read(GlobalFunctions.IsSystem1 ?
-                    "MC_System_Tags.WarningBit[0]" : "System2_MC_Tag.WarningCondBit", typeof(bool), 1000))?.ToArray();
+                var EnumWBool = _Main.OPC.Read<bool[]>(GlobalFunctions.IsSystem1 ?
+                    "MC_System_Tags.WarningBit[0]" : "System2_MC_Tag.WarningCondBit[1]", typeof(bool), 1000);
                 if (EnumWBool != null)
                     warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
 #else

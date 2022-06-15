@@ -102,7 +102,7 @@ namespace PentagonHMI.ChildControls
                 {
                     ugrd_LeftDestacker.Children.Insert(0, new Button
                     {
-                        Tag = TagLeftDestacker.Replace("1", i.ToString()),
+                        Tag =  i.ToString(),
                         Width = 150,
                         Height = 14,
                         Margin = new Thickness(1),
@@ -111,7 +111,7 @@ namespace PentagonHMI.ChildControls
                     });
                     ugrd_RightDestacker.Children.Insert(0, new Button
                     {
-                        Tag = TagRightDestacker.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Width = 150,
                         Height = 14,
                         Margin = new Thickness(1),
@@ -120,7 +120,7 @@ namespace PentagonHMI.ChildControls
                     });
                     ugrd_Stacker.Children.Insert(0, new Button
                     {
-                        Tag = TagStacker.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Width = 150,
                         Height = 14,
                         Margin = new Thickness(1),
@@ -160,25 +160,22 @@ namespace PentagonHMI.ChildControls
                         if (LeftDestacker != null)
                             foreach (var item in ugrd_LeftDestacker.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = LeftDestacker[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (RighDestacker != null)
                             foreach (var item in ugrd_RightDestacker.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = RighDestacker[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (Stacker != null)
                             foreach (var item in ugrd_Stacker.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = Stacker[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                     }
