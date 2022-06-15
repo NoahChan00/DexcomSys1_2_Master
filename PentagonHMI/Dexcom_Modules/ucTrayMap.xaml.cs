@@ -189,7 +189,7 @@ namespace PentagonHMI.ChildControls
                 {
                     ugrd_LeftTray.Children.Add(new Button
                     {
-                        Tag = Tag_L_Shuttle_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -198,7 +198,7 @@ namespace PentagonHMI.ChildControls
                     });
                     ugrd_RightTray.Children.Add(new Button
                     {
-                        Tag = Tag_R_Shuttle_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -211,7 +211,7 @@ namespace PentagonHMI.ChildControls
                 {
                     pcba_SlotTray.Children.Add(new Button
                     {
-                        Tag = Tag_PCBA_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -224,7 +224,7 @@ namespace PentagonHMI.ChildControls
                 {
                     bat_SlotTray.Children.Add(new Button
                     {
-                        Tag = Tag_Btry_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -240,7 +240,7 @@ namespace PentagonHMI.ChildControls
                 {
                     input_LeftSlot.Children.Add(new Button
                     {
-                        Tag = Tag_L_Input_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -249,7 +249,7 @@ namespace PentagonHMI.ChildControls
                     });
                     input_RightSlot.Children.Add(new Button
                     {
-                        Tag = Tag_R_Input_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -262,7 +262,7 @@ namespace PentagonHMI.ChildControls
                 {
                     output_Slot.Children.Add(new Button
                     {
-                        Tag = Tag_Output_Slot.Replace("1", i.ToString()),
+                        Tag = i.ToString(),
                         Height = 25,
                         Width = 25,
                         Margin = new Thickness(1),
@@ -307,33 +307,29 @@ namespace PentagonHMI.ChildControls
                         if (LAry != null)
                             foreach (var item in ugrd_LeftTray.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (RAry != null)
                             foreach (var item in ugrd_RightTray.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (PCBAry != null)
                             foreach (var item in pcba_SlotTray.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (BatAry != null)
                             foreach (var item in bat_SlotTray.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                     }
@@ -342,26 +338,23 @@ namespace PentagonHMI.ChildControls
                         if (InputL != null)
                             foreach (var item in input_LeftSlot.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (InputR != null)
                             foreach (var item in input_RightSlot.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                         if (OutputAry != null)
                             foreach (var item in output_Slot.Children)
                             {
-                                TextBlock tb = item as TextBlock;
+                                Button tb = item as Button;
                                 // Somehow tb.Tag start from 0 unlike above 2
                                 string result = OutputAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                tb.Text = "";
                                 tb.Background = Dic_ResultColor[result];
                             }
                     }

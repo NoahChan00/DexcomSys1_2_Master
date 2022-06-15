@@ -160,7 +160,7 @@ namespace PentagonHMI
                 };
 
                 GlobalFunctions.LoadErrorList();
-                GlobalFunctions.LoadMachineName();
+                //GlobalFunctions.LoadMachineName();
 
                 UpdateConfig();
 
@@ -542,11 +542,13 @@ namespace PentagonHMI
             try
             {
 #if !DEBUG
-                var EnumBool = ((IEnumerable<bool>)_Main.OPC.Read("MC_System_Tags.ErrorBit[0]", typeof(bool), 2000))?.ToArray();
+                var EnumBool = ((IEnumerable<bool>)_Main.OPC.Read(GlobalFunctions.IsSystem1 ?
+                    "MC_System_Tags.ErrorBit[0]" : "System2_MC_Tag_ErrorCondBit[1]", typeof(bool), 2000))?.ToArray();
                 if (EnumBool != null)
                     alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
 
-                var EnumWBool = ((IEnumerable<bool>)_Main.OPC.Read("MC_System_Tags.WarningBit[0]", typeof(bool), 1000))?.ToArray();
+                var EnumWBool = ((IEnumerable<bool>)_Main.OPC.Read(GlobalFunctions.IsSystem1 ?
+                    "MC_System_Tags.WarningBit[0]" : "System2_MC_Tag.WarningCondBit", typeof(bool), 1000))?.ToArray();
                 if (EnumWBool != null)
                     warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
 #else
