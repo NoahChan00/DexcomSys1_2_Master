@@ -14,7 +14,7 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucTrayMap : UserControl, IDisposable
     {
-        private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
         private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
 
         private LogicClasses.Main _Main;

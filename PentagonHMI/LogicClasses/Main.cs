@@ -19,7 +19,7 @@ namespace PentagonHMI.LogicClasses
         private VanillaDB.DataDBCall DBCall;
         public TagName TN = new TagName();
         public Main_Custom Custom;
-        public INGEAR_Opc OPC = new INGEAR_Opc();
+        public INGEAR_Opc OPC = new INGEAR_Opc(Info.OPC.IP);
         public SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         public SQLCarrier MainSQLer;
         public DataTable dt_Config;

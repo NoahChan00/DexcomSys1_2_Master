@@ -16,7 +16,7 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucLotEntry : UserControl, IDisposable
     {
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
         SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         Dictionary<string, string> dic_BatteryType = new Dictionary<string, string>();
         List<string> lst_DUTID = new List<string>();

@@ -68,9 +68,10 @@ namespace SimpleOPC
         }
         #endregion
 
-        public INGEAR_Opc()
+        public INGEAR_Opc(string IP)
         {
             Logger.SetPath();
+            Connect(IP);
         }
 
         public bool Initialize(List<TagInfo> lst_tags, string ip, string path = "0", int timeout = 3000, object controller = null)

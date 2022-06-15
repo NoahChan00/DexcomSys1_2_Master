@@ -23,7 +23,7 @@ namespace PentagonHMI.Views
         private List<RecipeModel> recipeList = new List<RecipeModel>();
         private List<string> lst_ReelType;
         SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
-        INGEAR_Opc OPC = new INGEAR_Opc();
+        INGEAR_Opc OPC = new INGEAR_Opc(Info.OPC.IP);
         #endregion
 
         #region Constructor

@@ -16,7 +16,7 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucDryrun : UserControl, IDisposable
     {
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
         DateTime DT = DateTime.Now.AddMinutes(-5);
         //20 Set
         private const string Tag_Dryrun_Enable = "Dry_Run_Data_{0}.Enable_DryRun";

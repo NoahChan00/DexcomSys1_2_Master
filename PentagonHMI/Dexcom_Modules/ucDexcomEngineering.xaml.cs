@@ -15,7 +15,7 @@ namespace PentagonHMI
 {
     public partial class ucDexcomEngineering : UserControl, IDisposable
     {
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc();
+        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
         //SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
         LogicClasses.Main _Main;
         private struct Control
