@@ -104,38 +104,38 @@ namespace PentagonHMI.ChildControls
                     ugrd_LeftDestacker.Children.Insert(0, new Button
                     {
                         Tag = i.ToString(),
-                        Width = 150,
-                        Height = 14,
+                        Width = 250,
+                        Height = 28,
                         Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = TagLeftDestacker.Replace("1", i.ToString()),
                         Content = i.ToString(),
-                        FontSize = 9, 
+                        FontSize = 18, 
                         FontWeight = FontWeights.Bold,
                     });
                     ugrd_RightDestacker.Children.Insert(0, new Button
                     {
                         Tag = i.ToString(),
-                        Width = 150,
-                        Height = 14,
+                        Width = 250,
+                        Height = 28,
                         Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = TagRightDestacker.Replace("1", i.ToString()),
                         Content = i.ToString(),
-                        FontSize = 8,
+                        FontSize = 18,
                         FontWeight = FontWeights.Bold,
                     });
                     // ugrd_Stacker from up to down
                     ugrd_Stacker.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Width = 150,
-                        Height = 14,
+                        Width = 250,
+                        Height = 28,
                         Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = TagStacker.Replace("1", i.ToString()),
                         Content = i.ToString(),
-                        FontSize = 9,
+                        FontSize = 18,
                         FontWeight = FontWeights.Bold,
                     });
                 }

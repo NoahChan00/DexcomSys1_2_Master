@@ -136,6 +136,10 @@ namespace PentagonHMI
             InitializeComponent();
             try
             {
+                if (GlobalFunctions.IsSystem1)
+                {
+                    sp_Stacker.Visibility = Visibility.Collapsed;
+                }
                 FileLogger.DefaultLocation_Time = Properties.Settings.Default.LogLocation.ToString() + "Logs_" + DateTime.Now.ToString("yyyy-MMM");
                 FileLogger.DefaultLocation = Properties.Settings.Default.LogLocation.ToString();
 

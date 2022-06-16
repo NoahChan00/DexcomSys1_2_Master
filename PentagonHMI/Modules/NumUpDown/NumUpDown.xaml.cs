@@ -159,7 +159,7 @@ namespace PentagonHMI.Modules.NumUpDown
             remove { RemoveHandler(IncreaseClickedEvent, value); }
         }
 
-        //Increase button clicked
+        //Decrease button clicked
         private static readonly RoutedEvent DecreaseClickedEvent =
             EventManager.RegisterRoutedEvent("DecreaseClicked", RoutingStrategy.Bubble,
             typeof(RoutedEventHandler), typeof(NumUpDown));

@@ -174,7 +174,7 @@
         </Grid.ColumnDefinitions> 
 
         <ScrollViewer Grid.Column="0" x:Name="ScrollViewerSystem2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" Visibility="Visible">
-            <UniformGrid Columns="2" Rows="2">
+            <UniformGrid Columns="3" Rows="1">
                 <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -183,11 +183,11 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Left Destacker"  Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="ugrd_LeftDestacker"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 15"/>
+                            <UniformGrid Name="ugrd_LeftDestacker"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 50"/>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -205,11 +205,11 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Right Destacker" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="ugrd_RightDestacker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 15"/>
+                            <UniformGrid Name="ugrd_RightDestacker" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 50"/>
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -228,11 +228,11 @@
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="150" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Stacker" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="ugrd_Stacker"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 15"/>
+                            <UniformGrid Name="ugrd_Stacker"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 50"/>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
