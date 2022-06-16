@@ -101,7 +101,7 @@ namespace PentagonHMI
                         }
                     }
 
-                    // Read require plc 
+                    // Read require plc tag 
                     if (GlobalFunctions.IsSystem1)
                     {
                         System.Windows.Controls.Control[] controls = new System.Windows.Controls.Control[]
@@ -111,19 +111,19 @@ namespace PentagonHMI
                             BtryRobot_tg_StationInitDone, BtryRobot_tg_StationJogMode, PCBARack_btn_StartInit, PCBARack_tg_StationCycleMode, PCBARack_tg_StationInitDone,
                             PCBARack_tg_StationJogMode, PCBARobotPickTray, PCBARobotPickTrayRow, PCBARobotStationCycleMode, PCBARobotStationJogMode, PCBARobot_btn_PlaceTurret,
                             PCBARobot_btn_StartInit, PCBARobot_num_PickTray_Col, PCBARobot_tg_StationInitDone, S1_RotaryTable_btn_TurretIndex, UnloadRobot_btn_PickTurret,
-                            UnloadRobot_btn_PlaceLeft, UnloadRobot_btn_PlaceRight, UnloadRobot_btn_StartInit, UnloadRobot_num_PickTray_Col,
-                            UnloadRobot_num_PickTray_Row, UnloadRobot_tg_StationCycleMode, UnloadRobot_tg_StationInitDone, UnloadRobot_tg_StationJogMode
+                            UnloadRobot_btn_PlaceLeft, UnloadRobot_btn_PlaceRight, UnloadRobot_btn_StartInit, UnloadRobot_num_PickTray_Col, UnloadRobot_num_PickTray_Row,
+                            UnloadRobot_tg_StationCycleMode, UnloadRobot_tg_StationInitDone, UnloadRobot_tg_StationJogMode
                         };
 
-                        foreach(var c in controls) 
+                        foreach (var c in controls)
                         {
                             ReadPlcToControl(c);
                         }
                     }
                     else
                     {
-                        System.Windows.Controls.Control[] controls = new System.Windows.Controls.Control[] 
-                        { 
+                        System.Windows.Controls.Control[] controls = new System.Windows.Controls.Control[]
+                        {
                             InputRack_btn_StartInit, InputRack_tg_StationCycleMode, InputRack_tg_StationInitDone, InputRack_tg_StationJogMode, InputRobot_btn_PickFromLeft,
                             InputRobot_btn_PickFromRight, InputRobot_btn_PlaceTurret, InputRobot_btn_StartInit, InputRobot_num_ColNo, InputRobot_num_RowNo,
                             InputRobot_tg_StationInitDone, InputRobot_tg_StationJogMode, InputRobot_tg_StationJogMode, OutputRack_btn_StartInit, OutputRack_tg_StationCycleMode,
@@ -132,7 +132,7 @@ namespace PentagonHMI
                             S2_RotaryTable_btn_TurretIndex
                         };
 
-                        foreach(var c in controls) 
+                        foreach (var c in controls)
                         {
                             ReadPlcToControl(c);
                         }

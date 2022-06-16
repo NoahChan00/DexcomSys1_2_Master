@@ -258,6 +258,7 @@
         </Style>
         
     </UserControl.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
         <Border CornerRadius="16,16,16,16"  BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="2" Margin="0,0,0,0">
             <Grid VerticalAlignment="Top">
