@@ -307,7 +307,15 @@
         </ScrollViewer>
 
         <ScrollViewer x:Name="ScrollViewerSystem2" Grid.Column="0" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" Visibility="Visible">
-            <UniformGrid Columns="2" Rows="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -338,7 +346,7 @@
                     </Grid>
                 </Border>
 
-                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2" Grid.Row="1">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -371,7 +379,7 @@
                     </Grid>
                 </Border>
 
-                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
+                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2" Grid.Column="1" Grid.RowSpan="2">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -383,7 +391,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
                         <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="output_Slot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 50" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="output_Slot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 200" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -402,11 +410,7 @@
                         </Grid>
                     </Grid>
                 </Border>
-
-                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
-                    <Grid Visibility="Hidden" />
-                </Border>
-            </UniformGrid>
+            </Grid>
         </ScrollViewer>
 
         <Border Grid.Column="1" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0,0,5,0" BorderThickness="2">
