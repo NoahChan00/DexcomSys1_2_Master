@@ -17,7 +17,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button x:Name="ControlPanelActionButton" Content="{Binding ControlPanelActionName}"
-                            Height="48" IsEnabled="{Binding ControlPanelActionEnable}" Margin="2"
+                            Height="52" IsEnabled="{Binding ControlPanelActionEnable}" Margin="1"
                             Tag="{Binding}" Click="controlPanelActionButton_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -42,7 +42,7 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <ToggleButton x:Name="ControlPanelToggleButton" Content="{Binding ControlPanelToggleName}"
-                                  Height="48" IsChecked="{Binding ControlPanelToggleStatus}" Margin="2"
+                                  Height="56" IsChecked="{Binding ControlPanelToggleStatus}" Margin="1"
                                   IsEnabled="{Binding ControlPanelToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                   Click="controlPanelToggleButton_Click">
                         <ToggleButton.Style>

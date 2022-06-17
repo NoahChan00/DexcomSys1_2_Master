@@ -38,11 +38,10 @@
                 </StackPanel>
             </Border>
 
-            <Border Grid.Row="1" MinWidth="400" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
+            <Border Grid.Row="1" MinWidth="400" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Prompt Box" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <ToggleButton x:Name="PromptToggleButton" Content="{Binding PromptToggleName}"
-                                  Height="48" IsChecked="{Binding PromptToggleStatus}"
+                    <ToggleButton x:Name="PromptToggleButton" Content="{Binding PromptToggleName}" Height="48" IsChecked="{Binding PromptToggleStatus}"
                                   IsEnabled="{Binding PromptToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                   Click="promptToggleButton_Click">
                         <ToggleButton.Style>
@@ -50,7 +49,7 @@
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
-                                            <Label Background="Red" Content="End Lot" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold" />
+                                            <Label Background="Red" Content="End Lot" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold"/>
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -418,19 +417,19 @@
                 </StackPanel>
             </Border>
 
-            <Border Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
-                <StackPanel>
-                    <Label Content="DUT" Grid.ColumnSpan="3" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+            <!--<Border Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">-->
+                <!--<StackPanel>-->
+                    <!--<Label Content="DUT" Grid.ColumnSpan="3" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />-->
 
-                    <GroupBox>
-                        <Grid x:Name="GridForDUT">
+                    <!--<GroupBox>-->
+                        <Grid x:Name="GridForDUT" Grid.Column="4" Grid.ColumnSpan="1" Grid.RowSpan="4" Margin="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                         </Grid>
-                    </GroupBox>
-                </StackPanel>
-            </Border>
+                    <!--</GroupBox>-->
+                <!--</StackPanel>-->
+            <!--</Border>-->
             <!--<Border Grid.Column="4" Grid.Row="2" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
                 <StackPanel>
                     <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />

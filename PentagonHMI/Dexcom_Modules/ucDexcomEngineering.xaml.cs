@@ -126,7 +126,7 @@ namespace PentagonHMI
                         {
                             InputRack_btn_StartInit, InputRack_tg_StationCycleMode, InputRack_tg_StationInitDone, InputRack_tg_StationJogMode, InputRobot_btn_PickFromLeft,
                             InputRobot_btn_PickFromRight, InputRobot_btn_PlaceTurret, InputRobot_btn_StartInit, InputRobot_num_ColNo, InputRobot_num_RowNo,
-                            InputRobot_tg_StationInitDone, InputRobot_tg_StationJogMode, InputRobot_tg_StationJogMode, OutputRack_btn_StartInit, OutputRack_tg_StationCycleMode,
+                            InputRobot_tg_StationInitDone, InputRobot_tg_StationJogMode, InputRobot_tg_StationCycleMode, OutputRack_btn_StartInit, OutputRack_tg_StationCycleMode,
                             OutputRack_tg_StationInitDone, OutputRack_tg_StationJogMode, OutputRobot_btn_PickFromTurret, OutputRobot_btn_PlaceToTray, OutputRobot_btn_StartInit,
                             OutputRobot_num_PickTray_Col, OutputRobot_num_PickTray_Row, OutputRobot_tg_StationCycleMode, OutputRobot_tg_StationInitDone, OutputRobot_tg_StationJogMode,
                             S2_RotaryTable_btn_TurretIndex

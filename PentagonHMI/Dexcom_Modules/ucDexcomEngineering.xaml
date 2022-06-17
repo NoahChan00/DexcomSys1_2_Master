@@ -712,7 +712,7 @@
 
                                 <StackPanel Grid.Row="4" Orientation="Horizontal">
                                     <TextBlock Text="Station Cycle Mode : " Width="200" />
-                                    <ToggleButton Name="InputRobot_tg_StationCycleMode" Click="ToogleButtonHandler" />
+                                    <ToggleButton Name="InputRobot_tg_StationCycleMode" Click="ToogleButtonHandler" Tag="HMI_StationCycleMode_InputRobot"/>
                                 </StackPanel>
 
                                 <UniformGrid Rows="1" Grid.Row="6">

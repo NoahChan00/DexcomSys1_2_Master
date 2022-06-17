@@ -171,13 +171,13 @@ namespace PentagonHMI.ChildControls
                         },
                         new InfoBlockModel
                         {
-                           Title = "Scheduled Down Time",
+                           Title = "Scheduled Downtime",
                            Key = Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
                         new InfoBlockModel
                         {
-                           Title = "Unscheduled Down Time",
+                           Title = "Unscheduled Downtime",
                            Key = Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
@@ -225,7 +225,7 @@ namespace PentagonHMI.ChildControls
                         },
                          new InfoBlockModel
                         {
-                           Title = "Planned Productive Time",
+                           Title = "Planned Production Time",
                            Key = Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
@@ -325,13 +325,13 @@ namespace PentagonHMI.ChildControls
                         },
                         new InfoBlockModel
                         {
-                           Title = "Schedule Downtime",
+                           Title = "Scheduled Downtime",
                            Key = Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
                         new InfoBlockModel
                         {
-                           Title = "Unschedule Downtime",
+                           Title = "Unscheduled Downtime",
                            Key = Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },

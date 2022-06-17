@@ -36,7 +36,6 @@
     </UserControl.Resources>
 
     <Border CornerRadius="16,16,16,16"  BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="2" Margin="0,0,0,0">
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />

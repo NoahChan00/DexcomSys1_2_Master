@@ -79,8 +79,8 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="140" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0">
-                <Border CornerRadius="16,16,16,16"  Margin="5,2,5,5">
+            <Grid Grid.Column="0" Grid.ColumnSpan="2">
+                <Border CornerRadius="16,16,16,16"  Margin="1">
                     <Grid x:Name="TopPanelGrid">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="300"/>
@@ -89,7 +89,7 @@
                             <ColumnDefinition Width="250"/>
                         </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="0" Grid.RowSpan="3" Grid.Row="0"  Name="Status_Border" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}"  Margin="0,0,5,0" BorderThickness="2">
+                        <Border Grid.Column="0" Grid.RowSpan="3" Grid.Row="0"  Name="Status_Border" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}"  Margin="1" BorderThickness="2">
                             <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="30" />
@@ -139,7 +139,7 @@
                 </Border>
             </Grid>
 
-            <Grid Name="GridContainer" Grid.Row="1" Grid.Column="0" Margin="5,0,10,5" >
+            <Grid Name="GridContainer" Grid.Row="1" Grid.Column="0"  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
@@ -359,7 +359,7 @@
                 </Border>
             </Grid>
 
-            <Grid Name="AlertWarning" Grid.Row="2"  Margin="5,0,10,5">
+            <Grid Name="AlertWarning" Grid.Row="2" Margin="1">
                 <Border  CornerRadius="16,16,16,16"  BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="2" >
                     <Grid >
                         <Grid.RowDefinitions>
@@ -375,10 +375,7 @@
                         Margin="0, 0, 0, 0"
                         VerticalAlignment="Top">
                         </Label>
-                        <ScrollViewer Grid.Row="1"
-            VerticalScrollBarVisibility="Hidden"
-            Height="auto"
-            Margin="0, 0, 0, 0">
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Height="auto" Margin="0, 0, 0, 0">
                             <DataGrid Margin="5" Name="dgAlertWarning" FontSize="14" AutoGenerateColumns="False" ItemsSource="{Binding}" MaxHeight="160" IsReadOnly="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Binding="{Binding msgDatetime}" Header="Date/Time"  SortDirection="Descending" FontSize="14" />
