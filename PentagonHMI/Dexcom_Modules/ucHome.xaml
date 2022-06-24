@@ -212,7 +212,7 @@
                                     </UniformGrid>
                                 </GroupBox>
                                 <WrapPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0 45">
-                                    <Image Source="/Images/MainHMI/Turret.png" SnapsToDevicePixels="True" />
+                                    <Image Source="/HMI;component/Images/MainHMI/Turret.png" SnapsToDevicePixels="True" />
 
                                     <Canvas Visibility="Visible">
                                         <StackPanel Canvas.Top="-15" Canvas.Left="-173">
