@@ -242,9 +242,6 @@
     <Compile Include="Arcadia_Modules\ucLifterTab.xaml.cs">
       <DependentUpon>ucLifterTab.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Arcadia_Modules\ucMainConveyorStatus.xaml.cs">
-      <DependentUpon>ucMainConveyorStatus.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ChildControls\ucIOLocation_new.xaml.cs">
       <DependentUpon>ucIOLocation_new.xaml</DependentUpon>
     </Compile>
@@ -580,10 +577,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Arcadia_Modules\ucLifterTab.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Arcadia_Modules\ucMainConveyorStatus.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

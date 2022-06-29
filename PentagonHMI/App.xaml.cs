@@ -47,6 +47,7 @@ namespace PentagonHMI
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
+            FileLogger.logEvent(GetType().Name, "HMI Application gracefully terminated");
             /*
              * Date: 2013-02-04
              * Author: Tammie
