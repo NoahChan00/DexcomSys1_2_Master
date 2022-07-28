@@ -68,6 +68,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AxInterop.CVXLib">
+      <HintPath>..\..\Dexcom_Island_00_HMI\DLL\AxInterop.CVXLib.dll</HintPath>
+    </Reference>
     <Reference Include="AxInterop.VWORKSXGLib, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\P1729\Desktop\KeyenceImageCapture\DLL\AxInterop.VWORKSXGLib.dll</HintPath>
@@ -102,6 +105,10 @@
     <Reference Include="INGEAR.NET.Logix, Version=7.0.0.0, Culture=neutral, PublicKeyToken=ab5727b8d3226c58, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DLL\INGEAR.NET.Logix.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.CVXLib">
+      <HintPath>..\DLL\Interop.CVXLib.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="Keyence.IV.Sdk">
       <HintPath>..\DLL\Keyence.IV.Sdk.dll</HintPath>
