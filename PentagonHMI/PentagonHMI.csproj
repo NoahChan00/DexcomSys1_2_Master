@@ -299,6 +299,12 @@
     <Compile Include="Modules\VisionTabControl\Vision\AxXGXView.Designer.cs">
       <DependentUpon>AxXGXView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modules\VisionTabControl\Vision\CvXView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Modules\VisionTabControl\Vision\CvXView.Designer.cs">
+      <DependentUpon>CvXView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modules\VisionTabControl\Vision\VisionView.xaml.cs">
       <DependentUpon>VisionView.xaml</DependentUpon>
     </Compile>
@@ -959,6 +965,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modules\VisionTabControl\Vision\AxXGXView.resx">
       <DependentUpon>AxXGXView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modules\VisionTabControl\Vision\CvXView.resx">
+      <DependentUpon>CvXView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

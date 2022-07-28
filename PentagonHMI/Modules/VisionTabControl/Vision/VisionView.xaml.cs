@@ -34,7 +34,8 @@ namespace PentagonHMI
                 {
                     WindowsFormsHost windowsFormsHost = new WindowsFormsHost
                     {
-                        Child = new AxXGXView(_main)
+                        //Child = new AxXGXView(_main)
+                        Child = new CvXView()
                     };
 
                     VisionGroupBox.Children.Add(windowsFormsHost);
