@@ -1088,6 +1088,12 @@
     <Content Include="ExternalLibs\Unused\opcrcw.da.dll" />
     <Content Include="ExternalLibs\Unused\SysmacCompolet.dll" />
     <Content Include="ExternalLibs\WPFToolkit.Extended.dll" />
+    <Resource Include="Images\MainHMI\S1TurnTable.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\MainHMI\S2TurnTable.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\MainHMI\Turret.png" />
     <Resource Include="Images\TLA\TLA Layout.png" />
     <Resource Include="ReadMe.txt" />
