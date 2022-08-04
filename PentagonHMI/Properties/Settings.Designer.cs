@@ -265,30 +265,6 @@ namespace PentagonHMI.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("System_02")]
-        public string StationType {
-            get {
-                return ((string)(this["StationType"]));
-            }
-            set {
-                this["StationType"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.3.3")]
-        public string PLC_IPAddress {
-            get {
-                return ((string)(this["PLC_IPAddress"]));
-            }
-            set {
-                this["PLC_IPAddress"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("3000")]
         public string PLC_Timeout {
             get {
@@ -302,11 +278,59 @@ namespace PentagonHMI.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("persist security info = false; data source = UN-FP-CL-P2451\\SQLEXPRESS; integrate" +
-            "d security = true; initial catalog = gdb_dexcomsystem2;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("persist security info=false; data source=UN-FP-CL-P2451\\SQLEXPRESS; integrated se" +
+            "curity=true; initial catalog=gdb_dexcomsystem1;")]
         public string DatabaseConnectionString {
             get {
                 return ((string)(this["DatabaseConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("System_01")]
+        public string StationType {
+            get {
+                return ((string)(this["StationType"]));
+            }
+            set {
+                this["StationType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.3.1")]
+        public string PLC_IPAddress {
+            get {
+                return ((string)(this["PLC_IPAddress"]));
+            }
+            set {
+                this["PLC_IPAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.3.21")]
+        public string VISIONIP {
+            get {
+                return ((string)(this["VISIONIP"]));
+            }
+            set {
+                this["VISIONIP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8502")]
+        public int VISIONPORT {
+            get {
+                return ((int)(this["VISIONPORT"]));
+            }
+            set {
+                this["VISIONPORT"] = value;
             }
         }
     }

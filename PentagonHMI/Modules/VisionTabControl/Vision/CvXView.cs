@@ -37,8 +37,8 @@ namespace PentagonHMI
                 {
                     //MyLogger.VisionDebugLog("Processing succeeded");
 
-                    axCVX1.Address = "193.168.3.21";
-                    axCVX1.Port = 8502;
+                    axCVX1.Address = Properties.Settings.Default.VISIONIP;
+                    axCVX1.Port = Properties.Settings.Default.VISIONPORT;
 
                     int Connect = axCVX1.Connect();
 

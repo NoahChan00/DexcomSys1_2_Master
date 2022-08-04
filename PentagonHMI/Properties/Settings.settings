@@ -62,21 +62,27 @@
     <Setting Name="ProjectType" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dexcom</Value>
     </Setting>
-    <Setting Name="StationType" Type="System.String" Scope="User">
-      <Value Profile="(Default)">System_02</Value>
-    </Setting>
-    <Setting Name="PLC_IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.3.3</Value>
-    </Setting>
     <Setting Name="PLC_Timeout" Type="System.String" Scope="User">
       <Value Profile="(Default)">3000</Value>
     </Setting>
     <Setting Name="DatabaseConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionString&gt;persist security info = false; data source = UN-FP-CL-P2451\SQLEXPRESS; integrated security = true; initial catalog = gdb_dexcomsystem2;&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;persist security info=false; data source=UN-FP-CL-P2451\SQLEXPRESS; integrated security=true; initial catalog=gdb_dexcomsystem1;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">persist security info = false; data source = UN-FP-CL-P2451\SQLEXPRESS; integrated security = true; initial catalog = gdb_dexcomsystem2;</Value>
+      <Value Profile="(Default)">persist security info=false; data source=UN-FP-CL-P2451\SQLEXPRESS; integrated security=true; initial catalog=gdb_dexcomsystem1;</Value>
+    </Setting>
+    <Setting Name="StationType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">System_01</Value>
+    </Setting>
+    <Setting Name="PLC_IPAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.3.1</Value>
+    </Setting>
+    <Setting Name="VISIONIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.3.21</Value>
+    </Setting>
+    <Setting Name="VISIONPORT" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8502</Value>
     </Setting>
   </Settings>
 </SettingsFile>

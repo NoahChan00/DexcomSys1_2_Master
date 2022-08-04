@@ -5,7 +5,6 @@ using PentagonHMI.Classes;
 using SimpleDatabase;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -131,18 +130,6 @@ namespace PentagonHMI.ChildControls
             [8] = "Idle",
         };
 
-        //Station Status
-        private const string Tag_Station1_Stat = "Station_1.DUT_Status";
-
-        private const string Tag_Station2_Stat = "Station_2.DUT_Status";
-        private const string Tag_Station3_Stat = "Station_3.DUT_Status";
-        private const string Tag_Station4_Stat = "Station_4.DUT_Status";
-        private const string Tag_Station5_Stat = "Station_5.DUT_Status";
-        private const string Tag_Station6_Stat = "Station_6.DUT_Status";
-        private const string Tag_Station7_Stat = "Station_7.DUT_Status";
-        private const string Tag_Station8_Stat = "Station_8.DUT_Status";
-        private ObservableCollection<DUTStationStatModel> DUTs = new ObservableCollection<DUTStationStatModel>();
-        private Dictionary<int, Brush> Dic_StationStatColor = new Dictionary<int, Brush>();
 
         public ucHome(LogicClasses.Main main)
         {
@@ -150,7 +137,7 @@ namespace PentagonHMI.ChildControls
             _Main = main;
 
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP))
+            if(!OPCore.Connect(Info.OPC.IP))
                 return;
 #endif
             Initialize();
@@ -164,11 +151,59 @@ namespace PentagonHMI.ChildControls
             if(GlobalFunctions.IsSystem1)
             {
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S1TurnTable.jpeg", UriKind.Relative));
+
+                Station1Tb.Text = "Station 5\r\nVISION CHECK";
+                Station1DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
+
+                Station2Tb.Text = "Station 6\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
+
+                Station3Tb.Text = "Station 7\r\nROBOT UNLOAD";
+                Station1DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
+
+                Station4Tb.Text = "Station 8\r\nEMPTY CHECK";
+                Station1DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
+
+                Station5Tb.Text = "Station 1\r\nPCBA LOAD";
+                Station1DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
+
+                Station6Tb.Text = "Station 2\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
+
+                Station7Tb.Text = "Station 3\r\nBATTERY LOAD";
+                Station1DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
+
+                Station8Tb.Text = "Station 4\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
             }
             else
             {
+                SomeoneWantVisionControlTC.Items.Add(new TabItem() { Header = "Vision", Content = new VisionView(_Main) });
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S2TurnTable.jpeg", UriKind.Relative));
 
+                Station1Tb.Text = "Station 7\r\nEMPTY Check";
+                Station1DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
+
+                Station2Tb.Text = "Station 8\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
+
+                Station3Tb.Text = "Station 1\r\nROBOT LOAD";
+                Station1DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
+
+                Station4Tb.Text = "Station 2\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
+
+                Station5Tb.Text = "Station 3\r\nVISION CHECK";
+                Station1DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
+
+                Station6Tb.Text = "Station 4\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
+
+                Station7Tb.Text = "Station 5\r\nROBOT UNLOAD";
+                Station1DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
+
+                Station8Tb.Text = "Station 6\r\nBUFFER";
+                Station1DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
             }
             Func<ChartPoint, string> PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
             Pie_Quality.Series = new SeriesCollection
@@ -203,19 +238,32 @@ namespace PentagonHMI.ChildControls
                     #region Station Status Read
 
                     var stats = new List<int>();
+                    var innertTxt = new List<string>();
 #if !DEBUG
-                    stats.AddRange(new List<int>{
-                        OPCore.Read<int>(Tag_Station1_Stat),
-                        OPCore.Read<int>(Tag_Station2_Stat),
-                        OPCore.Read<int>(Tag_Station3_Stat),
-                        OPCore.Read<int>(Tag_Station4_Stat),
-                        OPCore.Read<int>(Tag_Station5_Stat),
-                        OPCore.Read<int>(Tag_Station6_Stat),
-                        OPCore.Read<int>(Tag_Station7_Stat),
-                        OPCore.Read<int>(Tag_Station8_Stat)
+                    stats.AddRange(new List<int> {
+                        OPCore.Read<int>((((string, string))Station1DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station2DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station3DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station4DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station5DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station6DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station7DutStatus.Tag).Item1),
+                        OPCore.Read<int>((((string, string))Station8DutStatus.Tag).Item1),
+                    });
+
+                    innertTxt.AddRange(new List<string> {
+                        OPCore.Read<string>((((string,string))Station1DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station2DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station3DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station4DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station5DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station6DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station7DutStatus.Tag).Item2),
+                        OPCore.Read<string>((((string,string))Station8DutStatus.Tag).Item2),
                     });
 #else
                     stats.AddRange(new List<int> { 0, 1, 10, 11, 0, 1, 10, 11 });
+                    innertTxt.AddRange(new List<string> { "A", "B", "C", "D", "E", "F", "G", "H" });
 #endif
 
                     var stationsStatus = new List<Button>(){
@@ -252,7 +300,9 @@ namespace PentagonHMI.ChildControls
                             default:
                                 // not sure what to do
                                 break;
+
                         }
+                        stationsStatus[i].Content = innertTxt[i];
                     }
 
                     #endregion Station Status Read
