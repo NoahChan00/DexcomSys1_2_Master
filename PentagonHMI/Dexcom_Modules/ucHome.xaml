@@ -91,7 +91,7 @@
 
             <Border Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}"
                     Margin="1 0  0 0" BorderThickness="2">
-                <TabControl x:Name="SomeoneWantVisionControlTC" Width="1000">
+                <TabControl x:Name="VisionControlTC" Width="1000">
                     <TabItem Header="Station Status">
                         <StackPanel>
                             <Grid>
@@ -102,7 +102,7 @@
                                                 <Setter Property="Background" Value="Transparent" />
                                                 <Setter Property="BorderBrush" Value="Black" />
                                                 <Setter Property="FontSize" Value="20" />
-                                                <Setter Property="FontWeight" Value="ExtraBold" />
+                                                <Setter Property="FontWeight" Value="Bold" />
                                                 <Setter Property="Foreground" Value="White" />
                                                 <Setter Property="Height" Value="30" />
                                                 <Setter Property="Width" Value="30" />

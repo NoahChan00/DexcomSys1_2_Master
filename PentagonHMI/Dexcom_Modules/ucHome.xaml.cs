@@ -178,7 +178,7 @@ namespace PentagonHMI.ChildControls
             }
             else
             {
-                SomeoneWantVisionControlTC.Items.Add(new TabItem() { Header = "Vision", Content = new VisionView(_Main) });
+                VisionControlTC.Items.Add(new TabItem() { Header = "Vision", Content = new VisionView(_Main) });
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S2TurnTable.jpeg", UriKind.Relative));
 
                 Station1Tb.Text = "Station 7\r\nEMPTY Check";

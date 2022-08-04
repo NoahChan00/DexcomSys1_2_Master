@@ -275,17 +275,6 @@ namespace PentagonHMI.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("persist security info=false; data source=UN-FP-CL-P2451\\SQLEXPRESS; integrated se" +
-            "curity=true; initial catalog=gdb_dexcomsystem1;")]
-        public string DatabaseConnectionString {
-            get {
-                return ((string)(this["DatabaseConnectionString"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("System_01")]
@@ -331,6 +320,17 @@ namespace PentagonHMI.Properties {
             }
             set {
                 this["VISIONPORT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("persist security info=false; data source=UN-FP-CL-P2451\\SQLEXPRESS; integrated se" +
+            "curity=true; initial catalog=gdb_dexcomsystem2;")]
+        public string DatabaseConnectionString {
+            get {
+                return ((string)(this["DatabaseConnectionString"]));
             }
         }
     }

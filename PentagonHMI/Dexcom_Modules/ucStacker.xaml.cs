@@ -152,6 +152,7 @@ namespace PentagonHMI.ChildControls
                     short[] RighDestacker = default;
                     short[] Stacker = default;
 
+                    bool isAdminOrPenta = new List<string>() { "ADMIN", "PENTA" }.Contains(_Main.UserAccessLevel.ToUpper());
                     if (GlobalFunctions.IsSystem1)
                     {
                     }
@@ -160,9 +161,10 @@ namespace PentagonHMI.ChildControls
                         LeftDestacker = OPCore.Read<short[]>(TagLeftDestacker, typeof(short), Row * Column);
                         RighDestacker = OPCore.Read<short[]>(TagRightDestacker, typeof(short), Row * Column);
                         Stacker = OPCore.Read<short[]>(TagStacker, typeof(short), Row * Column);
+                        LeftDestackerButton.IsEnabled = RightDestackerButton.IsEnabled = isAdminOrPenta;
                     }
 
-                    if (GlobalFunctions.IsSystem1)
+                    if (GlobalFunctions.IsSystem1) // System1 don't have this yet
                     {
                     }
                     else
@@ -188,6 +190,7 @@ namespace PentagonHMI.ChildControls
                                 string result = Stacker[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
                             }
+
                     }
                 }
                 catch (Exception exception)
