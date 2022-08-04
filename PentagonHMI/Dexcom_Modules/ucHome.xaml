@@ -160,10 +160,18 @@
                                     </WrapPanel>
                                     <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Left" Width="180" Canvas.Left="812" Canvas.Top="510">
                                         <UniformGrid Columns="1" VerticalAlignment="Top">
-                                            <Button Background="Gray" Content="No Unit" FontSize="10" FontWeight="Bold" BorderBrush="Black" />
-                                            <Button Background="Blue" Content="Not Tested" FontSize="10" FontWeight="Bold" BorderBrush="Black" />
-                                            <Button Background="Green" Content="Pass" FontSize="10" FontWeight="Bold" BorderBrush="Black" />
-                                            <Button Background="Red" Content="Fail" FontSize="10" FontWeight="Bold" BorderBrush="Black" />
+                                            <UniformGrid.Resources>
+                                                <Style TargetType="Button">
+                                                    <Setter Property="BorderBrush" Value="Black" />
+                                                    <Setter Property="FontSize" Value="14" />
+                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                    <Setter Property="Foreground" Value="White" />
+                                                </Style>
+                                            </UniformGrid.Resources>
+                                            <Button Background="Gray" Content="No Unit" />
+                                            <Button Background="Blue" Content="Not Tested" />
+                                            <Button Background="Green" Content="Pass" />
+                                            <Button Background="Red" Content="Fail" />
                                         </UniformGrid>
                                     </GroupBox>
 
