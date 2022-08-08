@@ -1088,7 +1088,7 @@
     <Content Include="ExternalLibs\Unused\opcrcw.da.dll" />
     <Content Include="ExternalLibs\Unused\SysmacCompolet.dll" />
     <Content Include="ExternalLibs\WPFToolkit.Extended.dll" />
-    <Resource Include="Images\MainHMI\S2 Turn Table.jpeg">
+    <Resource Include="Images\MainHMI\S2TurnTable.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\MainHMI\S1TurnTable.jpeg">
