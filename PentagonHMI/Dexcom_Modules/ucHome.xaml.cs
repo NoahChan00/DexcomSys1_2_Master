@@ -157,25 +157,25 @@ namespace PentagonHMI.ChildControls
                 Station1DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
 
                 Station2Tb.Text = "Station 6\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
+                Station2DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
 
                 Station3Tb.Text = "Station 7\r\nROBOT UNLOAD";
-                Station1DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
+                Station3DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
 
                 Station4Tb.Text = "Station 8\r\nEMPTY CHECK";
-                Station1DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
+                Station4DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
 
                 Station5Tb.Text = "Station 1\r\nPCBA LOAD";
-                Station1DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
+                Station5DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
 
                 Station6Tb.Text = "Station 2\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
+                Station6DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
 
                 Station7Tb.Text = "Station 3\r\nBATTERY LOAD";
-                Station1DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
+                Station7DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
 
                 Station8Tb.Text = "Station 4\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
+                Station8DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
             }
             else
             {
@@ -188,25 +188,25 @@ namespace PentagonHMI.ChildControls
                 Station1DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
 
                 Station2Tb.Text = "Station 8\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
+                Station2DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
 
                 Station3Tb.Text = "Station 1\r\nROBOT LOAD";
-                Station1DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
+                Station3DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
 
                 Station4Tb.Text = "Station 2\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
+                Station4DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
 
                 Station5Tb.Text = "Station 3\r\nVISION CHECK";
-                Station1DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
+                Station5DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
 
                 Station6Tb.Text = "Station 4\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
+                Station6DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
 
                 Station7Tb.Text = "Station 5\r\nROBOT UNLOAD";
-                Station1DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
+                Station7DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
 
                 Station8Tb.Text = "Station 6\r\nBUFFER";
-                Station1DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
+                Station8DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
             }
             Func<ChartPoint, string> PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
             Pie_Quality.Series = new SeriesCollection
