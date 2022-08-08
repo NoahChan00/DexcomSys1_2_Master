@@ -148,6 +148,11 @@ namespace PentagonHMI.ChildControls
 
         private void Initialize()
         {
+            void SetCanvasTopLeft(StackPanel cc, double t, double l)
+            {
+                Canvas.SetTop(cc, t);
+                Canvas.SetLeft(cc, l);
+            }
             if(GlobalFunctions.IsSystem1)
             {
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S1TurnTable.jpeg", UriKind.Relative));
@@ -155,27 +160,35 @@ namespace PentagonHMI.ChildControls
 
                 Station1Tb.Text = "Station 5\r\nVISION CHECK";
                 Station1DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
+                SetCanvasTopLeft(SP1, 0, 430);
 
                 Station2Tb.Text = "Station 6\r\nBUFFER";
                 Station2DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
+                SetCanvasTopLeft(SP2, 80, 580);
 
                 Station3Tb.Text = "Station 7\r\nROBOT UNLOAD";
                 Station3DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
+                SetCanvasTopLeft(SP3, 260, 650);
 
                 Station4Tb.Text = "Station 8\r\nEMPTY CHECK";
                 Station4DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
+                SetCanvasTopLeft(SP4, 400, 620); 
 
                 Station5Tb.Text = "Station 1\r\nPCBA LOAD";
                 Station5DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
+                SetCanvasTopLeft(SP5, 565, 400);
 
                 Station6Tb.Text = "Station 2\r\nBUFFER";
                 Station6DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
+                SetCanvasTopLeft(SP6, 440, 210);
 
                 Station7Tb.Text = "Station 3\r\nBATTERY LOAD";
                 Station7DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
+                SetCanvasTopLeft(SP7, 260, 75);
 
                 Station8Tb.Text = "Station 4\r\nBUFFER";
                 Station8DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
+                SetCanvasTopLeft(SP8, 60, 200);
             }
             else
             {
@@ -186,27 +199,35 @@ namespace PentagonHMI.ChildControls
 
                 Station1Tb.Text = "Station 7\r\nEMPTY Check";
                 Station1DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");
+                SetCanvasTopLeft(SP1, 15, 360);
 
                 Station2Tb.Text = "Station 8\r\nBUFFER";
                 Station2DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
+                SetCanvasTopLeft(SP2, 80, 560);
 
                 Station3Tb.Text = "Station 1\r\nROBOT LOAD";
                 Station3DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
+                SetCanvasTopLeft(SP3, 240, 630);
 
                 Station4Tb.Text = "Station 2\r\nBUFFER";
                 Station4DutStatus.Tag = ("Station_2.DUT_Status", "Station_2.Nest_Code");
+                SetCanvasTopLeft(SP4, 420, 580);
 
                 Station5Tb.Text = "Station 3\r\nVISION CHECK";
                 Station5DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
+                SetCanvasTopLeft(SP5, 500, 330); 
 
                 Station6Tb.Text = "Station 4\r\nBUFFER";
                 Station6DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
+                SetCanvasTopLeft(SP6, 420, 230);
 
                 Station7Tb.Text = "Station 5\r\nROBOT UNLOAD";
                 Station7DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
+                SetCanvasTopLeft(SP7, 250, 120);
 
                 Station8Tb.Text = "Station 6\r\nBUFFER";
                 Station8DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
+                SetCanvasTopLeft(SP8, 80, 240);
             }
             Func<ChartPoint, string> PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
             Pie_Quality.Series = new SeriesCollection

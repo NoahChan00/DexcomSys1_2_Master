@@ -96,64 +96,64 @@
                         <StackPanel>
                             <Grid>
                                 <Canvas>
-                                        <Canvas.Resources>
-                                            <Style TargetType="Button">
-                                                <Setter Property="Background" Value="Transparent" />
-                                                <Setter Property="BorderBrush" Value="Black" />
-                                                <Setter Property="FontSize" Value="20" />
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                                <Setter Property="Foreground" Value="White" />
-                                                <Setter Property="Height" Value="30" />
-                                                <Setter Property="Width" Value="30" />
-                                            </Style>
-                                            <Style TargetType="TextBlock">
-                                                <Setter Property="FontSize" Value="14" />
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                                <Setter Property="VerticalAlignment" Value="Center" />
-                                            </Style>
-                                        </Canvas.Resources>
-                                        <Image x:Name="TurnStepImage" Width="550" Height="550" Canvas.Left="150" Canvas.Top="35"/>
+                                    <Canvas.Resources>
+                                        <Style TargetType="Button">
+                                            <Setter Property="Background" Value="Transparent" />
+                                            <Setter Property="BorderBrush" Value="Black" />
+                                            <Setter Property="FontSize" Value="20" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="Foreground" Value="White" />
+                                            <Setter Property="Height" Value="30" />
+                                            <Setter Property="Width" Value="30" />
+                                        </Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="14" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="HorizontalAlignment" Value="Center" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                        </Style>
+                                    </Canvas.Resources>
+                                    <Image x:Name="TurnStepImage" Width="550" Height="550" Canvas.Left="150" Canvas.Top="35" />
 
-                                            <StackPanel Canvas.Top="25" Canvas.Left="400">
-                                                <TextBlock x:Name="Station1Tb" />
-                                                <Button x:Name="Station1DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP1">
+                                        <TextBlock x:Name="Station1Tb" />
+                                        <Button x:Name="Station1DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="120" Canvas.Left="550">
-                                                <TextBlock x:Name="Station2Tb" />
-                                                <Button x:Name="Station2DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP2">
+                                        <TextBlock x:Name="Station2Tb" />
+                                        <Button x:Name="Station2DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="280" Canvas.Left="650">
-                                                <TextBlock x:Name="Station3Tb" />
-                                                <Button x:Name="Station3DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP3">
+                                        <TextBlock x:Name="Station3Tb" />
+                                        <Button x:Name="Station3DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="465" Canvas.Left="570">
-                                                <TextBlock x:Name="Station4Tb" />
-                                                <Button x:Name="Station4DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP4">
+                                        <TextBlock x:Name="Station4Tb" />
+                                        <Button x:Name="Station4DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="575" Canvas.Left="375">
-                                                <TextBlock x:Name="Station5Tb" />
-                                                <Button x:Name="Station5DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP5">
+                                        <TextBlock x:Name="Station5Tb" />
+                                        <Button x:Name="Station5DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="475" Canvas.Left="220">
-                                                <TextBlock x:Name="Station6Tb" />
-                                                <Button x:Name="Station6DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP6">
+                                        <TextBlock x:Name="Station6Tb" />
+                                        <Button x:Name="Station6DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="280" Canvas.Left="100">
-                                                <TextBlock x:Name="Station7Tb" />
-                                                <Button x:Name="Station7DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP7">
+                                        <TextBlock x:Name="Station7Tb" />
+                                        <Button x:Name="Station7DutStatus" />
+                                    </StackPanel>
 
-                                            <StackPanel Canvas.Top="120" Canvas.Left="225">
-                                                <TextBlock x:Name="Station8Tb" />
-                                                <Button x:Name="Station8DutStatus" />
-                                            </StackPanel>
+                                    <StackPanel x:Name="SP8">
+                                        <TextBlock x:Name="Station8Tb" />
+                                        <Button x:Name="Station8DutStatus" />
+                                    </StackPanel>
                                     <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Left" Width="180" Canvas.Left="812" Canvas.Top="510">
                                         <UniformGrid Columns="1" VerticalAlignment="Top">
                                             <UniformGrid.Resources>
