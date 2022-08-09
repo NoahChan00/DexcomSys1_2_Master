@@ -89,8 +89,7 @@
                 </Border>
             </Grid>
 
-            <Border Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}"
-                    Margin="1 0  0 0" BorderThickness="2">
+            <Border Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <TabControl x:Name="VisionControlTC" Width="1000">
                     <TabItem Header="Station Status">
                         <StackPanel>
@@ -104,7 +103,14 @@
                                             <Setter Property="FontWeight" Value="Bold" />
                                             <Setter Property="Foreground" Value="White" />
                                             <Setter Property="Height" Value="30" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                            <Setter Property="VerticalContentAlignment" Value="Center" />
                                             <Setter Property="Width" Value="30" />
+                                            <Style.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="30" />
+                                                </Style>
+                                            </Style.Resources>
                                         </Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="FontSize" Value="14" />
@@ -117,7 +123,8 @@
 
                                     <StackPanel x:Name="SP1">
                                         <TextBlock x:Name="Station1Tb" />
-                                        <Button x:Name="Station1DutStatus" />
+                                        <Button x:Name="Station1DutStatus">
+                                        </Button>
                                     </StackPanel>
 
                                     <StackPanel x:Name="SP2">

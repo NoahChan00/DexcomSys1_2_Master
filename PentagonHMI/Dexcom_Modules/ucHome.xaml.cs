@@ -193,9 +193,7 @@ namespace PentagonHMI.ChildControls
             else
             {
                 VisionControlTC.Items.Add(new TabItem() { Header = "Vision", Content = new VisionView(_Main) });
-                // PLC Side given incorrect rotation photo :)
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S2TurnTable.jpeg", UriKind.Relative));
-                //TurnStepImage.RenderTransform = new RotateTransform(180);
 
                 Station1Tb.Text = "Station 7\r\nEMPTY Check";
                 Station1DutStatus.Tag = ("Station_7.DUT_Status", "Station_7.Nest_Code");

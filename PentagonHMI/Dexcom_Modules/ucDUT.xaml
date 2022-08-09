@@ -44,8 +44,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate>
-                                <TextBlock FontSize="13" Foreground="White" FontWeight="Bold" Text="OFF" 
-                                        Style="{StaticResource ToggleButtonContentTextbox}" />
+                                <TextBlock FontSize="13" Foreground="White" FontWeight="Bold" Text="OFF" Style="{StaticResource ToggleButtonContentTextbox}" />
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -135,35 +134,39 @@
                     <DataTemplate>
                         <StackPanel>
                             <Label Content="{Binding Name}" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
-                                    HorizontalContentAlignment="Center"  />
+                                    HorizontalContentAlignment="Center" />
                             <ItemsControl ItemsSource="{Binding Sockets}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel />
+                                        <UniformGrid Columns="1" Height="140.25" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
 
-                                        <Border  BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1">
+                                        <Border BorderBrush="{DynamicResource BlueLineBrush}" BorderThickness="1">
                                             <Border.Resources>
                                                 <Style TargetType="Label">
                                                     <Setter Property="FontWeight" Value="Bold" />
+                                                    <Setter Property="FontSize" Value="14" />
+                                                    <Setter Property="Height" Value="35" />
                                                 </Style>
                                             </Border.Resources>
                                             <StackPanel>
                                                 <UniformGrid Columns="2">
-                                                    <Label Content="Total Pass:"  Background="LightGray" />
-                                                    <Label Name="lbl_TotalPass" Content="{Binding TotalPass}" HorizontalContentAlignment="Center"  Foreground="Green" />
-                                                    <Label Content="Total Fail:"  Background="LightGray" />
-                                                    <Label Name="lbl_TotalFail" Content="{Binding TotalFail}" HorizontalContentAlignment="Center"  Foreground="Red" />
-                                                    <Label Content="Yield:"  Background="LightGray" />
-                                                    <Label Name="lbl_Yield" Content="{Binding Yield}" HorizontalContentAlignment="Center"  Foreground="Gray" />
-                                                    <Label Content="Disable:"  Background="LightGray" />
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                                        <ToggleButton Height="30" Width="60"  Tag="{Binding Key}" IsChecked="{Binding SocketDisable}"
-                                                                Click="socketToggle_Click" IsEnabled="False" />
-                                                    </StackPanel>
+                                                    <UniformGrid.Resources>
+                                                    </UniformGrid.Resources>
+                                                    <Label Content="Total Pass:" Background="LightGray" />
+                                                    <Label Name="lbl_TotalPass" Content="{Binding TotalPass}" HorizontalContentAlignment="Center"
+                                                            Foreground="Green" />
+                                                    <Label Content="Total Fail:" Background="LightGray" />
+                                                    <Label Name="lbl_TotalFail" Content="{Binding TotalFail}" HorizontalContentAlignment="Center"
+                                                            Foreground="Red" />
+                                                    <Label Content="Yield:" Background="LightGray" />
+                                                    <Label Name="lbl_Yield" Content="{Binding Yield}" HorizontalContentAlignment="Center" Foreground="Gray" />
+                                                    <Label Content="Disable:" Background="LightGray" />
+                                                    <ToggleButton Height="30" Width="60" Tag="{Binding Key}" IsChecked="{Binding SocketDisable}"
+                                                            Click="socketToggle_Click" IsEnabled="False" />
                                                 </UniformGrid>
                                             </StackPanel>
                                         </Border>

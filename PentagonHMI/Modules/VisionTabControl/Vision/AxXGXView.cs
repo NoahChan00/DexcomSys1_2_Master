@@ -56,8 +56,8 @@ namespace PentagonHMI
             {
                 if (axXGX1.Initialize() == 0)
                 {
-                    axXGX1.Address = _Main.VisionIP;
-                    axXGX1.Port = 8502;
+                    axXGX1.Address = Properties.Settings.Default.VISIONIP;
+                    axXGX1.Port = Properties.Settings.Default.VISIONPORT;
 
                     if (axXGX1.Connect() == 0)
                     {
