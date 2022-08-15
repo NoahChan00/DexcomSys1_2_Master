@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Logix;
 using PentagonHMI.Classes;
+using PentagonHMI.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,6 +10,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -136,7 +138,7 @@ namespace PentagonHMI
             InitializeComponent();
             try
             {
-                if (GlobalFunctions.IsSystem1)
+                if(GlobalFunctions.IsSystem1)
                 {
                     sp_Stacker.Visibility = Visibility.Collapsed;
                 }
@@ -168,13 +170,13 @@ namespace PentagonHMI
 
                 UpdateConfig();
 
-                if (NeedTorqueDriver)
+                if(NeedTorqueDriver)
                 {
                     _Main.HasTorqueDriver = true;
                     TorqueDriver = new Tcpip_ArcadiaTorqueDriver(ref _Main);
 
                     DataTable dtDriver = _Main.SQLer.Exec_DTSelect($"SELECT TagName FROM [{Info.SQL.DatabaseName}].[dbo].[IO] WHERE DisplayName LIKE '%Driver Start'");
-                    if (dtDriver.Rows.Count > 0)
+                    if(dtDriver.Rows.Count > 0)
                         _Main.TorqueDriverStartTag = dtDriver.Rows[0][0].ToString();
 
                     _Main.Tcpip_ArcadiaTorqueDriver = TorqueDriver;
@@ -189,7 +191,7 @@ namespace PentagonHMI
                 _Main.OnAlwaysUpdate += _Main_OnAlwaysUpdate;
                 this.Closed += new EventHandler(Main_Closed);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Error Creating Page: " + ex.Message);
             }
@@ -201,24 +203,67 @@ namespace PentagonHMI
             {
                 //if (ProjectType.LIFTER != GlobalFunctions.ProjectType)
                 //{
-                if (_Main.HasStationStatusCheck)
+                if(_Main.HasStationStatusCheck)
                     Update_Station_Status();
                 else
                     Dispatcher.Invoke(() => Status_Border.Visibility = Visibility.Collapsed);
-                if (_Main.HasBreakTimeCheck)
+                if(_Main.HasBreakTimeCheck)
                     BreakTimeOffDay_Check();
-                if (_Main.HasLogManagement)
+                if(_Main.HasLogManagement)
                     LogFileManagement();
-                if (_Main.HasErrorCheck)
+                if(_Main.HasErrorCheck)
                     CheckErrorList();
-
+                CheckPickFail();
                 Dispatcher.Invoke(() => VersionUpdate());
 
                 //}
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
+            }
+        }
+
+        PickFailPrompt pickFailPrompt;
+        bool pickFailPromptState = false;
+        SelectedTray selectedTray;
+        private void CheckPickFail()
+        {
+            bool allFalse = true;
+            foreach(var s in new List<string> { Tags.MainPage.PickFailPromptWindowPCBA.Name, Tags.MainPage.PickFailPromptWindowBattery.Name, Tags.MainPage.PickFailPromptWindowLShuttle.Name, Tags.MainPage.PickFailPromptWindowRShuttle.Name })
+            {
+                bool readedState = _Main.OPC.Read<bool>(s);
+                if(readedState && pickFailPromptState == false)
+                {
+                    if(s == Tags.MainPage.PickFailPromptWindowPCBA.Name)
+                    {
+                        selectedTray = SelectedTray.S1PCBA;
+                    }
+                    else if(s == Tags.MainPage.PickFailPromptWindowBattery.Name)
+                    {
+                        selectedTray = SelectedTray.S1BATTERY;
+                    }
+                    else if(s == Tags.MainPage.PickFailPromptWindowLShuttle.Name)
+                    {
+                        selectedTray = SelectedTray.S2LEFT;
+                    }
+                    else
+                    {
+                        selectedTray = SelectedTray.S2RIGHT;
+                    }
+
+                    pickFailPrompt = new PickFailPrompt(_Main, selectedTray);
+                    pickFailPromptState = true;
+                    break;
+                }
+                if(readedState)
+                {
+                    allFalse = false;
+                }
+            }
+            if(allFalse && pickFailPromptState == true)
+            {
+                pickFailPromptState = false;
             }
         }
 
@@ -257,20 +302,20 @@ namespace PentagonHMI
                 // Not found from Db
                 //_Main.HasRackStatus = Convert.ToBoolean(GetItem("HasRackStatus").ToString());
 
-                if (ProjectType.LIFTER == GlobalFunctions.ProjectType ||
+                if(ProjectType.LIFTER == GlobalFunctions.ProjectType ||
                     (ProjectType.ARCADIA == GlobalFunctions.ProjectType && StationType.VISION == GlobalFunctions.StationType) ||
                     _Main.MachineName.Contains("Power") || _Main.MachineName.Contains("Temperature"))
                 {
                     string[] alarmSplit = GetItem("AlarmIncluded").ToString().Split(';');
-                    foreach (string x in alarmSplit)
+                    foreach(string x in alarmSplit)
                     {
                         // if its a range
-                        if (x.Replace(" ", "").Contains('-'))
+                        if(x.Replace(" ", "").Contains('-'))
                         {
                             int from = Convert.ToInt32(x.Split('-')[0]);
                             int to = Convert.ToInt32(x.Split('-')[1]);
 
-                            for (int i = from; i <= to; i++)
+                            for(int i = from; i <= to; i++)
                             {
                                 AlarmIncluded.Add(i);
                             }
@@ -282,15 +327,15 @@ namespace PentagonHMI
                     }
 
                     string[] warningSplit = GetItem("WarningIncluded").ToString().Split(';');
-                    foreach (string x in warningSplit)
+                    foreach(string x in warningSplit)
                     {
                         // if its a range
-                        if (x.Replace(" ", "").Contains('-'))
+                        if(x.Replace(" ", "").Contains('-'))
                         {
                             int from = Convert.ToInt32(x.Split('-')[0]);
                             int to = Convert.ToInt32(x.Split('-')[1]);
 
-                            for (int i = from; i <= to; i++)
+                            for(int i = from; i <= to; i++)
                             {
                                 WarningIncluded.Add(i);
                             }
@@ -302,19 +347,19 @@ namespace PentagonHMI
                     }
                 }
 
-                if (ProjectType.ARCADIA == GlobalFunctions.ProjectType ||
+                if(ProjectType.ARCADIA == GlobalFunctions.ProjectType ||
                     GlobalFunctions.ProjectType == ProjectType.TLA)
                 {
                     NeedTorqueDriver = Convert.ToBoolean(GetItem("TorqueDriver").ToString());
                 }
 
-                if (ProjectType.LIFTER == GlobalFunctions.ProjectType)
+                if(ProjectType.LIFTER == GlobalFunctions.ProjectType)
                 {
                     LifterZone = Convert.ToInt32(GetItem("LifterZone").ToString());
                     LifterPosition = GetItem("LifterPosition").ToString();
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -335,7 +380,7 @@ namespace PentagonHMI
             int rejectBinCount = 8;
             string rejectBinDisplayStatusTagKey = "DIMM_Data_Tracking_Barcd_RejBin";
 
-            switch (GlobalFunctions.ProjectType)
+            switch(GlobalFunctions.ProjectType)
             {
                 case ProjectType.DEXCOM:
                     HasIO = HasUserAccount = HasDryrun = HasSOEE = HasLOEE = HasSetting =
@@ -347,94 +392,94 @@ namespace PentagonHMI
                     break;
             }
 
-            if (HasRejectBinDisplay)
+            if(HasRejectBinDisplay)
                 rejectBinDisplayView = new RejectBinDisplayView(ref _Main, rejectBinCount, rejectBinDisplayStatusTagKey);
             RejectBinDisplayStackPanel.Visibility = HasRejectBinDisplay ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasRackConfig)
+            if(HasRackConfig)
                 rackConfigurationView = new RackConfigurationView(ref _Main);
             RackConfigurationStackPanel.Visibility = HasRackConfig ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasRecipeConfig)
+            if(HasRecipeConfig)
                 recipeConfigurationView = new RecipeConfigurationView(_Main.OPC);
             RecipeConfigurationStackPanel.Visibility = HasRecipeConfig ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasUserAccount)
+            if(HasUserAccount)
                 UserAcountChild = new ChildControls.ucUserAccount(ref _Main);
             SP_User.Visibility = HasUserAccount ? Visibility.Visible : Visibility.Collapsed;
 
             //if (HasDryrun) DryrunChild = new ChildControls.ucDryrun(ref _Main);
-            if (HasDryrun)
+            if(HasDryrun)
                 dryRunView = new DryRunView(_Main);
             DryrunStackPanel.Visibility = HasDryrun ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasSOEE)
+            if(HasSOEE)
                 OEEShiftView = new ChildControls.ucDexcom_OEE(ref _Main, ChildControls.ucDexcom_OEE.OEEType.Shift);
             Sp_OEEShift.Visibility = HasSOEE ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasLOEE)
+            if(HasLOEE)
                 OEELotView = new ChildControls.ucDexcom_OEE(ref _Main, ChildControls.ucDexcom_OEE.OEEType.Lot);
             Sp_OEELot.Visibility = HasLOEE ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasSetting)
+            if(HasSetting)
                 SettingChild = new ChildControls.ucSetting(ref _Main);
             Sp_Setting.Visibility = HasSetting ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasLog)
+            if(HasLog)
                 LogChild = new ChildControls.ucEventLog(ref _Main);
             Sp_Log.Visibility = HasLog ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasMotor)
+            if(HasMotor)
                 MotorChild = new ChildControls.ucMotor(ref _Main);
             Sp_Motor.Visibility = HasMotor ? Visibility.Visible : Visibility.Collapsed;
 
             //if (HasIO) IOInputChild = new ChildControls.ucIOInput(ref _Main, ref _PreLoadIO);
-            if (HasIO)
+            if(HasIO)
                 iOView = new IOView(ref _Main);
             Sp_IOList.Visibility = HasIO ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasIOLoc)
+            if(HasIOLoc)
                 IOLocationChild = new ChildControls.ucIOLocation(ref _Main);
             Sp_IOLoc.Visibility = HasIOLoc ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasEng)
+            if(HasEng)
                 DexcomEngineeringView = new ucDexcomEngineering(_Main); //engineeringView = new EngineeringView(ref _Main);
             EngineeringStackPanel.Visibility = HasEng ? Visibility.Visible : Visibility.Collapsed;
 
             //Home Pages
-            if (HasZoneLeftVisionRightMainPage)
+            if(HasZoneLeftVisionRightMainPage)
                 mainView = new MainView(ref _Main);
-            if (HasLifterTab)
+            if(HasLifterTab)
                 LifterTabChild = new Arcadia_Modules.ucLifterTab(ref _Main, LifterZone, LifterPosition);
-            if (HasArcadiaConveyorMain)
+            if(HasArcadiaConveyorMain)
                 InitializeArcadiaMainLine();
-            if (HasZoneLeftRackRightMainPage)
+            if(HasZoneLeftRackRightMainPage)
                 VTCMainPageChild = new VTC_Modules.ucVTC_Main(ref _Main);
 
             //Custom & Frame
-            if (HasPrinter)
+            if(HasPrinter)
                 printerService = new PrinterService(ref _Main);
-            if (HasPLCEvent)
+            if(HasPLCEvent)
                 _Main.PLCEventLogListener = new TcpIpServer();
-            if (HasPopUp)
+            if(HasPopUp)
                 popUpView = new PopUpView(ref _Main);
 
-            if (HasSignin)
+            if(HasSignin)
                 signInView = new SignInView(ref _Main);
             SP_Login.Visibility = HasSignin ? Visibility.Visible : Visibility.Collapsed;
             lblCurrUser.Visibility = HasSignin ? Visibility.Visible : Visibility.Collapsed;
 
-            if (HasMachineInfo)
+            if(HasMachineInfo)
                 _Main.machineInformationView = new MachineInformationView(_Main);
-            if (HasControlPanel)
+            if(HasControlPanel)
                 controlPanelView = new ControlPanelView(_Main);
-            if (HasTrayMap)
+            if(HasTrayMap)
                 TrayMapView = new ChildControls.ucTrayMap(_Main);
-            if (HasStacker)
+            if(HasStacker)
                 StackerView = new ChildControls.ucStacker(_Main);
-            if (HasDUT)
+            if(HasDUT)
                 DUTView = new ChildControls.ucDUT(_Main);
-            if (HasLot)
+            if(HasLot)
                 LotView = new ChildControls.ucLotEntry(_Main);
 
             //directorySizeService = new DirectorySizeService(_Main);
@@ -456,7 +501,7 @@ namespace PentagonHMI
                 Grid.SetRow(controlPanelView, 0);
                 Grid.SetColumn(controlPanelView, 2);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -471,14 +516,14 @@ namespace PentagonHMI
         private void timer_Tick(object sender, EventArgs e)
         {
             uint envTicks = (uint)Environment.TickCount;
-            if (GetLastInputInfo(ref lastInputInfo))
+            if(GetLastInputInfo(ref lastInputInfo))
             {
                 uint lastInputTick = lastInputInfo.dwTime;
                 idleTime = envTicks - lastInputTick;
                 idleTime = idleTime / 1000;
             }
             int value = Int32.Parse(Classes.GlobalFunctions.login_Timeout);
-            if (idleTime > value && _Main.MotorPageON == false && _Main.IOPageON == false)
+            if(idleTime > value && _Main.MotorPageON == false && _Main.IOPageON == false)
             {
                 LogIN_OUT(false);
             }
@@ -493,22 +538,22 @@ namespace PentagonHMI
 
         private bool LocalAccountCheck(string StrName, string strPassword)
         {
-            if (StrName == "admin" && strPassword == "#admin123")
+            if(StrName == "admin" && strPassword == "#admin123")
                 return true;
             return false;
         }
 
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
-            if (PreCheck() == true)
+            if(PreCheck() == true)
             {
                 _Main.UserAccessLevel = _Main.SQLer.Exec_Scalar<string>($"SELECT [LEVEL] FROM USERS WHERE USERNAME = '{ucUsername.Text}' AND PASSWORD = '{ucPassword.Text}'");
 
-                if (string.IsNullOrWhiteSpace(_Main.UserAccessLevel))
-                    if (LocalAccountCheck(ucUsername.Text, ucPassword.Text))
+                if(string.IsNullOrWhiteSpace(_Main.UserAccessLevel))
+                    if(LocalAccountCheck(ucUsername.Text, ucPassword.Text))
                         _Main.UserAccessLevel = "Administrator";
 
-                if (!string.IsNullOrWhiteSpace(_Main.UserAccessLevel))
+                if(!string.IsNullOrWhiteSpace(_Main.UserAccessLevel))
                 {
                     lblCurrUser.Content = "Current User :  " + _Main.UserAccessLevel;
                     ucUsername.Text = "";
@@ -559,14 +604,14 @@ namespace PentagonHMI
                 alarmLst = "1,2";
                 warningLst = "1,4";
 #endif
-                if (prevalarmLst != alarmLst || prevwarningLst != warningLst)
+                if(prevalarmLst != alarmLst || prevwarningLst != warningLst)
                 {
                     _Main_OnError();
                     prevwarningLst = warningLst;
                     prevalarmLst = alarmLst;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -606,20 +651,20 @@ namespace PentagonHMI
         private void LogWarningDuration(int ErrCode, int Duration, string[] ErrInfo)
         {
             string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "AlarmWarningDuration");
-            if (!Directory.Exists(LogsPath))
+            if(!Directory.Exists(LogsPath))
             {
                 Directory.CreateDirectory(LogsPath);
             }
             string _Path = Path.Combine(LogsPath, $"WarningDuration_{DateTime.Today.ToString("yyyy-MM-dd")}.txt");
             bool HasFile = File.Exists(_Path);
-            using (FileStream stream = new FileStream(_Path,
+            using(FileStream stream = new FileStream(_Path,
                HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
             {
-                using (var writer = new StreamWriter(stream))
+                using(var writer = new StreamWriter(stream))
                 {
-                    using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                    using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                     {
-                        if (!HasFile)
+                        if(!HasFile)
                         {
                             csv.WriteField("DateTime");
                             csv.WriteField("ErrCode");
@@ -646,20 +691,20 @@ namespace PentagonHMI
         private void LogAlarmDuration(int ErrCode, int Duration, string[] ErrInfo)
         {
             string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "AlarmWarningDuration");
-            if (!Directory.Exists(LogsPath))
+            if(!Directory.Exists(LogsPath))
             {
                 Directory.CreateDirectory(LogsPath);
             }
             string _Path = System.IO.Path.Combine(LogsPath, $"AlarmDuration_{DateTime.Today.ToString("yyyyMMdd")}.txt");
             bool HasFile = File.Exists(_Path);
-            using (FileStream stream = new FileStream(_Path,
+            using(FileStream stream = new FileStream(_Path,
                HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
             {
-                using (var writer = new StreamWriter(stream))
+                using(var writer = new StreamWriter(stream))
                 {
-                    using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                    using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                     {
-                        if (!HasFile)
+                        if(!HasFile)
                         {
                             csv.WriteField("DateTime");
                             csv.WriteField("ErrCode");
@@ -686,7 +731,7 @@ namespace PentagonHMI
         private void Update_Station_Status()
         {
             //string statustag = "Machine_Status.str_MachineStatus";
-            string statustag = Tags.MainPage.MachineStatus.Name;           
+            string statustag = Tags.MainPage.MachineStatus.Name;
             //if (GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("FINAL"))
             //    statustag = "OutPNP_Machine_Status.str_MachineStatus";
             //else if (GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("CENTRAL"))
@@ -696,7 +741,7 @@ namespace PentagonHMI
 
             _Main.MachineStatus = _Content;
             string _Color = Yellow;
-            switch (_Content.ToUpper())
+            switch(_Content.ToUpper())
             {
                 case "STOPPED":
                 case "STOP":
@@ -753,17 +798,17 @@ namespace PentagonHMI
 
                 this.Dispatcher.Invoke(new Action(() => dgAlertWarning.Items.Refresh()));
 
-                if (alarmLst.Contains(","))
+                if(alarmLst.Contains(","))
                 {
                     ErrorCode = alarmLst.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);  //don't need split as it is in array
                                                                                                             // var ErrorCode1 = ErrorCode.Except(prevErrorCode);
                                                                                                             //ErrorCode.Reverse().Reverse();
-                    foreach (var Error in ErrorCode)
+                    foreach(var Error in ErrorCode)
                     {
                         errornum = Convert.ToInt32(Error);
-                        if (AlarmIncluded.Count > 0)
+                        if(AlarmIncluded.Count > 0)
                         {
-                            if (AlarmIncluded.Exists(x => x == errornum))
+                            if(AlarmIncluded.Exists(x => x == errornum))
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
@@ -778,14 +823,14 @@ namespace PentagonHMI
                 }
                 else
                 {
-                    if (alarmLst != "")
+                    if(alarmLst != "")
                     {
                         string Error = alarmLst;
                         errornum = Convert.ToInt32(Error);
 
-                        if (AlarmIncluded.Count > 0)
+                        if(AlarmIncluded.Count > 0)
                         {
-                            if (AlarmIncluded.Exists(x => x == errornum))
+                            if(AlarmIncluded.Exists(x => x == errornum))
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
@@ -799,18 +844,18 @@ namespace PentagonHMI
                     }
                 }
 
-                if (warningLst.Contains(","))
+                if(warningLst.Contains(","))
                 {
                     WarningCode = warningLst.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 
                     //WarningCode.Reverse().Reverse();
-                    foreach (string Error in WarningCode)
+                    foreach(string Error in WarningCode)
                     {
                         errornum = Convert.ToInt32(Error) + WarningStartsAt;
 
-                        if (WarningIncluded.Count > 0)
+                        if(WarningIncluded.Count > 0)
                         {
-                            if (WarningIncluded.Exists(x => x == errornum))
+                            if(WarningIncluded.Exists(x => x == errornum))
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
@@ -825,14 +870,14 @@ namespace PentagonHMI
                 }
                 else
                 {
-                    if (warningLst != "")
+                    if(warningLst != "")
                     {
                         string Error = warningLst;
                         errornum = Convert.ToInt32(Error) + WarningStartsAt;
 
-                        if (WarningIncluded.Count > 0)
+                        if(WarningIncluded.Count > 0)
                         {
-                            if (WarningIncluded.Exists(x => x == errornum))
+                            if(WarningIncluded.Exists(x => x == errornum))
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
@@ -847,7 +892,7 @@ namespace PentagonHMI
                 }
                 dt_AlarmTable = AlertWarningDt;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -930,27 +975,27 @@ namespace PentagonHMI
 
                 //If Month Add, Path Add
                 string PathThisMonth = Properties.Settings.Default.LogLocation.ToString() + "Logs_" + DateTime.Now.ToString("yyyy-MMM");
-                if (FileLogger.DefaultLocation_Time != PathThisMonth)
+                if(FileLogger.DefaultLocation_Time != PathThisMonth)
                     FileLogger.DefaultLocation_Time = PathThisMonth;
 
-                if (!Directory.Exists(FileLogger.DefaultLocation_Time))
+                if(!Directory.Exists(FileLogger.DefaultLocation_Time))
                     Directory.CreateDirectory(FileLogger.DefaultLocation_Time);
 
                 //Zip per Month
                 string ZipFileName = $@"{LogsPrefix}{DateTime.Now.AddMonths(-1).ToString("yyyy-MMM")}";
                 string ZipPath = Path.Combine(FileLogger.DefaultLocation, ZipFileName);
                 string LastMonthLog = FileLogger.DefaultLocation + "Logs_" + DateTime.Now.AddMonths(-1).ToString("yyyy-MMM");
-                if (!File.Exists(ZipPath) && Directory.Exists(LastMonthLog))
+                if(!File.Exists(ZipPath) && Directory.Exists(LastMonthLog))
                     ZipFile.CreateFromDirectory(LastMonthLog, ZipPath);
 
                 //FileSize > 90mb split log file
                 string[] folderPaths = Directory.GetDirectories(FileLogger.DefaultLocation_Time);
-                foreach (string folder in folderPaths)
-                    foreach (string file in Directory.GetFiles(folder))
-                        if (!file.Contains("_BK_"))
+                foreach(string folder in folderPaths)
+                    foreach(string file in Directory.GetFiles(folder))
+                        if(!file.Contains("_BK_"))
                         {
                             FileInfo info = new FileInfo(file);
-                            if ((info.Length / 1024 / 1024) > 90)
+                            if((info.Length / 1024 / 1024) > 90)
                             {
                                 string ext = Path.GetExtension(file);
                                 File.Move(file, Path.ChangeExtension(file, null) + $"_BK_{DateTime.Now.ToString("yyyy-MMM-dd_HHmm.ss.fff")}{ext}");
@@ -959,10 +1004,10 @@ namespace PentagonHMI
 
                 //Delete Log Folder if more than 3 month
                 string[] filePaths = Directory.GetDirectories(FileLogger.DefaultLocation);
-                foreach (string file in filePaths.Where(x => x.Contains("Logs_")))
+                foreach(string file in filePaths.Where(x => x.Contains("Logs_")))
                 {
                     FileInfo info = new FileInfo(file);
-                    if (Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddMonths(-4))
+                    if(Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddMonths(-4))
                     {
                         Directory.Delete(file, true);
                     }
@@ -970,9 +1015,9 @@ namespace PentagonHMI
 
                 //Duration, delete ZipFile if longer than a year
                 filePaths = Directory.GetFiles(FileLogger.DefaultLocation);
-                foreach (string file in filePaths.Where(x => x.Contains(LogsPrefix)))
+                foreach(string file in filePaths.Where(x => x.Contains(LogsPrefix)))
                 {
-                    if (Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddYears(-1))
+                    if(Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddYears(-1))
                     {
                         File.Delete(file);
                     }
@@ -980,19 +1025,19 @@ namespace PentagonHMI
 
                 //Space not enough delete
                 DriveInfo Ddrive = DriveInfo.GetDrives().Where(x => x.Name.Contains("D")).FirstOrDefault();
-                if (Ddrive != null)
+                if(Ddrive != null)
                 {
                     var totalspace = Ddrive.TotalSize;
                     var freespace = Ddrive.AvailableFreeSpace;
 
-                    if ((Convert.ToDouble(freespace) / totalspace * 100) < 20)
+                    if((Convert.ToDouble(freespace) / totalspace * 100) < 20)
                     {
                         filePaths = Directory.GetFiles(FileLogger.DefaultLocation);
-                        if (filePaths.Where(x => x.Contains(LogsPrefix)).Count() > 3)
+                        if(filePaths.Where(x => x.Contains(LogsPrefix)).Count() > 3)
                         {
-                            foreach (string file in filePaths.Where(x => x.Contains(LogsPrefix)))
+                            foreach(string file in filePaths.Where(x => x.Contains(LogsPrefix)))
                             {
-                                if (Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddMonths(-4))
+                                if(Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddMonths(-4))
                                 {
                                     File.Delete(file);
                                 }
@@ -1001,7 +1046,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -1013,7 +1058,7 @@ namespace PentagonHMI
 
             DataTable DT_Day;
 
-            if (GlobalFunctions.ProjectType == ProjectType.ARCADIA)
+            if(GlobalFunctions.ProjectType == ProjectType.ARCADIA)
             {
                 DT_Day = _Main.MainSQLer.Exec_DTSelect($"SELECT [StartDay] as 'Start'," +
                     "[EndDay] as 'End' FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'Day'");
@@ -1024,23 +1069,23 @@ namespace PentagonHMI
                     "[EndDay] as 'End' FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'Day'");
             }
 
-            if (DT_Day != null)
+            if(DT_Day != null)
             {
-                foreach (DataRow dr in DT_Day.Rows)
+                foreach(DataRow dr in DT_Day.Rows)
                 {
                     DateTime start = Convert.ToDateTime(dr["Start"].ToString());
                     DateTime end = Convert.ToDateTime(dr["End"].ToString());
                     TimeSpan ts = new TimeSpan(23, 59, 59);
-                    if ((DateTime.Now >= start) &&
+                    if((DateTime.Now >= start) &&
                       (DateTime.Now <= end.Add(ts)))
                         ++WithinBreak;
                 }
             }
 
-            if (WithinBreak == 0)
+            if(WithinBreak == 0)
             {
                 DataTable DT;
-                if (GlobalFunctions.ProjectType == ProjectType.ARCADIA)
+                if(GlobalFunctions.ProjectType == ProjectType.ARCADIA)
                 {
                     DT = _Main.MainSQLer.Exec_DTSelect($"SELECT SUBSTRING(CONVERT(VARCHAR, [STARTTIME],108),1,5) AS 'Start'," +
                         $"SUBSTRING(CONVERT(VARCHAR,[ENDTIME],108),1,5) AS 'End' FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME'");
@@ -1051,15 +1096,15 @@ namespace PentagonHMI
                         $"SUBSTRING(CONVERT(VARCHAR,[ENDTIME],108),1,5) AS 'End' FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME'");
                 }
 
-                if (DT != null)
-                    foreach (DataRow dr in DT.Rows)
+                if(DT != null)
+                    foreach(DataRow dr in DT.Rows)
                     {
                         string[] StartTime = dr["Start"].ToString().Split(':');
                         string[] EndTime = dr["End"].ToString().Split(':');
                         TimeSpan ts_Start = new TimeSpan(Convert.ToInt32(StartTime[0]), Convert.ToInt32(StartTime[1]), 0);
                         TimeSpan ts_End = new TimeSpan(Convert.ToInt32(EndTime[0]), Convert.ToInt32(EndTime[1]), 0);
                         TimeSpan now = DateTime.Now.TimeOfDay;
-                        if ((now > ts_Start) && (now < ts_End))
+                        if((now > ts_Start) && (now < ts_End))
                             ++WithinBreak;
                     }
             }
@@ -1073,7 +1118,7 @@ namespace PentagonHMI
             bool success = false;
             _strErrorMessage = TryFindResource("ERR_UNKNOWN").ToString();
 
-            if (GlobalFunctions.ErrorListDict.ContainsKey(ErrorCode))
+            if(GlobalFunctions.ErrorListDict.ContainsKey(ErrorCode))
             {
                 _strErrorMessage = GlobalFunctions.ErrorListDict[ErrorCode];
                 success = true;
@@ -1085,17 +1130,17 @@ namespace PentagonHMI
         {
             bool Check = true;
 
-            if (String.IsNullOrEmpty(ucPassword.Text))
+            if(String.IsNullOrEmpty(ucPassword.Text))
             {
-                if (String.IsNullOrEmpty(ucPassword.ucLabelErrorContent))
+                if(String.IsNullOrEmpty(ucPassword.ucLabelErrorContent))
                 {
                     this.ucPassword.ucLabelErrorContent = this.TryFindResource("LOGIN_ERROR_MSG_PASSWORD_IS_EMPTY").ToString();
                     Check = false;
                 }
             }
-            else if (!String.IsNullOrEmpty(ucPassword.Text))
+            else if(!String.IsNullOrEmpty(ucPassword.Text))
             {
-                if (!String.IsNullOrEmpty(ucPassword.ucLabelErrorContent))
+                if(!String.IsNullOrEmpty(ucPassword.ucLabelErrorContent))
                 {
                     this.ucPassword.ucLabelErrorContent = String.Empty;
                 }
@@ -1114,7 +1159,7 @@ namespace PentagonHMI
             {
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -1135,7 +1180,7 @@ namespace PentagonHMI
         {
             try
             {
-                if (!LogIN)
+                if(!LogIN)
                 {
                     _Main.UserAccessLevel = "Operator";
                     lblCurrUser.Content = "Current User :  " + _Main.UserAccessLevel;
@@ -1146,13 +1191,13 @@ namespace PentagonHMI
                 TXT_Login.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
                 TXT_Logout.Visibility = LogIN ? Visibility.Visible : Visibility.Collapsed;
 
-                foreach (Image img in LstImg_PageDisIcon)
+                foreach(Image img in LstImg_PageDisIcon)
                     img.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
 
-                if (!LogIN)
+                if(!LogIN)
                     SwapPage("HOME");
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -1164,39 +1209,39 @@ namespace PentagonHMI
         {
             try
             {
-                if (Page.Equals(CurPage))
+                if(Page.Equals(CurPage))
                     return;
 
-                if (ProjectType.ARCADIA == GlobalFunctions.ProjectType && StationType.ARCADIA_Main == GlobalFunctions.StationType && Page.Equals("HOME"))
+                if(ProjectType.ARCADIA == GlobalFunctions.ProjectType && StationType.ARCADIA_Main == GlobalFunctions.StationType && Page.Equals("HOME"))
                 {
                     Grd_FullScreenPage.Visibility = Visibility.Visible;
                     _Main.HomePageON = true;
                     return;
                 }
-                else if (GlobalFunctions.ProjectType == ProjectType.TLA &&
+                else if(GlobalFunctions.ProjectType == ProjectType.TLA &&
                     GlobalFunctions.StationType == StationType.ARCADIA_Main && Page.Equals("HOME"))
                 {
                     TLA_MainConveyorGrid.Visibility = Visibility.Visible;
                     _Main.HomePageON = true;
                     return;
                 }
-                else if (!Page.Equals("LOGIN") && !Page.Equals("LOGOUT"))
-                    if (ucChild != null)
+                else if(!Page.Equals("LOGIN") && !Page.Equals("LOGOUT"))
+                    if(ucChild != null)
                     {
                         ((IDisposable)ucChild).Dispose();
                         ucChild = null;
-                        if (ucChildDUT != null)
+                        if(ucChildDUT != null)
                         {
                             ((IDisposable)ucChildDUT).Dispose();
                         }
                     }
 
-                if (SP_Colored != null)
+                if(SP_Colored != null)
                     SP_Colored.Background = Brushes.Transparent;
 
                 // https://en.wikipedia.org/wiki/Goto#Criticism, suspect below logic written way before 21st century
                 // https://en.wikipedia.org/wiki/Structured_programming Please study this before using goto
-                switch (Page)
+                switch(Page)
                 {
                     case "HOME":
                     case "DUT":
@@ -1309,8 +1354,8 @@ namespace PentagonHMI
                         goto case "COLORING";
                     case "LOGOUT":
                         LogIN_OUT(false);
-                        if (_Main.OPC.Read<bool>(EMtag.Name))
-                            if (MessageBox.Show("Engineering Mode On, \n" +
+                        if(_Main.OPC.Read<bool>(EMtag.Name))
+                            if(MessageBox.Show("Engineering Mode On, \n" +
                                 "Do you want to Turn Off the Engineering Mode Before Log out?", "Warning", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                                 _Main.OPC.Write(EMtag.Name, false);
                         goto case "COLORING";
@@ -1326,7 +1371,7 @@ namespace PentagonHMI
                 }
 
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -1337,12 +1382,12 @@ namespace PentagonHMI
             try
             {
                 Image Page = sender as Image;
-                if (Page == null || Page.Tag == null)
+                if(Page == null || Page.Tag == null)
                     return;
 
                 SwapPage(Page.Tag.ToString().ToUpper());
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -1350,10 +1395,10 @@ namespace PentagonHMI
 
         private void Reinit_Click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show($"Proceed to Reinitiate Machine?", "Comfirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if(MessageBox.Show($"Proceed to Reinitiate Machine?", "Comfirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 {
-                    if (_Main.MachineStatus.ToUpper() == "IDLE" || _Main.MachineStatus.ToUpper() == "IDLING")
+                    if(_Main.MachineStatus.ToUpper() == "IDLE" || _Main.MachineStatus.ToUpper() == "IDLING")
                     {
                         _Main.OPC.Write(GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit", false);
                     }
@@ -1384,7 +1429,7 @@ namespace PentagonHMI
 
                 LogIN_OUT(true);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1437,7 +1482,7 @@ namespace PentagonHMI
                 Tuple.Create("BackEnd_Lifter.str_MachineStatusZ2",Rec_BackendLifter_Zone2, Tbk_BackendLifter_Zone2),
             };
 
-            foreach (var item in LstTuple_Tagname_Rec_Tbk)
+            foreach(var item in LstTuple_Tagname_Rec_Tbk)
                 tgp_Status.AddTag(new Tag { Name = item.Item1, DataType = Logix.Tag.ATOMIC.STRING, MyObject = Tuple.Create(item.Item2, item.Item3) });
 
             List<Tag> lst_EstopTag = new List<Tag>
@@ -1468,7 +1513,7 @@ namespace PentagonHMI
                 new Tag{MyObject = "Z13E2", Name = "PalletConv_PIO213:2:I.Data.3", DataType = Logix.Tag.ATOMIC.BOOL},
             };
 
-            foreach (var item in lst_EstopTag)
+            foreach(var item in lst_EstopTag)
                 tgp_Estop.AddTag(item);
 
             Dic_EstopName_Tuple_RecTbk = new Dictionary<string, Tuple<Shp.Rectangle, TextBlock>>
@@ -1499,7 +1544,7 @@ namespace PentagonHMI
                 ["Z13E2"] = Tuple.Create(Rec_Z13E2, Tbk_Z13E2),
             };
 
-            foreach (var item in Dic_EstopName_Tuple_RecTbk.Values)
+            foreach(var item in Dic_EstopName_Tuple_RecTbk.Values)
             {
                 item.Item1.Visibility = Visibility.Collapsed;
                 item.Item2.Visibility = Visibility.Collapsed;
@@ -1527,11 +1572,11 @@ namespace PentagonHMI
             {
                 _Main.MyPLC.GroupRead(tgp_Status, tgp_Estop, tgp_General);
 
-                foreach (Tag item in tgp_Status.Tags)
+                foreach(Tag item in tgp_Status.Tags)
                 {
                     Brush color;
                     string Status = (item.Value?.ToString() ?? "ERROR").ToUpper();
-                    if (!Dic_Status_Color.TryGetValue(Status, out color))
+                    if(!Dic_Status_Color.TryGetValue(Status, out color))
                         color = Brushes.Orange;
                     Tuple<Shp.Rectangle, TextBlock> tuple_Rec_Tbk = item.MyObject as Tuple<Shp.Rectangle, TextBlock>;
                     Dispatcher.Invoke(() => tuple_Rec_Tbk.Item1.Fill = color);
@@ -1540,33 +1585,33 @@ namespace PentagonHMI
                 }
 
                 var IEnum_EstopOn = tgp_Estop.Tags.ToArray().Where(x => Convert.ToBoolean(((Tag)x)?.Value ?? false))?.Select(x => ((Tag)x).MyObject.ToString());
-                if (IEnum_LastEstopon != IEnum_EstopOn)
+                if(IEnum_LastEstopon != IEnum_EstopOn)
                 {
-                    if (IEnum_LastEstopon != null)
+                    if(IEnum_LastEstopon != null)
                     {
-                        foreach (var estop in IEnum_LastEstopon)
+                        foreach(var estop in IEnum_LastEstopon)
                         {
                             Dispatcher.Invoke(() => Dic_EstopName_Tuple_RecTbk[estop].Item1.Visibility = Visibility.Collapsed);
                             Dispatcher.Invoke(() => Dic_EstopName_Tuple_RecTbk[estop].Item2.Visibility = Visibility.Collapsed);
                         }
                     }
                     IEnum_LastEstopon = IEnum_EstopOn;
-                    if (IEnum_LastEstopon != null)
+                    if(IEnum_LastEstopon != null)
                     {
-                        foreach (var estop in IEnum_LastEstopon)
+                        foreach(var estop in IEnum_LastEstopon)
                         {
                             Dispatcher.Invoke(() => Dic_EstopName_Tuple_RecTbk[estop].Item1.Visibility = Visibility.Visible);
                             Dispatcher.Invoke(() => Dic_EstopName_Tuple_RecTbk[estop].Item2.Visibility = Visibility.Visible);
                         }
                     }
                 }
-                foreach (Tag item in tgp_General.Tags)
+                foreach(Tag item in tgp_General.Tags)
                 {
-                    if (item.MyObject.GetType() == typeof(TextBlock))
+                    if(item.MyObject.GetType() == typeof(TextBlock))
                         Dispatcher.Invoke(() => ((TextBlock)item.MyObject).Text = item.Value?.ToString() ?? string.Empty);
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1589,7 +1634,7 @@ namespace PentagonHMI
                 _Main.HomePageON = false;
                 SwapPage("OEE");
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }

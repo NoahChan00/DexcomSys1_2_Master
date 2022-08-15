@@ -10,7 +10,7 @@ namespace PentagonHMI.Views.ComponentLifeCycle
     public partial class ucComponentLifeCycle : UserControl, IDisposable
     {
         LogicClasses.Main _Main;
-        public ucComponentLifeCycle(ref LogicClasses.Main _main, Main main)
+        public ucComponentLifeCycle(ref LogicClasses.Main _main)
         {
             InitializeComponent();
             _Main = _main;

@@ -32,6 +32,16 @@ namespace PentagonHMI.Tags
         public static Tag HMI_Pause_Lot_Prompt = new Tag("Lot_Info.HMI_Pause_Lot_Prompt", Tag.ATOMIC.BOOL);
 
         public static Tag dint_Quality = new Tag("Lot_OEE_Tags.dint_Quality", Tag.ATOMIC.DINT); // Data Type not stated int HMI List
+        // System1
+        public static Tag PickFailPromptWindowPCBA = new Tag("b_PCBATray_Error", Tag.ATOMIC.BOOL);
+        // Not require
+        public static Tag PickFailPromptWindowBattery= new Tag("b_BatteryTray_Error", Tag.ATOMIC.BOOL);
+        // System2
+        public static Tag PickFailPromptWindowRShuttle = new Tag("b_RShuttle_Error", Tag.ATOMIC.BOOL);
+        public static Tag PickFailPromptWindowLShuttle = new Tag("b_LShuttle_Error", Tag.ATOMIC.BOOL);
+
+        public static Tag PickFailSkipPick = new Tag("b_HMI_AckSkipPick", Tag.ATOMIC.BOOL);
+        public static Tag PickFailRetryPick = new Tag("b_HMI_AckRetryPick", Tag.ATOMIC.BOOL);
     }
     public class EngineeringPLCTags
     {

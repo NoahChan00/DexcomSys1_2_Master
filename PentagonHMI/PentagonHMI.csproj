@@ -520,6 +520,9 @@
     <Compile Include="Views\ComponentLifeCycle\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Main\PickFailPrompt.xaml.cs">
+      <DependentUpon>PickFailPrompt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PartStatus\PartStatusLegendView.xaml.cs">
       <DependentUpon>PartStatusLegendView.xaml</DependentUpon>
     </Compile>
@@ -921,6 +924,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Main\PickFailPrompt.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PartStatus\PartStatusLegendView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1187,7 +1194,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\LabelSetup\" />
-    <Folder Include="Views\Main\" />
     <Folder Include="VTC_Modules\Resources\" />
   </ItemGroup>
   <ItemGroup>
