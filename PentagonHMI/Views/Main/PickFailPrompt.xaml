@@ -23,10 +23,10 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <UniformGrid x:Name="TrayUniformGrid" />
-                            <ToggleButton x:Name="SkipPickButton" Checked="SkipChecked" Unchecked="SkipUnchecked" Grid.Row="1" Width="200" Height="60" FontSize="25"
-                                    HorizontalAlignment="Center" Margin="0 30 0 15">Skip Pick</ToggleButton>
-                            <ToggleButton x:Name="RetryPickButton" Checked="RetryPickChecked" Unchecked="RetryPickUnchecked"  Grid.Row="2" Width="200" Height="60" FontSize="25"
-                                    HorizontalAlignment="Center" Margin="0 15 0 30">Retry Pick</ToggleButton>
+                            <ToggleButton x:Name="SkipPickButton" Checked="SkipChecked" Unchecked="SkipUnchecked" Grid.Row="1" Width="200" Height="60"
+                                    FontSize="25" HorizontalAlignment="Center" Margin="0 30 0 15">Skip Pick</ToggleButton>
+                            <ToggleButton x:Name="RetryPickButton" Checked="RetryPickChecked" Unchecked="RetryPickUnchecked" Grid.Row="2" Width="200"
+                                    Height="60" FontSize="25" HorizontalAlignment="Center" Margin="0 15 0 30">Retry Pick</ToggleButton>
                         </Grid>
                     </Border>
                 </Grid>

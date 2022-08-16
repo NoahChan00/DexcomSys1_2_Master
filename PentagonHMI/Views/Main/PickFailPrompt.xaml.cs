@@ -54,7 +54,7 @@ namespace PentagonHMI.Views.Main
             {
                 while(!ct.IsCancellationRequested)
                 {
-                    Task.Delay(250);
+                    Thread.Sleep(250);
                     Dispatcher.Invoke(() =>
                     {
                         SkipPickButton.IsChecked = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool));
