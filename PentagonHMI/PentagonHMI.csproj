@@ -1194,6 +1194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\LabelSetup\" />
+	<Folder Include="Views\Main\" />
     <Folder Include="VTC_Modules\Resources\" />
   </ItemGroup>
   <ItemGroup>
@@ -1209,7 +1210,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

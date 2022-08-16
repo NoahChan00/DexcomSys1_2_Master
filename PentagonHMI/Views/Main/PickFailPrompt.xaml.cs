@@ -53,10 +53,12 @@ namespace PentagonHMI.Views.Main
             InitializeComponent();
             Task.Run(() =>
             {
+#if !DEBUG
                 while(main.OPC.Read<bool>(triggerTag, typeof(bool)))
                 {
                     Thread.Sleep(250);
                 }
+#endif
                 Close();
             });
         }
