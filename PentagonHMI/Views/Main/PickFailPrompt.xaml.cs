@@ -51,20 +51,6 @@ namespace PentagonHMI.Views.Main
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";
-            Show();
-
-            Task.Run(() =>
-            {
-#if !DEBUG
-                while(main.OPC.Read<bool>(triggerTag, typeof(bool)))
-                {
-                    Thread.Sleep(250);
-                }
-#else
-                Thread.Sleep(10_000);
-#endif
-                Dispatcher.Invoke(Close);
-            });
         }
 
         private LogicClasses.Main main;

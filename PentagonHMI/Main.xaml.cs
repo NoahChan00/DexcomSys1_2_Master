@@ -226,7 +226,6 @@ namespace PentagonHMI
         }
 
         private PickFailPrompt pickFailPrompt;
-        private bool pickFailPromptState = false;
         private SelectedTray selectedTray;
 
         private void CheckPickFail()
@@ -239,7 +238,7 @@ namespace PentagonHMI
                 {
                     allFalse = false;
 
-                    if(!pickFailPromptState)
+                    if(pickFailPrompt == null)
                     {
                         if(s == Tags.MainPage.PickFailPromptWindowPCBA.Name)
                         {
@@ -259,15 +258,15 @@ namespace PentagonHMI
                         }
 
                         pickFailPrompt = new PickFailPrompt(_Main, selectedTray);
-                        pickFailPromptState = true;
+                        Dispatcher.Invoke(pickFailPrompt.Show);
                         break;
                     }
                 }
             }
-            if(allFalse && pickFailPromptState)
+            if(allFalse && pickFailPrompt != null)
             {
-                //pickFailPromptState will close itself, too much hassle to inject into it and let it set false.
-                pickFailPromptState = false;
+                Dispatcher.Invoke(pickFailPrompt.Close);
+                pickFailPrompt = null;
             }
         }
 
