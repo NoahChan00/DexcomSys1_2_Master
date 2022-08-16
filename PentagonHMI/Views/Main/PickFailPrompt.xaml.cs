@@ -19,7 +19,7 @@ namespace PentagonHMI.Views.Main
     /// <summary>
     /// Interaction logic for pickFailPrompt.xaml
     /// </summary>
-    public partial class PickFailPrompt : Window
+    public partial class PickFailPrompt : UserControl
     {
         public PickFailPrompt(LogicClasses.Main main, SelectedTray selectedTray)
         {

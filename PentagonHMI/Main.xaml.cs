@@ -258,15 +258,19 @@ namespace PentagonHMI
                         }
 
                         pickFailPrompt = new PickFailPrompt(_Main, selectedTray);
-                        Dispatcher.Invoke(pickFailPrompt.Show);
+                        MainGrid.IsEnabled = false;
+                        PickFailCanva.Visibility = Visibility.Visible;
+                        PickFailContentControl.Content = pickFailPrompt;
                         break;
                     }
                 }
             }
             if(allFalse && pickFailPrompt != null)
             {
-                Dispatcher.Invoke(pickFailPrompt.Close);
                 pickFailPrompt = null;
+                MainGrid.IsEnabled = true;
+                PickFailCanva.Visibility = Visibility.Collapsed;
+                //PickFailContentControl.Content = pickFailPrompt;
             }
         }
 
@@ -596,12 +600,12 @@ namespace PentagonHMI
 #if !DEBUG
                 var EnumBool = _Main.OPC.Read<bool[]>(GlobalFunctions.IsSystem1 ?
                     "MC_System_Tags.ErrorBit[0]" : "System2_MC_Tag.ErrorCondBit[0]", typeof(bool), 512);
-                if (EnumBool != null)
+                if(EnumBool != null)
                     alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
 
                 var EnumWBool = _Main.OPC.Read<bool[]>(GlobalFunctions.IsSystem1 ?
                     "MC_System_Tags.WarningBit[0]" : "System2_MC_Tag.WarningCondBit[0]", typeof(bool), 512);
-                if (EnumWBool != null)
+                if(EnumWBool != null)
                     warningLst = string.Join(",", FindAllIndex(EnumWBool, x => x == true));
 #else
                 alarmLst = "1,2";
