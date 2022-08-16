@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -51,13 +52,15 @@ namespace PentagonHMI.Views.Main
             ct = cts.Token;
             Task.Run(() =>
             {
-                while(ct.IsCancellationRequested)
+                while(!ct.IsCancellationRequested)
                 {
                     Task.Delay(250);
                     Dispatcher.Invoke(() =>
                     {
-                        SkipPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
-                        RetryPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailRetryPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
+                        SkipPickButton.IsChecked = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool));
+                        SkipPickButton.Background = (SkipPickButton.IsChecked ?? false) ? Brushes.LimeGreen : Brushes.LightGray;
+                        RetryPickButton.IsChecked = main.OPC.Read<bool>(Tags.MainPage.PickFailRetryPick.Name, typeof(bool));
+                        RetryPickButton.Background = (RetryPickButton.IsChecked ?? false) ? Brushes.LimeGreen : Brushes.LightGray;
                     });
                 }
             });
@@ -80,9 +83,9 @@ namespace PentagonHMI.Views.Main
             {
                 return;
             }
-            if(sender is Button)
+            if(sender is ToggleButton tb)
             {
-                main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, true, typeof(bool));
+                main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, tb.IsChecked, typeof(bool));
             }
         }
 
@@ -92,9 +95,9 @@ namespace PentagonHMI.Views.Main
             {
                 return;
             }
-            if(sender is Button)
+            if(sender is ToggleButton tb)
             {
-                main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, true, typeof(bool));
+                main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, tb.IsChecked, typeof(bool));
             }
         }
     }
