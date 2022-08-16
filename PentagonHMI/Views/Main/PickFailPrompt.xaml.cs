@@ -51,8 +51,26 @@ namespace PentagonHMI.Views.Main
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";
+            cts = new CancellationTokenSource();
+            ct = cts.Token;
+            Task.Run(() =>
+            {
+                while(ct.IsCancellationRequested)
+                {
+                    Task.Delay(250);
+                    SkipPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
+                    RetryPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailRetryPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
+                }
+            });
         }
 
+        ~PickFailPrompt()
+        {
+            cts.Cancel();
+        }
+
+        private CancellationToken ct;
+        private CancellationTokenSource cts;
         private LogicClasses.Main main;
         private ucTrayMap trayMap;
         private string triggerTag;
@@ -66,7 +84,6 @@ namespace PentagonHMI.Views.Main
             }
             if(sender is Button b)
             {
-                b.Background = Brushes.LimeGreen;
                 main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, true, typeof(bool));
             }
         }
@@ -79,7 +96,6 @@ namespace PentagonHMI.Views.Main
             }
             if(sender is Button b)
             {
-                b.Background = Brushes.LimeGreen;
                 main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, true, typeof(bool));
             }
         }

@@ -23,8 +23,8 @@
                                 <RowDefinition Height="auto" />
                             </Grid.RowDefinitions>
                             <UniformGrid x:Name="TrayUniformGrid" />
-                            <Button Click="SkipPickClick" Grid.Row="1" Width="200" Height="60"  FontSize="25" HorizontalAlignment="Center" Margin="0 30 0 5">Skip Pick</Button>
-                            <Button Click="RetryPickClick" Grid.Row="2" Width="200" Height="60" FontSize="25" HorizontalAlignment="Center" Margin="0 5 0 30">Retry Pick</Button>
+                            <Button x:Name="SkipPickButton" Click="SkipPickClick" Grid.Row="1" Width="200" Height="60"  FontSize="25" HorizontalAlignment="Center" Margin="0 30 0 5">Skip Pick</Button>
+                            <Button x:Name="RetryPickButton" Click="RetryPickClick" Grid.Row="2" Width="200" Height="60" FontSize="25" HorizontalAlignment="Center" Margin="0 5 0 30">Retry Pick</Button>
                         </Grid>
                     </Border>
                 </Grid>
