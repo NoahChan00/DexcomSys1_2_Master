@@ -231,7 +231,7 @@ namespace PentagonHMI
         private void CheckPickFail()
         {
             bool allFalse = true;
-            foreach(var s in new List<string> { Tags.MainPage.PickFailPromptWindowPCBA.Name, Tags.MainPage.PickFailPromptWindowBattery.Name, Tags.MainPage.PickFailPromptWindowLShuttle.Name, Tags.MainPage.PickFailPromptWindowRShuttle.Name })
+            foreach(var s in GlobalFunctions.IsSystem1 ? new List<string> {Tags.MainPage.PickFailPromptWindowPCBA.Name, Tags.MainPage.PickFailPromptWindowBattery.Name, } : new List<string>{  Tags.MainPage.PickFailPromptWindowLShuttle.Name, Tags.MainPage.PickFailPromptWindowRShuttle.Name })
             {
                 bool readedState = _Main.OPC.Read<bool>(s);
                 if(readedState)
