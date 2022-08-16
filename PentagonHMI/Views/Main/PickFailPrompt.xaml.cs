@@ -32,22 +32,18 @@ namespace PentagonHMI.Views.Main
                 case SelectedTray.S1PCBA:
                     title = "PCBA";
                     TrayUniformGrid = trayMap.pcba_SlotTray;
-                    triggerTag = Tags.MainPage.PickFailPromptWindowPCBA.Name;
                     break;
                 case SelectedTray.S1BATTERY:
                     title = "Battery";
                     TrayUniformGrid = trayMap.bat_SlotTray;
-                    triggerTag = Tags.MainPage.PickFailPromptWindowBattery.Name;
                     break;
                 case SelectedTray.S2LEFT:
                     title = "Left Shuttle";
                     TrayUniformGrid = trayMap.input_LeftSlot;
-                    triggerTag = Tags.MainPage.PickFailPromptWindowLShuttle.Name;
                     break;
                 case SelectedTray.S2RIGHT:
                     title = "Right Shuttle";
                     TrayUniformGrid = trayMap.input_RightSlot;
-                    triggerTag = Tags.MainPage.PickFailPromptWindowRShuttle.Name;
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";
@@ -58,8 +54,11 @@ namespace PentagonHMI.Views.Main
                 while(ct.IsCancellationRequested)
                 {
                     Task.Delay(250);
-                    SkipPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
-                    RetryPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailRetryPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
+                    Dispatcher.Invoke(() =>
+                    {
+                        SkipPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
+                        RetryPickButton.Background = main.OPC.Read<bool>(Tags.MainPage.PickFailRetryPick.Name, typeof(bool)) ? Brushes.LimeGreen : Brushes.LightGray;
+                    });
                 }
             });
         }
@@ -73,7 +72,6 @@ namespace PentagonHMI.Views.Main
         private CancellationTokenSource cts;
         private LogicClasses.Main main;
         private ucTrayMap trayMap;
-        private string triggerTag;
 
         bool IsClicked { get; set; } = false;
         private void SkipPickClick(object sender, RoutedEventArgs e)
@@ -82,7 +80,7 @@ namespace PentagonHMI.Views.Main
             {
                 return;
             }
-            if(sender is Button b)
+            if(sender is Button)
             {
                 main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, true, typeof(bool));
             }
@@ -94,7 +92,7 @@ namespace PentagonHMI.Views.Main
             {
                 return;
             }
-            if(sender is Button b)
+            if(sender is Button)
             {
                 main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, true, typeof(bool));
             }
