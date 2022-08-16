@@ -77,17 +77,6 @@ namespace PentagonHMI.Views.Main
         private ucTrayMap trayMap;
 
         bool IsClicked { get; set; } = false;
-        private void SkipPickClick(object sender, RoutedEventArgs e)
-        {
-            if(IsClicked)
-            {
-                return;
-            }
-            if(sender is ToggleButton tb)
-            {
-                main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, tb.IsChecked, typeof(bool));
-            }
-        }
 
         private void RetryPickClick(object sender, RoutedEventArgs e)
         {
@@ -99,6 +88,26 @@ namespace PentagonHMI.Views.Main
             {
                 main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, tb.IsChecked, typeof(bool));
             }
+        }
+
+        private void SkipChecked(object sender, RoutedEventArgs e)
+        {
+            main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, true, typeof(bool));
+        }
+
+        private void SkipUnchecked(object sender, RoutedEventArgs e)
+        {
+            main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, false, typeof(bool));
+        }
+
+        private void RetryPickChecked(object sender, RoutedEventArgs e)
+        {
+            main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, true, typeof(bool));
+        }
+
+        private void RetryPickUnchecked(object sender, RoutedEventArgs e)
+        {
+            main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, false, typeof(bool));
         }
     }
     public enum SelectedTray
