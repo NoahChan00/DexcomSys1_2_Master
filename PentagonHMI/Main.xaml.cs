@@ -213,7 +213,7 @@ namespace PentagonHMI
                     LogFileManagement();
                 if(_Main.HasErrorCheck)
                     CheckErrorList();
-                CheckPickFail();
+                Dispatcher.Invoke(CheckPickFail);
                 Dispatcher.Invoke(() => VersionUpdate());
 
                 //}
@@ -233,36 +233,40 @@ namespace PentagonHMI
             foreach(var s in new List<string> { Tags.MainPage.PickFailPromptWindowPCBA.Name, Tags.MainPage.PickFailPromptWindowBattery.Name, Tags.MainPage.PickFailPromptWindowLShuttle.Name, Tags.MainPage.PickFailPromptWindowRShuttle.Name })
             {
                 bool readedState = _Main.OPC.Read<bool>(s);
-                if(readedState && pickFailPromptState == false)
-                {
-                    if(s == Tags.MainPage.PickFailPromptWindowPCBA.Name)
-                    {
-                        selectedTray = SelectedTray.S1PCBA;
-                    }
-                    else if(s == Tags.MainPage.PickFailPromptWindowBattery.Name)
-                    {
-                        selectedTray = SelectedTray.S1BATTERY;
-                    }
-                    else if(s == Tags.MainPage.PickFailPromptWindowLShuttle.Name)
-                    {
-                        selectedTray = SelectedTray.S2LEFT;
-                    }
-                    else
-                    {
-                        selectedTray = SelectedTray.S2RIGHT;
-                    }
-
-                    pickFailPrompt = new PickFailPrompt(_Main, selectedTray);
-                    pickFailPromptState = true;
-                    break;
-                }
                 if(readedState)
                 {
                     allFalse = false;
+
+                    if(!pickFailPromptState)
+                    {
+                        if(s == Tags.MainPage.PickFailPromptWindowPCBA.Name)
+                        {
+                            selectedTray = SelectedTray.S1PCBA;
+                        }
+                        else if(s == Tags.MainPage.PickFailPromptWindowBattery.Name)
+                        {
+                            selectedTray = SelectedTray.S1BATTERY;
+                        }
+                        else if(s == Tags.MainPage.PickFailPromptWindowLShuttle.Name)
+                        {
+                            selectedTray = SelectedTray.S2LEFT;
+                        }
+                        else
+                        {
+                            selectedTray = SelectedTray.S2RIGHT;
+                        }
+
+                        pickFailPrompt = new PickFailPrompt(_Main, selectedTray);
+                        pickFailPrompt.Show();
+                        pickFailPromptState = true;
+                        break;
+
+                    }
                 }
             }
-            if(allFalse && pickFailPromptState == true)
+            if(allFalse && pickFailPromptState)
             {
+                //pickFailPromptState will close itself, too much hassle to inject into it and let it set false.
                 pickFailPromptState = false;
             }
         }

@@ -23,6 +23,7 @@ namespace PentagonHMI.Views.Main
     {
         public PickFailPrompt(LogicClasses.Main main, SelectedTray selectedTray)
         {
+            InitializeComponent();
             this.main = main;
             trayMap = new ucTrayMap(main);
             string title = "";
@@ -50,7 +51,6 @@ namespace PentagonHMI.Views.Main
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";
-            InitializeComponent();
             Task.Run(() =>
             {
 #if !DEBUG
