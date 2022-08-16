@@ -51,6 +51,8 @@ namespace PentagonHMI.Views.Main
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";
+            Show();
+
             Task.Run(() =>
             {
 #if !DEBUG
@@ -58,8 +60,10 @@ namespace PentagonHMI.Views.Main
                 {
                     Thread.Sleep(250);
                 }
+#else
+                Thread.Sleep(10_000);
 #endif
-                Close();
+                Dispatcher.Invoke(Close);
             });
         }
 

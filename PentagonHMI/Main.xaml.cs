@@ -10,7 +10,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -112,10 +111,12 @@ namespace PentagonHMI
         {
             get; set;
         }
+
         private UserControl ucChildDUT
         {
             get; set;
         }
+
         //For Auto Logout
         internal struct LASTINPUTINFO
         {
@@ -224,9 +225,10 @@ namespace PentagonHMI
             }
         }
 
-        PickFailPrompt pickFailPrompt;
-        bool pickFailPromptState = false;
-        SelectedTray selectedTray;
+        private PickFailPrompt pickFailPrompt;
+        private bool pickFailPromptState = false;
+        private SelectedTray selectedTray;
+
         private void CheckPickFail()
         {
             bool allFalse = true;
@@ -257,10 +259,8 @@ namespace PentagonHMI
                         }
 
                         pickFailPrompt = new PickFailPrompt(_Main, selectedTray);
-                        pickFailPrompt.Show();
                         pickFailPromptState = true;
                         break;
-
                     }
                 }
             }
@@ -1373,7 +1373,6 @@ namespace PentagonHMI
                         SP_Colored.Background = Brushes.DeepSkyBlue;
                         break;
                 }
-
             }
             catch(Exception ex)
             {
