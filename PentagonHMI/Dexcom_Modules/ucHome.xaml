@@ -21,17 +21,25 @@
             </Grid.ColumnDefinitions>
 
             <Border Grid.Row="0" MinWidth="400" CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="0 1 1 1" BorderThickness="2">
-                <StackPanel>
-                    <Label Content="Lot Control" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <UniformGrid Grid.Row="1" Columns="2">
-                        <StackPanel>
-                            <Button Click="Purge_Click" FontSize="20" Content="Purge Lot" Margin="10" Padding="10" />
-                        </StackPanel>
-                        <StackPanel>
-                            <Button Click="End_Click" FontSize="20" Content="End Lot" Margin="10" Padding="10" />
-                        </StackPanel>
-                    </UniformGrid>
-                </StackPanel>
+                <Grid>
+                    <StackPanel x:Name="System1_Stuff" Visibility="Collapsed">
+                        <Label Content="Lot Control" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                        <UniformGrid Grid.Row="1" Columns="2">
+                            <StackPanel>
+                                <Button Click="Purge_Click" FontSize="20" Content="Purge Lot" Margin="10" Padding="10" />
+                            </StackPanel>
+                            <StackPanel>
+                                <Button Click="End_Click" FontSize="20" Content="End Lot" Margin="10" Padding="10" />
+                            </StackPanel>
+                        </UniformGrid>
+                    </StackPanel>
+                    <StackPanel x:Name="System2_Stuff" Visibility="Visible">
+                        <Label Content="Lot ID" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                        <Label Name="LabelLotID" Content="Nan" Grid.ColumnSpan="1" FontSize="30"  Padding="10" VerticalAlignment="Center"
+                                HorizontalAlignment="Center" FontWeight="Bold" />
+
+                    </StackPanel>
+                </Grid>
             </Border>
 
             <Border Grid.Row="1" MinWidth="400" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">

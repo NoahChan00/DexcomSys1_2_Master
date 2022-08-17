@@ -42,6 +42,8 @@ namespace PentagonHMI.Tags
 
         public static Tag PickFailSkipPick = new Tag("b_HMI_AckSkipPick", Tag.ATOMIC.BOOL);
         public static Tag PickFailRetryPick = new Tag("b_HMI_AckRetryPick", Tag.ATOMIC.BOOL);
+
+        public static Tag LotID = new Tag("Lot_Info.HMI_LotID", Tag.ATOMIC.STRING);
     }
     public class EngineeringPLCTags
     {

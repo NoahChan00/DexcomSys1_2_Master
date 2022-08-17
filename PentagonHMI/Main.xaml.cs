@@ -143,6 +143,10 @@ namespace PentagonHMI
                 {
                     sp_Stacker.Visibility = Visibility.Collapsed;
                 }
+                else
+                {
+                    sp_Lot.Visibility = Visibility.Collapsed;
+                }
                 FileLogger.DefaultLocation_Time = Properties.Settings.Default.LogLocation.ToString() + "Logs_" + DateTime.Now.ToString("yyyy-MMM");
                 FileLogger.DefaultLocation = Properties.Settings.Default.LogLocation.ToString();
 

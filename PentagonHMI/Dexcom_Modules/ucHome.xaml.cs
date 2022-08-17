@@ -155,6 +155,8 @@ namespace PentagonHMI.ChildControls
             }
             if(GlobalFunctions.IsSystem1)
             {
+                System1_Stuff.Visibility = Visibility.Visible;
+                System2_Stuff.Visibility = Visibility.Collapsed;
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S1TurnTable.jpeg", UriKind.Relative));
 
 
@@ -192,6 +194,8 @@ namespace PentagonHMI.ChildControls
             }
             else
             {
+                System2_Stuff.Visibility = Visibility.Visible;
+                System1_Stuff.Visibility = Visibility.Collapsed;
                 VisionControlTC.Items.Add(new TabItem() { Header = "Vision", Content = new VisionView(_Main) });
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S2TurnTable.jpeg", UriKind.Relative));
 
@@ -251,6 +255,10 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
+                    if(!GlobalFunctions.IsSystem1)
+                    {
+                        LabelLotID.Content = _Main.OPC.Read<string>(Tags.MainPage.LotID.Name, typeof(string))??"Nan";
+                    }
                     //Quality
                     double QualityPercent = OPCore.Read<int>(Tag_Quality) * 100;
                     Pie_Quality.Series[0].Values[0] = QualityPercent.To2Dcml();
