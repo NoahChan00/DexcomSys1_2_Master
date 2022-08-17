@@ -1095,6 +1095,10 @@
     <Content Include="ExternalLibs\Unused\opcrcw.da.dll" />
     <Content Include="ExternalLibs\Unused\SysmacCompolet.dll" />
     <Content Include="ExternalLibs\WPFToolkit.Extended.dll" />
+    <Resource Include="Images\TrayMap\s1 left&amp;right tray.PNG" />
+    <Resource Include="Images\TrayMap\s1 pcba tray.PNG" />
+    <Resource Include="Images\TrayMap\s2 input left&amp;right tray.PNG" />
+    <Resource Include="Images\TrayMap\s2 Output TX tray.PNG" />
     <Resource Include="Images\MainHMI\S2TurnTable.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -1194,7 +1198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\LabelSetup\" />
-	<Folder Include="Views\Main\" />
     <Folder Include="VTC_Modules\Resources\" />
   </ItemGroup>
   <ItemGroup>
