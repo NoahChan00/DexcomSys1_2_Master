@@ -26,25 +26,27 @@ namespace PentagonHMI.Views.Main
         {
             InitializeComponent();
             this.main = main;
-            trayMap = new ucTrayMap(main);
             string title = "";
+            trayMap = new ucTrayMap(main);
+            trayMap.RemoveParent();
             switch(selectedTray)
             {
                 case SelectedTray.S1PCBA:
                     title = "PCBA";
-                    TrayUniformGrid = trayMap.pcba_SlotTray;
+                    TrayCanvas.Children.Add(trayMap.pcba_SlotTray);
+                    Canvas.SetTop(trayMap.pcba_SlotTray, (TrayCanvas.Height - trayMap.pcba_SlotTray.Height)/2) ;
                     break;
                 case SelectedTray.S1BATTERY:
                     title = "Battery";
-                    TrayUniformGrid = trayMap.bat_SlotTray;
+                    TrayCanvas.Children.Add(trayMap.bat_SlotTray);
                     break;
                 case SelectedTray.S2LEFT:
                     title = "Left Shuttle";
-                    TrayUniformGrid = trayMap.input_LeftSlot;
+                    TrayCanvas.Children.Add(trayMap.input_LeftSlot);
                     break;
                 case SelectedTray.S2RIGHT:
                     title = "Right Shuttle";
-                    TrayUniformGrid = trayMap.input_RightSlot;
+                    TrayCanvas.Children.Add(trayMap.input_RightSlot);
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";

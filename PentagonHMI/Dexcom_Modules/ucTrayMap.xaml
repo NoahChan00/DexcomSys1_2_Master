@@ -250,7 +250,7 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="PCBA Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Name="pcba_SlotTrayGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <UniformGrid Name="pcba_SlotTray"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 25" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -282,7 +282,7 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Battery Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Name="bat_SlotTrayGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
 
@@ -327,7 +327,7 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Left Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Name="input_LeftSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <UniformGrid Name="input_LeftSlot"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -357,7 +357,7 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Right Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid x:Name="input_RightSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <UniformGrid Name="input_RightSlot" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
 

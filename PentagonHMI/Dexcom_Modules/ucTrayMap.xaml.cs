@@ -421,5 +421,11 @@ namespace PentagonHMI.ChildControls
                 }
             }
         }
+
+        public void RemoveParent()
+        {
+            // Use for other view, have to disconnect then only can utilize.
+            new List<Grid> { input_LeftSlotGrid, input_RightSlotGrid, pcba_SlotTrayGrid, bat_SlotTrayGrid }.ForEach(x => x.Children.Clear());
+        }
     }
 }
