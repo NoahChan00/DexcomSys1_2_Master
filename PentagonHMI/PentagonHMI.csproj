@@ -1095,10 +1095,10 @@
     <Content Include="ExternalLibs\Unused\opcrcw.da.dll" />
     <Content Include="ExternalLibs\Unused\SysmacCompolet.dll" />
     <Content Include="ExternalLibs\WPFToolkit.Extended.dll" />
-    <Resource Include="Images\TrayMap\s1 left&amp;right tray.PNG" />
-    <Resource Include="Images\TrayMap\s1 pcba tray.PNG" />
-    <Resource Include="Images\TrayMap\s2 input left&amp;right tray.PNG" />
-    <Resource Include="Images\TrayMap\s2 Output TX tray.PNG" />
+    <Resource Include="Images\TrayMap\S1LeftRight.PNG" />
+    <Resource Include="Images\TrayMap\S1PCBA.PNG" />
+    <Resource Include="Images\TrayMap\S2InputLeftRight.PNG" />
+    <Resource Include="Images\TrayMap\S2Output.PNG" />
     <Resource Include="Images\MainHMI\S2TurnTable.jpeg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

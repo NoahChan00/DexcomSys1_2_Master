@@ -156,7 +156,11 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Right Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1LeftRight.png"/>
+                            </Grid.Background>
+
                             <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
 
@@ -192,7 +196,12 @@
 
                         <Label Content="PCBA Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Name="pcba_SlotTrayGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Name="pcba_SlotTrayGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="450">
+                            <!--<Grid.Background>-->
+                            <!-- Pending correct raotation image-->
+                                <!--<ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1PCBA.png"/>-->
+                            <!--</Grid.Background>-->
+
                             <UniformGrid Name="pcba_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 200" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -225,7 +234,11 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Left Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1LeftRight.png"/>
+                            </Grid.Background>
+
                             <UniformGrid Name="ugrd_LeftTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -305,8 +318,12 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Left Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Name="input_LeftSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="input_LeftSlot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
+                        <Grid Name="input_LeftSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2InputLeftRight.png"/>
+                            </Grid.Background>
+                            <UniformGrid Name="input_LeftSlot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft">
+                            </UniformGrid>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -337,7 +354,11 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Right Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid x:Name="input_RightSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid x:Name="input_RightSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2InputLeftRight.png"/>
+                            </Grid.Background>
+
                             <UniformGrid Name="input_RightSlot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90"
                                     FlowDirection="RightToLeft" />
                         </Grid>
@@ -374,7 +395,11 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                            <!--<Grid.Background>
+                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2Output.png"/>
+                            </Grid.Background>-->
+
                             <UniformGrid Name="output_Slot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 200" FlowDirection="RightToLeft" />
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">

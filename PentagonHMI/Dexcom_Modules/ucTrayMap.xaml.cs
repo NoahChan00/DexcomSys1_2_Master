@@ -104,8 +104,8 @@ namespace PentagonHMI.ChildControls
             Col = 4;
             PRow = 9;
             PCol = 10;
-            ORow = 6;
-            OCol = 10;
+            ORow = 10;
+            OCol = 6;
 #if !DEBUG
             if (GlobalFunctions.IsSystem1)
                 BatType = OPCore.Read<int>(Tag_Btry_dint);
@@ -258,17 +258,28 @@ namespace PentagonHMI.ChildControls
                     });
                 }
                 int totalOutput = ORow * OCol;
+
+                // This tray vertical inverse
+                Stack<int> tmpStack = new Stack<int>();
                 for(int i = 1; i <= totalOutput; i++)
                 {
-                    output_Slot.Children.Add(new Button
+                    tmpStack.Push(i);
+                    if(tmpStack.Count == ORow)
                     {
-                        Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
-                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                        CommandParameter = Tag_Output_Slot.Replace("1", i.ToString())
-                    });
+                        while(tmpStack.Count != 0)
+                        {
+                            int ii = tmpStack.Pop();
+                            output_Slot.Children.Add(new Button
+                            {
+                                Tag = ii.ToString(),
+                                Height = 25,
+                                Width = 25,
+                                Margin = new Thickness(1),
+                                Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                                CommandParameter = Tag_Output_Slot.Replace("1", ii.ToString())
+                            });
+                        }
+                    }
                 }
             }
         }
