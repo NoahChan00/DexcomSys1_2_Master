@@ -31,7 +31,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="450" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -47,7 +47,7 @@
                     <TextBlock Visibility="Collapsed" MouseLeftButtonDown="btn_HELP_Click" Padding="0 0 10 0" VerticalAlignment="Center" Foreground="Snow" FontWeight="Bold" Text="HELP" HorizontalAlignment="Right" />
 
                     <Grid Grid.Row="1">
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible">
                             <ItemsControl Name="itmctrl_OEEinfo" ItemsSource="{Binding OEEInfo}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -58,7 +58,7 @@
                                     <DataTemplate>
                                         <UniformGrid Rows="1">
                                             <TextBlock Text="{Binding Title}" FontSize="18" Padding="10 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
-                                            <TextBox Text="{Binding Value}" />
+                                            <TextBox Text="{Binding Value}" HorizontalAlignment="Right" VerticalAlignment="Center" Width="145" Height="25"/>
                                         </UniformGrid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
