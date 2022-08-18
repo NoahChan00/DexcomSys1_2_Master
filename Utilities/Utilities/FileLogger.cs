@@ -112,23 +112,19 @@ namespace Utilities
                 string[] ErrorActionString = ErrorAction.Split(';');
                 DataRow[] rows = prevdt.Select("msgErrorCode = '" + ErrorCode + "'");
                 DataRow dr = dt.NewRow();
+
+                dr["msgErrorCode"] = ErrorCode;
+                dr["msgError"] = ErrorActionString[1];
+                dr["msgAction"] = ErrorActionString[2];
+                dr["msgModule"] = ErrorActionString[0];
+                dr["msgType"] = int.Parse(ErrorCode) >= 2000 ? "Warning" : "Error";
                 if(rows.Length != 0)
                 {
                     dr["msgDatetime"] = rows[0]["msgDatetime"];
-                    dr["msgErrorCode"] = ErrorCode;
-                    dr["msgError"] = ErrorActionString[1];
-                    dr["msgAction"] = ErrorActionString[2];
-                    dr["msgModule"] = ErrorActionString[0];
-                    dr["msgType"] = int.Parse(ErrorCode) < 2000 ? "Warning" : "Error";
                 }
                 else
                 {
                     dr["msgDatetime"] = DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff");
-                    dr["msgErrorCode"] = ErrorCode;
-                    dr["msgError"] = ErrorActionString[1];
-                    dr["msgAction"] = ErrorActionString[2];
-                    dr["msgModule"] = ErrorActionString[0];
-                    dr["msgType"] = int.Parse(ErrorCode) < 2000 ? "Warning" : "Error";
 
                     string alamMsg = dr["msgErrorCode"].ToString().Replace(',', ' ') + ",";
                     alamMsg += dr["msgModule"].ToString().Replace(',', ' ') + ",";

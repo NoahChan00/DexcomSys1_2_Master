@@ -395,10 +395,10 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                            <!--<Grid.Background>
-                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2Output.png"/>
-                            </Grid.Background>-->
+                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" >
+                            <Grid.Background>
+                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2Output.jpg"/>
+                            </Grid.Background>
 
                             <UniformGrid Name="output_Slot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 200" FlowDirection="RightToLeft" />
                         </Grid>
