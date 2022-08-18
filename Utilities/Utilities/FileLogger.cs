@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Data;
+using System.Net.Configuration;
 
 namespace Utilities
 {
@@ -14,18 +15,18 @@ namespace Utilities
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Event";
             string Filename = "Event_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
-            if (descriptions.Length == 0)
+            if(descriptions.Length == 0)
                 return;
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
 
-            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine("DateTime,Module,Message");
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + "," + descriptions);
@@ -37,8 +38,8 @@ namespace Utilities
             }
             else
             {
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + descriptions);
                     writer.Flush();
@@ -54,16 +55,16 @@ namespace Utilities
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Dryrun";
             string Filename = "Dryrun_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
             bool FileExist = File.Exists(strPath + Path.DirectorySeparatorChar + Filename);
 
-            using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename),
+            using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename),
                 FileExist ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter writer = new StreamWriter(stream))
+            using(StreamWriter writer = new StreamWriter(stream))
             {
-                if (!FileExist)
+                if(!FileExist)
                 {
                     writer.WriteLine("Remark: 1. All Timespan are Logged as Second; 2. Log When Reset Button Triggered at Dryrun Page;");
                     writer.WriteLine("DateTime,RunTime,IdleTime,DownTime,MTBA,MTBF,SoftJam,HardJam");
@@ -82,15 +83,16 @@ namespace Utilities
 
             bool FileExist = File.Exists(strPath + Path.DirectorySeparatorChar + Filename);
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-            using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename),
+            using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename),
                 FileExist ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-            using (StreamWriter writer = new StreamWriter(stream))
+            using(StreamWriter writer = new StreamWriter(stream))
             {
                 //,Information,{Method}
-                if (!FileExist) { writer.WriteLine("DateTime,Module,Message"); }
+                if(!FileExist)
+                { writer.WriteLine("DateTime,Module,Message"); }
                 writer.WriteLine($"{DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff")},{Page},{Description}");
                 writer.Flush();
                 writer.Close();
@@ -104,20 +106,20 @@ namespace Utilities
             //Log to Log & DT
             try
             {
-                if (ErrorAction.Length == 0)
+                if(ErrorAction.Length == 0)
                     return;
 
                 string[] ErrorActionString = ErrorAction.Split(';');
                 DataRow[] rows = prevdt.Select("msgErrorCode = '" + ErrorCode + "'");
                 DataRow dr = dt.NewRow();
-                if (rows.Length != 0)
+                if(rows.Length != 0)
                 {
                     dr["msgDatetime"] = rows[0]["msgDatetime"];
                     dr["msgErrorCode"] = ErrorCode;
                     dr["msgError"] = ErrorActionString[1];
                     dr["msgAction"] = ErrorActionString[2];
-                    dr["msgStation"] = "";
                     dr["msgModule"] = ErrorActionString[0];
+                    dr["msgType"] = int.Parse(ErrorCode) < 2000 ? "Warning" : "Error";
                 }
                 else
                 {
@@ -125,8 +127,8 @@ namespace Utilities
                     dr["msgErrorCode"] = ErrorCode;
                     dr["msgError"] = ErrorActionString[1];
                     dr["msgAction"] = ErrorActionString[2];
-                    dr["msgStation"] = "";
                     dr["msgModule"] = ErrorActionString[0];
+                    dr["msgType"] = int.Parse(ErrorCode) < 2000 ? "Warning" : "Error";
 
                     string alamMsg = dr["msgErrorCode"].ToString().Replace(',', ' ') + ",";
                     alamMsg += dr["msgModule"].ToString().Replace(',', ' ') + ",";
@@ -138,17 +140,17 @@ namespace Utilities
                 dt.Rows.Add(dr);// InsertAt(dr, 0);
 
 
-                if (dt.Rows.Count > 31)
+                if(dt.Rows.Count > 31)
                 {
                     dt.Rows.RemoveAt(dt.Rows.Count - 1);
                 }
 
-                if (dr != null)
+                if(dr != null)
                 {
                     dr = null;
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
 
             }
@@ -158,7 +160,7 @@ namespace Utilities
         {
             try
             {
-                if (dt != null)
+                if(dt != null)
                 {
                     DataRow dr = dt.NewRow();
                     dr["LogDatetime"] = DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff");
@@ -168,7 +170,7 @@ namespace Utilities
 
                     dt.Rows.InsertAt(dr, 0);
 
-                    if (dt.Rows.Count > 100000)
+                    if(dt.Rows.Count > 100000)
                     {
                         dt.Rows.RemoveAt(dt.Rows.Count - 1);
                     }
@@ -178,7 +180,7 @@ namespace Utilities
                 Utilities.FileLogger.logEvent(type, descriptions);
 
             }
-            catch (Exception error)
+            catch(Exception error)
             {
 
                 logError(error.Message, error.ToString());
@@ -190,15 +192,15 @@ namespace Utilities
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Timesync";
             string Filename = DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
 
-            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff,") + Message);
                     writer.Flush();
@@ -209,8 +211,8 @@ namespace Utilities
             else
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff,") + Message);
                     writer.Flush();
@@ -226,18 +228,18 @@ namespace Utilities
             string Filename = "Error_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
 
-            if (descriptions.Length == 0)
+            if(descriptions.Length == 0)
                 return;
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
 
-            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + message + ", " + descriptions);
                     writer.WriteLine("");
@@ -248,8 +250,8 @@ namespace Utilities
             }
             else
             {
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + message + ", " + descriptions);
                     writer.WriteLine("");
@@ -268,18 +270,18 @@ namespace Utilities
             string Filename = "Else_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
 
-            if (descriptions.Length == 0)
+            if(descriptions.Length == 0)
                 return;
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
 
-            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + message + ", " + descriptions);
                     writer.Flush();
@@ -289,8 +291,8 @@ namespace Utilities
             }
             else
             {
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + message + ", " + descriptions);
                     writer.WriteLine("");
@@ -309,15 +311,15 @@ namespace Utilities
 
             //ErrorMsg = ErrorMsg.Replace(',', ' ');
             //Action = Action.Replace(',', ' ');
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
 
-            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine("DateTime,ErrorCode,Module,Message,Action");
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + "," + ErrorMsg + "," + Action);
@@ -328,8 +330,8 @@ namespace Utilities
             }
             else
             {
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + "," + ErrorMsg + "," + Action);
                     writer.Flush();
@@ -345,15 +347,15 @@ namespace Utilities
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + @"PLCEvent";
             string Filename = "PlcEvent_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
-            if (!Directory.Exists(strPath))
+            if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
 
-            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine("Date,Time,PLC Event");
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff,") + msg);
@@ -365,8 +367,8 @@ namespace Utilities
             else
             {
 
-                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter writer = new StreamWriter(stream))
+                using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using(StreamWriter writer = new StreamWriter(stream))
                 {
                     writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff,") + msg);
                     writer.Flush();

@@ -65,7 +65,7 @@ namespace PentagonHMI
 
         private string[] ErrorCode;
         private string[] WarningCode;
-        public static DataTable AlertWarningDt = new DataTable { Columns = { "msgDatetime", "msgErrorCode", "msgError", "msgAction", "msgStation", "msgModule", "msgView" } };
+        public static DataTable AlertWarningDt = new DataTable { Columns = { "msgDatetime", "msgErrorCode", "msgError", "msgAction", "msgModule", "msgView", "msgType" } };
         public DataTable dt_AlarmTable;
         private static DataTable dt_PreAlarmTable;
 

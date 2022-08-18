@@ -385,13 +385,25 @@
                             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden" Height="auto" Margin="0, 0, 0, 0">
                                 <DataGrid Margin="5" Name="dgAlertWarning" FontSize="14" AutoGenerateColumns="False" ItemsSource="{Binding}" MaxHeight="160"
                                         IsReadOnly="True">
+                                    <DataGrid.RowStyle>
+                                        <Style TargetType="DataGridRow">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding msgType}" Value="Error">
+                                                    <Setter Property="Background" Value="#FFFF4500 "></Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding msgType}" Value="Warning">
+                                                    <Setter Property="Background" Value="Yellow"></Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.RowStyle>
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Binding="{Binding msgDatetime}" Header="Date/Time" SortDirection="Descending" FontSize="14" />
                                         <DataGridTextColumn Binding="{Binding msgModule}" Header="Module" FontSize="14" />
+                                        <DataGridTextColumn Binding="{Binding msgType}" Header="Type" FontSize="14" />
                                         <DataGridTextColumn Binding="{Binding msgErrorCode}" Header="Error Code" FontSize="14" />
                                         <DataGridTextColumn Binding="{Binding msgError}" Header="Error/Warning " FontSize="14" />
                                         <DataGridTextColumn Binding="{Binding msgAction}" Header="Action" FontSize="14" />
-                                        <DataGridTextColumn Binding="{Binding msgView}" Header="" FontSize="14" Foreground="Blue" FontStyle="Italic" />
                                         <!--0729-->
                                     </DataGrid.Columns>
                                 </DataGrid>
@@ -687,7 +699,7 @@
             </Grid>
         </Grid>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="PickFailCanva" Visibility="Collapsed">
-            <ContentControl x:Name="PickFailContentControl"/>
+            <ContentControl x:Name="PickFailContentControl" />
         </Grid>
     </Grid>
 </Window>
