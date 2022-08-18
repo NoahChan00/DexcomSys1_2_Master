@@ -264,7 +264,8 @@ namespace PentagonHMI.ChildControls
                 for(int i = 1; i <= totalOutput; i++)
                 {
                     tmpStack.Push(i);
-                    if(tmpStack.Count == ORow)
+                    // - 1 to ORow due to starting index from 1
+                    if(tmpStack.Count == ORow - 1)
                     {
                         while(tmpStack.Count != 0)
                         {
