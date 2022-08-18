@@ -155,6 +155,8 @@ namespace PentagonHMI.ChildControls
             }
             if(GlobalFunctions.IsSystem1)
             {
+                LegendUniformGrid.Children.Insert(2, new Button(){Background=Brushes.Magenta, Content="Battery Present"});
+                BlueButton.Content = "PCBA Present";
                 System1_Stuff.Visibility = Visibility.Visible;
                 System2_Stuff.Visibility = Visibility.Collapsed;
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S1TurnTable.jpeg", UriKind.Relative));
@@ -292,7 +294,7 @@ namespace PentagonHMI.ChildControls
                         OPCore.Read<string>((((string,string))Station8DutStatus.Tag).Item2),
                     });
 #else
-                    stats.AddRange(new List<int> { 0, 1, 10, 11, 0, 1, 10, 11 });
+                    stats.AddRange(new List<int> { 0, 1, 10, 11, 0, 2, 10, 11 });
                     innertTxt.AddRange(new List<string> { "A", "B", "C", "D", "E", "F", "G", "H" });
 #endif
 
@@ -318,7 +320,10 @@ namespace PentagonHMI.ChildControls
                             case 1:
                                 stationsStatus[i].Background = Brushes.Blue;
                                 break;
-
+                                // Only for system 1, since 2 not use. Assume wont read 2
+                            case 2:
+                                stationsStatus[i].Background = Brushes.Magenta;
+                                break;
                             case 10:
                                 stationsStatus[i].Background = Brushes.Green;
                                 break;

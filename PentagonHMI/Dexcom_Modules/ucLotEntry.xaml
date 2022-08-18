@@ -71,14 +71,14 @@
                         <TextBlock Grid.Row="5" Grid.Column="1" Margin="5" FontSize="20" Text="Operator ID"/>
                         <TextBox x:Name="tbx_OprID" Grid.Row="5" Padding="5 0" Grid.Column="2" Width="250" MaxLength="20" FontSize="20"/>
 
-                        <TextBlock Grid.Row="7" Grid.Column="1" Margin="5" FontSize="20" Text="DUT ID"/>
+                        <!--<TextBlock Grid.Row="7" Grid.Column="1" Margin="5" FontSize="20" Text="DUT ID"/>
                         <Grid Grid.Row="7" Grid.Column="2">
                             <TextBox x:Name="tbx_onlineDUT" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20" IsReadOnly="True"/>
-                            <ComboBox x:Name="cbx_offlineDUT" FontSize="20" Width="250" Visibility="Hidden" IsEditable ="False" IsReadOnly="True" IsEnabled ="False"/>
-                        </Grid>
+                            <ComboBox x:Name="cbx_offlineDUT" FontSize="20" Width="250" Visibility="Hidden" />
+                        </Grid>-->
 
-                        <TextBlock Grid.Row="9" Grid.Column="1" Margin="5" FontSize="20" Text="Battery Type"/>
-                        <Grid Grid.Row="9" Grid.Column="2">
+                        <TextBlock Grid.Row="7" Grid.Column="1" Margin="5" FontSize="20" Text="Battery Type"/>
+                        <Grid Grid.Row="7" Grid.Column="2">
                             <TextBox x:Name="tbx_onlineBtrytype" Padding="5 0"  Width="250" IsEnabled="False" FontSize="20"/>
                             <ComboBox x:Name="cbx_offlineBtrytype" FontSize="20" Width="250" Visibility="Hidden"/>
                         </Grid>

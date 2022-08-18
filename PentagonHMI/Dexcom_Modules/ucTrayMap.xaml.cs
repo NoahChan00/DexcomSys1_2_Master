@@ -259,28 +259,17 @@ namespace PentagonHMI.ChildControls
                 }
                 int totalOutput = ORow * OCol;
 
-                // This tray vertical inverse
-                Stack<int> tmpStack = new Stack<int>();
                 for(int i = 1; i <= totalOutput; i++)
                 {
-                    tmpStack.Push(i);
-                    // - 1 to ORow due to starting index from 1
-                    if(tmpStack.Count == ORow - 1)
+                    output_Slot.Children.Add(new Button
                     {
-                        while(tmpStack.Count != 0)
-                        {
-                            int ii = tmpStack.Pop();
-                            output_Slot.Children.Add(new Button
-                            {
-                                Tag = ii.ToString(),
-                                Height = 25,
-                                Width = 25,
-                                Margin = new Thickness(1),
-                                Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                                CommandParameter = Tag_Output_Slot.Replace("1", ii.ToString())
-                            });
-                        }
-                    }
+                        Tag = i.ToString(),
+                        Height = 25,
+                        Width = 25,
+                        Margin = new Thickness(1),
+                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                        CommandParameter = Tag_Output_Slot.Replace("1", i.ToString())
+                    });
                 }
             }
         }

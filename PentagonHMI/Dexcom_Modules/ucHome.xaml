@@ -170,7 +170,7 @@
                                         <Button x:Name="Station8DutStatus" />
                                     </StackPanel>
                                     <GroupBox Header="Legend" IsHitTestVisible="True" HorizontalAlignment="Left" Width="180" Canvas.Left="812" Canvas.Top="510">
-                                        <UniformGrid Columns="1" VerticalAlignment="Top">
+                                        <UniformGrid x:Name="LegendUniformGrid" Columns="1" VerticalAlignment="Top">
                                             <UniformGrid.Resources>
                                                 <Style TargetType="Button">
                                                     <Setter Property="BorderBrush" Value="Black" />
@@ -180,7 +180,7 @@
                                                 </Style>
                                             </UniformGrid.Resources>
                                             <Button Background="Gray" Content="No Unit" />
-                                            <Button Background="Blue" Content="Not Tested" />
+                                            <Button x:Name="BlueButton" Background="Blue" Content="Not Tested" />
                                             <Button Background="Green" Content="Pass" />
                                             <Button Background="Red" Content="Fail" />
                                         </UniformGrid>

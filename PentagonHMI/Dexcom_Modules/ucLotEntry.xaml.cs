@@ -82,7 +82,7 @@ namespace PentagonHMI.ChildControls
             cbx_offlineBtrytype.SelectedValuePath = "Value";
             cbx_offlineBtrytype.ItemsSource = dic_BatteryType;
 
-            cbx_offlineDUT.ItemsSource = lst_DUTID;
+            //cbx_offlineDUT.ItemsSource = lst_DUTID;
             //cbx_offlineFirmwareVersion.ItemsSource = lst_FirmwareVersion;
         }
 
@@ -96,14 +96,14 @@ namespace PentagonHMI.ChildControls
 
                     if (GetServerInfo())
                     {
-                        cbx_offlineDUT.Visibility = Visibility.Hidden;
+                        //cbx_offlineDUT.Visibility = Visibility.Hidden;
                         //cbx_offlineFirmwareVersion.Visibility = Visibility.Hidden;
-                        cbx_offlineBtrytype.Visibility = Visibility.Hidden;
+                        //cbx_offlineBtrytype.Visibility = Visibility.Hidden;
                         //tbx_day2Exp.IsEnabled = false;
                     }
                     else
                     {
-                        cbx_offlineDUT.Visibility = Visibility.Visible;
+                        //cbx_offlineDUT.Visibility = Visibility.Visible;
                         //cbx_offlineFirmwareVersion.Visibility = Visibility.Visible;
                         cbx_offlineBtrytype.Visibility = Visibility.Visible;
                         //tbx_day2Exp.IsEnabled = true;
@@ -133,7 +133,7 @@ namespace PentagonHMI.ChildControls
         {
             if (test_ServerOn)
             {
-                tbx_onlineDUT.Text = "DUT1214";
+                //tbx_onlineDUT.Text = "DUT1214";
                 tbx_onlineBtrytype.Text = "Murata";
                 //tbx_onlineFirmwareVersion.Text = "V1.0.12";
                 //tbx_day2Exp.Text = "31";
@@ -198,12 +198,13 @@ namespace PentagonHMI.ChildControls
             //}
             else if (ServerOn)
             {
-                if (string.IsNullOrWhiteSpace(tbx_onlineDUT.Text))
-                {
-                    MessageBox.Show("DUT ID Not Defined");
-                    return;
-                }
-                else if (!dic_BatteryType.TryGetValue(tbx_onlineBtrytype.Text, out string btyEnum))
+                //if (string.IsNullOrWhiteSpace(tbx_onlineDUT.Text))
+                //{
+                //    MessageBox.Show("DUT ID Not Defined");
+                //    return;
+                //}
+                //else 
+                if (!dic_BatteryType.TryGetValue(tbx_onlineBtrytype.Text, out string btyEnum))
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
@@ -216,12 +217,13 @@ namespace PentagonHMI.ChildControls
             }
             else if (!ServerOn)
             {
-                if (string.IsNullOrWhiteSpace(cbx_offlineDUT.SelectedValue.ToString()))
-                {
-                    MessageBox.Show("DUT ID Not Defined");
-                    return;
-                }
-                else if (string.IsNullOrWhiteSpace(cbx_offlineBtrytype.SelectedValue.ToString()))
+                //if (string.IsNullOrWhiteSpace(cbx_offlineDUT.SelectedValue.ToString()))
+                //{
+                //    MessageBox.Show("DUT ID Not Defined");
+                //    return;
+                //}
+                //else 
+                if (string.IsNullOrWhiteSpace(cbx_offlineBtrytype.SelectedValue.ToString()))
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
@@ -233,19 +235,19 @@ namespace PentagonHMI.ChildControls
                 //}
             }
 
+            OPCore.Write(Tag_OprID_str20, tbx_OprID.Text, typeof(string));
             OPCore.Write(Tag_LotID_str, tbx_LotID.Text, typeof(string));
             OPCore.Write(Tag_LotQty_dint, LR_num_LotSize.Value, typeof(Int32));
-            OPCore.Write(Tag_OprID_str20, tbx_OprID.Text, typeof(string));
             //OPCore.Write(Tag_DayToExp_int, tbx_day2Exp.Text, typeof(int));
             if (ServerOn)
             {
-                OPCore.Write(Tag_DUTID_str20, tbx_onlineDUT.Text, typeof(string));
+                //OPCore.Write(Tag_DUTID_str20, tbx_onlineDUT.Text, typeof(string));
                 OPCore.Write(Tag_Btry_dint, dic_BatteryType[tbx_onlineBtrytype.Text], typeof(Int32));
                 //OPCore.Write(Tag_FirmwareVersion_str20, tbx_onlineFirmwareVersion.Text, typeof(string));
             }
             else
             {
-                OPCore.Write(Tag_DUTID_str20, cbx_offlineDUT.SelectedValue.ToString(), typeof(string));
+                //OPCore.Write(Tag_DUTID_str20, cbx_offlineDUT.SelectedValue.ToString(), typeof(string));
                 OPCore.Write(Tag_Btry_dint, cbx_offlineBtrytype.SelectedValue.ToString(), typeof(Int32));
                 //OPCore.Write(Tag_FirmwareVersion_str20, cbx_offlineFirmwareVersion.SelectedValue.ToString(), typeof(string));
             }
