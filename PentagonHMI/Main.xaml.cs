@@ -605,7 +605,7 @@ namespace PentagonHMI
             {
 #if !DEBUG
                 var EnumBool = _Main.OPC.Read<bool[]>(GlobalFunctions.IsSystem1 ?
-                    "System_1_MC_Tag.ErrorBit[0]" : "System2_MC_Tag.ErrorCondBit[0]", typeof(bool), 512);
+                    "System1_MC_Tag.ErrorBit[0]" : "System2_MC_Tag.ErrorCondBit[0]", typeof(bool), 512);
                 if(EnumBool != null)
                     alarmLst = string.Join(",", FindAllIndex(EnumBool, x => x == true));
 
