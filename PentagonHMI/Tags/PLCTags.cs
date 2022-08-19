@@ -35,7 +35,7 @@ namespace PentagonHMI.Tags
         // System1
         public static Tag PickFailPromptWindowPCBA = new Tag("b_PCBATray_Error", Tag.ATOMIC.BOOL);
         // Not require
-        public static Tag PickFailPromptWindowBattery= new Tag("b_BatteryTray_Error", Tag.ATOMIC.BOOL);
+        public static Tag PickFailPromptWindowBattery = new Tag("b_BatteryTray_Error", Tag.ATOMIC.BOOL);
         // System2
         public static Tag PickFailPromptWindowRShuttle = new Tag("b_RShuttle_Error", Tag.ATOMIC.BOOL);
         public static Tag PickFailPromptWindowLShuttle = new Tag("b_LShuttle_Error", Tag.ATOMIC.BOOL);
@@ -44,7 +44,18 @@ namespace PentagonHMI.Tags
         public static Tag PickFailRetryPick = new Tag("b_HMI_AckRetryPick", Tag.ATOMIC.BOOL);
 
         public static Tag LotID = new Tag("Lot_Info.HMI_LotID", Tag.ATOMIC.STRING);
+        public static Tag Mute = new Tag("HMI_Bypass_Buzzer", Tag.ATOMIC.BOOL);
+
+        public static Tag LotIDLotID1 = new Tag("Lot_Info.HMI_LotID", Tag.ATOMIC.STRING);
+        public static Tag LotIDOperatorID1 = new Tag("Lot_Info.HMI_OperatorID", Tag.ATOMIC.STRING);
+        public static Tag LotIDLotQuantity1 = new Tag("Lot_Info.HMI_Lot_Quantity", Tag.ATOMIC.DINT);
+        public static Tag LotIDLotBatteryType1 = new Tag("Lot_Info.HMI_BatteryType", Tag.ATOMIC.DINT);
+        public static Tag LotIDLotID2 = new Tag("str_FrmSys1_LotID", Tag.ATOMIC.STRING);
+        public static Tag LotIDOperatorID2 = new Tag("str_FrmSys1_OperatorID", Tag.ATOMIC.STRING);
+        public static Tag LotIDLotQuantity2 = new Tag("dint_FrmSys1_Lot_Quantity", Tag.ATOMIC.DINT);
+        public static Tag LotIDLotBatteryType2 = new Tag("dint_FrmSys1_BatteryType", Tag.ATOMIC.DINT);
     }
+
     public class EngineeringPLCTags
     {
         #region PCBA_Robot

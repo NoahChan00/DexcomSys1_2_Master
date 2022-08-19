@@ -92,6 +92,7 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
+                    ucLotEntryUserControl.IsEnabled = !_Main.OPC.Read<bool>("Lot_Info.New_Lot_Created");
                     //grd_Main.IsEnabled = !OPCore.Read<bool>(Tag_LotCreated_bool);
 
                     if (GetServerInfo())

@@ -35,7 +35,7 @@
                     </StackPanel>
                     <StackPanel x:Name="System2_Stuff" Visibility="Visible">
                         <Label Content="Lot ID" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <Label Name="LabelLotID" Content="Nan" Grid.ColumnSpan="1" FontSize="30"  Padding="10" VerticalAlignment="Center"
+                        <Label Name="LabelLotID" Content="Nan" Grid.ColumnSpan="1" FontSize="30" Padding="10" VerticalAlignment="Center"
                                 HorizontalAlignment="Center" FontWeight="Bold" />
 
                     </StackPanel>
@@ -44,58 +44,64 @@
 
             <Border Grid.Row="1" MinWidth="400" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
                 <StackPanel>
-                    <Label Content="Prompt Box" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                    <ToggleButton x:Name="PromptToggleButton" Content="{Binding PromptToggleName}" Height="48" IsChecked="{Binding PromptToggleStatus}"
-                            IsEnabled="{Binding PromptToggleEnable}" Tag="{Binding}" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
-                            Click="promptToggleButton_Click">
-                        <ToggleButton.Style>
-                            <Style TargetType="{x:Type ToggleButton}">
-                                <Setter Property="ContentTemplate">
-                                    <Setter.Value>
-                                        <DataTemplate>
-                                            <Label Background="Red" Content="End Lot" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold" />
-                                        </DataTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsChecked" Value="True">
-                                        <Setter Property="ContentTemplate">
-                                            <Setter.Value>
-                                                <DataTemplate>
-                                                    <Label Background="LimeGreen" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
-                                                            VerticalContentAlignment="Center" VerticalAlignment="Stretch" Content="Continue" FontSize="18"
-                                                            FontWeight="Bold" />
-                                                </DataTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                    <DataTrigger Binding="{Binding PromptToggleStatus}" Value="False">
-                                        <Setter Property="Background" Value="{Binding PromptToggleStatusOffColor}" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding PromptToggleStatus}" Value="True">
-                                        <Setter Property="Background" Value="{Binding PromptToggleStatusOnColor}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ToggleButton.Style>
-                    </ToggleButton>
+                    <Label Content="Buzzer" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                    <Border BorderBrush="Black" BorderThickness="1" Margin="10 5 10 10" >
+                        <ToggleButton Name="MuteToogleButton" Content="Mute" Click="MuteToggleButton_Click" Height="48" FontWeight="Bold" FontSize="18">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Background" Value="Green" />
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Background" Value="LightGray" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
+                    </Border>
                 </StackPanel>
             </Border>
 
-            <Grid Grid.ColumnSpan="2" Grid.Row="2" Grid.RowSpan="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <Border CornerRadius=" 14,14,14,14" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+            <Border Grid.Row="2" MinWidth="400" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+                <Grid>
                     <StackPanel>
-                        <Label Content="Quality" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <lvc:PieChart Name="Pie_Quality" Height="380" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" />
+
+                        <StackPanel.Resources>
+                            <Style TargetType="UniformGrid">
+                                <Setter Property="Height" Value="445 " />
+                            </Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="25" />
+                                <Setter Property="FontFamily" Value="Bold" />
+                                <Setter Property="Padding" Value="0 40 0 0" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Label Content="Lot Info" Grid.ColumnSpan="1" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                        <UniformGrid Columns="2">
+                            <TextBlock Background="LightGray">Lot ID</TextBlock>
+                            <TextBlock Name="LotIDTextBlock" />
+                            <TextBlock Background="LightGray">Operator ID</TextBlock>
+                            <TextBlock Name="OperatorIDTextBlock" />
+                            <TextBlock Background="LightGray">Lot Quantity</TextBlock>
+                            <TextBlock Name="LotQuatityTextBlock" />
+                            <TextBlock Background="LightGray">Battery Type</TextBlock>
+                            <TextBlock Name="BatteryTypeTextBlock" />
+                        </UniformGrid>
+
                     </StackPanel>
-                </Border>
-            </Grid>
+                </Grid>
+            </Border>
 
             <Border Grid.Column="3" Grid.ColumnSpan="1" Grid.RowSpan="4" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1 0  0 0" BorderThickness="2">
                 <TabControl x:Name="VisionControlTC" Width="1000">

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Utilities;
@@ -155,7 +156,7 @@ namespace PentagonHMI.ChildControls
             }
             if(GlobalFunctions.IsSystem1)
             {
-                LegendUniformGrid.Children.Insert(2, new Button(){Background=Brushes.Magenta, Content="Battery Present"});
+                LegendUniformGrid.Children.Insert(2, new Button() { Background = Brushes.Magenta, Content = "Battery Present" });
                 BlueButton.Content = "PCBA Present";
                 System1_Stuff.Visibility = Visibility.Visible;
                 System2_Stuff.Visibility = Visibility.Collapsed;
@@ -176,7 +177,7 @@ namespace PentagonHMI.ChildControls
 
                 Station4Tb.Text = "Station 8\r\nEMPTY CHECK";
                 Station4DutStatus.Tag = ("Station_8.DUT_Status", "Station_8.Nest_Code");
-                SetCanvasTopLeft(SP4, 400, 620); 
+                SetCanvasTopLeft(SP4, 400, 620);
 
                 Station5Tb.Text = "Station 1\r\nPCBA LOAD";
                 Station5DutStatus.Tag = ("Station_1.DUT_Status", "Station_1.Nest_Code");
@@ -219,7 +220,7 @@ namespace PentagonHMI.ChildControls
 
                 Station5Tb.Text = "Station 3\r\nVISION CHECK";
                 Station5DutStatus.Tag = ("Station_3.DUT_Status", "Station_3.Nest_Code");
-                SetCanvasTopLeft(SP5, 500, 330); 
+                SetCanvasTopLeft(SP5, 500, 330);
 
                 Station6Tb.Text = "Station 4\r\nBUFFER";
                 Station6DutStatus.Tag = ("Station_4.DUT_Status", "Station_4.Nest_Code");
@@ -233,22 +234,6 @@ namespace PentagonHMI.ChildControls
                 Station8DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
                 SetCanvasTopLeft(SP8, 80, 240);
             }
-            Func<ChartPoint, string> PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-            Pie_Quality.Series = new SeriesCollection
-            {
-              new PieSeries { Title = "Quality", Fill = Brushes.SpringGreen,  Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true, LabelPoint = PointLabel },
-              new PieSeries { Title = "_", Fill = Brushes.Gray, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-            };
-
-#if !DEBUG
-            //grd_KeyenceVision.Children.Add(new ucKeyenceVision(_Main));
-#else
-            //Quality
-            double QualityPercent = 0.6 * 100;
-            Pie_Quality.Series[0].Values[0] = QualityPercent.To2Dcml();
-            Pie_Quality.Series[1].Values[0] = 100 - QualityPercent.To2Dcml();
-#endif
-
         }
 
         private void HomeUpdate()
@@ -259,12 +244,8 @@ namespace PentagonHMI.ChildControls
                 {
                     if(!GlobalFunctions.IsSystem1)
                     {
-                        LabelLotID.Content = _Main.OPC.Read<string>(Tags.MainPage.LotID.Name, typeof(string))??"Nan";
+                        LabelLotID.Content = _Main.OPC.Read<string>(Tags.MainPage.LotID.Name, typeof(string)) ?? "Nan";
                     }
-                    //Quality
-                    double QualityPercent = OPCore.Read<int>(Tag_Quality) * 100;
-                    Pie_Quality.Series[0].Values[0] = QualityPercent.To2Dcml();
-                    Pie_Quality.Series[1].Values[0] = 100 - QualityPercent.To2Dcml();
 
 
                     #region Station Status Read
@@ -320,7 +301,7 @@ namespace PentagonHMI.ChildControls
                             case 1:
                                 stationsStatus[i].Background = Brushes.Blue;
                                 break;
-                                // Only for system 1, since 2 not use. Assume wont read 2
+                            // Only for system 1, since 2 not use. Assume wont read 2
                             case 2:
                                 stationsStatus[i].Background = Brushes.Magenta;
                                 break;
@@ -338,13 +319,37 @@ namespace PentagonHMI.ChildControls
 
                         }
                         stationsStatus[i].Content = innertTxt[i];
+                        MuteToogleButton.IsChecked = OPCore.Read<bool>(Tags.MainPage.Mute.Name, typeof(bool));
                     }
+                    UpdateLotInfo();
 
                     #endregion Station Status Read
                 }
                 catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
+                }
+            });
+        }
+        void UpdateLotInfo()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if(GlobalFunctions.IsSystem1)
+                {
+                    LotIDTextBlock.Text = OPCore.Read<string>(Tags.MainPage.LotIDLotID1.Name);
+                    OperatorIDTextBlock.Text = OPCore.Read<string>(Tags.MainPage.LotIDOperatorID1.Name);
+                    LotQuatityTextBlock.Text = OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity1.Name).ToString();
+                    int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
+                    BatteryTypeTextBlock.Text = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : "Murata";
+                }
+                else
+                {
+                    LotIDTextBlock.Text = OPCore.Read<string>(Tags.MainPage.LotIDLotID2.Name);
+                    OperatorIDTextBlock.Text = OPCore.Read<string>(Tags.MainPage.LotIDOperatorID2.Name);
+                    LotQuatityTextBlock.Text = OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity2.Name).ToString();
+                    int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType2.Name);
+                    BatteryTypeTextBlock.Text = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : "Murata";
                 }
             });
         }
@@ -392,19 +397,12 @@ namespace PentagonHMI.ChildControls
             OPCore.Write(Tag_PurgeLot_bool, true);
         }
 
-        private void promptToggleButton_Click(object sender, RoutedEventArgs e)
+        private void MuteToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            bool check = OPCore.Read<bool>(Tag_PurgeLot_bool, typeof(bool));
-
-            if(check != false)
+            if(sender is ToggleButton tb)
             {
-                FileLogger.logButton(Home, "End Lot", MethodBase.GetCurrentMethod().ToString());
-                OPCore.Write(Tag_PromptBox_bool, true);
-            }
-            else
-            {
-                FileLogger.logButton(Home, "Continue", MethodBase.GetCurrentMethod().ToString());
-                OPCore.Write(Tag_PromptBox_bool, false);
+                FileLogger.logButton(Home, "Mute", MethodBase.GetCurrentMethod().ToString());
+                OPCore.Write(Tags.MainPage.Mute.Name, tb.IsChecked);
             }
         }
     }

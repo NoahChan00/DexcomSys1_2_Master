@@ -24,9 +24,55 @@
                             </Grid.RowDefinitions>
                             <ContentControl x:Name="TrayContentControl" />
                             <ToggleButton x:Name="SkipPickButton" Checked="SkipChecked" Unchecked="SkipUnchecked" Grid.Row="1" Width="150" Height="45"
-                                    FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 5">Skip Pick</ToggleButton>
+                                    FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 5">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ToggleButton">
+                                                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Background" Value="Green" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                                Skip Pick
+                            </ToggleButton>
                             <ToggleButton x:Name="RetryPickButton" Checked="RetryPickChecked" Unchecked="RetryPickUnchecked" Grid.Row="2" Width="150"
-                                    Height="45" FontSize="25" HorizontalAlignment="Center" Margin="0 5 0 10">Retry Pick</ToggleButton>
+                                    Height="45" FontSize="25" HorizontalAlignment="Center" Margin="0 5 0 10">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ToggleButton">
+                                                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                    </Border>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Background" Value="Green" />
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="False">
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ToggleButton.Style>
+                                Retry Pick
+                            </ToggleButton>
                         </Grid>
                     </Border>
                 </Grid>
