@@ -395,7 +395,7 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" >
+                        <Grid Name="output_Slot_Grid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" >
                             <Grid.Background>
                                 <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2Output.jpg"/>
                             </Grid.Background>
