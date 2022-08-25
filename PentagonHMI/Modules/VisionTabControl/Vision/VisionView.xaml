@@ -5,47 +5,69 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid x:Name="VisionGroupBox">
         </Grid>
 
         <Border Grid.Column="1" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
             <StackPanel>
-                <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                <Label Content="Vision Fail Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                 <ScrollViewer>
                     <UniformGrid Columns="1">
                         <UniformGrid.Resources>
                             <Style TargetType="Label">
                                 <Setter Property="Background" Value="#FF627793" />
                                 <Setter Property="Foreground" Value="White" />
-                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontSize" Value="14" />
                                 <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
                             </Style>
                             <Style TargetType="TextBlock">
-                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontSize" Value="14" />
                                 <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
                         </UniformGrid.Resources>
                         <Label>Short Shot Fail</Label>
-                        <TextBlock x:Name="ShortShotFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="ShortShotFailTextBlock" />
+                        </Border>
                         <Label>OMFF Fail</Label>
-                        <TextBlock x:Name="OMFFFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="OMFFFailTextBlock" />
+                        </Border>
                         <Label>Brown Strain Front Fail</Label>
-                        <TextBlock x:Name="BrownStrainFrontFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="BrownStrainFrontFailTextBlock" />
+                        </Border>
                         <Label>Battery Clip Surface Fail</Label>
-                        <TextBlock x:Name="BatteryClipSurfaceFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="BatteryClipSurfaceFailTextBlock" />
+                        </Border>
                         <Label>Flashing Fail</Label>
-                        <TextBlock x:Name="FlashingFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="FlashingFailTextBlock" />
+                        </Border>
                         <Label>FOD Fail</Label>
-                        <TextBlock x:Name="FODFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="FODFailTextBlock" />
+                        </Border>
                         <Label>Live Bug Bubble Fail</Label>
-                        <TextBlock x:Name="LiveBugBubbleFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="LiveBugBubbleFailTextBlock" />
+                        </Border>
                         <Label>Brown Strain Back Fail</Label>
-                        <TextBlock x:Name="BrownStrainBackFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="BrownStrainBackFailTextBlock" />
+                        </Border>
                         <Label>Mouse Bite Fail</Label>
-                        <TextBlock x:Name="MouseBiteFailTextBlock" />
+                        <Border>
+                            <TextBlock x:Name="MouseBiteFailTextBlock" />
+                        </Border>
                     </UniformGrid>
                 </ScrollViewer>
             </StackPanel>

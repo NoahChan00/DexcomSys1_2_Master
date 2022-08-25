@@ -1441,7 +1441,7 @@ namespace PentagonHMI
                 timer.Enabled = true;
                 timer.Tick += timer_Tick; // Everytime timer ticks, timer_Tick will be called
                 timer.Interval = 1000 * 1;              // Timer will tick evert second
-                                                            // Enable the timer
+                                                        // Enable the timer
                 timer.Start();
 
                 LogIN_OUT(true);

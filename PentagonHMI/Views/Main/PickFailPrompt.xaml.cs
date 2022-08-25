@@ -75,9 +75,9 @@ namespace PentagonHMI.Views.Main
                     Thread.Sleep(250);
                     Dispatcher.Invoke(() =>
                     {
-                        SkipPickButton.IsChecked = main.OPC.Read<bool>(Tags.MainPage.PickFailSkipPick.Name, typeof(bool));
+                        SkipPickButton.IsChecked = main.OPC.Read<bool>(skipPickTag, typeof(bool));
                         SkipPickButton.Background = (SkipPickButton.IsChecked ?? false) ? Brushes.LimeGreen : Brushes.LightGray;
-                        RetryPickButton.IsChecked = main.OPC.Read<bool>(Tags.MainPage.PickFailRetryPick.Name, typeof(bool));
+                        RetryPickButton.IsChecked = main.OPC.Read<bool>(retryPickTag, typeof(bool));
                         RetryPickButton.Background = (RetryPickButton.IsChecked ?? false) ? Brushes.LimeGreen : Brushes.LightGray;
                     });
                 }
@@ -93,8 +93,6 @@ namespace PentagonHMI.Views.Main
         private CancellationTokenSource cts;
         private LogicClasses.Main main;
         private ucTrayMap trayMap;
-
-        bool IsClicked { get; set; } = false;
 
         private void SkipChecked(object sender, RoutedEventArgs e)
         {

@@ -79,10 +79,12 @@
                     <Style TargetType="UniformGrid">
                         <Setter Property="Height" Value="207.5 " />
                     </Style>
-                    <Style TargetType="TextBlock">
+                    <Style TargetType="Label">
                         <Setter Property="FontSize" Value="18" />
                         <Setter Property="FontFamily" Value="Bold" />
                         <Setter Property="Padding" Value="0 10 0 0" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center" />
                     </Style>
                 </StackPanel.Resources>
 
@@ -90,14 +92,14 @@
                     <StackPanel>
                         <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                         <UniformGrid Columns="2">
-                            <TextBlock Background="LightGray">Lot ID</TextBlock>
-                            <TextBlock Name="LotIDTextBlock" />
-                            <TextBlock Background="LightGray">Operator ID</TextBlock>
-                            <TextBlock Name="OperatorIDTextBlock" />
-                            <TextBlock Background="LightGray">Lot Quantity</TextBlock>
-                            <TextBlock Name="LotQuatityTextBlock" />
-                            <TextBlock Background="LightGray">Battery Type</TextBlock>
-                            <TextBlock Name="BatteryTypeTextBlock" />
+                            <Label Background="LightGray">Lot ID</Label>
+                            <Label Name="LotIDLabel" />
+                            <Label Background="LightGray">Operator ID</Label>
+                            <Label Name="OperatorIDLabel" />
+                            <Label Background="LightGray">Lot Quantity</Label>
+                            <Label Name="LotQuatityLabel" />
+                            <Label Background="LightGray">Battery Type</Label>
+                            <Label Name="BatteryTypeLabel" />
                         </UniformGrid>
                     </StackPanel>
                 </Border>
@@ -106,14 +108,14 @@
                     <StackPanel>
                         <Label Content="Production Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                         <UniformGrid Columns="2">
-                            <TextBlock Background="LightGray">Total Unit Pass</TextBlock>
-                            <TextBlock Name="TotalUnitPassTextBlock" />
-                            <TextBlock Background="LightGray">Total Unit Fail</TextBlock>
-                            <TextBlock Name="TotalUnitFailTextBlock" />
-                            <TextBlock Background="LightGray">Total Production Unit</TextBlock>
-                            <TextBlock Name="TotalProductionUnitTextBlock" />
-                            <TextBlock Background="LightGray">Current Yield</TextBlock>
-                            <TextBlock Name="CurrentYieldTextBlock" />
+                            <Label Background="LightGray">Total Unit Pass</Label>
+                            <Label Name="TotalUnitPassLabel" />
+                            <Label Background="LightGray">Total Unit Fail</Label>
+                            <Label Name="TotalUnitFailLabel" />
+                            <Label Background="LightGray">Total Production Unit</Label>
+                            <Label Name="TotalProductionUnitLabel" />
+                            <Label Background="LightGray">Current Yield</Label>
+                            <Label Name="CurrentYieldLabel" />
                         </UniformGrid>
                     </StackPanel>
                 </Border>
