@@ -256,7 +256,7 @@ namespace PentagonHMI
                         {
                             selectedTray = SelectedTray.S2LEFT;
                         }
-                        else
+                        else if(s == Tags.MainPage.PickFailPromptWindowRShuttle.Name)
                         {
                             selectedTray = SelectedTray.S2RIGHT;
                         }
@@ -277,6 +277,7 @@ namespace PentagonHMI
                 pickFailPrompt = null;
                 MainGrid.IsEnabled = true;
                 PickFailCanva.Visibility = Visibility.Collapsed;
+                PickFailContentControl.Content = null;
             }
         }
 
@@ -533,7 +534,7 @@ namespace PentagonHMI
             {
                 uint lastInputTick = lastInputInfo.dwTime;
                 idleTime = envTicks - lastInputTick;
-                idleTime = idleTime / 1000;
+                idleTime /= 1000;
             }
             int value = Int32.Parse(Classes.GlobalFunctions.login_Timeout);
             if(idleTime > value && _Main.MotorPageON == false && _Main.IOPageON == false)
@@ -1434,8 +1435,8 @@ namespace PentagonHMI
                 lastInputInfo.dwTime = 0;
 
                 timer.Enabled = true;
-                timer.Tick += new EventHandler(timer_Tick); // Everytime timer ticks, timer_Tick will be called
-                timer.Interval = (1000) * (1);              // Timer will tick evert second
+                timer.Tick += timer_Tick; // Everytime timer ticks, timer_Tick will be called
+                timer.Interval = 1000 * 1;              // Timer will tick evert second
                                                             // Enable the timer
                 timer.Start();
 

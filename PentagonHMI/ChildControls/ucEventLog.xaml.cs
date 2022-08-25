@@ -631,6 +631,56 @@ namespace PentagonHMI.ChildControls
 
         }
 
+        private DataTable loadLotSummaryTable()
+        {
+            DataTable dtCsv = new DataTable();
+            try
+            {
+                //string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM"), "LotSummary");
+                //string Filename = $"LotSummary_{Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM-dd")}.csv";
+                //string strFilePath = Path.Combine(LogsPath, Filename);
+                //currentPath = strFilePath;
+                //if (File.Exists(strFilePath))
+                //{
+                //    string allLine = "";
+                //    var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                //    using (var sr = new StreamReader(fs))
+                //    {
+                //        allLine = sr.ReadToEnd();
+                //        sr.Close();
+                //        fs.Close();
+                //    }
+
+                //    string[] stringList = allLine.Split('\n');
+                //    foreach (string row in stringList)
+                //    {
+                //        string[] cell = row.Split(',');
+                //        if (stringList[0] == row)
+                //        {
+                //            foreach (string column in cell)
+                //            {
+                //                dtCsv.Columns.Add(column.Trim());
+                //            }
+                //        }
+                //        else
+                //        {
+                //            DataRow dr = dtCsv.NewRow();
+                //            for (int i = 0; i < cell.Length; i++)
+                //            {
+                //                dr[i] = cell[i];
+                //            }
+                //            dtCsv.Rows.Add(dr);
+                //        }
+                //    }
+                //}
+                return dtCsv;
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
+                return dtCsv;
+            }
+        }
         private DataTable loadTestCSVTable()
         {
             DataTable dtCsv = new DataTable();
@@ -1290,6 +1340,28 @@ namespace PentagonHMI.ChildControls
                     break;
                 case "DRYRUN":
                     break;
+                case "LOTSUMMARY":
+                    string LogsPathLotSummary = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM"), "LotSummary");
+                    string FilenameLotSummary = $"LotSummary_{Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM-dd")}.csv";
+                    string strFilePathLotSummary = Path.Combine(LogsPathLotSummary, FilenameLotSummary);
+                    currentPath = strFilePathLotSummary;
+
+                    if (!string.IsNullOrEmpty(currentPath))
+                    {
+                        if (File.Exists(currentPath))
+                        {
+                            FileInfo fi = new FileInfo(currentPath);
+                            Process.Start(fi.Directory.FullName);
+                        }
+                        else
+                        {
+                            currentPath = currentPath.Substring(0, currentPath.LastIndexOf('\\'));
+                            if (!Directory.Exists(currentPath))
+                                Directory.CreateDirectory(currentPath);
+                            Process.Start(currentPath);
+                        }
+                    }
+                    break;
             }
 
             LogMenu.Visibility = Visibility.Collapsed;
@@ -1364,6 +1436,11 @@ namespace PentagonHMI.ChildControls
         {
             Utilities.FileLogger.logButton(strEventLog, "Retrieve Torque Driver Result", MethodBase.GetCurrentMethod().ToString());
             gridTorqueDriverResult.ItemsSource = loadTorqueDriverResultTable().DefaultView;
+        }
+        private void DatePickerLotSummary_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Utilities.FileLogger.logButton(strEventLog, "Retrieve Lot Summary Log", MethodBase.GetCurrentMethod().ToString());
+            gridLotSummary.ItemsSource = loadLotSummaryTable().DefaultView;
         }
 
         private DataTable loadTorqueDriverResultTable()
