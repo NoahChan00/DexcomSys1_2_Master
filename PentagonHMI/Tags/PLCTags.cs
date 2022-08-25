@@ -54,6 +54,11 @@ namespace PentagonHMI.Tags
         public static Tag LotIDOperatorID2 = new Tag("str_FrmSys1_OperatorID", Tag.ATOMIC.STRING);
         public static Tag LotIDLotQuantity2 = new Tag("dint_FrmSys1_Lot_Quantity", Tag.ATOMIC.DINT);
         public static Tag LotIDLotBatteryType2 = new Tag("dint_FrmSys1_BatteryType", Tag.ATOMIC.DINT);
+
+        public static Tag TotalUnitPass = new Tag("Lot_OEE_Tags.dint_Total_Pass", Tag.ATOMIC.DINT);
+        public static Tag TotalUnitFail = new Tag("Lot_OEE_Tags.dint_Total_PartFail", Tag.ATOMIC.DINT);
+        public static Tag TotalProductionUnit = new Tag("Lot_OEE_Tags.dint_TotalProductiveUnit", Tag.ATOMIC.DINT);
+        public static Tag Quality = new Tag("Lot_OEE_Tags.dint_Quality", Tag.ATOMIC.DINT);
     }
 
     public class EngineeringPLCTags

@@ -351,6 +351,10 @@ namespace PentagonHMI.ChildControls
                     int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType2.Name);
                     BatteryTypeTextBlock.Text = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : "Murata";
                 }
+                TotalUnitPassTextBlock.Text = OPCore.Read<int>(Tags.MainPage.TotalUnitPass.Name).ToString();
+                TotalUnitFailTextBlock.Text = OPCore.Read<int>(Tags.MainPage.TotalUnitFail.Name).ToString();
+                TotalProductionUnitTextBlock.Text = OPCore.Read<int>(Tags.MainPage.TotalProductionUnit.Name).ToString();
+                CurrentYieldTextBlock.Text = OPCore.Read<int>(Tags.MainPage.Quality.Name).ToString();
             });
         }
 
