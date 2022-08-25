@@ -92,7 +92,6 @@ namespace PentagonHMI.ChildControls
             Loading,
             TEEP,
             DeltaTime,
-            IncomingPartFail,
         }
 
         private OEEType OEEGrp;
@@ -503,17 +502,6 @@ namespace PentagonHMI.ChildControls
                               new PieSeries { Title = "Standby Time", Fill = Color3, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel }
                           }
                      },
-                     new PieChartBlockModel
-                     {
-                         Chart = OEEChart.IncomingPartFail,
-                         Formula = "Zone 1 Count + Zone 2 Count",
-                         Title = "Incoming Part Fail",
-                         PieInfo = new SeriesCollection
-                         {
-                              new PieSeries { Title = "Zone 1", Fill = Color1, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-                              new PieSeries { Title = "Zone 2", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-                         }
-                     }
             };
 
             DataContext = OEEList;
@@ -521,7 +509,7 @@ namespace PentagonHMI.ChildControls
 
         private double Productive, Standby, Engineering, Shift, NonSchedule, TotalPass, TotalFail,
         IdealCycleTime, TotalCount, EquipmentUpTime, OperationTime, Quality, Performance,
-        Availability, OEE, Loading, Teep, DeltaTime, IncomingPartFail, IncomingPartFail_Z1, IncomingPartFail_Z2;
+        Availability, OEE, Loading, Teep, DeltaTime; 
 
         private void Update()
         {
@@ -674,12 +662,6 @@ namespace PentagonHMI.ChildControls
                         item.PieInfo[0].Values[0] = DeltaTime.To2Dcml();
                         item.PieInfo[1].Values[0] = Productive.To2Dcml();
                         item.PieInfo[2].Values[0] = Standby.To2Dcml();
-                        break;
-
-                    case OEEChart.IncomingPartFail:
-                        item.Value = IncomingPartFail.ToString();
-                        item.PieInfo[0].Values[0] = IncomingPartFail_Z1;
-                        item.PieInfo[1].Values[0] = IncomingPartFail_Z2;
                         break;
 
                     default:
