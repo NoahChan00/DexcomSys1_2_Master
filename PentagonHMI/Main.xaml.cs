@@ -235,7 +235,7 @@ namespace PentagonHMI
         private void CheckPickFail()
         {
             bool allFalse = true;
-            foreach(var s in GlobalFunctions.IsSystem1 ? new List<string> { Tags.MainPage.PickFailPromptWindowPCBA.Name, /*Tags.MainPage.PickFailPromptWindowBattery.Name,*/ } : new List<string> { Tags.MainPage.PickFailPromptWindowLShuttle.Name, Tags.MainPage.PickFailPromptWindowRShuttle.Name })
+            foreach(var s in GlobalFunctions.IsSystem1 ? new List<string> { Tags.MainPage.PickFailPromptWindowPCBA.Name, /*Tags.MainPage.PickFailPromptWindowBattery.Name,*/ } : new List<string> { Tags.MainPage.PickFailPromptWindowLShuttle.Name, Tags.MainPage.PickFailPromptWindowRShuttle.Name, Tags.MainPage.PickFailPRomptWindowUnloadShuttle.Name })
             {
                 bool readedState = _Main.OPC.Read<bool>(s);
                 if(readedState)
@@ -259,6 +259,10 @@ namespace PentagonHMI
                         else if(s == Tags.MainPage.PickFailPromptWindowRShuttle.Name)
                         {
                             selectedTray = SelectedTray.S2RIGHT;
+                        }
+                        else if(s == Tags.MainPage.PickFailPRomptWindowUnloadShuttle.Name)
+                        {
+                            selectedTray = SelectedTray.S2OUTPUT;
                         }
 
 

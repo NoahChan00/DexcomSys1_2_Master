@@ -39,9 +39,14 @@ namespace PentagonHMI.Tags
         // System2
         public static Tag PickFailPromptWindowRShuttle = new Tag("b_RShuttle_Error", Tag.ATOMIC.BOOL);
         public static Tag PickFailPromptWindowLShuttle = new Tag("b_LShuttle_Error", Tag.ATOMIC.BOOL);
+        public static Tag PickFailPRomptWindowUnloadShuttle = new Tag("b_Unload_Error", Tag.ATOMIC.BOOL);
 
         public static Tag PickFailSkipPick = new Tag("b_HMI_AckSkipPick", Tag.ATOMIC.BOOL);
         public static Tag PickFailRetryPick = new Tag("b_HMI_AckRetryPick", Tag.ATOMIC.BOOL);
+
+
+        public static Tag PickFailUnloadSkipPick = new Tag("b_HMI_UnloadAckSkipPick", Tag.ATOMIC.BOOL);
+        public static Tag PickFailUnloadRetryPick = new Tag("b_HMI_UnloadAckRetryPick", Tag.ATOMIC.BOOL);
 
         public static Tag LotID = new Tag("Lot_Info.HMI_LotID", Tag.ATOMIC.STRING);
         public static Tag Mute = new Tag("HMI_Bypass_Buzzer", Tag.ATOMIC.BOOL);

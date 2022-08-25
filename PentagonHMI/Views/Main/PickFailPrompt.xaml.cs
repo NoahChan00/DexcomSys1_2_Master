@@ -22,6 +22,8 @@ namespace PentagonHMI.Views.Main
     /// </summary>
     public partial class PickFailPrompt : UserControl
     {
+        private string skipPickTag;
+        private string retryPickTag;
         public PickFailPrompt(LogicClasses.Main main, SelectedTray selectedTray)
         {
             InitializeComponent();
@@ -29,6 +31,8 @@ namespace PentagonHMI.Views.Main
             string title = "";
             trayMap = new ucTrayMap(main);
             trayMap.RemoveParent();
+            skipPickTag = Tags.MainPage.PickFailSkipPick.Name;
+            retryPickTag = Tags.MainPage.PickFailRetryPick.Name;
             switch(selectedTray)
             {
                 case SelectedTray.S1PCBA:
@@ -50,6 +54,15 @@ namespace PentagonHMI.Views.Main
                     title = "Right Shuttle";
                     TrayContentControl.Content = trayMap.input_RightSlot;
                     trayMap.input_RightSlot.Margin = new Thickness(0);
+                    break;
+                case SelectedTray.S2OUTPUT:
+                    title = "Unload Shuttle";
+                    TrayContentControl.Content = trayMap.output_Slot;
+                    trayMap.output_Slot.Margin = new Thickness(0);
+
+                    // Unload use different Tag
+                    skipPickTag = Tags.MainPage.PickFailUnloadSkipPick.Name;
+                    retryPickTag = Tags.MainPage.PickFailUnloadRetryPick.Name;
                     break;
             }
             TitleLabel.Content = title + " Tray Pick Fail";
@@ -83,36 +96,24 @@ namespace PentagonHMI.Views.Main
 
         bool IsClicked { get; set; } = false;
 
-        private void RetryPickClick(object sender, RoutedEventArgs e)
-        {
-            if(IsClicked)
-            {
-                return;
-            }
-            if(sender is ToggleButton tb)
-            {
-                main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, tb.IsChecked, typeof(bool));
-            }
-        }
-
         private void SkipChecked(object sender, RoutedEventArgs e)
         {
-            main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, true, typeof(bool));
+            main.OPC.Write(skipPickTag, true, typeof(bool));
         }
 
         private void SkipUnchecked(object sender, RoutedEventArgs e)
         {
-            main.OPC.Write(Tags.MainPage.PickFailSkipPick.Name, false, typeof(bool));
+            main.OPC.Write(skipPickTag, false, typeof(bool));
         }
 
         private void RetryPickChecked(object sender, RoutedEventArgs e)
         {
-            main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, true, typeof(bool));
+            main.OPC.Write(retryPickTag, true, typeof(bool));
         }
 
         private void RetryPickUnchecked(object sender, RoutedEventArgs e)
         {
-            main.OPC.Write(Tags.MainPage.PickFailRetryPick.Name, false, typeof(bool));
+            main.OPC.Write(retryPickTag, false, typeof(bool));
         }
     }
     public enum SelectedTray
@@ -121,5 +122,6 @@ namespace PentagonHMI.Views.Main
         S1BATTERY,
         S2LEFT,
         S2RIGHT,
+        S2OUTPUT,
     }
 }
