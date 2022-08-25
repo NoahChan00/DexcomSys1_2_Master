@@ -1,13 +1,56 @@
-﻿<UserControl x:Class="PentagonHMI.VisionView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:PentagonHMI"
-             TextElement.FontSize="16" TextElement.FontWeight="Regular">
+﻿<UserControl x:Class="PentagonHMI.VisionView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:PentagonHMI" TextElement.FontSize="16"
+        TextElement.FontWeight="Regular">
 
-    <Grid x:Name="VisionGroupBox">
-        
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="VisionGroupBox">
+        </Grid>
+
+        <Border Grid.Column="1" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+            <StackPanel>
+                <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                <ScrollViewer>
+                    <UniformGrid Columns="1">
+                        <UniformGrid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="Background" Value="#FF627793" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="16" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                            </Style>
+                        </UniformGrid.Resources>
+                        <Label>Short Shot Fail</Label>
+                        <TextBlock x:Name="ShortShotFailTextBlock" />
+                        <Label>OMFF Fail</Label>
+                        <TextBlock x:Name="OMFFFailTextBlock" />
+                        <Label>Brown Strain Front Fail</Label>
+                        <TextBlock x:Name="BrownStrainFrontFailTextBlock" />
+                        <Label>Battery Clip Surface Fail</Label>
+                        <TextBlock x:Name="BatteryClipSurfaceFailTextBlock" />
+                        <Label>Flashing Fail</Label>
+                        <TextBlock x:Name="FlashingFailTextBlock" />
+                        <Label>FOD Fail</Label>
+                        <TextBlock x:Name="FODFailTextBlock" />
+                        <Label>Live Bug Bubble Fail</Label>
+                        <TextBlock x:Name="LiveBugBubbleFailTextBlock" />
+                        <Label>Brown Strain Back Fail</Label>
+                        <TextBlock x:Name="BrownStrainBackFailTextBlock" />
+                        <Label>Mouse Bite Fail</Label>
+                        <TextBlock x:Name="MouseBiteFailTextBlock" />
+                    </UniformGrid>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
+
     </Grid>
 
 </UserControl>
