@@ -1343,8 +1343,7 @@ namespace PentagonHMI.ChildControls
                 case "LOTSUMMARY":
                     string LogsPathLotSummary = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM"), "LotSummary");
                     string FilenameLotSummary = $"LotSummary_{Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM-dd")}.csv";
-                    string strFilePathLotSummary = Path.Combine(LogsPathLotSummary, FilenameLotSummary);
-                    currentPath = strFilePathLotSummary;
+                    currentPath = Path.Combine(LogsPathLotSummary, FilenameLotSummary);
 
                     if (!string.IsNullOrEmpty(currentPath))
                     {

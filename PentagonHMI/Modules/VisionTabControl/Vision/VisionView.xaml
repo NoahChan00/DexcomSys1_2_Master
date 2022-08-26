@@ -14,9 +14,9 @@
         <Border Grid.Column="1" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
             <StackPanel>
                 <Label Content="Vision Fail Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                <ScrollViewer>
-                    <UniformGrid Columns="1">
-                        <UniformGrid.Resources>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="VisionFailInfoStackPanel">
+                        <StackPanel.Resources>
                             <Style TargetType="Label">
                                 <Setter Property="Background" Value="#FF627793" />
                                 <Setter Property="Foreground" Value="White" />
@@ -31,44 +31,9 @@
                                 <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="HorizontalAlignment" Value="Center" />
                             </Style>
-                        </UniformGrid.Resources>
-                        <Label>Short Shot Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="ShortShotFailTextBlock" />
-                        </Border>
-                        <Label>OMFF Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="OMFFFailTextBlock" />
-                        </Border>
-                        <Label>Brown Strain Front Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="BrownStrainFrontFailTextBlock" />
-                        </Border>
-                        <Label>Battery Clip Surface Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="BatteryClipSurfaceFailTextBlock" />
-                        </Border>
-                        <Label>Flashing Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="FlashingFailTextBlock" />
-                        </Border>
-                        <Label>FOD Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="FODFailTextBlock" />
-                        </Border>
-                        <Label>Live Bug Bubble Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="LiveBugBubbleFailTextBlock" />
-                        </Border>
-                        <Label>Brown Strain Back Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="BrownStrainBackFailTextBlock" />
-                        </Border>
-                        <Label>Mouse Bite Fail</Label>
-                        <Border>
-                            <TextBlock x:Name="MouseBiteFailTextBlock" />
-                        </Border>
-                    </UniformGrid>
+                        </StackPanel.Resources>
+                        <!-- Generate from xaml.cs -->
+                    </StackPanel>
                 </ScrollViewer>
             </StackPanel>
         </Border>

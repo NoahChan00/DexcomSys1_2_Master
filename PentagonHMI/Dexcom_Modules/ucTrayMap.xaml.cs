@@ -190,18 +190,12 @@ namespace PentagonHMI.ChildControls
                     ugrd_LeftTray.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_L_Shuttle_Slot.Replace("1", i.ToString())
                     });
                     ugrd_RightTray.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_R_Shuttle_Slot.Replace("1", i.ToString())
                     });
@@ -212,9 +206,6 @@ namespace PentagonHMI.ChildControls
                     pcba_SlotTray.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_PCBA_Slot.Replace("1", i.ToString())
                     });
@@ -225,9 +216,6 @@ namespace PentagonHMI.ChildControls
                     bat_SlotTray.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_Btry_Slot.Replace("1", i.ToString())
                     });
@@ -241,18 +229,12 @@ namespace PentagonHMI.ChildControls
                     input_LeftSlot.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_L_Shuttle_Slot.Replace("1", i.ToString())
                     });
                     input_RightSlot.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_R_Input_Slot.Replace("1", i.ToString())
                     });
@@ -264,9 +246,6 @@ namespace PentagonHMI.ChildControls
                     output_Slot.Children.Add(new Button
                     {
                         Tag = i.ToString(),
-                        Height = 25,
-                        Width = 25,
-                        Margin = new Thickness(1),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
                         CommandParameter = Tag_Output_Slot.Replace("1", i.ToString())
                     });

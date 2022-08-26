@@ -156,12 +156,19 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Right Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
-                            <Grid.Background>
-                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1LeftRight.png"/>
-                            </Grid.Background>
-
-                            <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
+                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <UniformGrid Name="ugrd_RightTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 45" FlowDirection="RightToLeft">
+                                <UniformGrid.Background>
+                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1LeftRight.png" />
+                                </UniformGrid.Background>
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="10" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
+                            </UniformGrid>
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -196,13 +203,16 @@
 
                         <Label Content="PCBA Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Name="pcba_SlotTrayGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="450">
-                            <!--<Grid.Background>-->
-                            <!-- Pending correct raotation image-->
-                                <!--<ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1PCBA.png"/>-->
-                            <!--</Grid.Background>-->
-
-                            <UniformGrid Name="pcba_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 200" FlowDirection="RightToLeft" />
+                        <Grid Name="pcba_SlotTrayGrid" Grid.Row="1">
+                            <UniformGrid Name="pcba_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="25 120 0 0" FlowDirection="RightToLeft">
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="5" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
+                            </UniformGrid>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -210,7 +220,7 @@
                                 <!--<Button Click="Reinspect_Click" Tag="pcba" Content="Reinspect Tray" FontSize="15" Margin="5" Padding="10" />-->
 
                                 <Button Name="PCBASlotButton" Click="ChangeTray_Click" Tag="HMI_PCBA_ReqChangeTray" Content="Change Tray" FontSize="15"
-                                        Margin="5" Padding="10"/>
+                                        Margin="5" Padding="10" />
 
                                 <!--<TextBlock Text="Purge Left Rack" FontSize="15" Margin="5" TextAlignment="Center" Style="{StaticResource Default}" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -234,12 +244,20 @@
                             <ColumnDefinition Width="200" />
                         </Grid.ColumnDefinitions>
                         <Label Content="Left Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="30,2,2,0" />
-                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
-                            <Grid.Background>
-                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1LeftRight.png"/>
-                            </Grid.Background>
+                        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
 
-                            <UniformGrid Name="ugrd_LeftTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="ugrd_LeftTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 45" FlowDirection="RightToLeft">
+                                <UniformGrid.Background>
+                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1LeftRight.png" />
+                                </UniformGrid.Background>
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="10" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
+                            </UniformGrid>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -271,7 +289,15 @@
                         <Label Content="Battery Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
                         <Grid Name="bat_SlotTrayGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft" />
+                            <UniformGrid Name="bat_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0" FlowDirection="RightToLeft">
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="10" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
+                            </UniformGrid>
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="2">
@@ -318,11 +344,19 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Left Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Name="input_LeftSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
-                            <Grid.Background>
-                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2InputLeftRight.png"/>
-                            </Grid.Background>
-                            <UniformGrid Name="input_LeftSlot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90" FlowDirection="RightToLeft">
+                        <Grid Name="input_LeftSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <UniformGrid Name="input_LeftSlot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 45" FlowDirection="RightToLeft">
+                                <UniformGrid.Background>
+                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2InputLeftRight.png" />
+                                </UniformGrid.Background>
+
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="15" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
                             </UniformGrid>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -354,13 +388,21 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Input Right Slot" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid x:Name="input_RightSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Height="300">
-                            <Grid.Background>
-                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2InputLeftRight.png"/>
-                            </Grid.Background>
+                        <Grid x:Name="input_RightSlotGrid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <UniformGrid Name="input_RightSlot" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft"
+                                    Margin="0 45">
+                                <UniformGrid.Background>
+                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2InputLeftRight.png" />
+                                </UniformGrid.Background>
 
-                            <UniformGrid Name="input_RightSlot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 90"
-                                    FlowDirection="RightToLeft" />
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="15" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
+                            </UniformGrid>
                         </Grid>
 
                         <Grid Grid.Column="2" Grid.Row="1">
@@ -395,12 +437,19 @@
                         </Grid.ColumnDefinitions>
                         <Label Content="Output Slot Tracking" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
-                        <Grid Name="output_Slot_Grid" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" >
-                            <Grid.Background>
-                                <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2Output.jpg"/>
-                            </Grid.Background>
-
-                            <UniformGrid Name="output_Slot" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 200" FlowDirection="RightToLeft" />
+                        <Grid Name="output_Slot_Grid" Grid.Row="1">
+                            <UniformGrid Name="output_Slot" HorizontalAlignment="Center" VerticalAlignment="Center" FlowDirection="RightToLeft" Margin="0 25">
+                                <UniformGrid.Background>
+                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S2Output.jpg" />
+                                </UniformGrid.Background>
+                                <UniformGrid.Resources>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Margin" Value="15" />
+                                        <Setter Property="Height" Value="30" />
+                                        <Setter Property="Width" Value="30" />
+                                    </Style>
+                                </UniformGrid.Resources>
+                            </UniformGrid>
                         </Grid>
                         <Grid Grid.Column="2" Grid.Row="1">
                             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
