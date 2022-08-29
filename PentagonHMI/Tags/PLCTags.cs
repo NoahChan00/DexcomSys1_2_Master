@@ -61,7 +61,7 @@ namespace PentagonHMI.Tags
         public static Tag LotIDLotBatteryType2 = new Tag("dint_FrmSys1_BatteryType", Tag.ATOMIC.DINT);
 
         public static Tag TotalUnitPass = new Tag("Lot_OEE_Tags.dint_Total_Pass", Tag.ATOMIC.DINT);
-        public static Tag TotalUnitFail = new Tag("Lot_OEE_Tags.dint_Total_PartFail", Tag.ATOMIC.DINT);
+        public static Tag TotalUnitFail = new Tag("Lot_OEE_Tags.dint_Total_Fail", Tag.ATOMIC.DINT);
         public static Tag TotalProductionUnit = new Tag("Lot_OEE_Tags.dint_TotalProductiveUnit", Tag.ATOMIC.DINT);
         public static Tag Quality = new Tag("Lot_OEE_Tags.dint_Quality", Tag.ATOMIC.REAL);
     }

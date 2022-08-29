@@ -53,6 +53,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Shift_OEE_DINT_OEE = new Tag { Name = "Shift_OEE_Tags.DINT_OEE", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Total_Pass = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Total_Fail = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Total_TotalProductiveUnit = new Tag { Name = "Shift_OEE_Tags.dint_Total_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
 
         private Tag Tag_Lot_OEE_str_HMI_OEEStartDateTime = new Tag { Name = "Lot_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
         private Tag Tag_Lot_OEE_dint_MachineUpTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
@@ -72,7 +73,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Lot_OEE_dint_Quality = new Tag { Name = "Lot_OEE_Tags.dint_Quality", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_Total_Pass = new Tag { Name = "Lot_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_Total_Fail = new Tag { Name = "Lot_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
-
+        private Tag Tag_Lot_OEE_dint_TotalProductiveUnit = new Tag { Name = "Lot_OEE_Tags.dint_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
         public enum Grouping
         {
             stringtime,
@@ -276,6 +277,24 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Shift_OEE_DINT_OEE.Name,
                            Group = Grouping.number
                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Total Pass",
+                             Key=  Tag_Shift_OEE_DINT_Total_Pass.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Total Fail",
+                             Key=  Tag_Shift_OEE_DINT_Total_Fail.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Total Productive Unit",
+                             Key=  Tag_Shift_OEE_DINT_Total_TotalProductiveUnit.Name,
+                             Group = Grouping.number
+                         },
                     },
                 };
             }
@@ -382,19 +401,26 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Lot_OEE_dint_Quality.Name,
                            Group =  Grouping.percent
                         },
-                        // new InfoBlockModel
-                        //{
-                        //   Title = "Total Pass",
-                        //   Key =  Tag_Lot_OEE_dint_Total_Pass.Name,
-                        //   Group =  Grouping.number
-                        //},
-                        // new InfoBlockModel
-                        //{
-                        //   Title = "Total Fail",
-                        //   Key = Tag_Lot_OEE_dint_Total_Fail.Name,
-                        //   Group =  Grouping.number
-                        //},
+                         new InfoBlockModel
+                        {
+                           Title = "Total Pass",
+                           Key =  Tag_Lot_OEE_dint_Total_Pass.Name,
+                           Group =  Grouping.number
+                        },
+                         new InfoBlockModel
+                        {
+                           Title = "Total Fail",
+                           Key = Tag_Lot_OEE_dint_Total_Fail.Name,
+                           Group =  Grouping.number
+                        },
+                         new InfoBlockModel
+                         {
+                             Title= "Total Productive Unit",
+                             Key=  Tag_Lot_OEE_dint_TotalProductiveUnit.Name,
+                             Group = Grouping.number
+                         },
                     }
+
                 };
             }
 

@@ -631,8 +631,8 @@ namespace PentagonHMI
                                 csv.WriteField("Sprint UPH");
                                 csv.WriteField("Soft Jam");
                                 csv.WriteField("Hard Jam");
-                                csv.WriteField("MTBF");
                                 csv.WriteField("MTBA");
+                                csv.WriteField("MTBF");
                                 csv.WriteField("Overall Total Yield (%)");
                                 //csv.WriteField("TOPM Enabled (Lot Start)");
                                 //csv.WriteField("TOPM Enabled (Lot End)");
@@ -701,8 +701,8 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<int>(SprintUPH));
                             csv.WriteField(OPC.Read<int>(SoftJam));
                             csv.WriteField(OPC.Read<int>(HardJam));
-                            csv.WriteField(OPC.Read<int>(MTBF));
                             csv.WriteField(OPC.Read<int>(MTBA));
+                            csv.WriteField(OPC.Read<int>(MTBF));
                             csv.WriteField(FormatString(Grouping.percent, OPC.Read<int>(OverallTotalYield)));
                             //csv.WriteField(OPC.Read<int>(TOPMEnabledLotStart));
                             //csv.WriteField(OPC.Read<int>(TOPMEnabledLotEnd));

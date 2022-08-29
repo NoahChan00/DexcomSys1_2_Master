@@ -271,7 +271,7 @@ namespace PentagonHMI.ChildControls
                     bool isAdminOrPenta = new List<string>() { "ADMIN", "PENTA" }.Contains(_Main.UserAccessLevel.ToUpper());
                     if(GlobalFunctions.IsSystem1)
                     {
-                        BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
+                        //BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
                         PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), PRow * PCol);
                         LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
                         RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
@@ -307,13 +307,13 @@ namespace PentagonHMI.ChildControls
                                     string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
                                     tb.Background = Dic_ResultColor[result];
                                 }
-                            if(BatAry != null)
-                                foreach(var item in bat_SlotTray.Children)
-                                {
-                                    Button tb = item as Button;
-                                    string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
+                            //if(BatAry != null)
+                            //    foreach(var item in bat_SlotTray.Children)
+                            //    {
+                            //        Button tb = item as Button;
+                            //        string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                            //        tb.Background = Dic_ResultColor[result];
+                            //    }
                         }
                         else
                         {

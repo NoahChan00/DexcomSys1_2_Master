@@ -58,6 +58,10 @@ namespace PentagonHMI.ChildControls
             datePickerUPH.DisplayDate = DateTime.Now;
             datePickerUPH.Text = DateTime.Now.ToString();
 
+
+            datePickerLotSummary.DisplayDate = DateTime.Now;
+            datePickerLotSummary.Text = DateTime.Now.ToString();
+
             datePickerAlarm.DisplayDate = DateTime.Now;
             datePickerAlarm.Text = DateTime.Now.ToString();
 
