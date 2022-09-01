@@ -33,12 +33,12 @@ namespace PentagonHMI.ChildControls
         //const string Tag_Battery_ChangeTray = "HMI_Battery_ReqChangeTray";
         //const string Tag_TrayRow = "HMI_Tags.TrayRowNo";
         //const string Tag_TrayCol = "HMI_Tags.TrayColumnNo";
-        private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        //private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
 
         // Dexcom 1 Tag ?
         private const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking[1]";//Length 16
         private const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking[1]";//Length 16
-        private const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
+        //private const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
         private const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
 
         //System 2 - Tray Map HMI
@@ -52,14 +52,14 @@ namespace PentagonHMI.ChildControls
         private int Col = 0;
         private int PRow = 0;
         private int PCol = 0;
-        private int BRow = 0;
-        private int BCol = 0;
+        //private int BRow = 0;
+        //private int BCol = 0;
         private int ORow = 0;
         private int OCol = 0;
-        private int BatType = 0;
+        //private int BatType = 0;
 
         private Dictionary<string, Brush> Dic_ResultColor = new Dictionary<string, Brush>();
-        private Dictionary<int, string> Dic_TrayMapSize = new Dictionary<int, string>();
+        //private Dictionary<int, string> Dic_TrayMapSize = new Dictionary<int, string>();
 
         public ucTrayMap(LogicClasses.Main main)
         {
@@ -354,11 +354,11 @@ namespace PentagonHMI.ChildControls
             _Main.TrayMapPageOn = false;
         }
 
-        private void Reinspect_Click(object sender, RoutedEventArgs e)
-        {
-            string tag = (sender as Button).Tag.ToString();
-            //OPCore.Write(tag == "L" ? Tag_L_Reinspect : tag == "R" ? Tag_R_Reinspect : "", true);
-        }
+        //private void Reinspect_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string tag = (sender as Button).Tag.ToString();
+        //    //OPCore.Write(tag == "L" ? Tag_L_Reinspect : tag == "R" ? Tag_R_Reinspect : "", true);
+        //}
 
         private void ChangeTray_Click(object sender, RoutedEventArgs e)
         {
@@ -368,13 +368,13 @@ namespace PentagonHMI.ChildControls
             //OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
         }
 
-        private void Purge_Click(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            ToggleButton tbtn = sender as ToggleButton;
-            string tag = tbtn.Tag.ToString();
-            // Tag from 0
-            //OPCore.Write(tag == "L" ? Tag_L_PurgeRack : tag == "R" ? Tag_R_PurgeRack : "", tbtn.IsChecked);
-        }
+        //private void Purge_Click(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    ToggleButton tbtn = sender as ToggleButton;
+        //    string tag = tbtn.Tag.ToString();
+        //    // Tag from 0
+        //    //OPCore.Write(tag == "L" ? Tag_L_PurgeRack : tag == "R" ? Tag_R_PurgeRack : "", tbtn.IsChecked);
+        //}
 
         private void ButtonToggleSlotCommand(string tagName)
         {
