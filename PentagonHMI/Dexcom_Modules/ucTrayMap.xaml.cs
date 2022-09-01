@@ -106,40 +106,40 @@ namespace PentagonHMI.ChildControls
             PCol = 10;
             ORow = 10;
             OCol = 6;
-//#if !DEBUG
-//            if(GlobalFunctions.IsSystem1)
-//                BatType = OPCore.Read<int>(Tag_Btry_dint);
-//            else
-//                BatType = 2;
-//#else
+            //#if !DEBUG
+            //            if(GlobalFunctions.IsSystem1)
+            //                BatType = OPCore.Read<int>(Tag_Btry_dint);
+            //            else
+            //                BatType = 2;
+            //#else
 
-//            BatType = 2;
-//#endif
+            //            BatType = 2;
+            //#endif
 
-//            switch(BatType)
-//            {
-//                // Maxell
-//                case 2:
-//                    BRow = 10;
-//                    BCol = 10;
-//                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
-//                    break;
-//                // Panasonic
-//                case 5:
-//                    BRow = 4;
-//                    BCol = 10;
-//                    break;
-//                // Murata
-//                case 6:
-//                    BRow = 10;
-//                    BCol = 5;
-//                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
-//                    break;
+            //            switch(BatType)
+            //            {
+            //                // Maxell
+            //                case 2:
+            //                    BRow = 10;
+            //                    BCol = 10;
+            //                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
+            //                    break;
+            //                // Panasonic
+            //                case 5:
+            //                    BRow = 4;
+            //                    BCol = 10;
+            //                    break;
+            //                // Murata
+            //                case 6:
+            //                    BRow = 10;
+            //                    BCol = 5;
+            //                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
+            //                    break;
 
-//                default:
-//                    MessageBox.Show("Failed to read battery type from PLC.");
-//                    break;
-//            }
+            //                default:
+            //                    MessageBox.Show("Failed to read battery type from PLC.");
+            //                    break;
+            //            }
 
             BrushConverter bc = new BrushConverter();
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
@@ -275,6 +275,36 @@ namespace PentagonHMI.ChildControls
                         LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
                         RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
                         PCBASlotButton.IsEnabled /*= BatterySlotButton.IsEnabled*/ = isAdminOrPenta;
+
+
+                        if(LAry != null)
+                            foreach(var item in ugrd_LeftTray.Children)
+                            {
+                                Button tb = item as Button;
+                                string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if(RAry != null)
+                            foreach(var item in ugrd_RightTray.Children)
+                            {
+                                Button tb = item as Button;
+                                string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if(PCBAry != null)
+                            foreach(var item in pcba_SlotTray.Children)
+                            {
+                                Button tb = item as Button;
+                                string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        //if(BatAry != null)
+                        //    foreach(var item in bat_SlotTray.Children)
+                        //    {
+                        //        Button tb = item as Button;
+                        //        string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                        //        tb.Background = Dic_ResultColor[result];
+                        //    }
                     }
                     else
                     {
@@ -283,62 +313,28 @@ namespace PentagonHMI.ChildControls
                         OutputAry = OPCore.Read<short[]>(Tag_Output_Slot, typeof(short), ORow * OCol);
                         InputLeftSlotButton.IsEnabled = InputRightSlotButton.IsEnabled = OutputSlotButton.IsEnabled = isAdminOrPenta;
 
-                        if(GlobalFunctions.IsSystem1)
-                        {
-                            if(LAry != null)
-                                foreach(var item in ugrd_LeftTray.Children)
-                                {
-                                    Button tb = item as Button;
-                                    string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
-                            if(RAry != null)
-                                foreach(var item in ugrd_RightTray.Children)
-                                {
-                                    Button tb = item as Button;
-                                    string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
-                            if(PCBAry != null)
-                                foreach(var item in pcba_SlotTray.Children)
-                                {
-                                    Button tb = item as Button;
-                                    string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
-                            //if(BatAry != null)
-                            //    foreach(var item in bat_SlotTray.Children)
-                            //    {
-                            //        Button tb = item as Button;
-                            //        string result = BatAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                            //        tb.Background = Dic_ResultColor[result];
-                            //    }
-                        }
-                        else
-                        {
-                            if(InputL != null)
-                                foreach(var item in input_LeftSlot.Children)
-                                {
-                                    Button tb = item as Button;
-                                    string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
-                            if(InputR != null)
-                                foreach(var item in input_RightSlot.Children)
-                                {
-                                    Button tb = item as Button;
-                                    string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
-                            if(OutputAry != null)
-                                foreach(var item in output_Slot.Children)
-                                {
-                                    Button tb = item as Button;
-                                    // Somehow tb.Tag start from 0 unlike above 2
-                                    string result = OutputAry[Convert.ToInt32(tb.Tag) - 1].ToString();
-                                    tb.Background = Dic_ResultColor[result];
-                                }
-                        }
+                        if(InputL != null)
+                            foreach(var item in input_LeftSlot.Children)
+                            {
+                                Button tb = item as Button;
+                                string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if(InputR != null)
+                            foreach(var item in input_RightSlot.Children)
+                            {
+                                Button tb = item as Button;
+                                string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Background = Dic_ResultColor[result];
+                            }
+                        if(OutputAry != null)
+                            foreach(var item in output_Slot.Children)
+                            {
+                                Button tb = item as Button;
+                                // Somehow tb.Tag start from 0 unlike above 2
+                                string result = OutputAry[Convert.ToInt32(tb.Tag) - 1].ToString();
+                                tb.Background = Dic_ResultColor[result];
+                            }
                     }
                 }
                 catch(Exception exception)
@@ -368,7 +364,6 @@ namespace PentagonHMI.ChildControls
         {
             string tag = (sender as Button).Tag.ToString();
 
-            // Just change tag to PLC address. WHY SO HASSLE!
             OPCore.Write(tag, true, typeof(bool));
             //OPCore.Write(tag == "L" ? Tag_L_ChangeTray : tag == "R" ? Tag_R_ChangeTray : tag == "pcba" ? Tag_PCBA_ChangeTray : tag == "battery" ? Tag_Battery_ChangeTray : tag == "inputLeft_Change" ? Tag_L_Input_Slot : tag == "inputRight_Change" ? Tag_R_Input_Slot : tag == "Output_Change" ? Output_Change_Tray : "", true);
         }
