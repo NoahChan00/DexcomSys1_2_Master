@@ -164,7 +164,7 @@ namespace PentagonHMI
             try
             {
                 string ErrMsg = string.Empty;
-                if (GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.ARCADIA_Main) // !!
+                if (GlobalFunctions.ProjectType== ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.ARCADIA_Main) // !!
                 {
                     try
                     {
@@ -676,7 +676,7 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<string>(FirmwareVer));
                             csv.WriteField(OPC.Read<string>(ManufactureDate));
                             csv.WriteField(OPC.Read<string>(ExpirationDate));
-                            csv.WriteField(OPC.Read<int>(OperatorID));
+                            csv.WriteField(OPC.Read<string>(OperatorID));
                             csv.WriteField(OPC.Read<string>(StartDateTime)); // start date time
                             csv.WriteField(OPC.Read<int>(SystemUpTime));
                             csv.WriteField(OPC.Read<int>(OperationTime));
@@ -703,7 +703,7 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<int>(HardJam));
                             csv.WriteField(OPC.Read<int>(MTBA));
                             csv.WriteField(OPC.Read<int>(MTBF));
-                            csv.WriteField(FormatString(Grouping.percent, OPC.Read<int>(OverallTotalYield)));
+                            csv.WriteField(FormatString(Grouping.percent, OPC.Read<double>(OverallTotalYield)));
                             //csv.WriteField(OPC.Read<int>(TOPMEnabledLotStart));
                             //csv.WriteField(OPC.Read<int>(TOPMEnabledLotEnd));
                             //csv.WriteField(OPC.Read<int>(TOPM1P));

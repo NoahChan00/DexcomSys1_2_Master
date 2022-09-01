@@ -53,7 +53,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Shift_OEE_DINT_OEE = new Tag { Name = "Shift_OEE_Tags.DINT_OEE", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Total_Pass = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Total_Fail = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
-        private Tag Tag_Shift_OEE_DINT_Total_TotalProductiveUnit = new Tag { Name = "Shift_OEE_Tags.dint_Total_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Total_TotalProductiveUnit = new Tag { Name = "Shift_OEE_Tags.dint_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
 
         private Tag Tag_Lot_OEE_str_HMI_OEEStartDateTime = new Tag { Name = "Lot_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
         private Tag Tag_Lot_OEE_dint_MachineUpTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
