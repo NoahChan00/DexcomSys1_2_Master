@@ -204,7 +204,7 @@
                         <Label Content="PCBA Slot Tracking Tray" Grid.ColumnSpan="2" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18"
                                 Padding="30,2,2,0" />
                         <Grid Name="pcba_SlotTrayGrid" Grid.Row="1">
-                            <UniformGrid Name="pcba_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 80 0 0"
+                            <UniformGrid Name="pcba_SlotTray" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20 100 0 0"
                                     FlowDirection="RightToLeft">
                                 <UniformGrid.Resources>
                                     <Style TargetType="Button">
