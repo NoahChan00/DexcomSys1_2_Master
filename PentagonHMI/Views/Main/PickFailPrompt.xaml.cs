@@ -39,10 +39,10 @@ namespace PentagonHMI.Views.Main
                     title = "PCBA";
                     TrayContentControl.Content = trayMap.pcba_SlotTray;
                     break;
-                case SelectedTray.S1BATTERY:
-                    title = "Battery";
-                    TrayContentControl.Content = trayMap.bat_SlotTray;
-                    break;
+                //case SelectedTray.S1BATTERY:
+                //    title = "Battery";
+                //    TrayContentControl.Content = trayMap.bat_SlotTray;
+                //    break;
                 case SelectedTray.S2LEFT:
                     title = "Left Shuttle";
                     TrayContentControl.Content = trayMap.input_LeftSlot;

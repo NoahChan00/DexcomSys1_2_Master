@@ -66,7 +66,7 @@ namespace PentagonHMI.ChildControls
             InitializeComponent();
             _Main = main;
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP))
+            if(!OPCore.Connect(Info.OPC.IP))
                 return;
 #endif
             Initialize();
@@ -106,41 +106,40 @@ namespace PentagonHMI.ChildControls
             PCol = 10;
             ORow = 10;
             OCol = 6;
-#if !DEBUG
-            if (GlobalFunctions.IsSystem1)
-                BatType = OPCore.Read<int>(Tag_Btry_dint);
-            else
-                BatType = 2;
-#else
+//#if !DEBUG
+//            if(GlobalFunctions.IsSystem1)
+//                BatType = OPCore.Read<int>(Tag_Btry_dint);
+//            else
+//                BatType = 2;
+//#else
 
-            BatType = 2;
-#endif
+//            BatType = 2;
+//#endif
 
-            switch(BatType)
-            {
-                // Maxell
-                case 2:
-                    BRow = 10;
-                    BCol = 10;
-                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
-                    break;
-                // Panasonic
-                case 5:
-                    BRow = 4;
-                    BCol = 10;
-                    break;
-                // Murata
-                case 6:
-                    BRow = 10;
-                    BCol = 5;
-                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
-                    break;
+//            switch(BatType)
+//            {
+//                // Maxell
+//                case 2:
+//                    BRow = 10;
+//                    BCol = 10;
+//                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
+//                    break;
+//                // Panasonic
+//                case 5:
+//                    BRow = 4;
+//                    BCol = 10;
+//                    break;
+//                // Murata
+//                case 6:
+//                    BRow = 10;
+//                    BCol = 5;
+//                    bat_SlotTray.Margin = new Thickness(0, 10, 0, 0);
+//                    break;
 
-                default:
-                    MessageBox.Show("Failed to read battery type from PLC.");
-                    break;
-            }
-            //#endif
+//                default:
+//                    MessageBox.Show("Failed to read battery type from PLC.");
+//                    break;
+//            }
 
             BrushConverter bc = new BrushConverter();
             DataTable dt = SQLer.Exec_DTSelect("SELECT * FROM TrayMapColor");
@@ -169,8 +168,8 @@ namespace PentagonHMI.ChildControls
                 ugrd_RightTray.Columns = Col;
                 pcba_SlotTray.Rows = PRow;
                 pcba_SlotTray.Columns = PCol;
-                bat_SlotTray.Rows = BRow;
-                bat_SlotTray.Columns = BCol;
+                //bat_SlotTray.Rows = BRow;
+                //bat_SlotTray.Columns = BCol;
             }
             else
             {
@@ -210,16 +209,16 @@ namespace PentagonHMI.ChildControls
                         CommandParameter = Tag_PCBA_Slot.Replace("1", i.ToString())
                     });
                 }
-                int totalBattery = BRow * BCol;
-                for(int i = 1; i <= totalBattery; i++)
-                {
-                    bat_SlotTray.Children.Add(new Button
-                    {
-                        Tag = i.ToString(),
-                        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                        CommandParameter = Tag_Btry_Slot.Replace("1", i.ToString())
-                    });
-                }
+                //int totalBattery = BRow * BCol;
+                //for(int i = 1; i <= totalBattery; i++)
+                //{
+                //    bat_SlotTray.Children.Add(new Button
+                //    {
+                //        Tag = i.ToString(),
+                //        Command = new RelayCommand<string>(ButtonToggleSlotCommand),
+                //        CommandParameter = Tag_Btry_Slot.Replace("1", i.ToString())
+                //    });
+                //}
             }
             else
             {
@@ -230,7 +229,7 @@ namespace PentagonHMI.ChildControls
                     {
                         Tag = i.ToString(),
                         Command = new RelayCommand<string>(ButtonToggleSlotCommand),
-                        CommandParameter = Tag_L_Shuttle_Slot.Replace("1", i.ToString())
+                        CommandParameter = Tag_L_Input_Slot.Replace("1", i.ToString())
                     });
                     input_RightSlot.Children.Add(new Button
                     {
@@ -259,7 +258,7 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
-                    short[] BatAry = default;
+                    //short[] BatAry = default;
                     short[] PCBAry = default;
                     short[] LAry = default;
                     short[] RAry = default;
@@ -275,7 +274,7 @@ namespace PentagonHMI.ChildControls
                         PCBAry = OPCore.Read<short[]>(Tag_PCBA_Slot, typeof(short), PRow * PCol);
                         LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
                         RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
-                        PCBASlotButton.IsEnabled = BatterySlotButton.IsEnabled = isAdminOrPenta;
+                        PCBASlotButton.IsEnabled /*= BatterySlotButton.IsEnabled*/ = isAdminOrPenta;
                     }
                     else
                     {
@@ -405,7 +404,7 @@ namespace PentagonHMI.ChildControls
         public void RemoveParent()
         {
             // Use for other view, have to disconnect then only can utilize.
-            new List<Grid> { input_LeftSlotGrid, input_RightSlotGrid,output_Slot_Grid, pcba_SlotTrayGrid, bat_SlotTrayGrid }.ForEach(x => x.Children.Clear());
+            new List<Grid> { input_LeftSlotGrid, input_RightSlotGrid, output_Slot_Grid, pcba_SlotTrayGrid, /*bat_SlotTrayGrid*/ }.ForEach(x => x.Children.Clear());
         }
     }
 }
