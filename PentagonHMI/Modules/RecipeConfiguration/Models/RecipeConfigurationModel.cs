@@ -5,13 +5,15 @@ namespace PentagonHMI
     public class RecipeConfigurationModel : ViewModelBase
     {
         #region PublicProperties
+
         private string recipeName = string.Empty;
+
         public string RecipeName
         {
             get { return recipeName; }
             set
             {
-                if (recipeName != value)
+                if(recipeName != value)
                 {
                     recipeName = value;
                     RaisePropertyChanged(nameof(RecipeName));
@@ -20,12 +22,13 @@ namespace PentagonHMI
         }
 
         private int mPNMaxCount = 0;
+
         public int MPNMaxCount
         {
             get { return mPNMaxCount; }
             set
             {
-                if (mPNMaxCount != value)
+                if(mPNMaxCount != value)
                 {
                     mPNMaxCount = value;
                     RaisePropertyChanged(nameof(MPNMaxCount));
@@ -34,18 +37,20 @@ namespace PentagonHMI
         }
 
         private string trayImage = string.Empty;
+
         public string TrayImage
         {
             get { return trayImage; }
             set
             {
-                if (trayImage != value)
+                if(trayImage != value)
                 {
                     trayImage = value;
                     RaisePropertyChanged(nameof(TrayImage));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

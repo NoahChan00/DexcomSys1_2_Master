@@ -9,12 +9,15 @@ namespace PentagonHMI
     public class PrinterService
     {
         #region PrivateFields
+
         private List<PrinterModel> printerList = new List<PrinterModel>();
         private LogicClasses.Main _Main = null;
         //private TagGroup tgrp_Trigger = new TagGroup();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public PrinterService(ref LogicClasses.Main _main)
         {
             try
@@ -22,14 +25,16 @@ namespace PentagonHMI
                 initializePrinter();
                 initializeOpc(_main);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializePrinter()
         {
             try
@@ -125,13 +130,13 @@ namespace PentagonHMI
                         //tgrp_Trigger.AddTag(x.TriggerPrintTag);
                         //tgrp_Trigger.AddTag(x.LabelCodeTag);
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 });
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -144,14 +149,16 @@ namespace PentagonHMI
                 _Main = _main;
                 _Main.OnFastUpdate += main_Home_OnUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         //private void Update()
         //{
         //    _Main.MyPLC.GroupRead(tgrp_Trigger);
@@ -174,7 +181,6 @@ namespace PentagonHMI
         //    });
         //}
 
-
         private void main_Home_OnUpdate()
         {
             try
@@ -185,15 +191,15 @@ namespace PentagonHMI
                     {
                         _Main.MyPLC.ReadTag(x.TriggerPrintTag);
 
-                        if (x.TriggerPrintTag.Value != null)
+                        if(x.TriggerPrintTag.Value != null)
                         {
-                            if (Convert.ToBoolean(x.TriggerPrintTag.Value))
+                            if(Convert.ToBoolean(x.TriggerPrintTag.Value))
                             {
                                 x.TriggerPrintTag.Value = false;
                                 _Main.MyPLC.WriteTag(x.TriggerPrintTag);
 
                                 _Main.MyPLC.ReadTag(x.LabelCodeTag);
-                                if (x.LabelCodeTag.Value == null)
+                                if(x.LabelCodeTag.Value == null)
                                 {
                                     x.TriggerPrintDoneTag.Value = false;
                                     x.TriggerPrintFailTag.Value = true;
@@ -202,7 +208,7 @@ namespace PentagonHMI
                                 {
                                     string text = File.ReadAllText(x.LabelFileDirectory);
 
-                                    if (text.Contains("UFO>51234>6->51234>65") && text.Contains("UFO1234-12345"))
+                                    if(text.Contains("UFO>51234>6->51234>65") && text.Contains("UFO1234-12345"))
                                     {
                                         text = text.Replace("UFO>51234>6->51234>65", x.LabelCodeTag.Value.ToString());
                                         text = text.Replace("UFO1234-12345", x.LabelCodeTag.Value.ToString());
@@ -223,17 +229,18 @@ namespace PentagonHMI
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 });
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

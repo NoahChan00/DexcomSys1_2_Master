@@ -11,14 +11,17 @@ namespace PentagonHMI
     public partial class MainView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private ZoneView zoneView = null;
         private YieldView yieldView = null;
         private UphView uphView = null;
         private VisionTabControlView visionTabControlView = null;
         private LogicClasses.Main main = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public MainView(ref LogicClasses.Main _main)
         {
             try
@@ -27,21 +30,23 @@ namespace PentagonHMI
                 initializeOpc(_main);
                 initializeView();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeOpc(LogicClasses.Main _main)
         {
             try
             {
                 main = _main;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -61,14 +66,14 @@ namespace PentagonHMI
 
                     uphView = new UphView(main);
                     addMainGridChildren(uphView, 1, 1);
-                    
+
                     MainTabControl.Items.Add(new TabItem
                     {
                         Header = "Vision",
                         Content = visionTabControlView = new VisionTabControlView(main)
                     });
 
-                    if (main.HasRackStatus)
+                    if(main.HasRackStatus)
                     {
                         MainTabControl.Items.Add(new TabItem
                         {
@@ -77,15 +82,17 @@ namespace PentagonHMI
                         });
                     }
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateMethods
+
         private void addMainGridChildren(UIElement uIElement, int gridRow,
             int gridColumn, int gridRowSpan = 1, int gridColumnSpan = 1)
         {
@@ -99,26 +106,29 @@ namespace PentagonHMI
                     Grid.SetRowSpan(uIElement, gridRowSpan);
                     Grid.SetColumnSpan(uIElement, gridColumnSpan);
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateMethods
 
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
             try
             {
                 main.HomePageON = false;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

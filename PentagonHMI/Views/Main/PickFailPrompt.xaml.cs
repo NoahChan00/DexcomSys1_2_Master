@@ -1,19 +1,10 @@
 ﻿using PentagonHMI.ChildControls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.Views.Main
 {
@@ -24,6 +15,7 @@ namespace PentagonHMI.Views.Main
     {
         private string skipPickTag;
         private string retryPickTag;
+
         public PickFailPrompt(LogicClasses.Main main, SelectedTray selectedTray)
         {
             InitializeComponent();
@@ -47,10 +39,12 @@ namespace PentagonHMI.Views.Main
                     title = "Left Shuttle";
                     TrayContentControl.Content = trayMap.input_LeftSlot;
                     break;
+
                 case SelectedTray.S2RIGHT:
                     title = "Right Shuttle";
                     TrayContentControl.Content = trayMap.input_RightSlot;
                     break;
+
                 case SelectedTray.S2OUTPUT:
                     title = "Unload Shuttle";
                     TrayContentControl.Content = trayMap.output_Slot;
@@ -113,6 +107,7 @@ namespace PentagonHMI.Views.Main
             main.OPC.Write(retryPickTag, false, typeof(bool));
         }
     }
+
     public enum SelectedTray
     {
         S1PCBA,

@@ -1,12 +1,12 @@
 ﻿<UserControl x:Class="PentagonHMI.UserControls.UCSmallLabelCheckbox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="38" d:DesignWidth="300" Name="ucSmallLabelCheckbox" >
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="38" d:DesignWidth="300" Name="ucSmallLabelCheckbox">
     <Grid Margin="0,0,0,5">
-        <Label Margin="0,2,150,0" Name="ucLabelTitle" MinWidth="150" Content="{Binding ElementName=ucSmallLabelCheckbox, Path=ucLabelTitleContent}"/>
+        <Label Margin="0,2,150,0" Name="ucLabelTitle" MinWidth="150" Content="{Binding ElementName=ucSmallLabelCheckbox, Path=ucLabelTitleContent}" />
         <CheckBox HorizontalAlignment="Right" Margin="156,12,120,2" Name="ucCheckBox" />
     </Grid>
 </UserControl>

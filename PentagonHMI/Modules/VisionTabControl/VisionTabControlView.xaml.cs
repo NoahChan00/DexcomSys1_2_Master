@@ -12,12 +12,15 @@ namespace PentagonHMI
     public partial class VisionTabControlView : UserControl
     {
         #region PrivateFields
+
         private VisionView visionView = null;
         private ucKeyenceVision ucKeyenceVision = null;
         private LogicClasses.Main main = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public VisionTabControlView(LogicClasses.Main _main)
         {
             try
@@ -26,21 +29,23 @@ namespace PentagonHMI
                 initializeOpc(_main);
                 initializeView();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeOpc(LogicClasses.Main _main)
         {
             try
             {
                 main = _main;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -55,27 +60,28 @@ namespace PentagonHMI
                     visionView = new VisionView(main);
                     addTabControlTab(visionView, "Vision", 0);
 
-                    if (GlobalFunctions.ProjectType == ProjectType.HDD)
+                    if(GlobalFunctions.ProjectType == ProjectType.HDD)
                     {
                         ucKeyenceVision = new ucKeyenceVision(main);
                         addTabControlTab(ucKeyenceVision, "Keyence Vision", 1);
                     }
 
-                    if (VisionTabControl.Items.Count == 1)
+                    if(VisionTabControl.Items.Count == 1)
                     {
                         VisionContentControl.Content = visionView;
                     }
-
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateMethods
+
         private void addTabControlTab(UIElement uIElement, string tabHeader, int index = 0)
         {
             Dispatcher.Invoke(new Action(() =>
@@ -86,17 +92,18 @@ namespace PentagonHMI
                     tab.Header = tabHeader;
                     tab.Content = uIElement;
 
-                    if (index == 0)
+                    if(index == 0)
                         index = VisionTabControl.Items.Count > 0 ? VisionTabControl.Items.Count : 0;
 
                     VisionTabControl.Items.Insert(index, tab);
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateMethods
     }
 }

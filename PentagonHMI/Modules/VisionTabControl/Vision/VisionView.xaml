@@ -1,6 +1,5 @@
 ﻿<UserControl x:Class="PentagonHMI.VisionView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:PentagonHMI" TextElement.FontSize="16"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" TextElement.FontSize="16"
         TextElement.FontWeight="Regular">
 
     <Grid>
@@ -37,7 +36,5 @@
                 </ScrollViewer>
             </StackPanel>
         </Border>
-
     </Grid>
-
 </UserControl>

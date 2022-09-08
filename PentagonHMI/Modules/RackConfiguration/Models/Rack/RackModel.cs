@@ -8,13 +8,15 @@ namespace PentagonHMI
     public class RackModel : ViewModelBase
     {
         #region PublicProperties
+
         private string rackName = string.Empty;
+
         public string RackName
         {
             get { return rackName; }
             set
             {
-                if (rackName != value)
+                if(rackName != value)
                 {
                     rackName = value;
                     RaisePropertyChanged(nameof(RackName));
@@ -23,12 +25,13 @@ namespace PentagonHMI
         }
 
         private List<RackTextModel> rackTextList = new List<RackTextModel>();
+
         public List<RackTextModel> RackTextList
         {
             get { return rackTextList; }
             set
             {
-                if (rackTextList != value)
+                if(rackTextList != value)
                 {
                     rackTextList = value;
                     RaisePropertyChanged(nameof(RackTextList));
@@ -36,8 +39,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView rackTextListView = null;
+
         public ICollectionView RackTextListView
         {
             get
@@ -49,12 +53,13 @@ namespace PentagonHMI
         }
 
         private List<RackToggleModel> rackToggleList = new List<RackToggleModel>();
+
         public List<RackToggleModel> RackToggleList
         {
             get { return rackToggleList; }
             set
             {
-                if (rackToggleList != value)
+                if(rackToggleList != value)
                 {
                     rackToggleList = value;
                     RaisePropertyChanged(nameof(RackToggleList));
@@ -64,6 +69,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView rackToggleListView = null;
+
         public ICollectionView RackToggleListView
         {
             get
@@ -73,6 +79,7 @@ namespace PentagonHMI
                 return rackToggleListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

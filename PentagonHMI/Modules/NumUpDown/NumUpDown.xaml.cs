@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
-
 
 namespace PentagonHMI.Modules.NumUpDown
 {
@@ -29,7 +19,6 @@ namespace PentagonHMI.Modules.NumUpDown
             Minimum = 0;
             TextBoxValue.Text = "0";
         }
-
 
         private void ResetText(TextBox tb)
         {
@@ -49,19 +38,20 @@ namespace PentagonHMI.Modules.NumUpDown
         private void value_TextChanged(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
-            if (!_numMatch.IsMatch(tb.Text)) ResetText(tb);
+            if(!_numMatch.IsMatch(tb.Text))
+                ResetText(tb);
             Value = Convert.ToInt32(tb.Text);
-            if (Value < Minimum) Value = Minimum;
-            if (Value > Maximum) Value = Maximum;
-
-
+            if(Value < Minimum)
+                Value = Minimum;
+            if(Value > Maximum)
+                Value = Maximum;
 
             RaiseEvent(new RoutedEventArgs(ValueChangedEvent));
         }
 
         private void Increase_Click(object sender, RoutedEventArgs e)
         {
-            if (Value < Maximum)
+            if(Value < Maximum)
             {
                 Value++;
                 RaiseEvent(new RoutedEventArgs(IncreaseClickedEvent));
@@ -70,7 +60,7 @@ namespace PentagonHMI.Modules.NumUpDown
 
         private void Decrease_Click(object sender, RoutedEventArgs e)
         {
-            if (Value > Minimum)
+            if(Value > Minimum)
             {
                 Value--;
                 RaiseEvent(new RoutedEventArgs(DecreaseClickedEvent));
@@ -78,20 +68,18 @@ namespace PentagonHMI.Modules.NumUpDown
         }
 
         /// <summary>The Value property represents the TextBoxValue of the control.</summary>
-        /// <returns>The current TextBoxValue of the control</returns>      
+        /// <returns>The current TextBoxValue of the control</returns>
 
         public int Value
         {
             get
             {
-
                 return (int)GetValue(ValueProperty);
             }
             set
             {
                 TextBoxValue.Text = value.ToString();
                 SetValue(ValueProperty, value);
-
             }
         }
 
@@ -99,7 +87,6 @@ namespace PentagonHMI.Modules.NumUpDown
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(int), typeof(NumUpDown),
               new PropertyMetadata(0, new PropertyChangedCallback(OnSomeValuePropertyChanged)));
-
 
         private static void OnSomeValuePropertyChanged(
         DependencyObject target, DependencyPropertyChangedEventArgs e)
@@ -133,7 +120,6 @@ namespace PentagonHMI.Modules.NumUpDown
         // Using a DependencyProperty as the backing store for Minimum.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(int), typeof(NumUpDown), new UIPropertyMetadata(0));
-
 
         // Value changed
         private static readonly RoutedEvent ValueChangedEvent =
@@ -178,18 +164,16 @@ namespace PentagonHMI.Modules.NumUpDown
         /// <param name="e"></param>
         private void value_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.IsDown && e.Key == Key.Up && Value < Maximum)
+            if(e.IsDown && e.Key == Key.Up && Value < Maximum)
             {
                 Value++;
                 RaiseEvent(new RoutedEventArgs(IncreaseClickedEvent));
             }
-            else if (e.IsDown && e.Key == Key.Down && Value > Minimum)
+            else if(e.IsDown && e.Key == Key.Down && Value > Minimum)
             {
                 Value--;
                 RaiseEvent(new RoutedEventArgs(DecreaseClickedEvent));
-
             }
         }
-
     }
 }

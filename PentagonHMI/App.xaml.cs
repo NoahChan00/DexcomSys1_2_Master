@@ -19,24 +19,24 @@ namespace PentagonHMI
 
                 FileLogger.logEvent(GetType().Name, string.Format("HMI Application started ({0}, ID: {1})", CurrentAssemblyName, CurrentProcessID));
 
-                foreach (System.Diagnostics.Process item in System.Diagnostics.Process.GetProcessesByName(CurrentAssemblyName))
+                foreach(System.Diagnostics.Process item in System.Diagnostics.Process.GetProcessesByName(CurrentAssemblyName))
                 {
                     try
                     {
-                        if (item.Id != CurrentProcessID)
+                        if(item.Id != CurrentProcessID)
                         {
                             FileLogger.logEvent(GetType().Name, string.Format("About to kill ({0}, ID: {1})", CurrentAssemblyName, item.Id));
                             item.Kill();
                         }
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logEvent(GetType().Name, string.Format("Error: Failed to kill ({0}, ID: {1})", CurrentAssemblyName, item.Id));
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logEvent(GetType().Name, "Error while trying to find and kill Previous Process");
                 FileLogger.logError(ex.Message, ex.ToString());
@@ -55,7 +55,7 @@ namespace PentagonHMI
              */
             //logger.Info("Application ended");
             //log.Info("HMI Application ended");
-            //logger.Info("HMI Application ended"); 
+            //logger.Info("HMI Application ended");
             //log4net.LogManager.Shutdown();
             //System.Diagnostics.Process[] proc = System.Diagnostics.Process.GetProcesses();
             //foreach (System.Diagnostics.Process item in System.Diagnostics.Process.GetProcessesByName("PentagonHMI.vshost"))
@@ -73,15 +73,17 @@ namespace PentagonHMI
          * Date: 2022-06-13
          * Author: Leon
          * Description: Log Unhandled Exception, found on dispatcher and current domain
-         * PS: Someone remove log4net usage 
+         * PS: Someone remove log4net usage
          */
+
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
             FileLogger.logError(e.Exception.ToString(), "On dispatcher unhandled exception - Unknown");
         }
+
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (e.ExceptionObject is Exception exception)
+            if(e.ExceptionObject is Exception exception)
             {
                 FileLogger.logError(exception.ToString(), "Current Domain unhandled exception - Unknown");
             }

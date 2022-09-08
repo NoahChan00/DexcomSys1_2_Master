@@ -9,9 +9,8 @@
 
     <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Quality">
         <Grid>
-        <userControls:UcData x:Name="YieldUserControl"/>
-        <lvc:PieChart Visibility="Collapsed" Name="PieYield" Margin="5" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieInfo}"/>
+        <userControls:UcData x:Name="YieldUserControl" />
+        <lvc:PieChart Visibility="Collapsed" Name="PieYield" Margin="5" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieInfo}" />
         </Grid>
     </GroupBox>
-
 </UserControl>

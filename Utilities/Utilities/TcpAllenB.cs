@@ -1,7 +1,4 @@
-﻿using System;
-using Logix;
-using System.Windows.Forms;
-using System.Linq;
+﻿using Logix;
 
 namespace Utilities
 {
@@ -9,7 +6,8 @@ namespace Utilities
     {
         // Allen Bradley PLC TCP Connection
         // ////////////////////////////////
-        Controller MyPLC = new Controller();
+        private Controller MyPLC = new Controller();
+
         public string ERROR_MSG { get; set; }
 
         public Controller GetController()
@@ -28,11 +26,11 @@ namespace Utilities
             int i = 0;
             do
             {
-                if (MyPLC.Connect() != ResultCode.E_SUCCESS)
+                if(MyPLC.Connect() != ResultCode.E_SUCCESS)
                 {
                     ERROR_MSG = $"ERROR - PLC_Connect ({i})\nIP= {ipAddress}, Path={path}, Timeout={timeout}\n {MyPLC.ErrorCode} : {MyPLC.ErrorString}";
 
-                    if (MyPLC.IsConnected)
+                    if(MyPLC.IsConnected)
                     {
                         i = 99;
                         rtnFlag = true;
@@ -50,8 +48,7 @@ namespace Utilities
                     rtnFlag = true;
                     i = 99;
                 }
-
-            } while (i < 5);
+            } while(i < 5);
 
             return rtnFlag;
         }

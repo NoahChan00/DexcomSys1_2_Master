@@ -3,10 +3,8 @@ using System.Linq;
 
 namespace PentagonHMI.Info
 {
-
     public static class SQL
     {
-
         public static string ServerName => @Classes.GlobalFunctions.ServerName;
         public static string DatabaseName => @Classes.GlobalFunctions.DatabaseName;
         public static bool IntegratedSecurity => Classes.GlobalFunctions.IntegratedSecurity;
@@ -41,8 +39,8 @@ namespace PentagonHMI.Info
 
         public static void Add_TagGroup(ref TagGroup Tgrp)
         {
-            for (int n = 0; n < Ary_TagGroup.Count(); n++)
-                if (Ary_TagGroup[n] == null || Ary_TagGroup[n].Tags.Count == 0)
+            for(int n = 0; n < Ary_TagGroup.Count(); n++)
+                if(Ary_TagGroup[n] == null || Ary_TagGroup[n].Tags.Count == 0)
                 {
                     Ary_TagGroup[n] = Tgrp;
                     return;
@@ -53,9 +51,9 @@ namespace PentagonHMI.Info
         {
             Ctrl.Connect();
 
-            for (int n = 0; n < Ary_TagGroup.Count(); n++)
+            for(int n = 0; n < Ary_TagGroup.Count(); n++)
             {
-                if (Ary_TagGroup[n] == null)
+                if(Ary_TagGroup[n] == null)
                     Ary_TagGroup[n] = new TagGroup { Active = false };
             }
         }
@@ -76,5 +74,4 @@ namespace PentagonHMI.Info
             public static TagGroup TStation = new TagGroup { MyObject = Key.TStation, Active = false };
         }
     }
-
 }

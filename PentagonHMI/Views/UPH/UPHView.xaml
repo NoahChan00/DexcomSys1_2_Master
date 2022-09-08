@@ -13,10 +13,10 @@
                                  Title="Time">
                     <liveCharts:Axis.Sections>
                         <liveCharts:AxisSection x:Name="UPHXAxisSection" DataLabel="True" DataLabelForeground="White" Fill="#FFFF5722"
-                                                SectionOffset="-0.5" SectionWidth="1" Stroke="#FFFF5722" StrokeThickness=".5"/>
+                                                SectionOffset="-0.5" SectionWidth="1" Stroke="#FFFF5722" StrokeThickness=".5" />
                     </liveCharts:Axis.Sections>
                     <liveCharts:Axis.Separator>
-                        <liveCharts:Separator Step="1"/>
+                        <liveCharts:Separator Step="1" />
                     </liveCharts:Axis.Separator>
                 </liveCharts:Axis>
             </liveCharts:CartesianChart.AxisX>
@@ -24,14 +24,13 @@
                 <liveCharts:Axis x:Name="UPHYAxis" Title="UPH">
                     <liveCharts:Axis.Sections>
                         <liveCharts:AxisSection x:Name="UPHYAxisSection" DataLabel="True" DataLabelForeground="White"
-                                                DisableAnimations="True" Panel.ZIndex="1" Stroke="#FFFF5722" StrokeThickness="1"/>
+                                                DisableAnimations="True" Panel.ZIndex="1" Stroke="#FFFF5722" StrokeThickness="1" />
                     </liveCharts:Axis.Sections>
                 </liveCharts:Axis>
             </liveCharts:CartesianChart.AxisY>
             <liveCharts:CartesianChart.Series>
-                <liveCharts:ColumnSeries x:Name="UPHColumnSeries"/>
+                <liveCharts:ColumnSeries x:Name="UPHColumnSeries" />
             </liveCharts:CartesianChart.Series>
         </liveCharts:CartesianChart>
     </GroupBox>
-
 </UserControl>

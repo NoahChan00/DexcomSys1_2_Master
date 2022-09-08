@@ -8,13 +8,15 @@ namespace PentagonHMI
     public class MachineInformationModel : ViewModelBase
     {
         #region PublicProperties
+
         private List<MachineInformationToggleStatusModel> machineInformationToggleStatusList = new List<MachineInformationToggleStatusModel>();
+
         public List<MachineInformationToggleStatusModel> MachineInformationToggleStatusList
         {
             get { return machineInformationToggleStatusList; }
             set
             {
-                if (machineInformationToggleStatusList != value)
+                if(machineInformationToggleStatusList != value)
                 {
                     machineInformationToggleStatusList = value;
                     RaisePropertyChanged(nameof(MachineInformationToggleStatusList));
@@ -24,6 +26,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView machineInformationToggleStatusListView = null;
+
         public ICollectionView MachineInformationToggleStatusListView
         {
             get
@@ -35,12 +38,13 @@ namespace PentagonHMI
         }
 
         private List<MachineInformationTextModel> machineInformationTextList = new List<MachineInformationTextModel>();
+
         public List<MachineInformationTextModel> MachineInformationTextList
         {
             get { return machineInformationTextList; }
             set
             {
-                if (machineInformationTextList != value)
+                if(machineInformationTextList != value)
                 {
                     machineInformationTextList = value;
                     RaisePropertyChanged(nameof(MachineInformationTextList));
@@ -50,6 +54,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView machineInformationTextListView = null;
+
         public ICollectionView MachineInformationTextListView
         {
             get
@@ -59,6 +64,7 @@ namespace PentagonHMI
                 return machineInformationTextListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

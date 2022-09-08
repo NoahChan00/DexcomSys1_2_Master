@@ -11,6 +11,7 @@ namespace PentagonHMI
     public partial class AboutView : UserControl, IDisposable
     {
         #region Constructors
+
         public AboutView()
         {
             try
@@ -18,38 +19,43 @@ namespace PentagonHMI
                 InitializeComponent();
                 updateAboutTextBox();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
-        
+
+        #endregion Constructors
+
         #region PrivateMethods
+
         private void updateAboutTextBox()
         {
             try
             {
                 string filePath = $"{AppDomain.CurrentDomain.BaseDirectory}About.txt";
-                
-                if (!File.Exists(filePath))
+
+                if(!File.Exists(filePath))
                 {
                     File.WriteAllText(filePath, string.Empty);
                 }
 
                 AboutTextBox.Dispatcher.Invoke(new Action(() => AboutTextBox.Text = File.ReadAllText(filePath)));
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
-        
+
+        #endregion PrivateMethods
+
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace PentagonHMI.Classes
 {
     #region PublicEnums
+
     public enum LineTerminator
     {
         NA,
@@ -18,11 +19,13 @@ namespace PentagonHMI.Classes
         LF,
         CRLF
     }
-    #endregion
+
+    #endregion PublicEnums
 
     public class TcpIpClient : IDisposable
     {
         #region PrivateFields
+
         private string serverIP_ = string.Empty;
         private bool checkConnectionFlag = false;
         private bool autoReconnect = false;
@@ -35,40 +38,54 @@ namespace PentagonHMI.Classes
         private bool runHeartBeat = true;
         private bool receivedHeartBeat = false;
         private LineTerminator lineTerminator;
-        #endregion
+
+        #endregion PrivateFields
 
         #region PublicEvents
+
         public delegate void ConnectionStatusEvent(string connectionStatus, string iP);
+
         public event ConnectionStatusEvent OnConnectionStatus;
+
         private void UpdateConnectionStatus(string connectionStatus)
         {
-            if (OnConnectionStatus != null)
+            if(OnConnectionStatus != null)
             {
                 OnConnectionStatus(connectionStatus, Convert.ToString(remoteServerEndPoint));
-                if (connectionStatus.Equals("Connected")) { runHeartBeat = true; }
-                else if (connectionStatus.Equals("Disconnected")) { runHeartBeat = false; }
+                if(connectionStatus.Equals("Connected"))
+                { runHeartBeat = true; }
+                else if(connectionStatus.Equals("Disconnected"))
+                { runHeartBeat = false; }
             }
         }
 
         public delegate void DataReceivedEvent(string message);
+
         public event DataReceivedEvent OnDataReceived;
+
         private void UpdateDataReceived(string message)
         {
-            if (OnDataReceived != null)
+            if(OnDataReceived != null)
             {
                 OnDataReceived(message);
                 receivedHeartBeat = true;
             }
         }
-        #endregion
+
+        #endregion PublicEvents
 
         #region Constructor
+
         public TcpIpClient(string localIP, string localPort, string serverIP, string serverPort, int reconnectInterval_, bool enableHeartBeat_, bool connectWhenConstruct, LineTerminator lineTerminator_)
         {
-            if (String.IsNullOrEmpty(localIP)) { throw new ArgumentException("Value cannot be null or empty.", "localIP"); }
-            if (String.IsNullOrEmpty(localPort)) { throw new ArgumentException("Value cannot be null or empty.", "localPort"); }
-            if (String.IsNullOrEmpty(serverIP)) { throw new ArgumentException("Value cannot be null or empty.", "serverIP"); }
-            if (String.IsNullOrEmpty(serverPort)) { throw new ArgumentException("Value cannot be null or empty.", "serverPort"); }
+            if(String.IsNullOrEmpty(localIP))
+            { throw new ArgumentException("Value cannot be null or empty.", "localIP"); }
+            if(String.IsNullOrEmpty(localPort))
+            { throw new ArgumentException("Value cannot be null or empty.", "localPort"); }
+            if(String.IsNullOrEmpty(serverIP))
+            { throw new ArgumentException("Value cannot be null or empty.", "serverIP"); }
+            if(String.IsNullOrEmpty(serverPort))
+            { throw new ArgumentException("Value cannot be null or empty.", "serverPort"); }
             serverIP_ = serverIP;
 
             checkConnectionFlag = false;
@@ -77,25 +94,28 @@ namespace PentagonHMI.Classes
 
             localEndPoint = new IPEndPoint(IPAddress.Parse(localIP), Convert.ToInt16(localPort));
             remoteServerEndPoint = new IPEndPoint(IPAddress.Parse(serverIP), Convert.ToInt16(serverPort));
-            if (connectWhenConstruct) { Connect(); }
+            if(connectWhenConstruct)
+            { Connect(); }
             reconnectInterval = reconnectInterval_;
             enableHeartBeat = enableHeartBeat_;
             lineTerminator = lineTerminator_;
             Task.Factory.StartNew(() => heartBeat());
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateMethods
+
         /// <summary>
         /// Connect to server.
         /// </summary>
         private void checkConnection()
         {
-            while (true)
+            while(true)
             {
-                if (checkConnectionFlag)
+                if(checkConnectionFlag)
                 {
-                    if (autoReconnect)
+                    if(autoReconnect)
                     {
                         Connect();
                     }
@@ -124,7 +144,7 @@ namespace PentagonHMI.Classes
             try
             {
                 socket_.EndConnect(asyncResult);
-                if (socket_.Connected)
+                if(socket_.Connected)
                 {
                     setupReceiveCallBack(socket_);
                     UpdateConnectionStatus("Connected");
@@ -134,14 +154,14 @@ namespace PentagonHMI.Classes
                     throw new Exception("Unable to connect to remote machine");
                 }
             }
-            catch (ObjectDisposedException)
+            catch(ObjectDisposedException)
             {
                 UpdateConnectionStatus("Disconnected");
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 checkConnectionFlag = true;
-                if (autoReconnect)
+                if(autoReconnect)
                 {
                     UpdateConnectionStatus(ex.Message);
                     UpdateConnectionStatus("Reconnecting");
@@ -165,7 +185,7 @@ namespace PentagonHMI.Classes
             {
                 socket_.BeginReceive(byteBuffer, 0, byteBuffer.Length, SocketFlags.None, new AsyncCallback(onReceivedData), socket_);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 throw ex;
             }
@@ -184,12 +204,14 @@ namespace PentagonHMI.Classes
             try
             {
                 int bytesRec = 0;
-                if (socket_ != null && socket_.Connected) { bytesRec = socket_.EndReceive(asyncResult); }
-                if (bytesRec > 0)
+                if(socket_ != null && socket_.Connected)
+                { bytesRec = socket_.EndReceive(asyncResult); }
+                if(bytesRec > 0)
                 {
                     // Wrote the data to the list.
                     string received = Encoding.ASCII.GetString(byteBuffer, 0, bytesRec);
-                    if (byteBuffer != null) { byteBuffer = null; }
+                    if(byteBuffer != null)
+                    { byteBuffer = null; }
                     byteBuffer = new byte[1024];
                     // If the connection is still usable restablish the callback.
                     setupReceiveCallBack(socket_);
@@ -197,10 +219,11 @@ namespace PentagonHMI.Classes
                     UpdateDataReceived(received);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 checkConnectionFlag = true;
-                if (autoReconnect) { UpdateConnectionStatus(ex.Message); }
+                if(autoReconnect)
+                { UpdateConnectionStatus(ex.Message); }
             }
         }
 
@@ -209,17 +232,17 @@ namespace PentagonHMI.Classes
             Stopwatch sw = new Stopwatch();
             sw.Reset();
             sw.Start();
-            while (true)
+            while(true)
             {
-                if (runHeartBeat == true && enableHeartBeat == true)
+                if(runHeartBeat == true && enableHeartBeat == true)
                 {
-                    if (receivedHeartBeat)
+                    if(receivedHeartBeat)
                     {
                         receivedHeartBeat = false;
                         sw.Reset();
                         sw.Start();
                     }
-                    if (sw.ElapsedMilliseconds >= 5000)
+                    if(sw.ElapsedMilliseconds >= 5000)
                     {
                         Send("SERVER ALIVE?");
                         receivedHeartBeat = false;
@@ -230,18 +253,22 @@ namespace PentagonHMI.Classes
                 Thread.Sleep(1000);
             }
         }
-        #endregion
+
+        #endregion PrivateMethods
 
         #region PublicMethods
+
         public void Connect()
         {
             try
             {
-                if (socket != null && socket.Connected == true) { return; }
-                using (Ping ping = new Ping())
+                if(socket != null && socket.Connected == true)
+                { return; }
+                using(Ping ping = new Ping())
                 {
                     PingReply pingResult = ping.Send(serverIP_);
-                    if (pingResult.Status != IPStatus.Success) { throw new PingException(string.Format("Failed to ping {0}.", serverIP_)); }
+                    if(pingResult.Status != IPStatus.Success)
+                    { throw new PingException(string.Format("Failed to ping {0}.", serverIP_)); }
                 }
                 checkConnectionFlag = false;
                 Thread.Sleep(reconnectInterval);
@@ -256,10 +283,10 @@ namespace PentagonHMI.Classes
                 // Connect to server non-blocking method
                 socket.BeginConnect(remoteServerEndPoint, new AsyncCallback(onConnect), socket);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 checkConnectionFlag = true;
-                if (autoReconnect)
+                if(autoReconnect)
                 {
                     UpdateConnectionStatus(ex.Message);
                     UpdateConnectionStatus("Reconnecting");
@@ -269,7 +296,7 @@ namespace PentagonHMI.Classes
         }
 
         public void Reconnect()
-        {            
+        {
             // Connect to server non-blocking method
             socket.BeginConnect(remoteServerEndPoint, new AsyncCallback(onConnect), socket);
         }
@@ -279,7 +306,7 @@ namespace PentagonHMI.Classes
         /// </summary>
         public void Disconnect()
         {
-            if (socket != null)
+            if(socket != null)
             {
                 socket.Close();
                 UpdateConnectionStatus("Disconnected");
@@ -297,14 +324,23 @@ namespace PentagonHMI.Classes
             bool sent = false;
             try
             {
-                switch (lineTerminator)
+                switch(lineTerminator)
                 {
-                    case LineTerminator.CR: message = string.Format("{0}{1}", message, "\r"); break;
-                    case LineTerminator.LF: message = string.Format("{0}{1}", message, "\n"); break;
-                    case LineTerminator.CRLF: message = string.Format("{0}{1}", message, "\r\n"); break;
+                    case LineTerminator.CR:
+                        message = string.Format("{0}{1}", message, "\r");
+                        break;
+
+                    case LineTerminator.LF:
+                        message = string.Format("{0}{1}", message, "\n");
+                        break;
+
+                    case LineTerminator.CRLF:
+                        message = string.Format("{0}{1}", message, "\r\n");
+                        break;
                 }
                 // Check we are connected.
-                if (socket == null || !socket.Connected) { throw new Exception("Must be connected to send a message"); }
+                if(socket == null || !socket.Connected)
+                { throw new Exception("Must be connected to send a message"); }
                 try
                 {
                     // Convert to byte array and send.
@@ -312,21 +348,24 @@ namespace PentagonHMI.Classes
                     socket.Send(byteDateLine, byteDateLine.Length, 0);
                     sent = true;
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     throw ex;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 checkConnectionFlag = true;
-                if (autoReconnect) { UpdateConnectionStatus(ex.Message); }
+                if(autoReconnect)
+                { UpdateConnectionStatus(ex.Message); }
             }
             return sent;
         }
-        #endregion
+
+        #endregion PublicMethods
 
         #region IDisposableMembers
+
         public void Dispose()
         {
             autoReconnect = false;
@@ -334,6 +373,7 @@ namespace PentagonHMI.Classes
             socket.Close();
             socket = null;
         }
-        #endregion
+
+        #endregion IDisposableMembers
     }
 }

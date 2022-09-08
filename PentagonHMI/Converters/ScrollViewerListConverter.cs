@@ -10,6 +10,7 @@ namespace PentagonHMI.Converters
     public class ScrollViewerListConverter : IMultiValueConverter
     {
         #region PublicInterfaceMethods
+
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             List<ScrollViewer> scrollViewerList = new List<ScrollViewer>();
@@ -26,6 +27,7 @@ namespace PentagonHMI.Converters
         {
             return null;
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

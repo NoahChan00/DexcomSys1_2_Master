@@ -19,19 +19,24 @@ namespace PentagonHMI
     public partial class PopUpView : Window, IDisposable
     {
         #region PrivateFields
+
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
+
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
         [DllImport("user32.dll")]
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         private List<PopUpModel> popUpList = new List<PopUpModel>();
         private ICollectionView popUpListView = null;
         private LogicClasses.Main _Main = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public PopUpView(ref LogicClasses.Main _main)
         {
             try
@@ -41,30 +46,32 @@ namespace PentagonHMI
                 initializePopUp();
                 initializeOpc();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializePopUp()
         {
             try
             {
                 popUpList = new List<PopUpModel>();
                 DataTable DT = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [POPUPINFO] WHERE [STATIONID] = {_Main.StationID}");
-                if (DT != null)
-                    foreach (DataRow dr in DT.Rows)
+                if(DT != null)
+                    foreach(DataRow dr in DT.Rows)
                     {
                         List<PopUpMessageDescriptionModel> lst_Desc = new List<PopUpMessageDescriptionModel>();
                         List<PopUpActionModel> lst_Action = new List<PopUpActionModel>();
                         string Desc_Index = "DESCRIPTION";
-                        if (!string.IsNullOrWhiteSpace(Desc_Index = dr[Desc_Index]?.ToString() ?? string.Empty))
+                        if(!string.IsNullOrWhiteSpace(Desc_Index = dr[Desc_Index]?.ToString() ?? string.Empty))
                         {
                             string[] Ary_Desc_Index = Desc_Index.Split(';');
-                            for (int n = 0; n < Ary_Desc_Index.Count();)
+                            for(int n = 0; n < Ary_Desc_Index.Count();)
                             {
                                 lst_Desc.Add(new PopUpMessageDescriptionModel
                                 {
@@ -75,10 +82,10 @@ namespace PentagonHMI
                         }
 
                         string Name_Address = "ACTION";
-                        if (!string.IsNullOrWhiteSpace(Name_Address = dr[Name_Address]?.ToString() ?? string.Empty))
+                        if(!string.IsNullOrWhiteSpace(Name_Address = dr[Name_Address]?.ToString() ?? string.Empty))
                         {
                             string[] Ary_Name_Address = Name_Address.Split(';');
-                            for (int n = 0; n < Ary_Name_Address.Count();)
+                            for(int n = 0; n < Ary_Name_Address.Count();)
                             {
                                 lst_Action.Add(new PopUpActionModel
                                 {
@@ -113,7 +120,7 @@ namespace PentagonHMI
                 popUpListView = CollectionViewSource.GetDefaultView(popUpList);
                 PopUpItemsControl.ItemsSource = popUpListView;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -125,14 +132,16 @@ namespace PentagonHMI
             {
                 _Main.OnAlwaysUpdate += main_OnPopUpUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void popUpWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -140,7 +149,7 @@ namespace PentagonHMI
                 var hwnd = new WindowInteropHelper(this).Handle;
                 SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -152,7 +161,7 @@ namespace PentagonHMI
             {
                 e.Cancel = true;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -165,12 +174,12 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 PopUpActionModel popUpActionModel = button.Tag as PopUpActionModel;
 
-                if (popUpList.Exists(x => x.PopUpActionList.Exists(y => y == popUpActionModel)))
+                if(popUpList.Exists(x => x.PopUpActionList.Exists(y => y == popUpActionModel)))
                 {
                     PopUpModel popUpModel = popUpList.Find(
                         x => x.PopUpActionList.Exists(y => y == popUpActionModel));
 
-                    if (MessageBox.Show($"{popUpModel.PopUpMessage}!{Environment.NewLine}" +
+                    if(MessageBox.Show($"{popUpModel.PopUpMessage}!{Environment.NewLine}" +
                         $"Are you sure you want to {popUpActionModel.PopUpActionName}?",
                         nameof(MessageBoxImage.Question), MessageBoxButton.YesNo,
                         MessageBoxImage.Question, MessageBoxResult.No,
@@ -186,7 +195,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -200,15 +209,15 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.PopUpTag.Name))
+                        if(!string.IsNullOrEmpty(x.PopUpTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.PopUpTag);
                         }
 
-                        if (!string.IsNullOrEmpty(x.PopUpMessageTag.Name))
+                        if(!string.IsNullOrEmpty(x.PopUpMessageTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.PopUpMessageTag);
-                            if (x.PopUpMessageTag.Value != null)
+                            if(x.PopUpMessageTag.Value != null)
                             {
                                 string value = x.PopUpMessageDescriptionList.Exists(
                                     y => y.PopUpMessageIndex == x.PopUpMessageTag.Value.ToString()) ?
@@ -216,14 +225,14 @@ namespace PentagonHMI
                                     x.PopUpMessageTag.Value.ToString()).PopUpMessageDescription :
                                     x.PopUpMessageTag.Value.ToString();
 
-                                if (x.PopUpMessage != value)
+                                if(x.PopUpMessage != value)
                                 {
                                     x.PopUpMessage = value;
                                 }
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
@@ -237,17 +246,17 @@ namespace PentagonHMI
                     {
                         PopUpModel popUpModel = x as PopUpModel;
 
-                        if (popUpModel.PopUpTag.Value == null)
+                        if(popUpModel.PopUpTag.Value == null)
                         {
                             return false;
                         }
                         else
                         {
-                            if (popUpModel.PopUpTag.DataType == Logix.Tag.ATOMIC.BOOL)
+                            if(popUpModel.PopUpTag.DataType == Logix.Tag.ATOMIC.BOOL)
                             {
                                 return Convert.ToBoolean(popUpModel.PopUpTag.Value) == true;
                             }
-                            else if (popUpModel.PopUpTag.DataType == Logix.Tag.ATOMIC.INT)
+                            else if(popUpModel.PopUpTag.DataType == Logix.Tag.ATOMIC.INT)
                             {
                                 return Convert.ToInt32(popUpModel.PopUpTag.Value) != 0;
                             }
@@ -257,14 +266,14 @@ namespace PentagonHMI
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                         return false;
                     }
                 };
 
-                    if (popUpList.Where(x => x.PopUpTag.DataType == Logix.Tag.ATOMIC.BOOL).ToList().Exists(
+                    if(popUpList.Where(x => x.PopUpTag.DataType == Logix.Tag.ATOMIC.BOOL).ToList().Exists(
                         x => Convert.ToBoolean(x.PopUpTag.Value) == true) || popUpList.Where(
                             x => x.PopUpTag.DataType == Logix.Tag.ATOMIC.INT).ToList().Exists(
                             x => Convert.ToInt32(x.PopUpTag.Value) != 0))
@@ -277,17 +286,20 @@ namespace PentagonHMI
                     }
                 }));
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

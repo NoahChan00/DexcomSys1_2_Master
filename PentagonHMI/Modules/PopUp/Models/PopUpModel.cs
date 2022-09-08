@@ -9,33 +9,38 @@ namespace PentagonHMI
     public class PopUpModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag PopUpTag = new Tag();
-        
+
         public Tag PopUpMessageTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string popUpMessage = string.Empty;
+
         public string PopUpMessage
         {
             get { return popUpMessage; }
             set
             {
-                if (popUpMessage != value)
+                if(popUpMessage != value)
                 {
                     popUpMessage = value;
                     RaisePropertyChanged(nameof(PopUpMessage));
                 }
             }
         }
-        
+
         private List<PopUpActionModel> popUpActionList = new List<PopUpActionModel>();
+
         public List<PopUpActionModel> PopUpActionList
         {
             get { return popUpActionList; }
             set
             {
-                if (popUpActionList != value)
+                if(popUpActionList != value)
                 {
                     popUpActionList = value;
                     RaisePropertyChanged(nameof(PopUpActionList));
@@ -43,8 +48,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView popUpActionListView = null;
+
         public ICollectionView PopUpActionListView
         {
             get
@@ -56,12 +62,13 @@ namespace PentagonHMI
         }
 
         private List<PopUpMessageDescriptionModel> popUpMessageDescriptionList = new List<PopUpMessageDescriptionModel>();
+
         public List<PopUpMessageDescriptionModel> PopUpMessageDescriptionList
         {
             get { return popUpMessageDescriptionList; }
             set
             {
-                if (popUpMessageDescriptionList != value)
+                if(popUpMessageDescriptionList != value)
                 {
                     popUpMessageDescriptionList = value;
                     RaisePropertyChanged(nameof(PopUpMessageDescriptionList));
@@ -71,6 +78,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView popUpMessageDescriptionListView = null;
+
         public ICollectionView PopUpMessageDescriptionListView
         {
             get
@@ -80,6 +88,7 @@ namespace PentagonHMI
                 return popUpMessageDescriptionListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

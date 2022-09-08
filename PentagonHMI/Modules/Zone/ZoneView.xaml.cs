@@ -1,12 +1,11 @@
-﻿using PentagonHMI.Classes;
+﻿using Logix;
+using PentagonHMI.Classes;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows;
 using System.Windows.Controls;
 using Utilities;
-using System.Linq;
-using System.Data;
-using Logix;
 
 namespace PentagonHMI
 {
@@ -16,11 +15,14 @@ namespace PentagonHMI
     public partial class ZoneView : UserControl
     {
         #region PrivateFields
+
         private List<ZoneModel> zoneList = new List<ZoneModel>();
         private LogicClasses.Main main = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public ZoneView(LogicClasses.Main _main)
         {
             try
@@ -30,14 +32,16 @@ namespace PentagonHMI
                 initializeZoneList();
                 initializeOpc(_main);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeZoneList()
         {
             try
@@ -45,7 +49,7 @@ namespace PentagonHMI
                 DataTable dtPalletZone = main.SQLer.Exec_DTSelect($"SELECT PalletZoneName, PalletZoneIndex FROM PalletZone WHERE ProjectType = '{GlobalFunctions.ProjectType}' ORDER BY PalletZoneIndex");
                 // Generate pallet zone
                 main.zoneCount = dtPalletZone.Rows.Count;
-                foreach (DataRow dr in dtPalletZone.Rows)
+                foreach(DataRow dr in dtPalletZone.Rows)
                 {
                     ZoneModel zoneModel = new ZoneModel();
                     zoneModel.ZoneName = dr["PalletZoneName"].ToString();
@@ -68,7 +72,7 @@ namespace PentagonHMI
                                                     $" ORDER BY PalletZoneStatusIndex");
 
                         List<ZoneStatusDescriptionModel> zoneStatusDescriptionList = new List<ZoneStatusDescriptionModel>();
-                        foreach (DataRow dr2 in dtPalletZoneStatusDesc.Rows)
+                        foreach(DataRow dr2 in dtPalletZoneStatusDesc.Rows)
                         {
                             zoneStatusDescriptionList.Add(new ZoneStatusDescriptionModel
                             {
@@ -78,17 +82,20 @@ namespace PentagonHMI
                         }
 
                         Tag zoneTag = new Tag();
-                        switch (dr1["PalletZoneStatusTagDataType"].ToString())
+                        switch(dr1["PalletZoneStatusTagDataType"].ToString())
                         {
                             case "STRING":
                                 zoneTag = new Tag(dr1["PalletZoneStatusTagName"].ToString(), Logix.Tag.ATOMIC.STRING);
                                 break;
+
                             case "INT":
                                 zoneTag = new Tag(dr1["PalletZoneStatusTagName"].ToString(), Logix.Tag.ATOMIC.INT);
                                 break;
+
                             case "DINT":
                                 zoneTag = new Tag(dr1["PalletZoneStatusTagName"].ToString(), Logix.Tag.ATOMIC.DINT);
                                 break;
+
                             case "REAL":
                                 zoneTag = new Tag(dr1["PalletZoneStatusTagName"].ToString(), Logix.Tag.ATOMIC.REAL);
                                 break;
@@ -106,11 +113,10 @@ namespace PentagonHMI
                     DataTable dtPalletZoneAction = main.SQLer.Exec_DTSelect($"SELECT PalletZoneActionName, PalletZoneActionTagName, PalletZoneActionEnable1TagName, PalletZoneActionEnable2TagName FROM PalletZoneAction" +
                                                                             $" WHERE ProjectType = '{GlobalFunctions.ProjectType}' AND PalletZoneIndex = '{zoneIndex}'" +
                                                                             $" ORDER BY PalletZoneActionIndex ");
-                    
-                    List<ZoneActionModel> zoneActionList = new List<ZoneActionModel>();
-                    foreach (DataRow dr1 in dtPalletZoneAction.Rows)
-                    {
 
+                    List<ZoneActionModel> zoneActionList = new List<ZoneActionModel>();
+                    foreach(DataRow dr1 in dtPalletZoneAction.Rows)
+                    {
                         zoneActionList.Add(new ZoneActionModel
                         {
                             ZoneActionName = dr1["PalletZoneActionName"].ToString(),
@@ -274,8 +280,6 @@ namespace PentagonHMI
                 //        }
                 //    }
                 //};
-
-
 
                 //if (ProjectType.HDD == GlobalFunctions.ProjectType)
                 //{
@@ -1030,11 +1034,12 @@ namespace PentagonHMI
                 //        item.ZoneStatusDescriptionList = zoneStatusDescriptionList;
                 //    };
                 //}
-                #endregion
+
+                #endregion Comment
 
                 ZoneItemsControl.ItemsSource = zoneList;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1047,14 +1052,16 @@ namespace PentagonHMI
                 main = _main;
                 main.Home_OnUpdate += main_Home_OnUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void zoneActionButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1062,11 +1069,11 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 ZoneActionModel zoneActionModel = button.Tag as ZoneActionModel;
 
-                if (zoneList.Exists(x => x.ZoneActionList.Exists(y => y == zoneActionModel)))
+                if(zoneList.Exists(x => x.ZoneActionList.Exists(y => y == zoneActionModel)))
                 {
                     ZoneModel zoneModel = zoneList.Find(x => x.ZoneActionList.Exists(y => y == zoneActionModel));
 
-                    if (MessageBox.Show($"Are you sure you want to {zoneActionModel.ZoneActionName}" +
+                    if(MessageBox.Show($"Are you sure you want to {zoneActionModel.ZoneActionName}" +
                         $" ({zoneModel.ZoneName})?", nameof(MessageBoxImage.Question),
                         MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No,
                         MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -1077,7 +1084,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1087,25 +1094,25 @@ namespace PentagonHMI
         {
             try
             {
-                foreach (var x in zoneList)
+                foreach(var x in zoneList)
                 {
                     try
                     {
-                        foreach (var y in x.ZoneStatusList)
+                        foreach(var y in x.ZoneStatusList)
                         {
                             try
                             {
-                                if (!string.IsNullOrEmpty(y.ZoneStatusTag.Name))
+                                if(!string.IsNullOrEmpty(y.ZoneStatusTag.Name))
                                 {
                                     main.MyPLC.ReadTag(y.ZoneStatusTag);
 
-                                    if (y.ZoneStatusTag.Value != null)
+                                    if(y.ZoneStatusTag.Value != null)
                                     {
-                                        if (y.ZoneStatusName == "Last Reject Reason")
+                                        if(y.ZoneStatusName == "Last Reject Reason")
                                         {
-                                            if (main.Dic_Reject_Index_Reason.TryGetValue(Convert.ToInt32(y.ZoneStatusTag.Value), out string Reason))
+                                            if(main.Dic_Reject_Index_Reason.TryGetValue(Convert.ToInt32(y.ZoneStatusTag.Value), out string Reason))
                                             {
-                                                if (y.ZoneStatus != Reason)
+                                                if(y.ZoneStatus != Reason)
                                                 {
                                                     y.ZoneStatus = Reason;
                                                 }
@@ -1114,7 +1121,7 @@ namespace PentagonHMI
                                             {
                                                 string value = y.ZoneStatusTag.Value.ToString();
 
-                                                if (y.ZoneStatus != value)
+                                                if(y.ZoneStatus != value)
                                                 {
                                                     y.ZoneStatus = value;
                                                 }
@@ -1128,7 +1135,7 @@ namespace PentagonHMI
                                                 y.ZoneStatusTag.Value.ToString()).ZoneStatusDescription :
                                                 y.ZoneStatusTag.Value.ToString();
 
-                                            if (y.ZoneStatus != value)
+                                            if(y.ZoneStatus != value)
                                             {
                                                 y.ZoneStatus = value;
                                             }
@@ -1136,53 +1143,54 @@ namespace PentagonHMI
                                     }
                                 }
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 FileLogger.logError(exception.Message, exception.ToString());
                             }
                         }
 
-                        foreach (var y in x.ZoneActionList)
+                        foreach(var y in x.ZoneActionList)
                         {
                             try
                             {
-                                if (!string.IsNullOrEmpty(y.ZoneActionEnable1Tag.Name) &&
+                                if(!string.IsNullOrEmpty(y.ZoneActionEnable1Tag.Name) &&
                                 !string.IsNullOrEmpty(y.ZoneActionEnable2Tag.Name))
                                 {
                                     main.MyPLC.ReadTag(y.ZoneActionEnable1Tag);
                                     main.MyPLC.ReadTag(y.ZoneActionEnable2Tag);
 
-                                    if (y.ZoneActionEnable1Tag.Value != null &&
+                                    if(y.ZoneActionEnable1Tag.Value != null &&
                                     y.ZoneActionEnable2Tag.Value != null)
                                     {
                                         bool value = !Convert.ToBoolean(
                                             y.ZoneActionEnable1Tag.Value) && Convert.ToBoolean(
                                                 y.ZoneActionEnable2Tag.Value);
 
-                                        if (y.ZoneActionEnable != value)
+                                        if(y.ZoneActionEnable != value)
                                         {
                                             y.ZoneActionEnable = value;
                                         }
                                     }
                                 }
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 FileLogger.logError(exception.Message, exception.ToString());
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

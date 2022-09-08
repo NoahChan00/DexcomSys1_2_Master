@@ -18,15 +18,18 @@ namespace PentagonHMI
     public partial class DryRunView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private LogicClasses.Main main = null;
         private ObservableCollection<DryRunModel> dryRunList = new ObservableCollection<DryRunModel>();
         private ICollectionView dryRunListView = null;
         private ObservableCollection<DryRunActionModel> dryRunActionList = new ObservableCollection<DryRunActionModel>();
         private ObservableCollection<DryRunTimeModel> dryRunTimeList = new ObservableCollection<DryRunTimeModel>();
         private ObservableCollection<DryRunCountModel> dryRunCountList = new ObservableCollection<DryRunCountModel>();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructors
+
         public DryRunView(LogicClasses.Main _main)
         {
             try
@@ -39,28 +42,32 @@ namespace PentagonHMI
                 initializeDryRunCountList();
                 initializeDryRunDurationChart();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructors
 
         #region Destructors
+
         ~DryRunView()
         {
             try
             {
                 Dispose();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Destructors
 
         #region PrivateInitializeMethods
+
         private void initialize(LogicClasses.Main _main)
         {
             try
@@ -68,19 +75,19 @@ namespace PentagonHMI
                 main = _main;
                 main.OnDryrunUpdate += main_OnDryrunUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void initializeDryRunList()
         {
             try
             {
                 dryRunList = new ObservableCollection<DryRunModel>();
-                
-                for (int i = 1; i <= 20; i++)
+
+                for(int i = 1; i <= 20; i++)
                 {
                     dryRunList.Add(new DryRunModel
                     {
@@ -97,16 +104,16 @@ namespace PentagonHMI
                         }
                     });
                 }
-                
+
                 dryRunListView = CollectionViewSource.GetDefaultView(dryRunList);
                 DryRunListComboBox.ItemsSource = dryRunListView;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void initializeDryRunActionList()
         {
             try
@@ -136,10 +143,10 @@ namespace PentagonHMI
                         DryRunActionValue = true
                     }
                 };
-                
+
                 DryRunActionListItemsControl.ItemsSource = dryRunActionList;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -181,10 +188,10 @@ namespace PentagonHMI
                         DryRunTimeTagKey = "Dry_Run_Data_{0}.MTBF_sec"
                     }
                 };
-                
+
                 DryRunTimeListItemsControl.ItemsSource = dryRunTimeList;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -210,7 +217,7 @@ namespace PentagonHMI
 
                 DryRunCountListItemsControl.ItemsSource = dryRunCountList;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -242,14 +249,16 @@ namespace PentagonHMI
                     }
                 };
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void main_OnDryrunUpdate()
         {
             Dispatcher.Invoke(() =>
@@ -258,15 +267,15 @@ namespace PentagonHMI
                 {
                     dryRunList.ToList().ForEach(x =>
                     {
-                        if (!string.IsNullOrEmpty(x.DryRunEnableTag.Name))
+                        if(!string.IsNullOrEmpty(x.DryRunEnableTag.Name))
                         {
                             main.MyPLC.ReadTag(x.DryRunEnableTag);
 
-                            if (x.DryRunEnableTag.Value != null)
+                            if(x.DryRunEnableTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(x.DryRunEnableTag.Value);
 
-                                if (x.DryRunEnable != value)
+                                if(x.DryRunEnable != value)
                                 {
                                     x.DryRunEnable = value;
 
@@ -279,15 +288,15 @@ namespace PentagonHMI
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(x.DryRunNameTag.Name))
+                        if(!string.IsNullOrEmpty(x.DryRunNameTag.Name))
                         {
                             main.MyPLC.ReadTag(x.DryRunNameTag);
 
-                            if (x.DryRunNameTag.Value != null)
+                            if(x.DryRunNameTag.Value != null)
                             {
                                 string value = x.DryRunNameTag.Value.ToString();
 
-                                if (x.DryRunName != value)
+                                if(x.DryRunName != value)
                                 {
                                     x.DryRunName = value;
                                 }
@@ -295,11 +304,11 @@ namespace PentagonHMI
                         }
                     });
 
-                    if (getCurrentDryRunModel(out DryRunModel dryRunModel))
+                    if(getCurrentDryRunModel(out DryRunModel dryRunModel))
                     {
                         dryRunActionList.ToList().ForEach(x =>
                         {
-                            if (!string.IsNullOrEmpty(x.DryRunActionEnableTagKey))
+                            if(!string.IsNullOrEmpty(x.DryRunActionEnableTagKey))
                             {
                                 Logix.Tag dryRunActionEnableTag = new Logix.Tag
                                 {
@@ -307,11 +316,11 @@ namespace PentagonHMI
                                     DataType = Logix.Tag.ATOMIC.BOOL
                                 };
 
-                                if (!string.IsNullOrEmpty(dryRunActionEnableTag.Name))
+                                if(!string.IsNullOrEmpty(dryRunActionEnableTag.Name))
                                 {
                                     main.MyPLC.ReadTag(dryRunActionEnableTag);
 
-                                    if (dryRunActionEnableTag.Value != null)
+                                    if(dryRunActionEnableTag.Value != null)
                                     {
                                         bool value = Convert.ToBoolean(dryRunActionEnableTag.Value);
 
@@ -323,7 +332,7 @@ namespace PentagonHMI
 
                         dryRunTimeList.ToList().ForEach(x =>
                         {
-                            if (!string.IsNullOrEmpty(x.DryRunTimeTagKey))
+                            if(!string.IsNullOrEmpty(x.DryRunTimeTagKey))
                             {
                                 Logix.Tag dryRunTimeTag = new Logix.Tag
                                 {
@@ -331,15 +340,15 @@ namespace PentagonHMI
                                     DataType = Logix.Tag.ATOMIC.DINT
                                 };
 
-                                if (!string.IsNullOrEmpty(dryRunTimeTag.Name))
+                                if(!string.IsNullOrEmpty(dryRunTimeTag.Name))
                                 {
                                     main.MyPLC.ReadTag(dryRunTimeTag);
 
-                                    if (dryRunTimeTag.Value != null)
+                                    if(dryRunTimeTag.Value != null)
                                     {
                                         int value = Convert.ToInt32(dryRunTimeTag.Value);
 
-                                        if (x.DryRunTime != value)
+                                        if(x.DryRunTime != value)
                                         {
                                             x.DryRunTime = value;
                                         }
@@ -352,7 +361,7 @@ namespace PentagonHMI
 
                         dryRunCountList.ToList().ForEach(x =>
                         {
-                            if (!string.IsNullOrEmpty(x.DryRunCountTagKey))
+                            if(!string.IsNullOrEmpty(x.DryRunCountTagKey))
                             {
                                 Logix.Tag dryRunCountTag = new Logix.Tag
                                 {
@@ -360,15 +369,15 @@ namespace PentagonHMI
                                     DataType = Logix.Tag.ATOMIC.INT
                                 };
 
-                                if (!string.IsNullOrEmpty(dryRunCountTag.Name))
+                                if(!string.IsNullOrEmpty(dryRunCountTag.Name))
                                 {
                                     main.MyPLC.ReadTag(dryRunCountTag);
 
-                                    if (dryRunCountTag.Value != null)
+                                    if(dryRunCountTag.Value != null)
                                     {
                                         int value = Convert.ToInt32(dryRunCountTag.Value);
 
-                                        if (x.DryRunCount != value)
+                                        if(x.DryRunCount != value)
                                         {
                                             x.DryRunCount = value;
                                         }
@@ -376,35 +385,35 @@ namespace PentagonHMI
                                 }
                             }
                         });
-                        
-                        for (int i = 0; i < DryRunDurationPieChart.Series.Count; i++)
+
+                        for(int i = 0; i < DryRunDurationPieChart.Series.Count; i++)
                         {
                             int currentValue = Convert.ToInt32(DryRunDurationPieChart.Series[i].Values[0]);
                             int value = Convert.ToInt32(TimeSpan.FromSeconds(dryRunTimeList[i + 1].DryRunTime).TotalMinutes);
 
-                            if (currentValue != value)
+                            if(currentValue != value)
                             {
                                 DryRunDurationPieChart.Series[i].Values[0] = value;
                             }
                         }
                     }
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             });
         }
-        
+
         private void dryRunActionButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (getCurrentDryRunModel(out DryRunModel dryRunModel))
+                if(getCurrentDryRunModel(out DryRunModel dryRunModel))
                 {
                     Button button = sender as Button;
                     DryRunActionModel dryRunActionModel = button.Tag as DryRunActionModel;
-                    
+
                     Logix.Tag dryRunActionTag = new Logix.Tag
                     {
                         Name = string.Format(dryRunActionModel.DryRunActionTagKey, dryRunModel.DryRunIndex),
@@ -415,48 +424,53 @@ namespace PentagonHMI
                     main.MyPLC.WriteTag(dryRunActionTag);
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PrivateMethods
+
         private bool getCurrentDryRunModel(out DryRunModel dryRunModel)
         {
             dryRunModel = null;
-            
+
             try
             {
-                if (DryRunListComboBox.SelectedItem != null)
+                if(DryRunListComboBox.SelectedItem != null)
                 {
                     dryRunModel = DryRunListComboBox.SelectedItem as DryRunModel;
                     return true;
                 }
-                
+
                 return false;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
                 return false;
             }
         }
-        #endregion
+
+        #endregion PrivateMethods
 
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
             try
             {
                 main.DryRunPageON = false;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

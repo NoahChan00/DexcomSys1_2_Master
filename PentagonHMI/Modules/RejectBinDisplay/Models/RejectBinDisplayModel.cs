@@ -8,13 +8,15 @@ namespace PentagonHMI
     public class RejectBinDisplayModel : ViewModelBase
     {
         #region PublicProperties
+
         private List<RejectBinDisplayStatusModel> rejectBinDisplayStatusList = new List<RejectBinDisplayStatusModel>();
+
         public List<RejectBinDisplayStatusModel> RejectBinDisplayStatusList
         {
             get { return rejectBinDisplayStatusList; }
             set
             {
-                if (rejectBinDisplayStatusList != value)
+                if(rejectBinDisplayStatusList != value)
                 {
                     rejectBinDisplayStatusList = value;
                     RaisePropertyChanged(nameof(RejectBinDisplayStatusList));
@@ -24,6 +26,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView rejectBinDisplayStatusListView = null;
+
         public ICollectionView RejectBinDisplayStatusListView
         {
             get
@@ -33,6 +36,7 @@ namespace PentagonHMI
                 return rejectBinDisplayStatusListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

@@ -16,17 +16,22 @@ namespace PentagonHMI
     public partial class IOView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private LogicClasses.Main main = null;
         private ObservableCollection<IOTypeModel> iOTypeList = new ObservableCollection<IOTypeModel>();
+
         private Logix.Tag machineRunningTag = new Logix.Tag
         {
             Name = Tags.MainPage.MachineStatus.Name,            //Name = "MC_System_Tags.MachineRunning",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
+
         private Logix.Tag engineeringModeTag = new Logix.Tag(Tags.MainPage.EngineeringMode.Name, Logix.Tag.ATOMIC.BOOL);
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructors
+
         public IOView(ref LogicClasses.Main _main)
         {
             try
@@ -35,19 +40,21 @@ namespace PentagonHMI
 
                 main = _main;
 
-                if (initializeIO())
+                if(initializeIO())
                 {
                     main.OnIOUpdate += main_OnIOUpdate;
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructors
 
         #region PrivateInitializeMethods
+
         private bool initializeIO()
         {
             try
@@ -59,7 +66,7 @@ namespace PentagonHMI
 
                 DataTable dataTable = database.ExecuteQueryDT_Select($"SELECT * FROM IO WHERE " +
                     $"StationID = {main.StationID} ORDER BY CAST([TagIndex] AS INT)", ref errorMessage);
-                foreach (DataRow dataRow in dataTable.Rows)
+                foreach(DataRow dataRow in dataTable.Rows)
                 {
                     object iOReadTag = dataRow["TagName"];
                     object iOTagName = dataRow["DisplayName"];
@@ -68,32 +75,34 @@ namespace PentagonHMI
                     object iOToggleTag = dataRow["OutputTagName"];
                     object iOTypeName = dataRow["IOType"];
 
-                    if (iOReadTag != null && iOTagName != null && iOIndexName != null && _iOName != null && iOTypeName != null)
+                    if(iOReadTag != null && iOTagName != null && iOIndexName != null && _iOName != null && iOTypeName != null)
                     {
-                        if (!string.IsNullOrEmpty(iOReadTag.ToString()) && !string.IsNullOrEmpty(iOTagName.ToString()) &&
+                        if(!string.IsNullOrEmpty(iOReadTag.ToString()) && !string.IsNullOrEmpty(iOTagName.ToString()) &&
                             !string.IsNullOrEmpty(iOIndexName.ToString()) && !string.IsNullOrEmpty(_iOName.ToString()) &&
                             !string.IsNullOrEmpty(iOTypeName.ToString()))
                         {
                             string iOName = string.Empty;
                             bool iOTagEnable = false;
 
-                            switch (_iOName.ToString())
+                            switch(_iOName.ToString())
                             {
                                 case "I":
                                     iOName = "Input";
                                     iOTagEnable = false;
                                     break;
+
                                 case "O":
                                     iOName = "Output";
                                     iOTagEnable = true;
                                     break;
+
                                 default:
                                     break;
                             }
 
-                            if (!string.IsNullOrEmpty(iOName))
+                            if(!string.IsNullOrEmpty(iOName))
                             {
-                                if (!iOTypeList.ToList().Exists(x => x.IOTypeName == iOTypeName.ToString()))
+                                if(!iOTypeList.ToList().Exists(x => x.IOTypeName == iOTypeName.ToString()))
                                 {
                                     iOTypeList.Add(new IOTypeModel
                                     {
@@ -102,7 +111,7 @@ namespace PentagonHMI
                                     });
                                 }
 
-                                if (!iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.ToList().Exists(
+                                if(!iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.ToList().Exists(
                                     x => x.IOIndexName == iOIndexName.ToString()))
                                 {
                                     iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.Add(new IOIndexModel
@@ -112,7 +121,7 @@ namespace PentagonHMI
                                     });
                                 }
 
-                                if (!iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.ToList().Find(
+                                if(!iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.ToList().Find(
                                     x => x.IOIndexName == iOIndexName.ToString()).IOList.ToList().Exists(x => x.IOName == iOName))
                                 {
                                     IOModel iOModel = new IOModel
@@ -121,7 +130,7 @@ namespace PentagonHMI
                                         IOTagList = new ObservableCollection<IOTagModel>()
                                     };
 
-                                    if (iOTagEnable)
+                                    if(iOTagEnable)
                                     {
                                         iOTypeList.ToList().Find(x => x.IOTypeName == iOTypeName.ToString()).IOIndexList.ToList().Find(
                                             x => x.IOIndexName == iOIndexName.ToString()).IOList.Add(iOModel);
@@ -144,11 +153,11 @@ namespace PentagonHMI
                                     IOTagEnable = iOTagEnable
                                 };
 
-                                if (iOTagModel.IOTagEnable)
+                                if(iOTagModel.IOTagEnable)
                                 {
-                                    if (iOToggleTag != null)
+                                    if(iOToggleTag != null)
                                     {
-                                        if (!string.IsNullOrEmpty(iOToggleTag.ToString()))
+                                        if(!string.IsNullOrEmpty(iOToggleTag.ToString()))
                                         {
                                             iOTagModel.IOToggleTag = new Logix.Tag
                                             {
@@ -171,26 +180,28 @@ namespace PentagonHMI
 
                 return true;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
                 return false;
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 TabControl tabControl = sender as TabControl;
-                if (tabControl.SelectedIndex < 0)
+                if(tabControl.SelectedIndex < 0)
                 {
                     tabControl.SelectedIndex = 0;
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -203,16 +214,16 @@ namespace PentagonHMI
                 CheckBox checkBox = sender as CheckBox;
                 IOTagModel iOTagModel = checkBox.Tag as IOTagModel;
 
-                if (iOTagModel.IOTagEnable)
+                if(iOTagModel.IOTagEnable)
                 {
-                    if (!string.IsNullOrEmpty(iOTagModel.IOToggleTag.Name))
+                    if(!string.IsNullOrEmpty(iOTagModel.IOToggleTag.Name))
                     {
                         main.OPC.Read<bool>(iOTagModel.IOToggleTag.Name);
                         main.OPC.Write(iOTagModel.IOToggleTag.Name, Convert.ToBoolean(checkBox.IsChecked));
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -231,7 +242,7 @@ namespace PentagonHMI
 
                 main.MyPLC.WriteTag(engineeringModeTag);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -241,17 +252,17 @@ namespace PentagonHMI
         {
             try
             {
-                if (!string.IsNullOrEmpty(machineRunningTag.Name))
+                if(!string.IsNullOrEmpty(machineRunningTag.Name))
                 {
                     main.MyPLC.ReadTag(machineRunningTag);
 
-                    if (machineRunningTag.Value != null)
+                    if(machineRunningTag.Value != null)
                     {
                         bool machineRunning = Convert.ToBoolean(machineRunningTag.Value);
 
                         EngineeringModeToggleButton.Dispatcher.Invoke(new Action(() =>
                         {
-                            if (EngineeringModeToggleButton.IsEnabled != !machineRunning)
+                            if(EngineeringModeToggleButton.IsEnabled != !machineRunning)
                             {
                                 EngineeringModeToggleButton.IsEnabled = !machineRunning;
                             }
@@ -259,17 +270,17 @@ namespace PentagonHMI
                     }
                 }
 
-                if (!string.IsNullOrEmpty(engineeringModeTag.Name))
+                if(!string.IsNullOrEmpty(engineeringModeTag.Name))
                 {
                     main.MyPLC.ReadTag(engineeringModeTag);
 
-                    if (engineeringModeTag.Value != null)
+                    if(engineeringModeTag.Value != null)
                     {
                         bool engineeringMode = Convert.ToBoolean(engineeringModeTag.Value);
 
                         EngineeringModeToggleButton.Dispatcher.Invoke(new Action(() =>
                         {
-                            if (EngineeringModeToggleButton.IsChecked != engineeringMode)
+                            if(EngineeringModeToggleButton.IsChecked != engineeringMode)
                             {
                                 EngineeringModeToggleButton.IsChecked = engineeringMode;
                             }
@@ -281,7 +292,7 @@ namespace PentagonHMI
                             {
                                 y.IOList.ToList().ForEach(z =>
                                 {
-                                    if (z.IOEnable != engineeringMode)
+                                    if(z.IOEnable != engineeringMode)
                                     {
                                         z.IOEnable = engineeringMode;
                                     }
@@ -299,15 +310,15 @@ namespace PentagonHMI
                         {
                             z.IOTagList.ToList().ForEach(i =>
                             {
-                                if (!string.IsNullOrEmpty(i.IOReadTag.Name))
+                                if(!string.IsNullOrEmpty(i.IOReadTag.Name))
                                 {
                                     main.MyPLC.ReadTag(i.IOReadTag);
 
-                                    if (i.IOReadTag.Value != null)
+                                    if(i.IOReadTag.Value != null)
                                     {
                                         bool iOTagStatus = Convert.ToBoolean(i.IOReadTag.Value);
 
-                                        if (i.IOTagStatus != iOTagStatus)
+                                        if(i.IOTagStatus != iOTagStatus)
                                         {
                                             i.IOTagStatus = iOTagStatus;
                                         }
@@ -318,25 +329,28 @@ namespace PentagonHMI
                     });
                 });
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
             try
             {
                 main.IOPageON = false;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

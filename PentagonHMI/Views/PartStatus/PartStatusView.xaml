@@ -7,7 +7,7 @@
     <ItemsControl x:Name="ZoneListItemsControl" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
@@ -15,53 +15,53 @@
                 <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="{Binding ZoneName}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto" MinWidth="80"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" MinWidth="80" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource KeyTextBlockStyle}" Text="Part"
-                                   Visibility="{Binding EnableManualAudit, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                   Visibility="{Binding EnableManualAudit, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <ComboBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ComboBoxStyle}" DisplayMemberPath="PartIndex"
                                   HorizontalContentAlignment="Center" ItemsSource="{Binding PartListView}"
-                                  Visibility="{Binding EnableManualAudit, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                  Visibility="{Binding EnableManualAudit, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <Button Grid.Row="0" Grid.Column="2" Style="{StaticResource ButtonStyle}" Content="Manual Audit" HorizontalAlignment="Left"
-                                Visibility="{Binding EnableManualAudit, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                Visibility="{Binding EnableManualAudit, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
                         <ItemsControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding PartListView}"
                                       VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Rows="1" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        
+
                                         <Border Grid.Row="0" BorderBrush="Black" BorderThickness="1">
-                                            <TextBlock Text="{Binding PartCount}" Background="{Binding PartStatus}" TextAlignment="Center"/>
+                                            <TextBlock Text="{Binding PartCount}" Background="{Binding PartStatus}" TextAlignment="Center" />
                                         </Border>
-                                        
+
                                         <TextBlock Grid.Row="1" Text="{Binding PartIndex}" TextAlignment="Center">
                                             <TextBlock.ToolTip>
                                                 <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
-                                                    <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding PartIndex}"/>
-                                                    
+                                                    <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding PartIndex}" />
+
                                                     <ItemsControl ItemsSource="{Binding PartSubStatusListView}"
                                                                   VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                                         <ItemsControl.ItemsPanel>
                                                             <ItemsPanelTemplate>
                                                                 <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True"
-                                                                                        VirtualizingPanel.VirtualizationMode="Recycling"/>
+                                                                                        VirtualizingPanel.VirtualizationMode="Recycling" />
                                                             </ItemsPanelTemplate>
                                                         </ItemsControl.ItemsPanel>
                                                         <ItemsControl.ItemTemplate>
@@ -69,9 +69,9 @@
                                                                 <VirtualizingStackPanel Orientation="Horizontal" VirtualizingPanel.IsVirtualizing="True"
                                                                                         VirtualizingPanel.VirtualizationMode="Recycling">
                                                                     <TextBlock Style="{StaticResource KeyTextBlockStyle}"
-                                                                               Text="{Binding SubStatusName, StringFormat={}{0} : }"/>
-                                                                    
-                                                                    <TextBlock Style="{StaticResource ValueTextBlockStyle}" Text="{Binding SubStatus}"/>
+                                                                               Text="{Binding SubStatusName, StringFormat={}{0} : }" />
+
+                                                                    <TextBlock Style="{StaticResource ValueTextBlockStyle}" Text="{Binding SubStatus}" />
                                                                 </VirtualizingStackPanel>
                                                             </DataTemplate>
                                                         </ItemsControl.ItemTemplate>
@@ -88,5 +88,4 @@
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
-
 </UserControl>

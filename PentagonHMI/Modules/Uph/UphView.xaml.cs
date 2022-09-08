@@ -12,19 +12,24 @@ namespace PentagonHMI
     public partial class UphView : UserControl
     {
         #region PrivateFields
+
         private LogicClasses.Main main = null;
         private readonly Tag uphTag = new Tag { Name = "OEE_Tags.str_Hourly_UPH", DataType = Logix.Tag.ATOMIC.STRING };
-        #endregion
+
+        #endregion PrivateFields
 
         #region PublicFields
+
         public int UPH { get; set; }
         public int[] PastUPH { get; set; }
         public double[] UPHWidth = new double[4];
         public int PreHrs = -1;
         public const int FixWidth = 300;
-        #endregion
+
+        #endregion PublicFields
 
         #region Constructor
+
         public UphView(LogicClasses.Main _main)
         {
             try
@@ -34,14 +39,16 @@ namespace PentagonHMI
                 //    grp_UPH.Header = "Hourly UPH";
                 initializeOpc(_main);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeOpc(LogicClasses.Main _main)
         {
             try
@@ -49,14 +56,16 @@ namespace PentagonHMI
                 main = _main;
                 main.Home_OnUpdate += main_Home_OnUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void main_Home_OnUpdate()
         {
             try
@@ -73,11 +82,15 @@ namespace PentagonHMI
 
                 double Max = PastUPH.Max() > UPH ? PastUPH.Max() : UPH;
                 int n = 0;
-                UPHWidth[n] = (PastUPH[2] / Max); n++;
-                UPHWidth[n] = (PastUPH[1] / Max); n++;
-                UPHWidth[n] = (PastUPH[0] / Max); n++;
-                UPHWidth[n] = (UPH / Max); n++;
-                if (Now != PreHrs && DateTime.Now.Minute > 1)
+                UPHWidth[n] = (PastUPH[2] / Max);
+                n++;
+                UPHWidth[n] = (PastUPH[1] / Max);
+                n++;
+                UPHWidth[n] = (PastUPH[0] / Max);
+                n++;
+                UPHWidth[n] = (UPH / Max);
+                n++;
+                if(Now != PreHrs && DateTime.Now.Minute > 1)
                 {
                     PreHrs = Now;
                 }
@@ -91,7 +104,7 @@ namespace PentagonHMI
                     UPHRecCur.Width = UPHWidth[3] * FixWidth;
                 }));
 
-                if (PastUPH != null && PastUPH.Count() > 1)
+                if(PastUPH != null && PastUPH.Count() > 1)
                 {
                     this.Dispatcher.Invoke(new Action(() =>
                     {
@@ -104,11 +117,12 @@ namespace PentagonHMI
                     }));
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

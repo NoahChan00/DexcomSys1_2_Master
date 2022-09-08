@@ -15,11 +15,14 @@ namespace PentagonHMI
     public partial class ControlPanelView : UserControl
     {
         #region PrivateFields
+
         private ControlPanelModel controlPanelModel = new ControlPanelModel();
         private LogicClasses.Main _Main = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public ControlPanelView(LogicClasses.Main _main)
         {
             try
@@ -29,19 +32,21 @@ namespace PentagonHMI
                 initializeControlPanel();
                 initializeOpc(_main);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeControlPanel()
         {
             try
             {
-                if (Classes.GlobalFunctions.ProjectType == ProjectType.HDD)
+                if(Classes.GlobalFunctions.ProjectType == ProjectType.HDD)
                 {
                     controlPanelModel = new ControlPanelModel
                     {
@@ -150,7 +155,7 @@ namespace PentagonHMI
                     string InitializeRead = string.Empty;
                     string InitializeWrite = string.Empty;
 
-                    if (Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
+                    if(Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
                     {
                         StartRead = "HMI_Tags.StartButton";
                         StartWrite = "HMI_Tags.StartButton";
@@ -164,7 +169,7 @@ namespace PentagonHMI
                         InitializeRead = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
                         InitializeWrite = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
 
-                        if (_Main.MachineName.ToUpper().Contains("FINAL"))
+                        if(_Main.MachineName.ToUpper().Contains("FINAL"))
                         {
                             StartRead = "OutputPnP_HMI_Tags.StartButton";
                             StartWrite = "OutputPnP_HMI_Tags.StartButton";
@@ -178,7 +183,7 @@ namespace PentagonHMI
                             InitializeRead = "OutPnP_MC_System_Tags.MachineInit";
                             InitializeWrite = "OutPnP_MC_System_Tags.MachineInit";
                         }
-                        else if (_Main.MachineName.ToUpper().Contains("CENTRAL"))
+                        else if(_Main.MachineName.ToUpper().Contains("CENTRAL"))
                         {
                             StartRead = "CenVis_HMI_Tags.StartButton";
                             StartWrite = "CenVis_HMI_Tags.StartButton";
@@ -204,7 +209,7 @@ namespace PentagonHMI
                         InitializeRead = "MC_System_Tags.MachineRunning";
                         InitializeWrite = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
 
-                        if (_Main.MachineName.ToUpper() == "FINAL INSPECTION")
+                        if(_Main.MachineName.ToUpper() == "FINAL INSPECTION")
                         {
                             StartRead = "OutPnP_HMI_Tags.StartButton";
                             StartWrite = "OutPnP_HMI_Tags.StartButton";
@@ -215,7 +220,7 @@ namespace PentagonHMI
                             InitializeRead = "OutputPnP_ModuleInit";
                             InitializeWrite = "OutputPnP_ModuleInit";
                         }
-                        else if (_Main.MachineName.ToUpper() == "CENTRALIZED VISION")
+                        else if(_Main.MachineName.ToUpper() == "CENTRALIZED VISION")
                         {
                             StartRead = "CenVis_HMI_Tags.StartButton";
                             StartWrite = "CenVis_HMI_Tags.StartButton";
@@ -406,7 +411,7 @@ namespace PentagonHMI
 
                 ControlPanelVirtualizingStackPanel.DataContext = controlPanelModel;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -418,14 +423,16 @@ namespace PentagonHMI
             {
                 _Main.OnAlwaysUpdate += main_OnAlwaysUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void controlPanelActionButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -433,11 +440,11 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 ControlPanelActionModel controlPanelActionModel = button.Tag as ControlPanelActionModel;
 
-                if (controlPanelModel.ControlPanelActionList.Exists(x => x == controlPanelActionModel))
+                if(controlPanelModel.ControlPanelActionList.Exists(x => x == controlPanelActionModel))
                 {
-                    if (controlPanelModel.ControlPanelActionList.FindIndex(x => x == controlPanelActionModel) == 3)
+                    if(controlPanelModel.ControlPanelActionList.FindIndex(x => x == controlPanelActionModel) == 3)
                     {
-                        if (MessageBox.Show($"Are you sure you want to" +
+                        if(MessageBox.Show($"Are you sure you want to" +
                             $" {controlPanelActionModel.ControlPanelActionName}?", nameof(MessageBoxImage.Question),
                             MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No,
                             MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -453,7 +460,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -466,11 +473,11 @@ namespace PentagonHMI
                 ToggleButton toggleButton = sender as ToggleButton;
                 ControlPanelToggleModel controlPanelToggleModel = toggleButton.Tag as ControlPanelToggleModel;
 
-                if (controlPanelModel.ControlPanelToggleList.Exists(x => x == controlPanelToggleModel))
+                if(controlPanelModel.ControlPanelToggleList.Exists(x => x == controlPanelToggleModel))
                 {
                     string message = toggleButton.IsChecked == true ? "on" : "off";
 
-                    if (MessageBox.Show($"Are you sure you want to {message}" +
+                    if(MessageBox.Show($"Are you sure you want to {message}" +
                         $" {controlPanelToggleModel.ControlPanelToggleName}?", nameof(MessageBoxImage.Question),
                         MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No,
                         MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -484,7 +491,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -498,40 +505,40 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.ControlPanelActionEnableTag.Name))
+                        if(!string.IsNullOrEmpty(x.ControlPanelActionEnableTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.ControlPanelActionEnableTag);
 
-                            if (x.ControlPanelActionEnableTag.Value != null)
+                            if(x.ControlPanelActionEnableTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(
                                     x.ControlPanelActionEnableTag.Value) == false &&
                                     _Main.UserAccessLevel != "Operator";
 
-                                if (x.ControlPanelActionEnable != value)
+                                if(x.ControlPanelActionEnable != value)
                                 {
                                     x.ControlPanelActionEnable = value;
                                 }
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(x.ControlPanelActionStatusTag.Name))
+                        if(!string.IsNullOrEmpty(x.ControlPanelActionStatusTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.ControlPanelActionStatusTag);
 
-                            if (x.ControlPanelActionStatusTag.Value != null)
+                            if(x.ControlPanelActionStatusTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(
                                     x.ControlPanelActionStatusTag.Value);
 
-                                if (x.ControlPanelActionStatus != value)
+                                if(x.ControlPanelActionStatus != value)
                                 {
                                     x.ControlPanelActionStatus = value;
                                 }
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
@@ -540,51 +547,51 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.ControlPanelToggleEnableTag.Name))
+                        if(!string.IsNullOrEmpty(x.ControlPanelToggleEnableTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.ControlPanelToggleEnableTag);
 
-                            if (x.ControlPanelToggleEnableTag.Value != null)
+                            if(x.ControlPanelToggleEnableTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(
                                     x.ControlPanelToggleEnableTag.Value) == false &&
                                     _Main.UserAccessLevel != "Operator";
 
-                                if (x.ControlPanelToggleEnable != value)
+                                if(x.ControlPanelToggleEnable != value)
                                 {
                                     x.ControlPanelToggleEnable = value;
                                 }
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(x.ControlPanelToggleTag.Name))
+                        if(!string.IsNullOrEmpty(x.ControlPanelToggleTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.ControlPanelToggleTag);
 
-                            if (x.ControlPanelToggleTag.Value != null)
+                            if(x.ControlPanelToggleTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(
                                     x.ControlPanelToggleTag.Value);
 
-                                if (x.ControlPanelToggleStatus != value)
+                                if(x.ControlPanelToggleStatus != value)
                                 {
                                     x.ControlPanelToggleStatus = value;
                                 }
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 });
-
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

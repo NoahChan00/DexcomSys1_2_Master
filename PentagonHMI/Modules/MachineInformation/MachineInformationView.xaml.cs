@@ -1,10 +1,9 @@
 ﻿using Logix;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Controls;
 using Utilities;
-using System.Data;
-using System.Windows;
 
 namespace PentagonHMI
 {
@@ -29,7 +28,7 @@ namespace PentagonHMI
                 initializeMachineInformation();
                 initializeOpc();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -56,14 +55,14 @@ namespace PentagonHMI
                 machineInformationModel.MachineInformationTextList = new List<MachineInformationTextModel>();
 
                 DataTable DT = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [MACHINEINFO] WHERE [STATIONID] = {_Main.StationID}");
-                if (DT != null)
-                    foreach (DataRow dr in DT.Rows)
+                if(DT != null)
+                    foreach(DataRow dr in DT.Rows)
                     {
                         const string DisplayName = "DisplayName";
                         const string InfoType = "InfoType";
                         Tag _tag = new Tag { Name = dr["TagName"].ToString().Trim(), DataType = Dic_Type_LogixType[dr["TagDataType"].ToString().ToUpper()] };
 
-                        if (dr[InfoType].ToString().ToUpper() == "STATUS")
+                        if(dr[InfoType].ToString().ToUpper() == "STATUS")
                         {
                             MachineInformationToggleStatusModel SM = new MachineInformationToggleStatusModel
                             {
@@ -72,7 +71,7 @@ namespace PentagonHMI
                             };
                             machineInformationModel.MachineInformationToggleStatusList.Add(SM);
                         }
-                        else if (dr[InfoType].ToString().ToUpper() == "TEXT")
+                        else if(dr[InfoType].ToString().ToUpper() == "TEXT")
                         {
                             MachineInformationTextModel TM = new MachineInformationTextModel
                             {
@@ -85,7 +84,7 @@ namespace PentagonHMI
 
                 MachineInformationGroupBox.DataContext = machineInformationModel;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -93,7 +92,7 @@ namespace PentagonHMI
 
         public void UpdateInfo(string Name, string Value)
         {
-            if (Dic_Name_Value.ContainsKey(Name))
+            if(Dic_Name_Value.ContainsKey(Name))
                 Dic_Name_Value[Name] = Value;
             else
                 Dic_Name_Value.Add(Name, Value);
@@ -105,7 +104,7 @@ namespace PentagonHMI
             {
                 _Main.OnAlwaysUpdate += main_OnAlwaysUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -123,9 +122,9 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.MachineInformationToggleStatusTag.Name))
+                        if(!string.IsNullOrEmpty(x.MachineInformationToggleStatusTag.Name))
                         {
-                            if (x.MachineInformationToggleStatusTag.Name == "DB")
+                            if(x.MachineInformationToggleStatusTag.Name == "DB")
                             {
                                 x.MachineInformationToggleStatusTag.Value = _Main.SQLer.isConnected();
                             }
@@ -134,19 +133,19 @@ namespace PentagonHMI
                                 _Main.MyPLC.ReadTag(x.MachineInformationToggleStatusTag);
                             }
 
-                            if (x.MachineInformationToggleStatusTag.Value != null)
+                            if(x.MachineInformationToggleStatusTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(
                                     x.MachineInformationToggleStatusTag.Value);
 
-                                if (x.MachineInformationToggleStatus != value)
+                                if(x.MachineInformationToggleStatus != value)
                                 {
                                     x.MachineInformationToggleStatus = value;
                                 }
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
@@ -156,15 +155,15 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.MachineInformationTextTag.Name))
+                        if(!string.IsNullOrEmpty(x.MachineInformationTextTag.Name))
                         {
-                            if (x.MachineInformationTextName == "Station" ||
+                            if(x.MachineInformationTextName == "Station" ||
                                 x.MachineInformationTextName == "Site" ||
                                 x.MachineInformationTextName == "Line")
                             {
                                 x.MachineInformationTextTag.Value = x.MachineInformationTextTag.Name;
                             }
-                            else if (x.MachineInformationTextName == "DateTime")
+                            else if(x.MachineInformationTextName == "DateTime")
                             {
                                 x.MachineInformationTextTag.Value = DateTime.Now.ToString();
                             }
@@ -173,7 +172,7 @@ namespace PentagonHMI
                                 _Main.MyPLC.ReadTag(x.MachineInformationTextTag);
                             }
 
-                            if (x.MachineInformationTextTag.Value != null)
+                            if(x.MachineInformationTextTag.Value != null)
                             {
                                 string value = x.MachineInformationTextTag.Value.ToString();
 
@@ -208,7 +207,7 @@ namespace PentagonHMI
                                 //    }
                                 //}
 
-                                if (x.MachineInformationTextValue != value)
+                                if(x.MachineInformationTextValue != value)
                                 {
                                     x.MachineInformationTextValue = value;
                                 }
@@ -220,13 +219,13 @@ namespace PentagonHMI
                         //        x.MachineInformationTextValue = Dic_Name_Value[x.MachineInformationTextName];
                         //}
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 });
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }

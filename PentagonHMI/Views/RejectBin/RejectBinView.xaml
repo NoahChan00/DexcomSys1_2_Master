@@ -9,26 +9,26 @@
         <ItemsControl x:Name="RejectBinListItemsControl" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="1"/>
+                    <UniformGrid Columns="1" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="70"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="70" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
                         <Border BorderThickness="1" BorderBrush="Black">
-                            <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="{Binding RejectBinName}"/>
+                            <TextBlock Style="{StaticResource KeyTextBlockStyle}" Text="{Binding RejectBinName}" />
                         </Border>
-                        
+
                         <ItemsControl Grid.Column="1" ItemsSource="{Binding RejectBinPartListView}"
                                       VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Rows="1" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
@@ -38,19 +38,19 @@
                                             <Style TargetType="{x:Type Border}">
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding PartFull}" Value="1">
-                                                        <Setter Property="Background" Value="Yellow"/>
+                                                        <Setter Property="Background" Value="Yellow" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding PartFull}" Value="2">
-                                                        <Setter Property="Background" Value="Transparent"/>
+                                                        <Setter Property="Background" Value="Transparent" />
                                                     </DataTrigger>
                                                     <DataTrigger Binding="{Binding PartFull}" Value="0">
-                                                        <Setter Property="Background" Value="LightGray"/>
+                                                        <Setter Property="Background" Value="LightGray" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Border.Style>
 
-                                        <TextBlock Style="{StaticResource CenterValueTextBlockStyle}" Text="{Binding PartQuantity}"/>
+                                        <TextBlock Style="{StaticResource CenterValueTextBlockStyle}" Text="{Binding PartQuantity}" />
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -60,5 +60,4 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </GroupBox>
-
 </UserControl>

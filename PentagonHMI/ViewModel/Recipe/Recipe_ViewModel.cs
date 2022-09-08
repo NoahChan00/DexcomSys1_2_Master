@@ -1,9 +1,9 @@
-﻿using System.Data;
-using SimpleDatabase;
+﻿using SimpleDatabase;
+using System.Data;
 
 namespace PentagonHMI.ViewModel.Recipe
 {
-    class Recipe_ViewModel
+    internal class Recipe_ViewModel
     {
         // Previously using Database COCO, pending verify
         private static SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);

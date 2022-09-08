@@ -74,6 +74,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Lot_OEE_dint_Total_Pass = new Tag { Name = "Lot_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_Total_Fail = new Tag { Name = "Lot_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_TotalProductiveUnit = new Tag { Name = "Lot_OEE_Tags.dint_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
+
         public enum Grouping
         {
             stringtime,
@@ -420,7 +421,6 @@ namespace PentagonHMI.ChildControls
                              Group = Grouping.number
                          },
                     }
-
                 };
             }
 

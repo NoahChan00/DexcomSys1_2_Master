@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -33,20 +23,21 @@ namespace PentagonHMI.UserControls
 
         private void Set1(string Ln)
         {
-            int n = 0;int width = 53;
+            int n = 0;
+            int width = 53;
             if(Ln.ToUpper().Contains('L'))
             {
-               n = Convert.ToInt32(Ln.Remove(0, 1));
-                PointIO.Width += 2; 
-                width = 55;               
+                n = Convert.ToInt32(Ln.Remove(0, 1));
+                PointIO.Width += 2;
+                width = 55;
             }
             else
             {
                 n = Convert.ToInt32(Ln);
             }
-            
-            if (n > 1)
-                PointIO.Width += (width * (n-1));
+
+            if(n > 1)
+                PointIO.Width += (width * (n - 1));
         }
 
         public bool Status
@@ -60,7 +51,7 @@ namespace PentagonHMI.UserControls
             if(status)
                 PointIO.Background = Brushes.Green;
             else
-                PointIO.Background = Brushes.Red;            
+                PointIO.Background = Brushes.Red;
         }
 
         public string IP

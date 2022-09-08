@@ -1,28 +1,28 @@
-﻿using System;
+﻿using Library;
+using System;
+using System.Data;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Data;
-using System.Globalization;
-using System.IO;
-using Library;
-using System.Reflection;
-using System.Diagnostics;
 using Utilities;
 
 namespace PentagonHMI.ChildControls
 {
     public partial class ucEventLog : UserControl, IDisposable
     {
-        CultureInfo CN = new CultureInfo("zh-CN");
+        private CultureInfo CN = new CultureInfo("zh-CN");
 
         private VanillaDB.DataDBCall DBCall;
-        string strEventLog => "LogPage";
+        private string strEventLog => "LogPage";
         private string DefaultPath { get; set; }
         private string currentPath { get; set; } = "";
 
-        PentagonHMI.LogicClasses.Main _Main;
+        private PentagonHMI.LogicClasses.Main _Main;
 
         public ucEventLog(ref LogicClasses.Main MainConnection)
         {
@@ -32,20 +32,23 @@ namespace PentagonHMI.ChildControls
 
             DefaultPath = FileLogger.DefaultLocation;
 
-            switch (Classes.GlobalFunctions.ProjectType)
+            switch(Classes.GlobalFunctions.ProjectType)
             {
                 case ProjectType.DIMM:
                     RamBarcodeIcon.Visibility = Visibility.Visible;
                     VisionResultIcon.Visibility = Visibility.Visible;
                     break;
+
                 case ProjectType.HDD:
                 case ProjectType.ARCADIA:
                     RamBarcodeIcon.Visibility = Visibility.Collapsed;
                     break;
+
                 case ProjectType.VTC:
                     RackBarcodeIcon.Visibility = Visibility.Visible;
                     ZoneBarcodeIcon.Visibility = Visibility.Visible;
                     break;
+
                 default:
                     break;
             }
@@ -57,7 +60,6 @@ namespace PentagonHMI.ChildControls
 
             datePickerUPH.DisplayDate = DateTime.Now;
             datePickerUPH.Text = DateTime.Now.ToString();
-
 
             datePickerLotSummary.DisplayDate = DateTime.Now;
             datePickerLotSummary.Text = DateTime.Now.ToString();
@@ -86,7 +88,7 @@ namespace PentagonHMI.ChildControls
             datePickerRackBarcode.DisplayDate = DateTime.Now;
             datePickerRackBarcode.Text = datePickerRackBarcode.DisplayDate.ToString();
 
-            // !! 
+            // !!
             datePickerTestCSV.DisplayDate = DateTime.Now;
             datePickerTestCSV.Text = datePickerTestCSV.DisplayDate.ToString();
 
@@ -101,10 +103,10 @@ namespace PentagonHMI.ChildControls
 
             datePickerTnRStn.DisplayDate = DateTime.Now;
             datePickerTnRStn.Text = datePickerTnRStn.DisplayDate.ToString();
-
         }
 
         #region old
+
         //private DataTable loadAlarmTable()
         //{
         //    DataTable dtCsv = new DataTable();
@@ -120,8 +122,8 @@ namespace PentagonHMI.ChildControls
         //            {
         //                while (!cFR.EndOfStream)
         //                {
-        //                    Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text 
-        //                    string[] rows = Fulltext.Split('\n'); //split full file text into rows  
+        //                    Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text
+        //                    string[] rows = Fulltext.Split('\n'); //split full file text into rows
         //                    for (int i = 0; i < rows.Count() - 1; i++)
         //                    {
         //                        string[] rowValues = rows[i].Split(rows[i].Contains('|') ? '|' : ',');
@@ -129,7 +131,7 @@ namespace PentagonHMI.ChildControls
         //                        {
         //                            for (int j = 0; j < rowValues.Count(); j++)
         //                            {
-        //                                dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers  
+        //                                dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers
         //                            }
         //                        }
         //                        else
@@ -139,7 +141,7 @@ namespace PentagonHMI.ChildControls
         //                            {
         //                                dr[k] = rowValues[k].ToString();
         //                            }
-        //                            dtCsv.Rows.Add(dr); //add other rows  
+        //                            dtCsv.Rows.Add(dr); //add other rows
         //                        }
         //                    }
 
@@ -177,8 +179,8 @@ namespace PentagonHMI.ChildControls
         //            {
         //                while (!cFR.EndOfStream)
         //                {
-        //                    Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text 
-        //                    string[] rows = Fulltext.Split('\n'); //split full file text into rows  
+        //                    Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text
+        //                    string[] rows = Fulltext.Split('\n'); //split full file text into rows
         //                    for (int i = 0; i < rows.Count() - 1; i++)
         //                    {
         //                        string[] rowValues = rows[i].Split(','); ;
@@ -186,7 +188,7 @@ namespace PentagonHMI.ChildControls
         //                        {
         //                            for (int j = 0; j < rowValues.Count(); j++)
         //                            {
-        //                                dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers  
+        //                                dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers
         //                            }
         //                        }
         //                        else
@@ -196,7 +198,7 @@ namespace PentagonHMI.ChildControls
         //                            {
         //                                dr[k] = rowValues[k].ToString();
         //                            }
-        //                            dtCsv.Rows.Add(dr); //add other rows  
+        //                            dtCsv.Rows.Add(dr); //add other rows
         //                        }
         //                    }
 
@@ -218,47 +220,47 @@ namespace PentagonHMI.ChildControls
         //    }
 
         //}
-        #endregion
+
+        #endregion old
 
         private DataTable loadPLCTable()
         {
             DataTable dtCsv = new DataTable();
             try
             {
-
                 string Fulltext = "";
                 string strPath = DefaultPath + System.IO.Path.DirectorySeparatorChar + @"Event";
                 string Filename = "PlcEvent_" + Convert.ToDateTime(datePickerPLC.Text).ToString("yyyy-MMM-dd") + ".txt";
                 string strFilePath = strPath + System.IO.Path.DirectorySeparatorChar + Filename;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
-                    using (CsvFileReader cFR = new CsvFileReader(strFilePath))
+                    using(CsvFileReader cFR = new CsvFileReader(strFilePath))
                     {
-                        while (!cFR.EndOfStream)
+                        while(!cFR.EndOfStream)
                         {
-                            Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text 
-                            string[] rows = Fulltext.Split('\n'); //split full file text into rows  
-                            for (int i = 0; i < rows.Count() - 1; i++)
+                            Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text
+                            string[] rows = Fulltext.Split('\n'); //split full file text into rows
+                            for(int i = 0; i < rows.Count() - 1; i++)
                             {
-                                string[] rowValues = rows[i].Split(','); ;
-                                if (i == 0)
+                                string[] rowValues = rows[i].Split(',');
+                                ;
+                                if(i == 0)
                                 {
-                                    for (int j = 0; j < rowValues.Count(); j++)
+                                    for(int j = 0; j < rowValues.Count(); j++)
                                     {
-                                        dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers  
+                                        dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers
                                     }
                                 }
                                 else
                                 {
                                     DataRow dr = dtCsv.NewRow();
-                                    for (int k = 0; k < rowValues.Count(); k++)
+                                    for(int k = 0; k < rowValues.Count(); k++)
                                     {
                                         dr[k] = rowValues[k].ToString();
                                     }
-                                    dtCsv.Rows.Add(dr); //add other rows  
+                                    dtCsv.Rows.Add(dr); //add other rows
                                 }
                             }
-
                         }
                     }
                     return dtCsv;
@@ -268,19 +270,16 @@ namespace PentagonHMI.ChildControls
                     ////MessageBox.Show("No Record");
                     return dtCsv;
                 }
-
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadVisionTable()
         {
-
             DataTable dtCsv = new DataTable();
             try
             {
@@ -288,16 +287,16 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"VisionResult_{Convert.ToDateTime(datePickerVisionResult.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string[] lines = File.ReadAllLines(strFilePath);
-                    for (int i = 0; i < lines.Length; i++)
+                    for(int i = 0; i < lines.Length; i++)
                     {
                         string[] s = lines[i].Split(',');
 
-                        if (i == 0)
+                        if(i == 0)
                         {
-                            for (int j = 0; j < s.Length; j++)
+                            for(int j = 0; j < s.Length; j++)
                             {
                                 dtCsv.Columns.Add(s[j]);
                             }
@@ -305,7 +304,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dataRow = dtCsv.NewRow();
-                            for (int j = 0; j < s.Length; j++)
+                            for(int j = 0; j < s.Length; j++)
                             {
                                 dataRow[j] = s[j];
                             }
@@ -315,7 +314,7 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
@@ -331,24 +330,25 @@ namespace PentagonHMI.ChildControls
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "AutoCOCO_Production_Report");
                 string Filename = $"AutoCOCOProductionReport_{Convert.ToDateTime(datePickerProduction.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
-                    using (CsvFileReader cFR = new CsvFileReader(strFilePath))
+                    using(CsvFileReader cFR = new CsvFileReader(strFilePath))
                     {
-                        while (!cFR.EndOfStream)
+                        while(!cFR.EndOfStream)
                         {
-                            Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text 
-                            string[] rows = Fulltext.Split('\n'); //split full file text into rows  
-                            for (int j = 1; j <= 72; j++)
-                                dtCsv.Columns.Add(j.ToString()); //add headers  
+                            Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text
+                            string[] rows = Fulltext.Split('\n'); //split full file text into rows
+                            for(int j = 1; j <= 72; j++)
+                                dtCsv.Columns.Add(j.ToString()); //add headers
 
-                            for (int i = 0; i < rows.Count() - 1; i++)
+                            for(int i = 0; i < rows.Count() - 1; i++)
                             {
-                                string[] rowValues = rows[i].Split(','); ;
+                                string[] rowValues = rows[i].Split(',');
+                                ;
                                 DataRow dr = dtCsv.NewRow();
-                                for (int k = 0; k < rowValues.Count(); k++)
+                                for(int k = 0; k < rowValues.Count(); k++)
                                     dr[k] = rowValues[k].ToString();
-                                dtCsv.Rows.Add(dr); //add other rows  
+                                dtCsv.Rows.Add(dr); //add other rows
                             }
                         }
                     }
@@ -359,14 +359,12 @@ namespace PentagonHMI.ChildControls
                     ////MessageBox.Show("No Record");
                     return dtCsv;
                 }
-
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadAlarmTable()
@@ -377,12 +375,12 @@ namespace PentagonHMI.ChildControls
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerAlarm.Text).ToString("yyyy-MMM"), "Alarm");
                 string Filename = $"Alarm_{Convert.ToDateTime(datePickerAlarm.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
-                    currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                currentPath = strFilePath;
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -390,12 +388,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -403,7 +401,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -413,12 +411,11 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadRamBarcodeTable()
@@ -429,12 +426,12 @@ namespace PentagonHMI.ChildControls
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerRamBarcode.Text).ToString("yyyy-MMM"), "RamBarcodeInstalled");
                 string Filename = $"RamBarcodeInstalled_{Convert.ToDateTime(datePickerRamBarcode.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
-                    currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                currentPath = strFilePath;
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -442,12 +439,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -455,7 +452,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -465,12 +462,11 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadZoneBarcodeTable()
@@ -481,12 +477,12 @@ namespace PentagonHMI.ChildControls
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerZoneBarcode.Text).ToString("yyyy-MMM"), "Barcode/InputZoneBarcodeLog");
                 string Filename = $"InputZoneBarcode_{Convert.ToDateTime(datePickerZoneBarcode.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
-                    currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                currentPath = strFilePath;
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -494,20 +490,20 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
-                                dtCsv.Columns.Add(column.Trim(),typeof(string));
+                                dtCsv.Columns.Add(column.Trim(), typeof(string));
                             }
                         }
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -517,12 +513,11 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadRackBarcodeTable()
@@ -534,12 +529,12 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"RackBarcode_{Convert.ToDateTime(datePickerRackBarcode.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
 
-                    currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                currentPath = strFilePath;
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -547,17 +542,16 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-
                         }
                         // Rackbarcode first row is header
-                        else if (stringList[1] == row)
+                        else if(stringList[1] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -565,7 +559,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -575,12 +569,11 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadOEETable()
@@ -591,12 +584,12 @@ namespace PentagonHMI.ChildControls
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerOEE.Text).ToString("yyyy-MMM"), "OEE");
                 string Filename = $"OEE_{Convert.ToDateTime(datePickerOEE.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
-                    currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                currentPath = strFilePath;
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -604,12 +597,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -617,7 +610,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -627,12 +620,11 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadLotSummaryTable()
@@ -679,12 +671,13 @@ namespace PentagonHMI.ChildControls
                 //}
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
         }
+
         private DataTable loadTestCSVTable()
         {
             DataTable dtCsv = new DataTable();
@@ -694,11 +687,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"TestCSV_{Convert.ToDateTime(datePickerTestCSV.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -706,12 +699,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -719,7 +712,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -729,7 +722,7 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
@@ -745,11 +738,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"TesterStnUnitTracker_{Convert.ToDateTime(datePickerTestStn.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -757,12 +750,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -770,7 +763,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -780,7 +773,7 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
@@ -796,11 +789,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"LaserStnUnitTracker_{Convert.ToDateTime(datePickerLaserStn.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -808,12 +801,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -821,7 +814,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -831,7 +824,7 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
@@ -847,11 +840,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"UnldStnUnitTracker_{Convert.ToDateTime(datePickerUnldStn.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -859,12 +852,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -872,7 +865,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -882,7 +875,7 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
@@ -898,11 +891,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"TnRStnUnitTracker_{Convert.ToDateTime(datePickerTnRStn.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -910,12 +903,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -923,7 +916,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -933,7 +926,7 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
@@ -949,11 +942,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"RejectReason_{Convert.ToDateTime(datePickerReject.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -961,12 +954,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -974,7 +967,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -984,49 +977,47 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
 
-                    //using (CsvFileReader cFR = new CsvFileReader(strFilePath))
-                    //{
-                    //    while (!cFR.EndOfStream)
-                    //    {
-                    //        Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text 
-                    //        string[] rows = Fulltext.Split('\n'); //split full file text into rows  
-                    //        for (int i = 0; i < rows.Count() - 1; i++)
-                    //        {
-                    //            string[] rowValues = rows[i].Split(','); ;
-                    //            if (i == 0)
-                    //            {
-                    //                for (int j = 0; j < rowValues.Count(); j++)
-                    //                {
-                    //                    dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers  
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                DataRow dr = dtCsv.NewRow();
-                    //                for (int k = 0; k < rowValues.Count(); k++)
-                    //                {
-                    //                    dr[k] = rowValues[k].ToString();
-                    //                }
-                    //                dtCsv.Rows.Add(dr); //add other rows  
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    //return dtCsv;
+                //using (CsvFileReader cFR = new CsvFileReader(strFilePath))
+                //{
+                //    while (!cFR.EndOfStream)
+                //    {
+                //        Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text
+                //        string[] rows = Fulltext.Split('\n'); //split full file text into rows
+                //        for (int i = 0; i < rows.Count() - 1; i++)
+                //        {
+                //            string[] rowValues = rows[i].Split(','); ;
+                //            if (i == 0)
+                //            {
+                //                for (int j = 0; j < rowValues.Count(); j++)
+                //                {
+                //                    dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers
+                //                }
+                //            }
+                //            else
+                //            {
+                //                DataRow dr = dtCsv.NewRow();
+                //                for (int k = 0; k < rowValues.Count(); k++)
+                //                {
+                //                    dr[k] = rowValues[k].ToString();
+                //                }
+                //                dtCsv.Rows.Add(dr); //add other rows
+                //            }
+                //        }
+                //    }
+                //}
+                //return dtCsv;
                 ////}
                 //else
                 //{
                 //    //MessageBox.Show("No Record");
                 //    return dtCsv;
                 //}
-
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         private DataTable loadEventTable()
@@ -1034,40 +1025,39 @@ namespace PentagonHMI.ChildControls
             DataTable dtCsv = new DataTable();
             try
             {
-
                 string Fulltext = "";
                 string strPath = DefaultPath + System.IO.Path.DirectorySeparatorChar + @"Event";
                 string Filename = "Event_" + Convert.ToDateTime(datePickerPLC.Text).ToString("yyyy-MMM-dd") + ".txt";
                 string strFilePath = strPath + System.IO.Path.DirectorySeparatorChar + Filename;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
-                    using (CsvFileReader cFR = new CsvFileReader(strFilePath))
+                    using(CsvFileReader cFR = new CsvFileReader(strFilePath))
                     {
-                        while (!cFR.EndOfStream)
+                        while(!cFR.EndOfStream)
                         {
-                            Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text 
-                            string[] rows = Fulltext.Split('\n'); //split full file text into rows  
-                            for (int i = 0; i < rows.Count() - 1; i++)
+                            Fulltext = cFR.ReadToEnd().ToString().Replace('\r', ' ');//.Replace(',' ,'-').Replace('-',' '); //read full file text
+                            string[] rows = Fulltext.Split('\n'); //split full file text into rows
+                            for(int i = 0; i < rows.Count() - 1; i++)
                             {
-                                string[] rowValues = rows[i].Split(','); ;
-                                if (i == 0)
+                                string[] rowValues = rows[i].Split(',');
+                                ;
+                                if(i == 0)
                                 {
-                                    for (int j = 0; j < rowValues.Count(); j++)
+                                    for(int j = 0; j < rowValues.Count(); j++)
                                     {
-                                        dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers  
+                                        dtCsv.Columns.Add(rowValues[j].ToString().Trim()); //add headers
                                     }
                                 }
                                 else
                                 {
                                     DataRow dr = dtCsv.NewRow();
-                                    for (int k = 0; k < rowValues.Count(); k++)
+                                    for(int k = 0; k < rowValues.Count(); k++)
                                     {
                                         dr[k] = rowValues[k].ToString();
                                     }
-                                    dtCsv.Rows.Add(dr); //add other rows  
+                                    dtCsv.Rows.Add(dr); //add other rows
                                 }
                             }
-
                         }
                     }
                     return dtCsv;
@@ -1077,19 +1067,17 @@ namespace PentagonHMI.ChildControls
                     //MessageBox.Show("No Record");
                     return dtCsv;
                 }
-
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
 
         public void Dispose()
         {
-            if (CN != null)
+            if(CN != null)
             {
                 CN = null;
             }
@@ -1172,11 +1160,13 @@ namespace PentagonHMI.ChildControls
             Utilities.FileLogger.logButton(strEventLog, "Retrieve Alarm Log", MethodBase.GetCurrentMethod().ToString());
             gridAlarmHistory.ItemsSource = loadAlarmTable().DefaultView;
         }
+
         private void btnOEESubmit_Click(object sender, RoutedEventArgs e)
         {
             Utilities.FileLogger.logButton(strEventLog, "Retrieve OEE Log", MethodBase.GetCurrentMethod().ToString());
             gridOEE.ItemsSource = loadOEETable().DefaultView;
         }
+
         private void btnPLCSubmit_Click(object sender, RoutedEventArgs e)
         {
             Utilities.FileLogger.logButton(strEventLog, "Retrieve PLC Log", MethodBase.GetCurrentMethod().ToString());
@@ -1207,7 +1197,7 @@ namespace PentagonHMI.ChildControls
             DateTime fromDate = Convert.ToDateTime(datePickerUPH.SelectedDate);
             DataTable dt = DBCall.Select_UPH(_Main.StationID, fromDate.Day.ToString(), fromDate.Month.ToString(), fromDate.Year.ToString(), ref errMsg);
 
-            if (dt != null)
+            if(dt != null)
             {
                 gridUPHEvent.ItemsSource = dt.DefaultView;
             }
@@ -1217,7 +1207,7 @@ namespace PentagonHMI.ChildControls
         {
             StackPanel SP = (StackPanel)sender;
             Utilities.FileLogger.logButton(strEventLog, $"Select Log {SP.Tag.ToString().ToUpper()}", MethodBase.GetCurrentMethod().ToString());
-            switch (SP.Tag.ToString().ToUpper())
+            switch(SP.Tag.ToString().ToUpper())
             {
                 case "ALARM":
                     //item = Path.Combine(FileLogger.DefaultLocation_Time, "Alarm");
@@ -1230,10 +1220,12 @@ namespace PentagonHMI.ChildControls
                     AlarmHistoryTab.IsSelected = true;
                     DatePickerAlarm_SelectedDateChanged(null, null);
                     break;
+
                 case "PLC":
                     PLCEventTab.Visibility = Visibility.Visible;
                     PLCEventTab.IsSelected = true;
                     break;
+
                 case "OEE":
                     //item = Path.Combine(FileLogger.DefaultLocation_Time, "OEE");
                     //if (!Directory.Exists(item))
@@ -1245,13 +1237,15 @@ namespace PentagonHMI.ChildControls
                     OEETab.IsSelected = true;
                     DatePickerOEE_SelectedDateChanged(null, null);
                     break;
-                case "TESTCSV": 
+
+                case "TESTCSV":
                     datePickerTestCSV.DisplayDate = DateTime.Now;
                     datePickerTestCSV.Text = datePickerTestCSV.DisplayDate.ToString();
                     TestCSVTab.Visibility = Visibility.Visible;
                     TestCSVTab.IsSelected = true;
                     DatePickerTestCSV_SelectedDateChanged(null, null);
                     break;
+
                 case "TESTSTN":
                     datePickerTestStn.DisplayDate = DateTime.Now;
                     datePickerTestStn.Text = datePickerTestStn.DisplayDate.ToString();
@@ -1259,6 +1253,7 @@ namespace PentagonHMI.ChildControls
                     TestStnTab.IsSelected = true;
                     DatePickerTestStn_SelectedDateChanged(null, null);
                     break;
+
                 case "LASERSTN":
                     datePickerLaserStn.DisplayDate = DateTime.Now;
                     datePickerLaserStn.Text = datePickerLaserStn.DisplayDate.ToString();
@@ -1266,6 +1261,7 @@ namespace PentagonHMI.ChildControls
                     LaserStnTab.IsSelected = true;
                     DatePickerLaserStn_SelectedDateChanged(null, null);
                     break;
+
                 case "UNLDSTN":
                     datePickerUnldStn.DisplayDate = DateTime.Now;
                     datePickerUnldStn.Text = datePickerUnldStn.DisplayDate.ToString();
@@ -1273,6 +1269,7 @@ namespace PentagonHMI.ChildControls
                     UnldStnTab.IsSelected = true;
                     DatePickerUnldStn_SelectedDateChanged(null, null);
                     break;
+
                 case "TNRSTN":
                     datePickerTnRStn.DisplayDate = DateTime.Now;
                     datePickerTnRStn.Text = datePickerTnRStn.DisplayDate.ToString();
@@ -1280,10 +1277,12 @@ namespace PentagonHMI.ChildControls
                     TnRStnTab.IsSelected = true;
                     DatePickerTnRStn_SelectedDateChanged(null, null);
                     break;
+
                 case "EVENT":
                     EventLogTab.Visibility = Visibility.Visible;
                     EventLogTab.IsSelected = true;
                     break;
+
                 case "REJECT":
                     datePickerReject.DisplayDate = DateTime.Now;
                     datePickerReject.Text = datePickerReject.DisplayDate.ToString();
@@ -1291,6 +1290,7 @@ namespace PentagonHMI.ChildControls
                     RejectHistoryTab.IsSelected = true;
                     DatePickerReject_SelectedDateChanged(null, null);
                     break;
+
                 case "UPH":
                     datePickerUPH.DisplayDate = DateTime.Now;
                     datePickerUPH.Text = datePickerUPH.DisplayDate.ToString();
@@ -1298,6 +1298,7 @@ namespace PentagonHMI.ChildControls
                     UPHLogTab.IsSelected = true;
                     DatePickerUPH_SelectedDateChanged(null, null);
                     break;
+
                 case "VISIONRESULT":
                     //VisionResultTab.Visibility = Visibility.Visible;
                     //VisionResultTab.IsSelected = true;
@@ -1309,11 +1310,13 @@ namespace PentagonHMI.ChildControls
                     VisionResultTab.IsSelected = true;
                     DatePickerVisionResult_SelectedDateChanged(null, null);
                     break;
+
                 case "PRODUCTION":
                     ProductionTab.Visibility = Visibility.Visible;
                     ProductionTab.IsSelected = true;
                     btnProduction_Click(null, null);
                     break;
+
                 case "RAMBARCODE":
                     datePickerRamBarcode.DisplayDate = DateTime.Now;
                     datePickerRamBarcode.Text = datePickerRamBarcode.DisplayDate.ToString();
@@ -1321,6 +1324,7 @@ namespace PentagonHMI.ChildControls
                     RamBarcodeTab.IsSelected = true;
                     DatePickerRamBarcode_SelectedDateChanged(null, null);
                     break;
+
                 case "ZONEBARCODE":
                     datePickerZoneBarcode.DisplayDate = DateTime.Now;
                     datePickerZoneBarcode.Text = datePickerZoneBarcode.DisplayDate.ToString();
@@ -1328,6 +1332,7 @@ namespace PentagonHMI.ChildControls
                     ZoneBarcodeTab.IsSelected = true;
                     DatePickerZoneBarcode_SelectedDateChanged(null, null);
                     break;
+
                 case "RACKBARCODE":
                     datePickerRackBarcode.DisplayDate = DateTime.Now;
                     datePickerRackBarcode.Text = datePickerRackBarcode.DisplayDate.ToString();
@@ -1335,6 +1340,7 @@ namespace PentagonHMI.ChildControls
                     RackBarcodeTab.IsSelected = true;
                     DatePickerRackBarcode_SelectedDateChanged(null, null);
                     break;
+
                 case "TORQUEDRIVERRESULT":
                     datePickerTorqueDriverResult.DisplayDate = DateTime.Now;
                     datePickerTorqueDriverResult.Text = datePickerTorqueDriverResult.DisplayDate.ToString();
@@ -1342,16 +1348,18 @@ namespace PentagonHMI.ChildControls
                     TorqueDriverResultTabItem.IsSelected = true;
                     DatePickerTorqueDriverResult_SelectedDateChanged(null, null);
                     break;
+
                 case "DRYRUN":
                     break;
+
                 case "LOTSUMMARY":
                     string LogsPathLotSummary = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM"), "LotSummary");
                     string FilenameLotSummary = $"LotSummary_{Convert.ToDateTime(datePickerLotSummary.Text).ToString("yyyy-MMM-dd")}.csv";
                     currentPath = Path.Combine(LogsPathLotSummary, FilenameLotSummary);
 
-                    if (!string.IsNullOrEmpty(currentPath))
+                    if(!string.IsNullOrEmpty(currentPath))
                     {
-                        if (File.Exists(currentPath))
+                        if(File.Exists(currentPath))
                         {
                             FileInfo fi = new FileInfo(currentPath);
                             Process.Start(fi.Directory.FullName);
@@ -1359,7 +1367,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             currentPath = currentPath.Substring(0, currentPath.LastIndexOf('\\'));
-                            if (!Directory.Exists(currentPath))
+                            if(!Directory.Exists(currentPath))
                                 Directory.CreateDirectory(currentPath);
                             Process.Start(currentPath);
                         }
@@ -1396,10 +1404,10 @@ namespace PentagonHMI.ChildControls
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
             Utilities.FileLogger.logButton(strEventLog, "Open File Button", MethodBase.GetCurrentMethod().ToString());
-         
-            if (!string.IsNullOrEmpty(currentPath))
+
+            if(!string.IsNullOrEmpty(currentPath))
             {
-                if (File.Exists(currentPath))
+                if(File.Exists(currentPath))
                     Process.Start(currentPath);
                 else
                 {
@@ -1412,9 +1420,9 @@ namespace PentagonHMI.ChildControls
         {
             Utilities.FileLogger.logButton(strEventLog, "Open Folder Button", MethodBase.GetCurrentMethod().ToString());
 
-            if (!string.IsNullOrEmpty(currentPath))
+            if(!string.IsNullOrEmpty(currentPath))
             {
-                if (File.Exists(currentPath))
+                if(File.Exists(currentPath))
                 {
                     FileInfo fi = new FileInfo(currentPath);
                     Process.Start(fi.Directory.FullName);
@@ -1422,7 +1430,7 @@ namespace PentagonHMI.ChildControls
                 else
                 {
                     currentPath = currentPath.Substring(0, currentPath.LastIndexOf('\\'));
-                    if (!Directory.Exists(currentPath))
+                    if(!Directory.Exists(currentPath))
                         Directory.CreateDirectory(currentPath);
                     Process.Start(currentPath);
                 }
@@ -1440,6 +1448,7 @@ namespace PentagonHMI.ChildControls
             Utilities.FileLogger.logButton(strEventLog, "Retrieve Torque Driver Result", MethodBase.GetCurrentMethod().ToString());
             gridTorqueDriverResult.ItemsSource = loadTorqueDriverResultTable().DefaultView;
         }
+
         private void DatePickerLotSummary_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             Utilities.FileLogger.logButton(strEventLog, "Retrieve Lot Summary Log", MethodBase.GetCurrentMethod().ToString());
@@ -1455,11 +1464,11 @@ namespace PentagonHMI.ChildControls
                 string Filename = $"TorqueDriverResult_{Convert.ToDateTime(datePickerTorqueDriverResult.Text).ToString("yyyyMMdd")}.txt";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                 currentPath = strFilePath;
-                if (File.Exists(strFilePath))
+                if(File.Exists(strFilePath))
                 {
                     string allLine = "";
                     var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    using (var sr = new StreamReader(fs))
+                    using(var sr = new StreamReader(fs))
                     {
                         allLine = sr.ReadToEnd();
                         sr.Close();
@@ -1467,12 +1476,12 @@ namespace PentagonHMI.ChildControls
                     }
 
                     string[] stringList = allLine.Split('\n');
-                    foreach (string row in stringList)
+                    foreach(string row in stringList)
                     {
                         string[] cell = row.Split(',');
-                        if (stringList[0] == row)
+                        if(stringList[0] == row)
                         {
-                            foreach (string column in cell)
+                            foreach(string column in cell)
                             {
                                 dtCsv.Columns.Add(column.Trim());
                             }
@@ -1480,7 +1489,7 @@ namespace PentagonHMI.ChildControls
                         else
                         {
                             DataRow dr = dtCsv.NewRow();
-                            for (int i = 0; i < cell.Length; i++)
+                            for(int i = 0; i < cell.Length; i++)
                             {
                                 dr[i] = cell[i];
                             }
@@ -1490,12 +1499,11 @@ namespace PentagonHMI.ChildControls
                 }
                 return dtCsv;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
-
         }
     }
 }

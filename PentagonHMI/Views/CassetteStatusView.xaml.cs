@@ -10,10 +10,13 @@ namespace PentagonHMI.Views
     public partial class CassetteStatusView : UserControl
     {
         #region PrivateFields
+
         public List<CassetteStatusCassetteModel> cassetteList = new List<CassetteStatusCassetteModel>();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public CassetteStatusView()
         {
             try
@@ -21,27 +24,29 @@ namespace PentagonHMI.Views
                 InitializeComponent();
                 initializeCassetteList();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeCassetteList()
         {
             try
             {
                 cassetteList = new List<CassetteStatusCassetteModel>();
 
-                for (int i = 0; i < 2; i++)
+                for(int i = 0; i < 2; i++)
                 {
                     try
                     {
                         List<CassetteStatusPositionModel> positionList = new List<CassetteStatusPositionModel>();
 
-                        for (int j = 1; j <= 10; j++)
+                        for(int j = 1; j <= 10; j++)
                         {
                             try
                             {
@@ -51,7 +56,7 @@ namespace PentagonHMI.Views
                                     CassetteSubStatusList = GetCasstteSyvStatusList(i)
                                 });
                             }
-                            catch (Exception ex)
+                            catch(Exception ex)
                             {
                                 FileLogger.logError(ex.Message, ex.ToString());
                             }
@@ -60,11 +65,11 @@ namespace PentagonHMI.Views
                         cassetteList.Add(new CassetteStatusCassetteModel
                         {
                             ScrollChangedCommand = new RelayCommand<EventArgsModel>(scrollChangedCommand),
-                            CassetteName =  i == 0? "Input Cassette" : "Output Cassette",
+                            CassetteName = i == 0 ? "Input Cassette" : "Output Cassette",
                             PositionList = positionList
                         });
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
@@ -72,16 +77,16 @@ namespace PentagonHMI.Views
 
                 CassetteListItemsControl.ItemsSource = cassetteList;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         private List<CassetteStatusSubStatusModel> GetCasstteSyvStatusList(int i)
         {
-
             List<CassetteStatusSubStatusModel> cassetteSubStatusList = new List<CassetteStatusSubStatusModel>
                         {
                             new CassetteStatusSubStatusModel
@@ -102,10 +107,11 @@ namespace PentagonHMI.Views
                             }
                         };
 
-            switch (i)
+            switch(i)
             {
                 default:
                     break;
+
                 case 0:
                     cassetteSubStatusList.Add(new CassetteStatusSubStatusModel
                     {
@@ -116,7 +122,8 @@ namespace PentagonHMI.Views
                         SubStatusName = "OutputPartNum"
                     });
                     break;
-                case 1:                    
+
+                case 1:
                     break;
             }
 
@@ -124,6 +131,7 @@ namespace PentagonHMI.Views
         }
 
         #region PrivateCommandMethods
+
         private void scrollChangedCommand(EventArgsModel eventArgsModel)
         {
             try
@@ -131,17 +139,18 @@ namespace PentagonHMI.Views
                 ScrollChangedEventArgs scrollChangedEventArgs = eventArgsModel.EventArgs as ScrollChangedEventArgs;
                 List<ScrollViewer> scrollViewerList = eventArgsModel.Parameter as List<ScrollViewer>;
 
-                if (scrollViewerList.Count >= 2)
+                if(scrollViewerList.Count >= 2)
                 {
                     scrollViewerList[0].ScrollToHorizontalOffset(scrollChangedEventArgs.HorizontalOffset);
                     scrollViewerList[1].ScrollToVerticalOffset(scrollChangedEventArgs.VerticalOffset);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateCommandMethods
     }
 }

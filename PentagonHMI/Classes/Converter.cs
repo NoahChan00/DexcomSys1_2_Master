@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PentagonHMI.Classes
 {
-    class Converter
+    internal class Converter
     {
         public static bool ToBoolean(object Value)
         {
             bool _bReturn = false;
-            if (Value == null)
+            if(Value == null)
             {
                 return false;
             }
-            else if (!Boolean.TryParse(Value.ToString(), out _bReturn))
+            else if(!Boolean.TryParse(Value.ToString(), out _bReturn))
             {
                 return false;
             }
@@ -27,21 +24,20 @@ namespace PentagonHMI.Classes
         public static Int32 ToInt32(object Value)
         {
             Int32 _iReturn = 0;
-            if (Value == null)
+            if(Value == null)
             {
-
                 return 0;
             }
             else
             {
                 try
                 {
-                    _iReturn =  Convert.ToInt32(Value);
+                    _iReturn = Convert.ToInt32(Value);
                     return _iReturn;
                 }
                 catch
                 {
-                    if (!Int32.TryParse(Value.ToString(), out _iReturn))
+                    if(!Int32.TryParse(Value.ToString(), out _iReturn))
                     {
                         return 0;
                     }
@@ -56,7 +52,7 @@ namespace PentagonHMI.Classes
         public static Int16 ToInt16(object Value)
         {
             Int16 _iReturn = 0;
-            if (Value == null)
+            if(Value == null)
             {
                 return 0;
             }
@@ -69,7 +65,7 @@ namespace PentagonHMI.Classes
                 }
                 catch
                 {
-                    if (!Int16.TryParse(Value.ToString(), out _iReturn))
+                    if(!Int16.TryParse(Value.ToString(), out _iReturn))
                     {
                         return 0;
                     }
@@ -83,11 +79,11 @@ namespace PentagonHMI.Classes
 
         public static String ToString(object Value)
         {
-            if (Value == null)
+            if(Value == null)
             {
                 return "";
             }
-            else if (Value is DBNull)
+            else if(Value is DBNull)
             {
                 return "";
             }
@@ -100,12 +96,12 @@ namespace PentagonHMI.Classes
         public static Decimal ToDecimal(object Value)
         {
             Decimal _dReturn = 0;
-            if (Value == null)
+            if(Value == null)
             {
                 return 0;
             }
 
-            if (!Decimal.TryParse(Value.ToString(), out _dReturn))
+            if(!Decimal.TryParse(Value.ToString(), out _dReturn))
             {
                 return 0;
             }
@@ -118,7 +114,7 @@ namespace PentagonHMI.Classes
         public static DateTime ToDateTime(object Value, String DateFormat)
         {
             DateTime _dtReturn;
-            if (DateTime.TryParseExact(Value.ToString(), DateFormat, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _dtReturn))
+            if(DateTime.TryParseExact(Value.ToString(), DateFormat, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _dtReturn))
             {
                 return _dtReturn;
             }
@@ -127,10 +123,11 @@ namespace PentagonHMI.Classes
                 return new DateTime(1999, 1, 1);
             }
         }
+
         public static DateTime ToDateTime(object Value)
         {
             DateTime _dtReturn;
-            if (DateTime.TryParse(Value.ToString(), out _dtReturn))
+            if(DateTime.TryParse(Value.ToString(), out _dtReturn))
             {
                 return _dtReturn;
             }
@@ -143,7 +140,7 @@ namespace PentagonHMI.Classes
         public static double ToDouble(object Value)
         {
             double _dtReturn;
-            if (double.TryParse(Value.ToString(), out _dtReturn))
+            if(double.TryParse(Value.ToString(), out _dtReturn))
             {
                 return _dtReturn;
             }
@@ -151,22 +148,19 @@ namespace PentagonHMI.Classes
             {
                 return 0;
             }
-
         }
 
         public static TimeSpan ToTimeSpan(object Value, String TimeFormat)
         {
             DateTime _dtReturn;
-            if (DateTime.TryParseExact(Value.ToString(), TimeFormat, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _dtReturn))
+            if(DateTime.TryParseExact(Value.ToString(), TimeFormat, System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out _dtReturn))
             {
-
                 return _dtReturn.TimeOfDay;
             }
             else
             {
                 return new TimeSpan(0, 0, 0);
             }
-
         }
     }
 }

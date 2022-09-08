@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,14 +10,18 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelNumericUpDown : UserControl
     {
         #region Constructor
+
         public UCLabelNumericUpDown()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleContentProperty =
@@ -42,12 +36,14 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleContentProperty); }
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
-        #endregion
+
+        #endregion ucLabelTitle Properties
 
         /// <summary>
         /// Set the maximum value for the control
         /// </summary>
-        double _intMaximun = 100;
+        private double _intMaximun = 100;
+
         public double Maximun
         {
             get { return _intMaximun; }
@@ -61,7 +57,8 @@ namespace PentagonHMI.UserControls
         /// <summary>
         /// Set the minumum value for the control
         /// </summary>
-        double _intMinimum = 0;
+        private double _intMinimum = 0;
+
         public double Minimum
         {
             get { return _intMinimum; }
@@ -103,7 +100,7 @@ namespace PentagonHMI.UserControls
         }
 
         /// <summary>
-        /// Set the Increment for the updown control 
+        /// Set the Increment for the updown control
         /// </summary>
         /// <remarks>
         /// Default 1
@@ -128,7 +125,7 @@ namespace PentagonHMI.UserControls
         }
 
         /// <summary>
-        /// Set the maxwidth for the updown control 
+        /// Set the maxwidth for the updown control
         /// </summary>
         /// <remarks>
         /// Default 1
@@ -146,7 +143,7 @@ namespace PentagonHMI.UserControls
         }
 
         /// <summary>
-        /// Set the width for the updown control 
+        /// Set the width for the updown control
         /// </summary>
         /// <remarks>
         /// Default 1
@@ -162,6 +159,7 @@ namespace PentagonHMI.UserControls
                 ucUpDown.Width = value;
             }
         }
-        #endregion
+
+        #endregion Properties
     }
 }

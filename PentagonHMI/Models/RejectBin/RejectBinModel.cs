@@ -8,27 +8,30 @@ namespace PentagonHMI.Models
     public class RejectBinModel : ViewModelBase
     {
         #region PublicProperties
+
         private string rejectBinName = string.Empty;
+
         public string RejectBinName
         {
             get { return rejectBinName; }
             set
             {
-                if (rejectBinName != value)
+                if(rejectBinName != value)
                 {
                     rejectBinName = value;
                     RaisePropertyChanged(nameof(RejectBinName));
                 }
             }
         }
-        
+
         private List<RejectBinPartModel> rejectBinPartList = new List<RejectBinPartModel>();
+
         public List<RejectBinPartModel> RejectBinPartList
         {
             get { return rejectBinPartList; }
             set
             {
-                if (rejectBinPartList != value)
+                if(rejectBinPartList != value)
                 {
                     rejectBinPartList = value;
                     RaisePropertyChanged(nameof(RejectBinPartList));
@@ -36,8 +39,9 @@ namespace PentagonHMI.Models
                 }
             }
         }
-        
+
         private ICollectionView rejectBinPartListView = null;
+
         public ICollectionView RejectBinPartListView
         {
             get
@@ -47,6 +51,7 @@ namespace PentagonHMI.Models
                 return rejectBinPartListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

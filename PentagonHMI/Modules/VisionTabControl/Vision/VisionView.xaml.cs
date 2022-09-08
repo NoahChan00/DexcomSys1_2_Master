@@ -13,6 +13,7 @@ namespace PentagonHMI
     public partial class VisionView : UserControl
     {
         #region Constructor
+
         public VisionView(LogicClasses.Main _main)
         {
             try
@@ -35,9 +36,11 @@ namespace PentagonHMI
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
 
-        LogicClasses.Main Main;
+        #endregion Constructor
+
+        private LogicClasses.Main Main;
+
         private void Vision_OnUpdate()
         {
             Dispatcher?.Invoke(() =>
@@ -57,6 +60,7 @@ namespace PentagonHMI
         }
 
         #region PrivateInitializeMethods
+
         private void initializeVision(LogicClasses.Main _main)
         {
             Dispatcher.Invoke(new Action(() =>
@@ -77,6 +81,7 @@ namespace PentagonHMI
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
     }
 }

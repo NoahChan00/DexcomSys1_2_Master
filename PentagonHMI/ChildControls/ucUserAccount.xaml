@@ -1,14 +1,14 @@
 ﻿<!-- ******************************************************************************
     Date: 2013-01-29
-    Requests: 
+    Requests:
         - Additional Panel called "Engineering Mode" to Setting.
         - Add 5 buttons nested under Engineering Mode that can change from enable to disable and disable to enable.
         - "Enable" buttons from Applicator 1 & 2 are to be removed.
-    
+
     Date: 2013-01-31
     Requests:
         - Centralise the button in Engineering Mode.
-    
+
     Date: 2013-02-07
     Requests:
         - Remove Applicator 1 & 2.
@@ -21,7 +21,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:uc="clr-namespace:PentagonHMI.UserControls" 
+             xmlns:uc="clr-namespace:PentagonHMI.UserControls"
              mc:Ignorable="d"
             d:DesignHeight="641" d:DesignWidth="1035"
              xmlns:my="clr-namespace:PentagonHMI.UserControls">
@@ -29,14 +29,14 @@
         <Style
             x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_DATETIME_STYLE"
             TargetType="{x:Type DataGridColumnHeader}">
-            <Setter 
+            <Setter
                 Property="Content"
                 Value="User ID" />
         </Style>
         <Style
             x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_USER_STYLE"
             TargetType="{x:Type DataGridColumnHeader}">
-            <Setter 
+            <Setter
                 Property="Content"
                 Value="Password" />
         </Style>
@@ -50,7 +50,7 @@
         <Style
             x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_DESCRIPTION_STYLE"
             TargetType="{x:Type DataGridColumnHeader}">
-            <Setter 
+            <Setter
                 Property="Content"
                 Value="{DynamicResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_DESCRIPTION}" />
         </Style>
@@ -64,7 +64,6 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0" x:Name="lblTitle" Content="User Account" Style="{DynamicResource styTopPenalBlue}" Height="30" VerticalAlignment="Top" FontSize="18" Margin="0" Padding="30,2,2,0" />
 
-
             <Grid Grid.Row="1" Margin="20,0,0,0">
                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <Grid>
@@ -73,24 +72,22 @@
                             <ColumnDefinition Width="400" />
                         </Grid.ColumnDefinitions>
 
-
                         <StackPanel Grid.Column="0">
                             <GroupBox Header="Change Password" FontSize="16" BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3">
                                 <StackPanel>
 
-                                    <Label Content="User ID" Height="28"  FontSize="16"  />
-                                    <TextBox Height="30" Name="txtUserid1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left"/>
-                                    <Label Content="Old Password" Height="28"  FontSize="16"  />
+                                    <Label Content="User ID" Height="28"  FontSize="16" />
+                                    <TextBox Height="30" Name="txtUserid1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left" />
+                                    <Label Content="Old Password" Height="28"  FontSize="16" />
 
                                     <PasswordBox Height="30" Name="txtPass1" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
                                     <!--<TextBox Height="30" Name="txtPass1" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />-->
-                                    <Label Content="New Password" Height="28"  FontSize="16"  />
+                                    <Label Content="New Password" Height="28"  FontSize="16" />
                                     <PasswordBox Height="30" Name="txtNewPass1" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
                                     <!--<TextBox Height="30" Name="txtNewPass1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left" />-->
-                                    <Label Content="Confirm Password" Height="28"  FontSize="16"  />
+                                    <Label Content="Confirm Password" Height="28"  FontSize="16" />
                                     <PasswordBox Height="30" Name="txtCNewPass1" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
-                                    <!--<TextBox Height="30" Name="txtCNewPass1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left"/>-->
-
+                                    <!--<TextBox Height="30" Name="txtCNewPass1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left" />-->
 
                                     <Button Background="{DynamicResource NormalBackgroundBrush}" Content="Change Password" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnChangePassword" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnChangePassword_Click" FontSize="16" />
                                 </StackPanel>
@@ -100,29 +97,24 @@
                                     <Label Content="User Level" Height="28" Name="label1" FontSize="16" VerticalAlignment="Top" />
                                     <ComboBox Height="30" Name="userlevel" Width="150" VerticalAlignment="Top" Margin="150,-26,0,0" HorizontalAlignment="Left">
                                         <ComboBoxItem Content="Operator" FontSize="16" />
-                                        <ComboBoxItem Content="Technician" FontSize="16"  />
+                                        <ComboBoxItem Content="Technician" FontSize="16" />
                                         <ComboBoxItem Content="Engineer"  FontSize="16" />
-
-
                                     </ComboBox>
-                                    <Label Content="User ID" Height="28"  FontSize="16"  />
+                                    <Label Content="User ID" Height="28"  FontSize="16" />
                                     <TextBox Height="30" Name="txtUserid" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
-                                    <Label Content="Password" Height="28"  FontSize="16"  />
+                                    <Label Content="Password" Height="28"  FontSize="16" />
                                     <PasswordBox Height="30" Name="txtpassword" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
                                     <!--<TextBox Height="30" Name="txtpassword" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />-->
-                                    <Label Content="Confirm Password" Height="28"  FontSize="16"  />
+                                    <Label Content="Confirm Password" Height="28"  FontSize="16" />
                                     <PasswordBox Height="30" Name="txtCpassword" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
-
 
                                     <Button Background="{DynamicResource NormalBackgroundBrush}" Content="Add New" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnAddUser" Style="{DynamicResource styGlassButton}" Width="100" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnAddUser_Click" FontSize="16" />
                                 </StackPanel>
                             </GroupBox>
-
-
                         </StackPanel>
                         <StackPanel  Grid.Column="1">
 
-                            <GroupBox BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3" Header="Delete ID" FontSize="16" >
+                            <GroupBox BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3" Header="Delete ID" FontSize="16">
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="200" />
@@ -134,7 +126,7 @@
             Height="auto"
             Margin="10, 10, 10, 10">
                                         <DataGrid
-                Name="dgLog" 
+                Name="dgLog"
                 AutoGenerateColumns="False"
                 ItemsSource="{Binding}"
                 MaxHeight="200"
@@ -144,29 +136,26 @@
                                                 <DataGridTextColumn
                         Binding="{Binding UserName}"
                         HeaderStyle="{StaticResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_DATETIME_STYLE}"
-                        SortDirection="Descending" SortMemberPath="UserName"/>
+                        SortDirection="Descending" SortMemberPath="UserName" />
                                                 <!--<DataGridTextColumn
                         Binding="{Binding Password}"
                         HeaderStyle="{StaticResource
                         MAIN_WINDOW_DATATABLE_EVENT_HEADER_USER_STYLE}" SortMemberPath="Password" />-->
                                                 <DataGridTextColumn
                         Binding="{Binding Level}"
-                        HeaderStyle="{StaticResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_LOG_TYPE_STYLE}" Width="*" SortMemberPath="Level"/>
+                        HeaderStyle="{StaticResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_LOG_TYPE_STYLE}" Width="*" SortMemberPath="Level" />
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </ScrollViewer>
                                     <Button Background="{DynamicResource NormalBackgroundBrush}" Grid.Row="1" Content="Delete" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnDeleteUser" Style="{DynamicResource styGlassButton}" Width="100" Margin="0,0,10,10" HorizontalAlignment="Right" Click="btnDeleteUser_Click" FontSize="16" />
                                 </Grid>
                             </GroupBox>
-
                         </StackPanel>
                     </Grid>
-
                 </ScrollViewer>
             </Grid>
 
-
-            <!--<Grid Grid.Row="2">            
+            <!--<Grid Grid.Row="2">
         </Grid>-->
         </Grid>
     </Border>

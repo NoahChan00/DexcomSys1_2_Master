@@ -1,10 +1,10 @@
-﻿using Logix;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using Logix;
 using System;
 using System.Windows.Controls;
-using Utilities;
-using LiveCharts;
-using LiveCharts.Wpf;
 using System.Windows.Media;
+using Utilities;
 
 namespace PentagonHMI
 {
@@ -14,23 +14,26 @@ namespace PentagonHMI
     public partial class YieldView : UserControl
     {
         #region PrivateFields
+
         private LogicClasses.Main main = null;
         private readonly Tag zone1TotalPassTag = new Tag { Name = "OEE_Tags.dint_Z1_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private readonly Tag zone1TotalFailTag = new Tag { Name = "OEE_Tags.dint_Z1_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
         private readonly Tag zone2TotalPassTag = new Tag { Name = "OEE_Tags.dint_Z2_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private readonly Tag zone2TotalFailTag = new Tag { Name = "OEE_Tags.dint_Z2_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
-        SeriesCollection Series;
+        private SeriesCollection Series;
         public Func<ChartPoint, string> PointLabel { get; set; }
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public YieldView(LogicClasses.Main _main)
         {
             try
             {
                 main = _main;
                 InitializeComponent();
-                if (ProjectType.HDD == Classes.GlobalFunctions.ProjectType)
+                if(ProjectType.HDD == Classes.GlobalFunctions.ProjectType)
                 {
                     YieldUserControl.Visibility = System.Windows.Visibility.Collapsed;
                     PieYield.Visibility = System.Windows.Visibility.Visible;
@@ -42,36 +45,36 @@ namespace PentagonHMI
                     };
                     PieYield.Series = Series;
                 }
-                else if (Classes.GlobalFunctions.ProjectType == ProjectType.ARCADIA && Classes.GlobalFunctions.StationType == StationType.VISION)
+                else if(Classes.GlobalFunctions.ProjectType == ProjectType.ARCADIA && Classes.GlobalFunctions.StationType == StationType.VISION)
                 {
-                    if (main.MachineName.ToUpper().Contains("FINAL"))
+                    if(main.MachineName.ToUpper().Contains("FINAL"))
                     {
                         zone1TotalPassTag = new Tag { Name = "OutputPnP_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone1TotalFailTag = new Tag { Name = "OutputPnP_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
                     }
-                    else if (main.MachineName.ToUpper().Contains("CENTRAL"))
+                    else if(main.MachineName.ToUpper().Contains("CENTRAL"))
                     {
                         zone1TotalPassTag = new Tag { Name = "CenVis_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone1TotalFailTag = new Tag { Name = "CenVis_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
                     }
                 }
-                else if (Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
+                else if(Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
                 {
-                    if (Classes.GlobalFunctions.StationType == StationType.ARCADIA_Main)
+                    if(Classes.GlobalFunctions.StationType == StationType.ARCADIA_Main)
                     {
                         zone1TotalPassTag = new Tag { Name = "Labelling_OEE_Tags.dint_Z1_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone1TotalFailTag = new Tag { Name = "Labelling_OEE_Tags.dint_Z1_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
                         zone2TotalPassTag = new Tag { Name = "Labelling_OEE_Tags.dint_Z2_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone2TotalFailTag = new Tag { Name = "Labelling_OEE_Tags.dint_Z2_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
                     }
-                    else if (main.MachineName.ToUpper().Contains("FINAL"))
+                    else if(main.MachineName.ToUpper().Contains("FINAL"))
                     {
                         zone1TotalPassTag = new Tag { Name = "OutputPnP_OEE_Tags.dint_Z1_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone1TotalFailTag = new Tag { Name = "OutputPnP_OEE_Tags.dint_Z1_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
                         zone2TotalPassTag = new Tag { Name = "OutputPnP_OEE_Tags.dint_Z2_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone2TotalFailTag = new Tag { Name = "OutputPnP_OEE_Tags.dint_Z2_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
                     }
-                    else if (main.MachineName.ToUpper().Contains("CENTRAL"))
+                    else if(main.MachineName.ToUpper().Contains("CENTRAL"))
                     {
                         zone1TotalPassTag = new Tag { Name = "CenVis_OEE_Tags.dint_Z1_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
                         zone1TotalFailTag = new Tag { Name = "CenVis_OEE_Tags.dint_Z1_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
@@ -82,14 +85,16 @@ namespace PentagonHMI
 
                 initializeOpc(_main);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeOpc(LogicClasses.Main _main)
         {
             try
@@ -97,19 +102,21 @@ namespace PentagonHMI
                 main = _main;
                 main.Home_OnUpdate += main_Home_OnUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void main_Home_OnUpdate()
         {
             try
             {
-                if (ProjectType.HDD == Classes.GlobalFunctions.ProjectType)
+                if(ProjectType.HDD == Classes.GlobalFunctions.ProjectType)
                 {
                     double Pass = main.OPC.Read<double>("OEE_Tags.dint_Total_Pass");
                     double Fail = main.OPC.Read<double>("OEE_Tags.dint_Total_Fail");
@@ -123,12 +130,12 @@ namespace PentagonHMI
                 }
                 else
                 {
-                    if (main.zoneCount == 1)
+                    if(main.zoneCount == 1)
                     {
                         main.MyPLC.ReadTag(zone1TotalPassTag);
                         main.MyPLC.ReadTag(zone1TotalFailTag);
 
-                        if (zone1TotalPassTag.Value != null && zone1TotalFailTag.Value != null)
+                        if(zone1TotalPassTag.Value != null && zone1TotalFailTag.Value != null)
                         {
                             YieldUserControl.PassFail = $"{zone1TotalPassTag.Value},{zone1TotalFailTag.Value},-,-";
                         }
@@ -140,7 +147,7 @@ namespace PentagonHMI
                         main.MyPLC.ReadTag(zone2TotalPassTag);
                         main.MyPLC.ReadTag(zone2TotalFailTag);
 
-                        if (zone1TotalPassTag.Value != null && zone1TotalFailTag.Value != null &&
+                        if(zone1TotalPassTag.Value != null && zone1TotalFailTag.Value != null &&
                         zone2TotalPassTag.Value != null && zone2TotalFailTag.Value != null)
                         {
                             YieldUserControl.PassFail = $"{zone1TotalPassTag.Value},{zone1TotalFailTag.Value}," +
@@ -149,11 +156,12 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

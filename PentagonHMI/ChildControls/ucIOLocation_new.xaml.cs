@@ -11,16 +11,18 @@ namespace PentagonHMI.ChildControls
 {
     public partial class ucIOLocation : UserControl, IDisposable
     {
-        LogicClasses.Main _Main;
-        bool isFullscreen = false;
-        bool isZoomed = false;
+        private LogicClasses.Main _Main;
+        private bool isFullscreen = false;
+        private bool isZoomed = false;
+
         #region Constructor
+
         public ucIOLocation(ref LogicClasses.Main Main)
         {
             _Main = Main;
             InitializeComponent();
 
-            if (!Directory.Exists(@"D:\IOLocations"))
+            if(!Directory.Exists(@"D:\IOLocations"))
                 Directory.CreateDirectory(@"D:\IOLocations");
 
             DirectoryInfo DI = new DirectoryInfo(@"D:\IOLocations");
@@ -41,35 +43,38 @@ namespace PentagonHMI.ChildControls
                         Fullscreen.Source = new BitmapImage(new Uri(x.FullName));
                     });
                 }
-                catch (Exception ex)
+                catch(Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
 
                 itemControls.ItemsSource = ioLocations;
             }));
-
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Destructor
+
         ~ucIOLocation()
         {
             Dispose();
         }
+
         public void Dispose()
         {
             _Main.IOLocPageON = false;
         }
-        #endregion
+
+        #endregion Destructor
 
         private void StackPanel_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (isFullscreen)
+            if(isFullscreen)
             {
                 Fullscreen.RenderTransform = null;
                 var position = e.MouseDevice.GetPosition(Fullscreen);
-                if (isZoomed)
+                if(isZoomed)
                 {
                     Fullscreen.RenderTransform = null;
                     isZoomed = !isZoomed;

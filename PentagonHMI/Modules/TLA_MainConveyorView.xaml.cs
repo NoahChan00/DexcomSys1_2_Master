@@ -1,5 +1,4 @@
-﻿using PentagonHMI.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,6 +14,7 @@ namespace PentagonHMI
     public partial class TLA_MainConveyorView : UserControl
     {
         #region PrivateFields
+
         private Dictionary<string, Brush> machineStatusDictionary = new Dictionary<string, Brush>
         {
             { "Running", Brushes.MediumSeaGreen },
@@ -27,13 +27,15 @@ namespace PentagonHMI
             { "Disabled", Brushes.DimGray },
             { "Alarm", Brushes.Red }
         };
-        
+
         private List<Tuple<Logix.Tag, Rectangle, TextBlock, Logix.Controller>> machineStatusList = new List<Tuple<Logix.Tag, Rectangle, TextBlock, Logix.Controller>>();
         private List<Tuple<Logix.Tag, StackPanel>> eStopList = new List<Tuple<Logix.Tag, StackPanel>>();
         private LogicClasses.Main main = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructors
+
         public TLA_MainConveyorView(LogicClasses.Main _main)
         {
             try
@@ -44,17 +46,19 @@ namespace PentagonHMI
 
                 initializeMachineStatusList();
                 initializeEStopList();
-                
+
                 main.Home_OnUpdate += main_Home_OnUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructors
 
         #region PrivateInitializeMethods
+
         private void initializeMachineStatusList()
         {
             try
@@ -138,7 +142,7 @@ namespace PentagonHMI
                 //    }
                 //});
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -235,14 +239,16 @@ namespace PentagonHMI
                     }, Zone9EStop2StackPanel)
                 };
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void main_Home_OnUpdate()
         {
             try
@@ -251,9 +257,9 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.Item1.Name))
+                        if(!string.IsNullOrEmpty(x.Item1.Name))
                         {
-                            if (x.Item4 == null)
+                            if(x.Item4 == null)
                             {
                                 main.MyPLC.ReadTag(x.Item1);
                             }
@@ -262,13 +268,13 @@ namespace PentagonHMI
                                 x.Item4.ReadTag(x.Item1);
                             }
 
-                            if (x.Item1.Value != null)
+                            if(x.Item1.Value != null)
                             {
-                                if (!string.IsNullOrEmpty(x.Item1.Value.ToString()))
+                                if(!string.IsNullOrEmpty(x.Item1.Value.ToString()))
                                 {
                                     Brush brush = Brushes.Transparent;
 
-                                    if (machineStatusDictionary.ContainsKey(x.Item1.Value.ToString()))
+                                    if(machineStatusDictionary.ContainsKey(x.Item1.Value.ToString()))
                                     {
                                         brush = machineStatusDictionary[x.Item1.Value.ToString()];
                                     }
@@ -277,22 +283,22 @@ namespace PentagonHMI
                                     {
                                         try
                                         {
-                                            if (x.Item2.Fill != brush)
+                                            if(x.Item2.Fill != brush)
                                             {
                                                 x.Item2.Fill = brush;
                                             }
 
-                                            if (x.Item3.Foreground != brush)
+                                            if(x.Item3.Foreground != brush)
                                             {
                                                 x.Item3.Foreground = brush;
                                             }
 
-                                            if (x.Item3.Text != x.Item1.Value.ToString())
+                                            if(x.Item3.Text != x.Item1.Value.ToString())
                                             {
                                                 x.Item3.Text = x.Item1.Value.ToString();
                                             }
                                         }
-                                        catch (Exception exception)
+                                        catch(Exception exception)
                                         {
                                             FileLogger.logError(exception.Message, exception.ToString());
                                         }
@@ -301,7 +307,7 @@ namespace PentagonHMI
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
@@ -311,11 +317,11 @@ namespace PentagonHMI
                 {
                     try
                     {
-                        if (!string.IsNullOrEmpty(x.Item1.Name))
+                        if(!string.IsNullOrEmpty(x.Item1.Name))
                         {
                             main.MyPLC.ReadTag(x.Item1);
 
-                            if (x.Item1.Value != null)
+                            if(x.Item1.Value != null)
                             {
                                 Dispatcher.Invoke(new Action(() =>
                                 {
@@ -324,17 +330,18 @@ namespace PentagonHMI
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 });
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

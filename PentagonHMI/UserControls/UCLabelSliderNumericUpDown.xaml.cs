@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,15 +10,19 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelSliderNumericUpDown : UserControl
     {
         #region Constructor
+
         public UCLabelSliderNumericUpDown()
         {
             InitializeComponent();
             ucUpDown.Value = 0;
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleContentProperty =
@@ -43,17 +37,19 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleContentProperty); }
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
-        #endregion
+
+        #endregion ucLabelTitle Properties
 
         /// <summary>
         /// Set the maximum value for the control
         /// </summary>
-        double _intMaximun = 100;
+        private double _intMaximun = 100;
+
         public double Maximun
         {
             get { return _intMaximun; }
-            set 
-            { 
+            set
+            {
                 _intMaximun = value;
                 ucSlider.Maximum = value;
                 ucUpDown.Maximum = value;
@@ -63,12 +59,13 @@ namespace PentagonHMI.UserControls
         /// <summary>
         /// Set the minumum value for the control
         /// </summary>
-        double _intMinimum = 0;
+        private double _intMinimum = 0;
+
         public double Minimum
         {
             get { return _intMinimum; }
-            set 
-            { 
+            set
+            {
                 _intMinimum = value;
                 ucSlider.Minimum = value;
                 ucUpDown.Minimum = value;
@@ -102,7 +99,7 @@ namespace PentagonHMI.UserControls
         }
 
         /// <summary>
-        /// Set the Increment for the updown control 
+        /// Set the Increment for the updown control
         /// </summary>
         /// <remarks>
         /// Default 1
@@ -125,9 +122,11 @@ namespace PentagonHMI.UserControls
                 ucSlider.Margin = new Thickness(value, 3, 69, 2);
             }
         }
-        #endregion
+
+        #endregion Properties
 
         #region FormEvents
+
         private void ucSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             ucUpDown.Value = ucSlider.Value;
@@ -137,6 +136,7 @@ namespace PentagonHMI.UserControls
         {
             ucSlider.Value = Convert.ToDouble(ucUpDown.Value);
         }
-        #endregion
+
+        #endregion FormEvents
     }
 }

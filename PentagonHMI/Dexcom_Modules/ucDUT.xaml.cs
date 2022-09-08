@@ -28,7 +28,7 @@ namespace PentagonHMI.ChildControls
             InitializeComponent();
             _Main = main;
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP))
+            if(!OPCore.Connect(Info.OPC.IP))
                 return;
 #endif
             Initialize();
@@ -75,11 +75,11 @@ namespace PentagonHMI.ChildControls
             //for (int num = 0; num < Num; num++)
             //    DTM.Sockets.Add(new SubDUTModel());
             //DTM.Sockets.Add(new SubDUTModel());
-            foreach (var i in new List<string>() { "A", "B", "C", "D", "E", "F", "G", "H" })
+            foreach(var i in new List<string>() { "A", "B", "C", "D", "E", "F", "G", "H" })
             {
                 DUTs.Add(new DUTModel() { Name = "TurretNest_" + i, });
             }
-            foreach (var i in DUTs) // Weird logic due to migration from Island 0 to System 1 and System 2
+            foreach(var i in DUTs) // Weird logic due to migration from Island 0 to System 1 and System 2
             {
                 i.Sockets.Add(new SubDUTModel());
             }
@@ -92,7 +92,7 @@ namespace PentagonHMI.ChildControls
             {
                 try
                 {
-                    foreach (var DUT in DUTs)
+                    foreach(var DUT in DUTs)
                     {
 #if !DEBUG
                         var SocketsDisable = OPCore.Read<bool>(DUT.TagSocketDisable);
@@ -106,7 +106,7 @@ namespace PentagonHMI.ChildControls
                         var TotalFails = 1;
                         var Yields = 1;
 #endif
-                        for (int i = 0; i < DUT.Sockets.Count; i++)
+                        for(int i = 0; i < DUT.Sockets.Count; i++)
                         {
                             DUT.Sockets[i].SocketDisable = SocketsDisable;
                             DUT.Sockets[i].TotalPass = TotalPasses.ToString();
@@ -116,7 +116,7 @@ namespace PentagonHMI.ChildControls
                         }
                     }
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
@@ -152,7 +152,7 @@ namespace PentagonHMI.ChildControls
             }
             set
             {
-                if (name != value)
+                if(name != value)
                 {
                     name = value;
                     // Not sure this required
@@ -208,7 +208,7 @@ namespace PentagonHMI.ChildControls
             }
             set
             {
-                if (sockets != value)
+                if(sockets != value)
                 {
                     sockets = value;
                     RaisePropertyChanged(nameof(Sockets));
@@ -229,7 +229,7 @@ namespace PentagonHMI.ChildControls
             }
             set
             {
-                if (background != value)
+                if(background != value)
                 {
                     background = value;
                     RaisePropertyChanged(nameof(Background));
@@ -247,7 +247,7 @@ namespace PentagonHMI.ChildControls
             }
             set
             {
-                if (totalPass != value)
+                if(totalPass != value)
                 {
                     totalPass = value;
                     RaisePropertyChanged(nameof(TotalPass));
@@ -266,7 +266,7 @@ namespace PentagonHMI.ChildControls
             }
             set
             {
-                if (totalFail != value)
+                if(totalFail != value)
                 {
                     totalFail = value;
                     RaisePropertyChanged(nameof(TotalFail));
@@ -292,7 +292,7 @@ namespace PentagonHMI.ChildControls
 
                 //var result = (Convert.ToDouble(TotalPass) / Convert.ToDouble(TotalFail)) * x;
                 //RaisePropertyChanged(nameof(result));
-                if (Yield != value)
+                if(Yield != value)
                 {
                     yield = value + "%";
                     RaisePropertyChanged(nameof(Yield));
@@ -311,7 +311,7 @@ namespace PentagonHMI.ChildControls
 
             set
             {
-                if (SocketDisable != value)
+                if(SocketDisable != value)
                 {
                     socketDisable = value;
                     RaisePropertyChanged(nameof(SocketDisable));

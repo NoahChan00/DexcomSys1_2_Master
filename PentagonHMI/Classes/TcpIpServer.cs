@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PentagonHMI.Classes
@@ -23,7 +23,8 @@ namespace PentagonHMI.Classes
                 Int32 port = 11000;
 
                 var IP = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(x => x.ToString().Contains("168.3")).FirstOrDefault();
-                if (IP == null) return;
+                if(IP == null)
+                    return;
                 server = new TcpListener(IP, port);
 
                 // Start listening for client requests.
@@ -32,11 +33,9 @@ namespace PentagonHMI.Classes
                 // Buffer for reading data
                 Byte[] bytes = new Byte[256];
 
-
                 // Enter the listening loop.
-                while (true)
+                while(true)
                 {
-
                     // Perform a blocking call to accept requests.
                     // You could also use server.AcceptSocket() here.
                     TcpClient client = server.AcceptTcpClient();
@@ -47,7 +46,7 @@ namespace PentagonHMI.Classes
                     int i;
 
                     // Loop to receive all the data sent by the client.
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                    while((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                     {
                         // Translate data bytes to a ASCII string.
                         Utilities.FileLogger.logPlcEvent(Encoding.ASCII.GetString(bytes, 0, i));
@@ -57,7 +56,7 @@ namespace PentagonHMI.Classes
                     client.Close();
                 }
             }
-            catch (SocketException ex)
+            catch(SocketException ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "PLC Event Log (Listen)");
             }
@@ -69,4 +68,3 @@ namespace PentagonHMI.Classes
         }
     }
 }
-

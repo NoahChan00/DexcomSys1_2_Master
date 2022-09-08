@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using System;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -12,41 +12,43 @@ namespace PentagonHMI.UserControls
             InitializeComponent();
         }
 
-        bool PreZ1 = false;
-        bool PreZ2 = false;
+        private bool PreZ1 = false;
+        private bool PreZ2 = false;
+
         public void SetDis(bool Zone1, bool Zone2)
         {
-            if (Zone1 != PreZ1)
+            if(Zone1 != PreZ1)
             {
-                this.Dispatcher.Invoke(new Action(() => Lbl_Zone1.Visibility = Zone1 ? 
+                this.Dispatcher.Invoke(new Action(() => Lbl_Zone1.Visibility = Zone1 ?
                 Visibility.Visible : Visibility.Collapsed));
                 PreZ1 = Zone1;
             }
 
-            if (Zone2 != PreZ2)
+            if(Zone2 != PreZ2)
             {
-                this.Dispatcher.Invoke(new Action(() => Lbl_Zone2.Visibility = Zone2 ? 
+                this.Dispatcher.Invoke(new Action(() => Lbl_Zone2.Visibility = Zone2 ?
                 Visibility.Visible : Visibility.Collapsed));
                 PreZ2 = Zone2;
             }
         }
 
-        string PreStatus;
+        private string PreStatus;
+
         public void SetStatus(string Sts)
         {
-            if (string.IsNullOrWhiteSpace(Sts))
+            if(string.IsNullOrWhiteSpace(Sts))
                 return;
 
-            if (Sts == PreStatus)
+            if(Sts == PreStatus)
                 return;
             else
                 PreStatus = Sts;
 
-            switch (Sts.ToUpper())
+            switch(Sts.ToUpper())
             {
                 case "RUNNING":
                 case "RUN":
-                    this.Dispatcher.Invoke(new Action(()=> Rec_Status.Fill = Brushes.LawnGreen));
+                    this.Dispatcher.Invoke(new Action(() => Rec_Status.Fill = Brushes.LawnGreen));
                     this.Dispatcher.Invoke(new Action(() => Lbl_Status.Background = Brushes.Green));
                     this.Dispatcher.Invoke(new Action(() => Lbl_Status.Foreground = Brushes.White));
                     break;

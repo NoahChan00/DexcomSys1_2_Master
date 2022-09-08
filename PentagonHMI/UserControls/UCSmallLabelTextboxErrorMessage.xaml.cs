@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 
 namespace PentagonHMI.UserControls
 {
@@ -21,14 +12,18 @@ namespace PentagonHMI.UserControls
     public partial class UCSmallLabelTextboxErrorMessage : UserControl
     {
         #region Constructor
+
         public UCSmallLabelTextboxErrorMessage()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleContentProperty =
@@ -43,9 +38,11 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleContentProperty); }
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
-        #endregion
 
-        bool _isPassword;
+        #endregion ucLabelTitle Properties
+
+        private bool _isPassword;
+
         public bool isPassword
         {
             get { return this._isPassword; }
@@ -53,7 +50,7 @@ namespace PentagonHMI.UserControls
             {
                 _isPassword = value;
 
-                if (_isPassword)
+                if(_isPassword)
                 {
                     this.ucPasswordBox.Visibility = System.Windows.Visibility.Visible;
                     this.ucTextBox.Visibility = System.Windows.Visibility.Collapsed;
@@ -66,7 +63,8 @@ namespace PentagonHMI.UserControls
             }
         }
 
-        bool _isNumeric = false;
+        private bool _isNumeric = false;
+
         public bool isNumeric
         {
             get { return this._isNumeric; }
@@ -78,7 +76,7 @@ namespace PentagonHMI.UserControls
         {
             get
             {
-                if (_isPassword)
+                if(_isPassword)
                 {
                     return this.ucPasswordBox.Password;
                 }
@@ -89,7 +87,7 @@ namespace PentagonHMI.UserControls
             }
             set
             {
-                if (_isPassword)
+                if(_isPassword)
                 {
                     this.ucPasswordBox.Password = value;
                 }
@@ -170,7 +168,7 @@ namespace PentagonHMI.UserControls
         {
             get
             {
-                if (_isPassword)
+                if(_isPassword)
                 {
                     return this.ucPasswordBox.MaxLength;
                 }
@@ -181,7 +179,7 @@ namespace PentagonHMI.UserControls
             }
             set
             {
-                if (_isPassword)
+                if(_isPassword)
                 {
                     this.ucPasswordBox.MaxLength = value;
                 }
@@ -197,7 +195,7 @@ namespace PentagonHMI.UserControls
         {
             get
             {
-                if (_isPassword)
+                if(_isPassword)
                 {
                     return this.ucPasswordBox.IsEnabled;
                 }
@@ -208,7 +206,7 @@ namespace PentagonHMI.UserControls
             }
             set
             {
-                if (_isPassword)
+                if(_isPassword)
                 {
                     this.ucPasswordBox.IsEnabled = value;
                 }
@@ -218,18 +216,18 @@ namespace PentagonHMI.UserControls
                 }
             }
         }
-       
+
         //Set the error label content and focus the control
         public string ucLabelErrorContent
         {
             get { return this.ucLabelError.Content.ToString(); }
-            set 
-            { 
+            set
+            {
                 this.ucLabelError.Content = value;
-                if (!string.IsNullOrEmpty(value))
+                if(!string.IsNullOrEmpty(value))
                 {
                     //this.ucTextBox.Focus();
-                    if (_isPassword)
+                    if(_isPassword)
                     {
                         this.ucPasswordBox.Focus();
                     }
@@ -247,29 +245,31 @@ namespace PentagonHMI.UserControls
             get { return this.ucLabelError.Visibility; }
             set { this.ucLabelError.Visibility = value; }
         }
-       
-        
-        #endregion
+
+        #endregion Properties
 
         #region Methods
-        // Use the PreviewTextInputHandler to respond to key presses 
+
+        // Use the PreviewTextInputHandler to respond to key presses
         private void PreviewTextInputHandler(Object sender, TextCompositionEventArgs e)
         {
-            if (_isNumeric)
+            if(_isNumeric)
             {
-                e.Handled = !IsTextAllowed(e.Text); 
+                e.Handled = !IsTextAllowed(e.Text);
             }
         }
 
-        // Use the DataObject.Pasting Handler  
+        // Use the DataObject.Pasting Handler
         private void PastingHandler(object sender, DataObjectPastingEventArgs e)
         {
-            if (e.DataObject.GetDataPresent(typeof(String)))
+            if(e.DataObject.GetDataPresent(typeof(String)))
             {
                 String text = (String)e.DataObject.GetData(typeof(String));
-                if (!IsTextAllowed(text)) e.CancelCommand();
+                if(!IsTextAllowed(text))
+                    e.CancelCommand();
             }
-            else e.CancelCommand();
+            else
+                e.CancelCommand();
         }
 
         //Validate the text
@@ -278,6 +278,7 @@ namespace PentagonHMI.UserControls
             Regex regex = new Regex("[^0-9.-]+"); //regex that matches disallowed text
             return !regex.IsMatch(text);
         }
-        #endregion
+
+        #endregion Methods
     }
 }

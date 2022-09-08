@@ -1,5 +1,4 @@
 ﻿using Logix;
-using PentagonHMI.Classes;
 using PentagonHMI.UserControls;
 using SimpleDatabase;
 using System;
@@ -43,7 +42,7 @@ namespace PentagonHMI.ChildControls
                 _MainConnection.OnMotorUpdate += new LogicClasses.Main.onMotorHandler(Motor_OnUpdate);
                 Initialize();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -59,7 +58,7 @@ namespace PentagonHMI.ChildControls
 
             //EM = new Tag("MC_System_Tags.EngineeringMode");//_MainConnection.StationID == "0" ? new Tag("bool_EngineerMode") : new Tag("bool_EngineeringMode");
             EM = new Tag(Tags.MainPage.EngineeringMode.Name, Tags.MainPage.EngineeringMode.DataType);
-            MStatus = new Tag("MC_System_Tags.MachineRunning",Logix.Tag.ATOMIC.BOOL);// _MainConnection.StationID == "0" ? new Tag("Conveyor_Preset.Production_Running") : new Tag("bool_MachineRunning");
+            MStatus = new Tag("MC_System_Tags.MachineRunning", Logix.Tag.ATOMIC.BOOL);// _MainConnection.StationID == "0" ? new Tag("Conveyor_Preset.Production_Running") : new Tag("bool_MachineRunning");
         }
 
         private class Assignment : SavePosition
@@ -149,12 +148,12 @@ namespace PentagonHMI.ChildControls
                 Utilities.FileLogger.logButton(strMotor, "Engineering Mode Trigger", MethodBase.GetCurrentMethod().ToString());
                 ToggleButton Tbtn = sender as ToggleButton;
                 EM.Value = (Boolean)Tbtn.IsChecked;
-                if (PLCController.WriteTag(EM) == ResultCode.E_SUCCESS)
+                if(PLCController.WriteTag(EM) == ResultCode.E_SUCCESS)
                     Tbtn.IsChecked = (bool)EM.Value;
                 else
                     Tbtn.IsChecked = (bool)Tbtn.IsChecked ? false : true;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Trigger Engineering Mode Failed IO Page");
             }
@@ -170,13 +169,13 @@ namespace PentagonHMI.ChildControls
             {
                 Update();
 
-                if (PLCController.ReadTag(MStatus) == ResultCode.E_SUCCESS && MStatus.Value != null)
+                if(PLCController.ReadTag(MStatus) == ResultCode.E_SUCCESS && MStatus.Value != null)
                     this.Dispatcher.Invoke(new Action(() => tgEM.IsEnabled = !(bool)MStatus.Value));
 
-                if (PLCController.ReadTag(EM) == ResultCode.E_SUCCESS && EM.Value != null)
+                if(PLCController.ReadTag(EM) == ResultCode.E_SUCCESS && EM.Value != null)
                     this.Dispatcher.Invoke(new Action(() => EMchk((bool)EM.Value)));
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -186,7 +185,7 @@ namespace PentagonHMI.ChildControls
         {
             int index = -1;
             Dispatcher.Invoke(() => index = MotorTab.SelectedIndex);
-            if (MotorPages.TryGetValue(index, out PageNow))
+            if(MotorPages.TryGetValue(index, out PageNow))
             {
                 PageNow.Update();
             }
@@ -200,15 +199,15 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                foreach (TabItem tb in MotorTab.Items)
+                foreach(TabItem tb in MotorTab.Items)
                     tb.IsEnabled = EMon;
 
-                if (!EMon)
+                if(!EMon)
                     MotorTab.SelectedIndex = 0;
 
                 tgEM.IsChecked = EMon;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -236,8 +235,8 @@ namespace PentagonHMI.ChildControls
             {
                 int row = 0;
                 DataTable DT = SQLer.Exec_DTSelect($"Select * from Motor_Info Where StationID = '{_MainConnection.StationID}'");
-                if (DT != null)
-                    foreach (DataRow dr in DT.Rows)
+                if(DT != null)
+                    foreach(DataRow dr in DT.Rows)
                     {
                         int _Axis = (int)dr["MotorAxis"];
                         List<ObservableCollection<UCMotorPage.IO>> CurrentIO = GetCurrentIO(_MainConnection.StationID, _Axis, ref ErrMsg);
@@ -278,7 +277,7 @@ namespace PentagonHMI.ChildControls
                         NewAxis(ASM);
                     }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -304,7 +303,7 @@ namespace PentagonHMI.ChildControls
             "Select [DisplayName],[IO], [TagName]," +
             $"(Select Count(*) from Motor_IO b where b.StationID = {StationID} and MotorAxis = {MotorAxis} " +
             $"and TagName = a.TagName) as 'Check' From IO a Where a.StationID = {StationID} ");
-            foreach (DataColumn col in dt.Columns)
+            foreach(DataColumn col in dt.Columns)
                 col.ReadOnly = false;
             return dt;
         }
@@ -319,10 +318,10 @@ namespace PentagonHMI.ChildControls
                 $"where a.stationID = {StationID} and b.stationID = {StationID} and [MotorAxis] = {MotorAxis}");
                 ObservableCollection<UCMotorPage.IO> CurrentI = new ObservableCollection<UCMotorPage.IO>();
                 ObservableCollection<UCMotorPage.IO> CurrentO = new ObservableCollection<UCMotorPage.IO>();
-                if (DT != null)
-                    foreach (DataRow dr in DT.Rows)
+                if(DT != null)
+                    foreach(DataRow dr in DT.Rows)
                     {
-                        if (dr["IO"].ToString() == "I")
+                        if(dr["IO"].ToString() == "I")
                             CurrentI.Add(new UCMotorPage.IO
                             {
                                 Content = dr["DisplayName"].ToString(),
@@ -340,7 +339,7 @@ namespace PentagonHMI.ChildControls
                 CurrentIO.Add(CurrentO);
                 return CurrentIO;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return CurrentIO;
@@ -351,7 +350,7 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                if (MotorPages.TryGetValue(MotorTab.SelectedIndex, out PageNow))
+                if(MotorPages.TryGetValue(MotorTab.SelectedIndex, out PageNow))
                 {
                     string Spliter = ",";
                     string pathCSV = Path.Combine(FileLogger.DefaultLocation_Time, "Motor");
@@ -359,25 +358,25 @@ namespace PentagonHMI.ChildControls
                     string Header = PageNow.AxisName + Spliter;
                     string Body = "Value,";
                     DataTable DT = PageNow.GetSavePosition();
-                    if (DT == null)
+                    if(DT == null)
                     {
                         MessageBox.Show("No Existing Save Position");
                         return;
                     }
 
-                    foreach (DataRow dr in DT.Rows)
+                    foreach(DataRow dr in DT.Rows)
                     {
                         Header += dr["Name"] + Spliter;
                         Body += dr["Position"] + Spliter;
                     }
 
-                    if (!Directory.Exists(pathCSV))
+                    if(!Directory.Exists(pathCSV))
                         Directory.CreateDirectory(pathCSV);
 
-                    if (!File.Exists(pathCSVMotorSave))
+                    if(!File.Exists(pathCSVMotorSave))
                     {
-                        using (FileStream stream = new FileStream((pathCSVMotorSave), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
-                        using (StreamWriter writer = new StreamWriter(stream))
+                        using(FileStream stream = new FileStream((pathCSVMotorSave), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                        using(StreamWriter writer = new StreamWriter(stream))
                         {
                             writer.WriteLine(Header);
                             writer.WriteLine(Body);
@@ -385,8 +384,8 @@ namespace PentagonHMI.ChildControls
                     }
                     else
                     {
-                        using (FileStream stream = new FileStream((pathCSVMotorSave), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                        using (StreamWriter writer = new StreamWriter(stream))
+                        using(FileStream stream = new FileStream((pathCSVMotorSave), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                        using(StreamWriter writer = new StreamWriter(stream))
                         {
                             writer.WriteLine(Header);
                             writer.WriteLine(Body);
@@ -396,7 +395,7 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Saved");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -408,12 +407,12 @@ namespace PentagonHMI.ChildControls
             {
                 string strPath = Path.Combine(FileLogger.DefaultLocation_Time, "Motor");
 
-                if (!Directory.Exists(@strPath))
+                if(!Directory.Exists(@strPath))
                     Directory.CreateDirectory(strPath);
 
                 Process.Start(@strPath);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -426,10 +425,10 @@ namespace PentagonHMI.ChildControls
                 DataRow[] DTr = sender as DataRow[];
                 SQLer.Exec_DTSelect($"Delete From Motor_IO Where StationID = {_MainConnection.StationID} and MotorAxis = {PageNow.Axis}");
                 string Values = string.Empty;
-                foreach (DataRow dr in DTr)
+                foreach(DataRow dr in DTr)
                     Values += $"({_MainConnection.StationID},{PageNow.Axis},'{dr["TagName"]}',GetDate()),";
 
-                if (DTr.GetLength(0) > 0)
+                if(DTr.GetLength(0) > 0)
                     SQLer.Exec_DTSelect($"INSERT INTO [dbo].[Motor_IO]([StationID],[MotorAxis],[TagName],[Updated_On])VALUES"
                         + Values.Remove(Values.Length - 1));
 
@@ -437,7 +436,7 @@ namespace PentagonHMI.ChildControls
                 PageNow.ICollection = CurIO[0];
                 PageNow.OCollection = CurIO[1];
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }

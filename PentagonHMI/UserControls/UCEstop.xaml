@@ -1,9 +1,9 @@
 ﻿<UserControl x:Class="PentagonHMI.UserControls.UCEstop"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" >
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="Estop" TargetType="Ellipse">
             <Style.Triggers>
@@ -15,11 +15,11 @@
                     </BeginStoryboard>
                 </EventTrigger>
             </Style.Triggers>
-            <Setter Property="Height" Value="15"/>
-            <Setter Property="Width" Value="15"/>
-            <Setter Property="Stroke" Value="Black"/>
-            <Setter Property="StrokeThickness" Value="1"/>
-            <Setter Property="Fill" Value="Red"/>
+            <Setter Property="Height" Value="15" />
+            <Setter Property="Width" Value="15" />
+            <Setter Property="Stroke" Value="Black" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="Fill" Value="Red" />
         </Style>
 
         <Style x:Key="Estops" TargetType="StackPanel">
@@ -39,22 +39,20 @@
         <StackPanel Name="StopUp" Style="{StaticResource Estops}" Margin="30 10 0 50">
             <Grid>
                 <Border BorderBrush="White" BorderThickness="1 1 1 0" CornerRadius="3">
-                    <Rectangle Fill="Red"  Width="30" Height="20" RadiusX="3" RadiusY="3"/>
+                    <Rectangle Fill="Red"  Width="30" Height="20" RadiusX="3" RadiusY="3" />
                 </Border>
-                <Label Name="Eup" Width="30" Height="20" Margin="0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Name="Eup" Width="30" Height="20" Margin="0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
             </Grid>
             <Polygon Fill="Red" Points="2 5 10 0 5 0" />
-
         </StackPanel>
         <StackPanel Name="StopDown" Visibility="Collapsed" Style="{StaticResource Estops}" Margin="30 50 0 0">
             <Polygon Fill="Red" Points="2 0 10 5 5 5" />
             <Grid>
                 <Border BorderBrush="White" BorderThickness="1 0 1 1" CornerRadius="3">
-                    <Rectangle Fill="Red"  Width="30" Height="20" RadiusX="3" RadiusY="3"/>
+                    <Rectangle Fill="Red"  Width="30" Height="20" RadiusX="3" RadiusY="3" />
                 </Border>
-                <Label Name="EDown" Width="30" Height="20" Margin="0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Label Name="EDown" Width="30" Height="20" Margin="0" Padding="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
             </Grid>
         </StackPanel>
     </Grid>
-
 </UserControl>

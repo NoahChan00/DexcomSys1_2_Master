@@ -9,6 +9,7 @@ namespace PentagonHMI.Converters
     public class InverseBooleanConverter : IValueConverter
     {
         #region PublicInterfaceMethods
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool boolean = false;
@@ -17,7 +18,7 @@ namespace PentagonHMI.Converters
             {
                 boolean = !System.Convert.ToBoolean(value);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -29,6 +30,7 @@ namespace PentagonHMI.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

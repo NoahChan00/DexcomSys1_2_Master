@@ -9,23 +9,28 @@ namespace PentagonHMI
     public class DirectorySizeService
     {
         #region PrivateFields
+
         private LogicClasses.Main main = null;
         private DirectoryInfo directoryInfo = null;
         private Logix.Tag directorySizeTag = null;
-        #endregion
+
+        #endregion PrivateFields
 
         #region PublicFields
+
         public bool EnableDirectorySizeService = false;
         public string DirectoryPath = string.Empty;
         public string DirectorySizeTagName = string.Empty;
-        #endregion
+
+        #endregion PublicFields
 
         #region Constructors
+
         /// <summary>
         /// INSERT INTO [gdb].[dbo].[DirectorySizeService] (Name,Value)
-        /// 
+        ///
         /// VALUES
-        /// 
+        ///
         /// ('EnableDirectorySizeService','false'),
         /// ('DirectoryPath',''),
         /// ('DirectorySizeTagName','')
@@ -39,12 +44,12 @@ namespace PentagonHMI
 
                 DataTable dataTable = main.SQLer.Exec_DTSelect($"SELECT * FROM [{nameof(DirectorySizeService)}]");
                 Func<string, object> getItem = (x) => dataTable.Select().Where(y => y["Name"].ToString().ToUpper() == x.ToUpper()).First()["Value"];
-                
+
                 EnableDirectorySizeService = Convert.ToBoolean(getItem(nameof(EnableDirectorySizeService)));
                 DirectoryPath = getItem(nameof(DirectoryPath)).ToString();
                 DirectorySizeTagName = getItem(nameof(DirectorySizeTagName)).ToString();
-                
-                if (EnableDirectorySizeService)
+
+                if(EnableDirectorySizeService)
                 {
                     directoryInfo = new DirectoryInfo(DirectoryPath);
                     directorySizeTag = new Logix.Tag
@@ -56,44 +61,49 @@ namespace PentagonHMI
                     main.OnAlwaysUpdate += main_OnAlwaysUpdate;
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
-        
+
+        #endregion Constructors
+
         #region PrivateEventMethods
+
         private void main_OnAlwaysUpdate()
         {
             try
             {
-                if (EnableDirectorySizeService)
+                if(EnableDirectorySizeService)
                 {
                     long sizeOfDir = directorySize(directoryInfo, true);
                     directorySizeTag.Value = string.Format("{0:N0}", ((double)sizeOfDir) / (1024 * 1024));
                     main.MyPLC.WriteTag(directorySizeTag);
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PrivateMethods
+
         private long directorySize(DirectoryInfo dInfo, bool includeSubDir)
         {
             long totalSize = dInfo.EnumerateFiles().Sum(file => file.Length);
-            
-            if (includeSubDir)
+
+            if(includeSubDir)
             {
                 totalSize += dInfo.EnumerateDirectories().Sum(dir => directorySize(dir, true));
             }
-            
+
             return totalSize;
         }
-        #endregion
+
+        #endregion PrivateMethods
     }
 }

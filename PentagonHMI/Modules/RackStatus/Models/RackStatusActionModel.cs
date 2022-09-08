@@ -6,23 +6,28 @@ namespace PentagonHMI
     public class RackStatusActionModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag RackStatusActionTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string _rackStatusActionName = string.Empty;
+
         public string RackStatusActionName
         {
             get { return _rackStatusActionName; }
             set
             {
-                if (_rackStatusActionName != value)
+                if(_rackStatusActionName != value)
                 {
                     _rackStatusActionName = value;
                     RaisePropertyChanged(nameof(RackStatusActionName));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

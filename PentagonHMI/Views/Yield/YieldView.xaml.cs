@@ -12,10 +12,13 @@ namespace PentagonHMI.Views
     public partial class YieldView : UserControl
     {
         #region PrivateFields
+
         private List<YieldStatusModel> yieldStatusList = new List<YieldStatusModel>();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public YieldView()
         {
             try
@@ -23,14 +26,16 @@ namespace PentagonHMI.Views
                 InitializeComponent();
                 initializeYieldStatusList();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeYieldStatusList()
         {
             try
@@ -49,11 +54,12 @@ namespace PentagonHMI.Views
 
                 YieldStatusListItemsControl.ItemsSource = yieldStatusList;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
     }
 }

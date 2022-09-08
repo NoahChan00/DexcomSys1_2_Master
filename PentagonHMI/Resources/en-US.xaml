@@ -1,6 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- ################################ -->
     <!-- ###### Main Window Module ###### -->
     <!-- ################################ -->
@@ -34,15 +33,14 @@
     <system:String x:Key="MAIN_WINDOW_BUTTON_STEPPER_CONFIG">Stepper Config</system:String>
     <system:String x:Key="MAIN_WINDOW_BUTTON_ALERT_SETTING">Alert Settings</system:String>
     <system:String x:Key="MAIN_WINDOW_BUTTON_TOPUP">TOP UP</system:String>
-    
-    
+
     <!-- Menu Header Title -->
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_MACHINE_STATUS_AND_INFORMATION">Machine Status and Information</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_MENU_NAVIGATION">Menu Navigation</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_EVENT_LOG">Event Log</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_CONNECTION_STATUS">Connection Status</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_TOPUP">TOP UP Quantity</system:String>
-    
+
     <!-- Sub Menu Header Title -->
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_MACHINE">Machine</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_PRODUCT">Product</system:String>
@@ -51,7 +49,7 @@
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_DEVICE_STATUS">Device Status</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_VISION">Vision</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_ALERT_WARNING">Alert/Warning</system:String>
-   
+
     <!-- Sub Menu Title -->
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_NAME">Name</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_STATUS">Status</system:String>
@@ -97,7 +95,7 @@
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_MESSAGES">Messages</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_DEVICE">Devices</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_HELP">Help</system:String>
-    
+
     <!--Log Messages-->
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_HOME_LOG">Home Selected</system:String>
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_EVENT_LOG">Event Log Selected</system:String>
@@ -115,8 +113,7 @@
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_VERSION_LOG">Version Selected</system:String>
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_PRODUCT_INFO">Product Information Selected</system:String>
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_HELP_LOG">Help Selected</system:String>
-    
-    
+
     <!-- Others -->
     <!--<system:String x:Key="MAIN_WINDOW_TITLE">Bellyband</system:String>-->
     <system:String x:Key="MAIN_WINDOW_TITLE">Belly Band Automation</system:String>
@@ -168,13 +165,13 @@
     <system:String x:Key="MAIN_WINDOW_TASK">Task</system:String>
     <system:String x:Key="MAIN_WINDOW_CURR_USER_MODE_OPERATOR">Current Mode: Operator</system:String>
     <system:String x:Key="MAIN_WINDOW_CURR_USER_MODE_ENGINEER">Current Mode: Engineer</system:String>
-    
+
     <!-- Errors -->
     <system:String x:Key="MAIN_WINDOW_ERR_MSG_ROBOT">Refer to operation manual</system:String>
     <system:String x:Key="MAIN_WINDOW_ERR_MSG_VISION">-</system:String>
     <system:String x:Key="MAIN_WINDOW_ERR_MSG_IDLE">Material Required</system:String>
     <system:String x:Key="MAIN_WINDOW_ERR_MSG_STOP">Press the Start Button</system:String>
-    
+
     <!--Error Panel -->
     <system:String x:Key="MAIN_WINDOW_DATATABLE_MESSAGE_HEADER_DATETIME">Date/Time</system:String>
     <system:String x:Key="MAIN_WINDOW_DATATABLE_MESSAGE_HEADER_ERRORCODE">Code</system:String>
@@ -346,14 +343,13 @@
     <system:String x:Key="LOGIN_TEXTBLOCK_INVALID">Invalid credentials.</system:String>
     <system:String x:Key="LOGIN_MSG_IS_LOGIN">is login.</system:String>
     <system:String x:Key="LOGIN_MSG_IS_LOGOUT">is logout.</system:String>
-        
+
     <!-- ############################# -->
     <!-- ###### IO Input Module ###### -->
     <!-- ############################# -->
     <!-- Others -->
     <system:String x:Key="IO_INPUT_CONFIG_SCREEN_TITLE">Controller Input Config</system:String>
     <system:String x:Key="IO_INPUT_WINDOW_TITLE">Controller Input</system:String>
-
 
     <system:String x:Key="IO_INPUT_IX0_00">I0.0 Start Push Button</system:String>
     <system:String x:Key="IO_INPUT_IX0_01">I0.1 Stop Push Button</system:String>
@@ -472,7 +468,6 @@
     <system:String x:Key="IO_OUTPUT_INTERNER_STRING_ON">On</system:String>
     <system:String x:Key="IO_OUTPUT_INTERNER_STRING_OFF">Off</system:String>
     <!-- Labels -->
-
 
     <system:String x:Key="IO_OUTPUT_QX5_00">Q0.0 Main Index Servo Motor Pulse</system:String>
     <system:String x:Key="IO_OUTPUT_QX5_01">Q0.1 Main Index Servo Motor Direction</system:String>
@@ -638,8 +633,6 @@
     <system:String x:Key="ROBOT_IO_INPUT_RI_22">In 22 Spare</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_23">In 23 Spare</system:String>
 
-
-
     <!-- #####################################-->
     <!-- ###### Robot IO Output Module 20130218 ###### -->
     <!-- #####################################-->
@@ -696,7 +689,6 @@
 
     <system:String x:Key="HOME_MSG_YIELD_RESET">Yield Reset</system:String>
     <system:String x:Key="HOME_MSG_STATISTIC_RESET">Statistics Reset</system:String>
-    
 
     <!-- ############################# -->
     <!-- ###### OEE Info Module ###### -->
@@ -729,7 +721,6 @@
     <system:String x:Key="OEE_INFO_LABEL_START_TIME">Start Time</system:String>
     <system:String x:Key="OEE_INFO_LABEL_OEE">OEE (%)</system:String>
     <system:String x:Key="OEE_INFO_LABEL_IDEAL_CYCLE_TIME">Ideal Cycle Time</system:String>
-    
 
     <!-- ##################################### -->
     <!-- ###### OEE Info Details Module ###### -->
@@ -751,12 +742,11 @@
     <system:String x:Key="OEE_INFO_DETAILS_LABEL_EFFICIENCY_RATE">Efficiency Rate (%)</system:String>
     <system:String x:Key="OEE_INFO_DETAILS_LABEL_START_DATE">Start Date</system:String>
     <system:String x:Key="OEE_INFO_DETAILS_LABEL_START_TIME">Start Time</system:String>
-    
+
     <!--Buttons-->
     <system:String x:Key="OEE_BUTTON_SAVE_LOG">Save to Log and Reset</system:String>
     <system:String x:Key="OEE_MSG_SAVE_LOG">Save OEE</system:String>
-    
-    
+
     <!-- ################################ -->
     <!-- ###### Maintenance Module ###### -->
     <!-- ################################ -->
@@ -785,7 +775,7 @@
     <system:String x:Key="MAINTENANCE_LABEL_TIMEOUT_SEND_UPC_FAIL">Time Out-Send UPC Fail</system:String>
     <system:String x:Key="MAINTENANCE_LABEL_TIMEOUT_SEND_PASS_OR_FAIL">Time Out-Send Pass / Fail</system:String>
     <system:String x:Key="MAINTENANCE_LABEL_WRITE_TO_FILE">Write To File</system:String>
-    
+
     <!-- Error Messages -->
     <system:String x:Key="MAINTENANCE_ERROR_MSG_PASSWORD_IS_EMPTY">Password cannot be empty.</system:String>
     <system:String x:Key="MAINTENANCE_ERROR_MSG_USERNAME_IS_EMPTY">User Name cannot be empty.</system:String>
@@ -840,7 +830,7 @@
     <!-- ########################## -->
     <!-- ###### Alarm Module ###### -->
     <!-- ########################## -->
-    
+
     <!-- other-->
     <system:String x:Key="ALARM_SCREEN_TITLE">Alarm</system:String>
     <system:String x:Key="ALARM_LOG_SCREEN_TITLE">Alarm Log</system:String>
@@ -933,7 +923,7 @@
     <system:String x:Key="CONFIG_TCPIP_LABEL_MESSAGE">Message</system:String>
     <system:String x:Key="CONFIG_TCPIP_LABEL_MESSAGE_RECEIVED">Message Received</system:String>
     <system:String x:Key="CONFIG_TCPIP_LABEL_CONNECTED_USERS">Connected Users</system:String>
-    
+
     <!-- Status Messages -->
     <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_CONNECTED">Connected</system:String>
     <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_CONNECTING">Connecting</system:String>
@@ -942,8 +932,8 @@
     <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_SAVED_SUCCESSFUL">Saved Successfully</system:String>
     <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_REMOTE_SERVER">Remote Server</system:String>
     <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_SERVER">Server</system:String>
-    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_LOCAL">Local</system:String>    
-    
+    <system:String x:Key="CONFIG_TCPIP_STATUS_MSG_LOCAL">Local</system:String>
+
     <!-- Error Messages -->
     <system:String x:Key="CONFIG_TCPIP_ERROR_MSG_INVALID_IP">Invalid IP.</system:String>
     <system:String x:Key="CONFIG_TCPIP_ERROR_MSG_INVALID_PORT">Invalid Port.</system:String>
@@ -974,21 +964,20 @@
     <system:String x:Key="SETTING_LABEL_ROBOT_SPEED">Robot Speed</system:String>
     <system:String x:Key="SETTING_LABEL_GLOVE_CYCLE_COUNT">Reset Cycle</system:String>
     <system:String x:Key="SETTING_LABEL_GLOVE_CYCLE_BUTTON">Reset Cycle Button</system:String>
-    
+
     <!-- Button -->
     <system:String x:Key="SETTING_BUTTON_UPDATE">Update</system:String>
-    
+
     <!-- Status Messages -->
     <system:String x:Key="SETTING_STATUS_MSG_SAVED_SUCCESSFUL">Saved Successfully</system:String>
     <system:String x:Key="SETTING_STATUS_MSG_BUTTON_BYPASS_CLICKED">Bar Code Result Bypass Button clicked</system:String>
     <system:String x:Key="SETTING_STATUS_MSG_BUTTON_GLOVE_CYCLE_CLICKED">Reset Glove Cycle Button clicked</system:String>
-    
+
     <system:String x:Key="SETTING_ERROR_VCFC_MSG">Please key in values from 1-99.</system:String>
     <system:String x:Key="SETTING_ERROR_GLOVE_MSG">Please enter a value between 4000 and 65000.</system:String>
     <system:String x:Key="SETTING_WARN_SAVE_MSG">Save Warning: Z-Offset will be affected. Are you sure you want to continue?</system:String>
     <system:String x:Key="SETTING_MSG_VISION_FAIL_EMPTY">Number of Vision Continuous Fail must not be empty.</system:String>
     <system:String x:Key="SETTING_MSG_GLOVE_CYCLE_EMPTY">Glove Unit Cycles must not be empty.</system:String>
-    
 
     <!-- ##################### -->
     <!-- ###### Version ###### -->
@@ -1009,7 +998,7 @@
     <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_ACTION">Action</system:String>
     <system:String x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_WARNING_CODE">Warning Code</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_ABOUT">About</system:String>
-    
+
     <!-- BK 20130218-->
     <system:String x:Key="SHIFT_LABEL_SHIFT1">Shift 1</system:String>
     <system:String x:Key="SHIFT_LABEL_SHIFT2">Shift 2</system:String>
@@ -1020,12 +1009,10 @@
 
     <system:String x:Key="HELP_ERR_MSG_FILE_NOT_FOUND">Image file not found. \nPlease make sure file is placed in \Images\PickArm_Help\"</system:String>
 
-
-
     <!-- #####################################-->
     <!-- ###### Station Zone IO Module ###### -->
     <!-- #####################################-->
-    
+
     <!--Asset Tag-->
     <system:String x:Key="CellZ2_IO_I0_0">PIO205_I3.0 - Z5c Upper Conveyor Present Sensor IN</system:String>
     <system:String x:Key="CellZ2_IO_I0_1">PIO205_I3.1 - Z5c Upper Conveyor Present Sensor OUT</system:String>
@@ -1228,7 +1215,7 @@
     <system:String x:Key="CellZ8_IO_I3_4">PIO218_I3.5 - Z18b Bottom Conveyor Present Sensor OUT</system:String>
     <system:String x:Key="CellZ8_IO_I3_5">PIO219_I1.4 - Z19a Bottom Conveyor Present Sensor IN</system:String>
     <system:String x:Key="CellZ8_IO_I3_6">PIO219_I1.5 - Z19a Bottom Conveyor Present Sensor OUT</system:String>
-    
+
     <!--LHS-->
     <system:String x:Key="CellZ9_IO_I0_0">PIO219_Q6.0 - Z19c Upper Conveyor Jog Forward</system:String>
     <system:String x:Key="CellZ9_IO_I0_1">PIO219_Q6.1 - Z19c Upper Conveyor Jog Reverse</system:String>
@@ -1448,7 +1435,6 @@
     <system:String x:Key="CellZ8_IO_Q2_5">PIO219_Q4.3 - Z19a Bottom Conveyor Jog Forward</system:String>
     <system:String x:Key="CellZ8_IO_Q2_6">PIO219_Q4.4 - Z19a Bottom Conveyor Jog Reverse</system:String>
 
-    
     <!--LHS-->
     <system:String x:Key="CellZ9_IO_Q0_0">PIO219_Q6.0 - Z19c Upper Conveyor Jog Forward</system:String>
     <system:String x:Key="CellZ9_IO_Q0_1">PIO219_Q6.1 - Z19c Upper Conveyor Jog Reverse</system:String>
@@ -1498,7 +1484,6 @@
     <system:String x:Key="CellZ10_IO_Q2_4">PIO222_Q8.5 - Z22b Bottom Conveyor Alarm Reset</system:String>
     <system:String x:Key="CellZ10_IO_Q2_5">PIO223_Q5.3 - Z23a Bottom Conveyor Jog Forward</system:String>
     <system:String x:Key="CellZ10_IO_Q2_6">PIO223_Q5.4 - Z23a Bottom Conveyor Jog Reverse</system:String>
-
 
     <!--General-->
     <!--Input-->
@@ -1620,7 +1605,7 @@
     <system:String x:Key="EPP_IO_I2_13">I2.13 Rack#4A Engagement Cyl Ret Signal</system:String>
     <system:String x:Key="EPP_IO_I2_14">I2.14 Rack#4A Proximity Sensor</system:String>
     <system:String x:Key="EPP_IO_I2_15">I2.15 Spare</system:String>
-    
+
     <system:String x:Key="EPP_IO_I3_00">I3.00 Rack#4B Precisor Ext Signal</system:String>
     <system:String x:Key="EPP_IO_I3_01">I3.01 Rack#4B Precisor Ret Signal</system:String>
     <system:String x:Key="EPP_IO_I3_02">I3.02 Rack#4B Engagement Cyl Ext Signal</system:String>
@@ -1687,7 +1672,7 @@
     <system:String x:Key="EPP_IO_I6_12">I6.12 Unloader Full Magazine Fulll Loaded Sensor</system:String>
     <system:String x:Key="EPP_IO_I6_13">I6.13 Unloader Lifter Magazine Present Sensor</system:String>
     <system:String x:Key="EPP_IO_I6_14">I6.14 Unloader Strip Present Sensor</system:String>
-    <system:String x:Key="EPP_IO_I6_15">I6.15 Unloader Strip Present Sensor at Pusher </system:String>
+    <system:String x:Key="EPP_IO_I6_15">I6.15 Unloader Strip Present Sensor at Pusher</system:String>
 
     <system:String x:Key="EPP_IO_I7_00">I7.00 Rack#1A Curtain Sesnor</system:String>
     <system:String x:Key="EPP_IO_I7_01">I7.01 Rack#1B Curtain Sesnor</system:String>
@@ -1705,7 +1690,7 @@
     <system:String x:Key="EPP_IO_I7_13">I7.13 Rack#5A Door Switch</system:String>
     <system:String x:Key="EPP_IO_I7_14">I7.14 Rack#5B Door Switch</system:String>
     <system:String x:Key="EPP_IO_I7_15">I7.15 Spare</system:String>
-     
+
     <!--Shutter Y (input 1 Motor Sensor)-->
     <system:String x:Key="EPP_IO_I1_MS_00">I1.MS.00 Shutter Y-axis Home Sensor</system:String>
     <system:String x:Key="EPP_IO_I1_MS_01">I1_MS_01 Shutter Y-axis Positive Sensor</system:String>
@@ -1715,7 +1700,6 @@
     <system:String x:Key="EPP_IO_I2_MS_00">I1.MS.00 Shutter Z-axis Home Sensor</system:String>
     <system:String x:Key="EPP_IO_I2_MS_01">I1_MS_01 Shutter Z-axis Positive Sensor</system:String>
     <system:String x:Key="EPP_IO_I2_MS_02">I1_MS_01 Shutter Z-axis Negative Sensor</system:String>
-
 
     <!--Shutter T (input 3 Motor Sensor)-->
     <system:String x:Key="EPP_IO_I3_MS_00">I1.MS.00 Shutter T-axis Home Sensor</system:String>
@@ -1878,7 +1862,6 @@
     <system:String x:Key="EPP_IO_Q6_14">Q6.14 Spare</system:String>
     <system:String x:Key="EPP_IO_Q6_15">Q6.15 Spare</system:String>
 
-
     <!--<system:String x:Key="EPP_IO_Q7_00">Q7.0 Spare</system:String>
     <system:String x:Key="EPP_IO_Q7_01">Q7.1 Spare</system:String>
     <system:String x:Key="EPP_IO_Q7_02">Q7.2 Spare</system:String>
@@ -1908,12 +1891,10 @@
 
     <system:String x:Key="WS_BTN_BAD">Reject Item</system:String>
 
-
-
     <!-- ############################# -->
     <!-- ###### IO Input Module ###### -->
     <!-- ############################# -->
-    
+
     <!--Empty Tray I15-->
 
     <system:String x:Key="Cell1_IO_I0_0">019I1.0 - Start Button</system:String>
@@ -2235,7 +2216,6 @@
     <system:String x:Key="Cell3_IO_I16_6">039I17.6 - Robot#1 At Safe Zone</system:String>
     <system:String x:Key="Cell3_IO_I16_7">039I17.7 - MOBO Ready</system:String>
 
-
     <!--MOBO Robot I6-->
 
     <system:String x:Key="Cell4_IO_I0_0">049I1.0 - Start Button</system:String>
@@ -2484,7 +2464,7 @@
     <system:String x:Key="Cell6_IO_I10_5">069I11.5 - Spare</system:String>
     <system:String x:Key="Cell6_IO_I10_6">069I11.6 - Spare</system:String>
     <system:String x:Key="Cell6_IO_I10_7">069I11.7 - Spare</system:String>
-    
+
     <!--Baffle I13-->
 
     <system:String x:Key="Cell7_IO_I0_0">079I1.0 - Start Button</system:String>
@@ -2615,7 +2595,6 @@
     <system:String x:Key="Cell7_IO_I15_5">079I24.5 - Vision Busy 1</system:String>
     <system:String x:Key="Cell7_IO_I15_6">079I24.6 - Vision Busy 2</system:String>
     <system:String x:Key="Cell7_IO_I15_7">079I24.7 - Spare</system:String>
-
 
     <!--BIOS&Cobra I12-->
     <system:String x:Key="Cell8_IO_I0_0">089I1.0 - Start Button</system:String>
@@ -2860,7 +2839,7 @@
     <!-- ############################# -->
     <!-- ###### IO Output Module ###### -->
     <!-- ############################# -->
-    
+
     <!--Empty Tray Q4-->
 
     <system:String x:Key="Cell1_IO_Q0_0">019Q18.0 - Start Button Indicator</system:String>
@@ -3402,7 +3381,7 @@
     <system:String x:Key="Cell10_IO_Q6_5">109Q15.5 - Spare</system:String>
     <system:String x:Key="Cell10_IO_Q6_6">109Q15.6 - Spare</system:String>
     <system:String x:Key="Cell10_IO_Q6_7">109Q15.7 - Spare</system:String>
-    
+
     <!-- ############################# -->
     <!-- ###### Main Conveyer ######## -->
     <!-- ############################# -->
@@ -4299,7 +4278,6 @@
     <system:String x:Key="Cell_IO_I98_7">PIO229_I3.7 - Spare</system:String>
     <!--96 => 99-->
 
-
     <!--OUTPUT-->
 
     <system:String x:Key="Cell_IO_Q0_0">PIO200_Q2.0 - Green Indicator</system:String>
@@ -5087,7 +5065,6 @@
     <system:String x:Key="STATION 11">PWRCABLEVELCRO</system:String>
     <system:String x:Key="STATION 12">SATA CABLE</system:String>
 
-
     <!-- ############################# -->
     <!-- ###### Main Conveyor IO??? ###### -->
     <!-- ############################# -->
@@ -5134,8 +5111,6 @@
     <system:String x:Key="Cell2_IO_Q14">Q14 Spare</system:String>
     <system:String x:Key="Cell2_IO_Q15">Q15 Spare</system:String>
 
-
-
     <!--MOBO Robot Cell-->
     <system:String x:Key="Cell4_IO_I00">I00 Robot#1 Start</system:String>
     <system:String x:Key="Cell4_IO_I01">I01 Robot#1 Program Bit#1</system:String>
@@ -5178,7 +5153,6 @@
     <system:String x:Key="Cell4_IO_Q13">Q13 Robot#1 Place Zone 2 In Progress</system:String>
     <system:String x:Key="Cell4_IO_Q14">Q14 Robot#1 Place Zone 2 Done</system:String>
     <system:String x:Key="Cell4_IO_Q15">Q15 Robot#1 Home Done</system:String>
-
 
     <!--Koolaid & Tang Robot Cell-->
     <system:String x:Key="Cell5_IO_I00">I00 Robot#1 Start</system:String>
@@ -5394,7 +5368,6 @@
     <system:String x:Key="Cell9_IO_Q14">Q14 Robot#1 Home Done</system:String>
     <system:String x:Key="Cell9_IO_Q15">Q15 Purge</system:String>
 
-
     <!--Small HeatSink Robot Cell-->
     <system:String x:Key="Cell10_IO_I00">I00 Robot#1 Start</system:String>
     <system:String x:Key="Cell10_IO_I01">I01 Robot#1 Program Bit#1</system:String>
@@ -5437,6 +5410,4 @@
     <system:String x:Key="Cell10_IO_Q13">Q13 Robot#1 Place Zone#2 Done</system:String>
     <system:String x:Key="Cell10_IO_Q14">Q14 Robot#1 Home Done</system:String>
     <system:String x:Key="Cell10_IO_Q15">Q15 Purge</system:String>
-
-
 </ResourceDictionary>

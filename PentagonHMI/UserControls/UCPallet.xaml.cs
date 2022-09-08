@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Shapes;
-using System.Windows.Media.Animation;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
     public partial class UCPallet : UserControl
     {
-        Storyboard Sty_Pop = new Storyboard();
-        Storyboard Sty_InLeft = new Storyboard();
-        Storyboard Sty_OutLeft = new Storyboard();
-        Storyboard Sty_InRight = new Storyboard();
-        Storyboard Sty_OutRight = new Storyboard();
+        private Storyboard Sty_Pop = new Storyboard();
+        private Storyboard Sty_InLeft = new Storyboard();
+        private Storyboard Sty_OutLeft = new Storyboard();
+        private Storyboard Sty_InRight = new Storyboard();
+        private Storyboard Sty_OutRight = new Storyboard();
 
-        DoubleAnimation AnOpc = new DoubleAnimation
+        private DoubleAnimation AnOpc = new DoubleAnimation
         {
             From = 0,
             To = 1,
@@ -23,7 +23,7 @@ namespace PentagonHMI.UserControls
             BeginTime = TimeSpan.FromSeconds(0)
         };
 
-        DoubleAnimation AnIn = new DoubleAnimation
+        private DoubleAnimation AnIn = new DoubleAnimation
         {
             From = 0,
             To = 38,
@@ -31,7 +31,7 @@ namespace PentagonHMI.UserControls
             BeginTime = TimeSpan.FromSeconds(0)
         };
 
-        DoubleAnimation AnOut = new DoubleAnimation
+        private DoubleAnimation AnOut = new DoubleAnimation
         {
             From = 38,
             To = 0,
@@ -39,7 +39,7 @@ namespace PentagonHMI.UserControls
             BeginTime = TimeSpan.FromSeconds(0)
         };
 
-        DoubleAnimation AnIn2 = new DoubleAnimation
+        private DoubleAnimation AnIn2 = new DoubleAnimation
         {
             From = 0,
             To = 38,
@@ -47,7 +47,7 @@ namespace PentagonHMI.UserControls
             BeginTime = TimeSpan.FromSeconds(0)
         };
 
-        DoubleAnimation AnOut2 = new DoubleAnimation
+        private DoubleAnimation AnOut2 = new DoubleAnimation
         {
             From = 38,
             To = 0,
@@ -92,10 +92,11 @@ namespace PentagonHMI.UserControls
             SetOrderID(OrdID);
         }
 
-        string PreOrderID { get; set; } = string.Empty;
+        private string PreOrderID { get; set; } = string.Empty;
+
         private void SetOrderID(string NowOrderID)
         {
-            if (NowOrderID == PreOrderID)
+            if(NowOrderID == PreOrderID)
                 return;
 
             this.Dispatcher.Invoke(new Action(() => OrderID.Text = NowOrderID));
@@ -103,13 +104,14 @@ namespace PentagonHMI.UserControls
             PreOrderID = NowOrderID;
         }
 
-        bool BoolLeftPallet { get; set; } = false;
+        private bool BoolLeftPallet { get; set; } = false;
+
         private void SetLeftPallet(bool Exist)
         {
-            if (BoolLeftPallet == Exist)
+            if(BoolLeftPallet == Exist)
                 return;
 
-            if (Exist)
+            if(Exist)
                 AnimateOpen("L");
             else
                 AnimateClose("L");
@@ -117,13 +119,14 @@ namespace PentagonHMI.UserControls
             BoolLeftPallet = Exist;
         }
 
-        bool BoolRightPallet { get; set; } = false;
+        private bool BoolRightPallet { get; set; } = false;
+
         private void SetRightPallet(bool Exist)
         {
-            if (BoolRightPallet == Exist)
+            if(BoolRightPallet == Exist)
                 return;
 
-            if (Exist)
+            if(Exist)
                 AnimateOpen("R");
             else
                 AnimateClose("R");
@@ -131,13 +134,14 @@ namespace PentagonHMI.UserControls
             BoolRightPallet = Exist;
         }
 
-        bool BoolTray { get; set; } = false;
+        private bool BoolTray { get; set; } = false;
+
         private void SetTray(bool Exist)
         {
-            if (BoolTray == Exist)
+            if(BoolTray == Exist)
                 return;
 
-            if (Exist)
+            if(Exist)
             {
                 Tray.Visibility = Visibility.Visible;
                 AnimatePop();
@@ -154,7 +158,7 @@ namespace PentagonHMI.UserControls
             {
                 Sty_Pop.Begin();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -164,18 +168,18 @@ namespace PentagonHMI.UserControls
         {
             try
             {
-                if (str_side == "L")
+                if(str_side == "L")
                 {
                     LeftPallet.HorizontalAlignment = HorizontalAlignment.Right;
                     Sty_InLeft.Begin();
                 }
-                else if (str_side == "R")
+                else if(str_side == "R")
                 {
                     RightPallet.HorizontalAlignment = HorizontalAlignment.Right;
                     Sty_InRight.Begin();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -185,22 +189,21 @@ namespace PentagonHMI.UserControls
         {
             try
             {
-                if (str_side == "L")
+                if(str_side == "L")
                 {
                     LeftPallet.HorizontalAlignment = HorizontalAlignment.Left;
                     Sty_OutLeft.Begin();
                 }
-                else if (str_side == "R")
+                else if(str_side == "R")
                 {
                     RightPallet.HorizontalAlignment = HorizontalAlignment.Left;
                     Sty_OutRight.Begin();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-
     }
 }

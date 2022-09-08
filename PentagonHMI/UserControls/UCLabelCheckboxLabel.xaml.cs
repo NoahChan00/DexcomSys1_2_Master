@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,13 +9,16 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelCheckboxLabel : UserControl
     {
         #region Constructor
+
         public UCLabelCheckboxLabel()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
 
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
@@ -44,17 +36,17 @@ namespace PentagonHMI.UserControls
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
 
-        #endregion
+        #endregion ucLabelTitle Properties
 
         public bool? ucIsCheck
         {
             get { return this.ucCheckBox.IsChecked; }
             set
             {
-                //this to avoid cross thread exception               
+                //this to avoid cross thread exception
                 //this.ucCheckBox.Dispatcher.Invoke(new Action(() => this.ucCheckBox.IsChecked = value));
                 //isAuto = true;
-                this.ucCheckBox.IsChecked= value;                
+                this.ucCheckBox.IsChecked = value;
             }
         }
 
@@ -66,11 +58,11 @@ namespace PentagonHMI.UserControls
                 //this to avoid cross thread exception
                 //this.ucCheckBox.Dispatcher.Invoke(new Action(() => this.ucCheckBox.IsHitTestVisible = value));
                 this.ucCheckBox.IsHitTestVisible = value;
-                //ucCheckBox.IsChecked= value; 
+                //ucCheckBox.IsChecked= value;
             }
         }
 
-         //Set the width between label and textbox
+        //Set the width between label and textbox
         public double ucCheckBoxPosition
         {
             get
@@ -81,18 +73,19 @@ namespace PentagonHMI.UserControls
             {
                 this.ucLabelTitle.Width = value - 5;
                 this.ucCheckBox.Margin = new Thickness(value, 2, 0, 6);
-                this.ucLabelContent.Margin = new Thickness(value + 20,0,0,6);
+                this.ucLabelContent.Margin = new Thickness(value + 20, 0, 0, 6);
             }
         }
 
         public double ucLabelContentWidth
         {
-            get {return this.ucLabelContent.Width;}
+            get { return this.ucLabelContent.Width; }
             set
             {
                 this.ucLabelContent.Width = value;
             }
         }
+
         public string ucLabelContentText
         {
             get { return this.ucLabelContent.Content.ToString(); }
@@ -114,6 +107,6 @@ namespace PentagonHMI.UserControls
             set { this.ucCheckBox.IsThreeState = value; }
         }
 
-        #endregion
+        #endregion Properties
     }
 }

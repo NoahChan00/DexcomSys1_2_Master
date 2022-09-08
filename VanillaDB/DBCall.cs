@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Data;
 using System.Collections;
+using System.Data;
 using System.Reflection;
 
 namespace VanillaDB
@@ -22,14 +22,14 @@ namespace VanillaDB
                 dt = VDB.ExecuteQueryDT($"EXEC Proc_UPH_Select '{StationID}','{Day}','{Month}','{Year}'", ref ErrMsg);
                 return dt;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 return null;
             }
             finally
             {
-                if (dt != null)
+                if(dt != null)
                     dt.Dispose();
             }
         }
@@ -45,10 +45,9 @@ namespace VanillaDB
                 ErrMsg = "";
                 dt = VDB.ExecuteQueryDT("EXEC Proc_Line_Shift_Select '" + ShiftID + "','" + StationID + "'", ref ErrMsg);
 
-
                 return dt;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -58,7 +57,7 @@ namespace VanillaDB
             }
             finally
             {
-                if (dt != null)
+                if(dt != null)
                     dt.Dispose();
             }
         }
@@ -73,34 +72,32 @@ namespace VanillaDB
                 VDB.ExecuteNonQuery(Query, ref ErrMsg);
                 return ErrMsg.Length == 0 ? true : false;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 ErrMsg = ex.Message;
                 return false;
             }
         }
 
-        public bool Shift_Reset(String ShiftID, string StationID , string NextShiftDT, string UserName,  ref string ErrMsg)
+        public bool Shift_Reset(String ShiftID, string StationID, string NextShiftDT, string UserName, ref string ErrMsg)
         {
             long epochTime = Function.getEpochTime(DateTime.UtcNow);
             string blnErrResult = "";
             MethodBase m = MethodBase.GetCurrentMethod();
             try
             {
-
                 ErrMsg = "";
                 int _ReturnCount = VDB.ExecuteNonQuery("EXEC Proc_Line_Shift_Reset '" + ShiftID + "'" +
-                    ",'" + StationID + "','" + NextShiftDT + "','" + UserName + "'" 
+                    ",'" + StationID + "','" + NextShiftDT + "','" + UserName + "'"
                     , ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "',''", ref ErrMsg);
                 }
 
-
-                if (_ReturnCount == 1)
+                if(_ReturnCount == 1)
                 {
                     return true;
                 }
@@ -109,7 +106,7 @@ namespace VanillaDB
                     return false;
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -131,14 +128,13 @@ namespace VanillaDB
                     ",'" + StationID + "','" + NextShiftDT + "','" + ShiftTime + "','" + Active + "','" + UserName + "'"
                     , ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "',''", ref ErrMsg);
                 }
 
-
-                if (_ReturnCount == 1)
+                if(_ReturnCount == 1)
                 {
                     return true;
                 }
@@ -147,7 +143,7 @@ namespace VanillaDB
                     return false;
                 }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -156,8 +152,8 @@ namespace VanillaDB
                 return false;
             }
         }
-        
-        public bool Alarm_Update(String AlmCode, String StationID, String ModuleCode, String AlmDesc,string AlmAction , string UserName,ref string ErrMsg)
+
+        public bool Alarm_Update(String AlmCode, String StationID, String ModuleCode, String AlmDesc, string AlmAction, string UserName, ref string ErrMsg)
         {
             long epochTime = Function.getEpochTime(DateTime.UtcNow);
             ErrMsg = "";
@@ -168,18 +164,15 @@ namespace VanillaDB
             ArrayList arrlist = new ArrayList();
             try
             {
-
-
                 arrlist.Clear();
 
-                
                 strSQL = "EXEC Proc_Line_Alarms_Update  '" + AlmCode + "','" + StationID + "','" + ModuleCode + "','" + AlmDesc + "','" + AlmAction + "','" + epochTime.ToString() + "','" + UserName + "'";
 
                 arrlist.Add(strSQL);
 
                 blnresult = VDB.Execute(arrlist, ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "',''", ref ErrMsg);
@@ -187,7 +180,7 @@ namespace VanillaDB
 
                 return blnresult;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -197,7 +190,7 @@ namespace VanillaDB
             }
             finally
             {
-                if (arrlist != null)
+                if(arrlist != null)
                     arrlist = null;
             }
         }
@@ -211,10 +204,9 @@ namespace VanillaDB
             string blnErrResult = "";
             try
             {
-
                 dt = VDB.ExecuteQueryDT("EXEC Proc_Line_Alarms_Select '" + viewOption + "','" + StationID + "'", ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "',0", ref ErrMsg);
@@ -222,7 +214,7 @@ namespace VanillaDB
 
                 return dt;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -232,7 +224,7 @@ namespace VanillaDB
             }
             finally
             {
-                if (dt != null)
+                if(dt != null)
                     dt.Dispose();
             }
         }
@@ -250,16 +242,15 @@ namespace VanillaDB
                 strSQL = "EXEC Proc_Line_User_Validate '" + UserName + "','" + Password + "'";
                 dt = VDB.ExecuteQueryDT(strSQL, ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "','-1'", ref ErrMsg);
                 }
 
-
                 return dt;
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -269,7 +260,7 @@ namespace VanillaDB
             }
             finally
             {
-                if (dt != null)
+                if(dt != null)
                     dt.Dispose();
             }
         }
@@ -284,7 +275,7 @@ namespace VanillaDB
             {
                 int _ResultCount = VDB.ExecuteNonQuery("EXEC Proc_Line_User_ChangePassword '" + UserName + "','" + OldPassword + "','" + NewPassword + "'", ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "',10", ref ErrMsg);
@@ -292,7 +283,7 @@ namespace VanillaDB
 
                 return (_ResultCount == 1);
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -312,18 +303,15 @@ namespace VanillaDB
             {
                 int _ResultCount = VDB.ExecuteNonQuery("EXEC Proc_Line_User_Delete '" + UserName + "'", ref ErrMsg);
 
-                if (ErrMsg != "")
+                if(ErrMsg != "")
                 {
                     ErrMsg = ErrMsg + " (" + m.Name + ")";
                     blnErrResult = VDB.ExecuteScalar("EXEC Proc_Error_Insert '" + epochTime.ToString() + "','1207','" + ErrMsg + "',10", ref ErrMsg);
                 }
 
-
                 return true;
-
-
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 ErrMsg = ErrMsg + " (" + m.Name + ")";
@@ -340,19 +328,17 @@ namespace VanillaDB
             ErrMsg = "";
             try
             {
-
                 dt = VDB.ExecuteQueryDT("EXEC Proc_Line_User_Select '" + UserName + "'", ref ErrMsg);
                 return dt;
-
             }
-            catch (Exception e)
+            catch(Exception e)
             {
                 ErrMsg = e.Message;
                 return null;
             }
             finally
             {
-                if (dt != null)
+                if(dt != null)
                     dt.Dispose();
             }
         }
@@ -360,23 +346,22 @@ namespace VanillaDB
         public class Function
         {
             public static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
             public static long getEpochTime(DateTime datetime)
             {
                 DateTime dateTimeUtc = datetime;
-                if (datetime.Kind != DateTimeKind.Utc)
+                if(datetime.Kind != DateTimeKind.Utc)
                 {
                     dateTimeUtc = datetime.ToUniversalTime();
                 }
 
-                if (dateTimeUtc.ToUniversalTime() <= UnixEpoch)
+                if(dateTimeUtc.ToUniversalTime() <= UnixEpoch)
                 {
                     return 0;
                 }
 
                 return (long)(dateTimeUtc - UnixEpoch).TotalMilliseconds;
             }
-
         }
-
     }
 }

@@ -6,6 +6,7 @@ namespace PentagonHMI.Converters
     public class EventArgsConverter : IEventArgsConverter
     {
         #region PublicInterfaceMethods
+
         public object Convert(object value, object parameter)
         {
             return new EventArgsModel
@@ -14,6 +15,7 @@ namespace PentagonHMI.Converters
                 Parameter = parameter
             };
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

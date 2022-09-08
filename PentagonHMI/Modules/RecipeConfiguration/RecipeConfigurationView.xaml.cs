@@ -15,15 +15,18 @@ namespace PentagonHMI
     public partial class RecipeConfigurationView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private INGEAR_Opc iNGEAR_Opc = null;
         private List<RecipeConfigurationMPNModel> editRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
         private List<RecipeConfigurationMPNModel> currentRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
         private List<RecipeConfigurationModel> recipeConfigurationList = new List<RecipeConfigurationModel>();
         private SQLCarrier sQLCarrier = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         private const string mPNListTagName = "HMI_Recipe_MPN_List_Recipe[{0},{1}]";
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public RecipeConfigurationView(INGEAR_Opc _iNGEAR_Opc)
         {
             try
@@ -33,21 +36,23 @@ namespace PentagonHMI
                 initializeRecipeConfigurationMPNList();
                 initializeRecipeConfiguration();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeOpc(INGEAR_Opc _iNGEAR_Opc)
         {
             try
             {
                 iNGEAR_Opc = _iNGEAR_Opc;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -63,7 +68,7 @@ namespace PentagonHMI
                 currentRecipeConfigurationMPNList = new List<RecipeConfigurationMPNModel>();
                 CurrentMPNListDataGrid.ItemsSource = currentRecipeConfigurationMPNList;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -81,7 +86,7 @@ namespace PentagonHMI
                     $"[{nameof(RecipeConfigurationModel.TrayImage)}]" +
                     $" FROM [RackConfig] ORDER BY [RecipeIndex]");
 
-                for (int i = 0; i < dataTable.Rows.Count; i++)
+                for(int i = 0; i < dataTable.Rows.Count; i++)
                 {
                     try
                     {
@@ -92,7 +97,7 @@ namespace PentagonHMI
                             TrayImage = Convert.ToString(dataTable.Rows[i][nameof(RecipeConfigurationModel.TrayImage)])
                         });
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
@@ -101,33 +106,37 @@ namespace PentagonHMI
                 RecipeConfigurationComboBox.ItemsSource = recipeConfigurationList;
                 RecipeConfigurationComboBox.SelectedIndex = 0;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateCommandMethods
+
         private void recipeConfigurationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Dispatcher.Invoke(new Action(() =>
             {
                 try
                 {
-                    if (RecipeConfigurationComboBox.SelectedIndex >= 0)
+                    if(RecipeConfigurationComboBox.SelectedIndex >= 0)
                     {
-                        switch (iNGEAR_Opc.Read<int>(
+                        switch(iNGEAR_Opc.Read<int>(
                             $"HMI_Recipe_MPN_Height_mm[{RecipeConfigurationComboBox.SelectedIndex}]"))
                         {
                             case 28:
                                 CurrentRAMHeightTallCheckBox.IsChecked = false;
                                 CurrentRAMHeightShortCheckBox.IsChecked = true;
                                 break;
+
                             case 32:
                                 CurrentRAMHeightTallCheckBox.IsChecked = true;
                                 CurrentRAMHeightShortCheckBox.IsChecked = false;
                                 break;
+
                             default:
                                 CurrentRAMHeightTallCheckBox.IsChecked = false;
                                 CurrentRAMHeightShortCheckBox.IsChecked = false;
@@ -165,7 +174,7 @@ namespace PentagonHMI
                         //        }
                         //    });
 
-                        for (int i = 0; i < recipeConfigurationList[RecipeConfigurationComboBox.SelectedIndex].MPNMaxCount; i++)
+                        for(int i = 0; i < recipeConfigurationList[RecipeConfigurationComboBox.SelectedIndex].MPNMaxCount; i++)
                         {
                             try
                             {
@@ -180,7 +189,7 @@ namespace PentagonHMI
                                     MPN = mpn
                                 });
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 FileLogger.logError(exception.Message, exception.ToString());
                             }
@@ -190,7 +199,7 @@ namespace PentagonHMI
                         CurrentMPNListDataGrid.Items.Refresh();
                     }
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
@@ -203,11 +212,11 @@ namespace PentagonHMI
 
             try
             {
-                for (int i = 0; i < editRecipeConfigurationMPNList.Count; i++)
+                for(int i = 0; i < editRecipeConfigurationMPNList.Count; i++)
                 {
                     try
                     {
-                        if (!iNGEAR_Opc.WriteStringTag(string.Format(mPNListTagName,
+                        if(!iNGEAR_Opc.WriteStringTag(string.Format(mPNListTagName,
                             RecipeConfigurationComboBox.SelectedIndex, i),
                             editRecipeConfigurationMPNList[i].MPN))
                         {
@@ -215,20 +224,20 @@ namespace PentagonHMI
                             break;
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
 
             try
             {
-                if (value)
+                if(value)
                 {
                     int currentRecipeConfigurationComboBoxSelectedIndex = RecipeConfigurationComboBox.SelectedIndex;
                     RecipeConfigurationComboBox.SelectedIndex = -1;
@@ -237,17 +246,20 @@ namespace PentagonHMI
 
                 MessageBox.Show(value == true ? "Settings saved." : "Failed to save settings.");
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateCommandMethods
 
         #region PublicMethods
+
         public void Dispose()
         {
         }
-        #endregion
+
+        #endregion PublicMethods
     }
 }

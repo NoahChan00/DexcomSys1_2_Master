@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,13 +11,16 @@ namespace PentagonHMI.UserControls
     public partial class UCCheckboxLabel : UserControl
     {
         #region Constructor
+
         public UCCheckboxLabel()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
 
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
@@ -44,21 +38,23 @@ namespace PentagonHMI.UserControls
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
 
-        #endregion
+        #endregion ucLabelTitle Properties
 
         #region ucIsCheck Properties
+
         public bool ucIsCheck
         {
             get { return Convert.ToBoolean(this.ucCheckBox.IsChecked); }
-            set 
-            { 
-                //this to avoid cross thread exception  
+            set
+            {
+                //this to avoid cross thread exception
                 //this.ucCheckBox.Dispatcher.Invoke(new Action(() => this.ucCheckBox.IsChecked =value));
                 //this.ucCheckBox.Dispatcher.Invoke(new Action(() => this.ucCheckBox.IsChecked =value));
                 //isAuto = true;
-                this.ucCheckBox.IsChecked= value;                
+                this.ucCheckBox.IsChecked = value;
             }
         }
+
         public bool ucIsHitTestVisible
         {
             get { return this.ucCheckBox.IsHitTestVisible; }
@@ -67,24 +63,32 @@ namespace PentagonHMI.UserControls
                 //this to avoid cross thread exception
                 //this.ucCheckBox.Dispatcher.Invoke(new Action(() => this.ucCheckBox.IsHitTestVisible = value));
                 this.ucCheckBox.IsHitTestVisible = value;
-                //ucCheckBox.IsChecked= value; 
+                //ucCheckBox.IsChecked= value;
             }
         }
-        #endregion
-        #endregion
+
+        #endregion ucIsCheck Properties
+
+        #endregion Properties
 
         #region Variable
+
         public event EventHandler ucChecked;
+
         public event EventHandler ucUnChecked;
+
         public event EventHandler ucMouseLeftButtonUp;
+
         //private bool isAuto = false;
         //private bool isTrigger = false;
-        #endregion
+
+        #endregion Variable
 
         #region FormEvents
+
         private void ucCheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            if (ucUnChecked != null)
+            if(ucUnChecked != null)
             {
                 ucUnChecked(this, EventArgs.Empty);
                 //if (!isAuto)
@@ -97,7 +101,7 @@ namespace PentagonHMI.UserControls
 
         private void ucCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            if (ucChecked != null)
+            if(ucChecked != null)
             {
                 ucChecked(this, EventArgs.Empty);
                 //if (!isAuto)
@@ -110,13 +114,12 @@ namespace PentagonHMI.UserControls
 
         private void ucCheckBox_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (ucMouseLeftButtonUp != null)
+            if(ucMouseLeftButtonUp != null)
             {
                 ucMouseLeftButtonUp(this, EventArgs.Empty);
             }
         }
-        #endregion       
 
-        
+        #endregion FormEvents
     }
 }

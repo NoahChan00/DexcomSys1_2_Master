@@ -1,18 +1,19 @@
-﻿using Logix;
-using NLog;
+﻿using NLog;
 using System;
 using System.Windows.Forms;
-using Utilities;
 
 namespace PentagonHMI
 {
     public partial class CvXView : UserControl
     {
         #region PrivateFields
+
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public CvXView()
         {
             InitializeComponent();
@@ -20,11 +21,13 @@ namespace PentagonHMI
             {
                 intializeaxCvx();
             }
-            catch (Exception ex) { logger.Error(ex); }
+            catch(Exception ex) { logger.Error(ex); }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitialize
+
         private void intializeaxCvx()
         {
             try
@@ -33,7 +36,7 @@ namespace PentagonHMI
 
                 //MyLogger.VisionDebugLog($"initializeResult : {initializeResult}");
 
-                if (initializeResult == 0)
+                if(initializeResult == 0)
                 {
                     //MyLogger.VisionDebugLog("Processing succeeded");
 
@@ -42,7 +45,7 @@ namespace PentagonHMI
 
                     int Connect = axCVX1.Connect();
 
-                    if (Connect == 0)
+                    if(Connect == 0)
                     {
                         //MyLogger.VisionDebugLog($"Connected. IP Address : {axCVX1.Address} ");
 
@@ -54,9 +57,9 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex) { logger.Error(ex); }
+            catch(Exception ex) { logger.Error(ex); }
         }
-        #endregion
-    }
 
+        #endregion PrivateInitialize
+    }
 }

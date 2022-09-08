@@ -8,13 +8,15 @@ namespace PentagonHMI
     public class ControlPanelModel : ViewModelBase
     {
         #region PublicProperties
+
         private List<ControlPanelActionModel> controlPanelActionList = new List<ControlPanelActionModel>();
+
         public List<ControlPanelActionModel> ControlPanelActionList
         {
             get { return controlPanelActionList; }
             set
             {
-                if (controlPanelActionList != value)
+                if(controlPanelActionList != value)
                 {
                     controlPanelActionList = value;
                     RaisePropertyChanged(nameof(ControlPanelActionList));
@@ -22,8 +24,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView controlPanelActionListView = null;
+
         public ICollectionView ControlPanelActionListView
         {
             get
@@ -33,14 +36,15 @@ namespace PentagonHMI
                 return controlPanelActionListView;
             }
         }
-        
+
         private List<ControlPanelToggleModel> controlPanelToggleList = new List<ControlPanelToggleModel>();
+
         public List<ControlPanelToggleModel> ControlPanelToggleList
         {
             get { return controlPanelToggleList; }
             set
             {
-                if (controlPanelToggleList != value)
+                if(controlPanelToggleList != value)
                 {
                     controlPanelToggleList = value;
                     RaisePropertyChanged(nameof(ControlPanelToggleList));
@@ -48,8 +52,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView controlPanelToggleListView = null;
+
         public ICollectionView ControlPanelToggleListView
         {
             get
@@ -60,19 +65,21 @@ namespace PentagonHMI
             }
         }
 
-        private int Ufg_clm = Classes.GlobalFunctions.ProjectType == ProjectType.HDD? 3 : 2;
+        private int Ufg_clm = Classes.GlobalFunctions.ProjectType == ProjectType.HDD ? 3 : 2;
+
         public int ufg_clm
         {
             get { return Ufg_clm; }
             set
             {
-                if (Ufg_clm != value)
+                if(Ufg_clm != value)
                 {
                     Ufg_clm = value;
                     RaisePropertyChanged(nameof(ufg_clm));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

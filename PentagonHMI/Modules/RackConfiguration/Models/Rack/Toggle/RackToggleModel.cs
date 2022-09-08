@@ -6,17 +6,21 @@ namespace PentagonHMI
     public class RackToggleModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag RackToggleTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string rackToggleName = string.Empty;
+
         public string RackToggleName
         {
             get { return rackToggleName; }
             set
             {
-                if (rackToggleName != value)
+                if(rackToggleName != value)
                 {
                     rackToggleName = value;
                     RaisePropertyChanged(nameof(RackToggleName));
@@ -25,18 +29,20 @@ namespace PentagonHMI
         }
 
         private bool rackToggleStatus = false;
+
         public bool RackToggleStatus
         {
             get { return rackToggleStatus; }
             set
             {
-                if (rackToggleStatus != value)
+                if(rackToggleStatus != value)
                 {
                     rackToggleStatus = value;
                     RaisePropertyChanged(nameof(RackToggleStatus));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

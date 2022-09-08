@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Controls;
 
 namespace PentagonHMI.Arcadia_Modules
@@ -11,12 +9,11 @@ namespace PentagonHMI.Arcadia_Modules
         {
             InitializeComponent();
             //LifterMain_Back_Zone1.Setup(ref main, 1, false);
-            LifterModule.Setup(ref main, Zone, Position);           
+            LifterModule.Setup(ref main, Zone, Position);
         }
 
         public void Dispose()
         {
-
         }
     }
 }

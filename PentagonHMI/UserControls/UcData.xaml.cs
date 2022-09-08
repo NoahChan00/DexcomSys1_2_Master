@@ -23,18 +23,19 @@ namespace PentagonHMI.UserControls
             set { SetValue2(value); }
         }
 
-        string PreValue = "NA";
-        bool Grayed = false;
-        void SetValue2(string str)
+        private string PreValue = "NA";
+        private bool Grayed = false;
+
+        private void SetValue2(string str)
         {
             try
             {
-                if (str != PreValue)
+                if(str != PreValue)
                 {
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                     {
                         PreValue = str;
-                        if (string.IsNullOrWhiteSpace(str) || !str.Contains(','))
+                        if(string.IsNullOrWhiteSpace(str) || !str.Contains(','))
                         {
                             TBox.Text = "N/A";
                             Round.Fill = Brushes.Wheat;
@@ -47,15 +48,13 @@ namespace PentagonHMI.UserControls
                             double F1 = Convert.ToInt32(strs[1]);
                             double P2 = 0;
                             double F2 = 0;
-                            if (strs[2] != "-" && strs[3] != "-")
+                            if(strs[2] != "-" && strs[3] != "-")
                             {
                                 P2 = Convert.ToInt32(strs[2]);
                                 F2 = Convert.ToInt32(strs[3]);
                             }
                             else
                                 isSingleZone = true;
-
-
 
                             double P = P1 + P2;
                             double F = F1 + F2;
@@ -65,7 +64,7 @@ namespace PentagonHMI.UserControls
                             T1Pass.Text = P1.ToString();
                             T1Fail.Text = F1.ToString();
 
-                            if (isSingleZone)
+                            if(isSingleZone)
                             {
                                 Z2PieContainer.Visibility = Visibility.Collapsed;
                                 sp_Zone2.Visibility = Visibility.Collapsed;
@@ -74,7 +73,7 @@ namespace PentagonHMI.UserControls
                                 z2Line2.Visibility = Visibility.Collapsed;
                                 zone2Pie.Visibility = Visibility.Collapsed;
                             }
-                            
+
                             T2Pass.Text = P2.ToString();
                             T2Fail.Text = F2.ToString();
 
@@ -82,19 +81,18 @@ namespace PentagonHMI.UserControls
                             double PF1 = (F1 / (P1 + F1)) * 100;
                             double PF2 = (F2 / (P2 + F2)) * 100;
 
-
-                            if (Double.IsNaN(PF))
+                            if(Double.IsNaN(PF))
                                 PF = 100;
 
-                            if (Double.IsNaN(PF1))
+                            if(Double.IsNaN(PF1))
                                 PF1 = 100;
 
-                            if (Double.IsNaN(PF2))
+                            if(Double.IsNaN(PF2))
                                 PF2 = 100;
 
                             TBox.Text = (P == 0 && F == 0 ? 0 : (Math.Floor((100 - PF) * 10)) / 10) + "%";
 
-                            if (Grayed)
+                            if(Grayed)
                             {
                                 Round.Fill = Brushes.DeepSkyBlue;
                                 Round1.Fill = Brushes.DodgerBlue;
@@ -142,7 +140,7 @@ namespace PentagonHMI.UserControls
                     }));
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                 {
@@ -156,10 +154,9 @@ namespace PentagonHMI.UserControls
             }
         }
 
-
-        void SetValue(string str)
+        private void SetValue(string str)
         {
-            if (string.IsNullOrWhiteSpace(str) || !str.Contains(','))
+            if(string.IsNullOrWhiteSpace(str) || !str.Contains(','))
             {
                 TBox.Text = "N/A";
                 Round.Fill = Brushes.Wheat;
@@ -173,15 +170,15 @@ namespace PentagonHMI.UserControls
                 double PF = (F / (P + F)) * 100;
                 TBox.Text = (P == 0 && F == 0 ? 0 : Math.Round(100 - PF)) + "%";
 
-                if (PF < 20)
+                if(PF < 20)
                 {
                     Round.Fill = Brushes.DeepSkyBlue;
                 }
-                else if (PF < 60)
+                else if(PF < 60)
                 {
                     Round.Fill = Brushes.Orange;
                 }
-                else if (PF <= 100)
+                else if(PF <= 100)
                 {
                     Round.Fill = Brushes.Red;
                 }
@@ -208,23 +205,18 @@ namespace PentagonHMI.UserControls
                 PS.HorizontalAlignment = HorizontalAlignment.Center;
                 PieContainer.Children.Add(PS);
                 //}
-
             }
-
         }
     }
-
-
-
 
     public class PolarPoint
     {
         // Angle expressed in degrees
         public PolarPoint(double radius, double angleDeg)
         {
-            if (radius < 0.0)
+            if(radius < 0.0)
                 throw new ArgumentException("Radius must be non-negative");
-            if ((angleDeg < 0) || (angleDeg >= 360.0))
+            if((angleDeg < 0) || (angleDeg >= 360.0))
                 throw new ArgumentException("Angle must be in range [0,360)");
 
             Radius = radius;
@@ -233,6 +225,7 @@ namespace PentagonHMI.UserControls
 
         // Polar coordinates
         public double Radius { get; set; }
+
         public double AngleDeg { get; set; }
 
         // Cartesian coordinates
@@ -311,7 +304,7 @@ namespace PentagonHMI.UserControls
                 double yEnd = maxHeight / 2.0 * Math.Sin(EndAngle * Math.PI / 180.0);
 
                 StreamGeometry geom = new StreamGeometry();
-                using (StreamGeometryContext ctx = geom.Open())
+                using(StreamGeometryContext ctx = geom.Open())
                 {
                     ctx.BeginFigure(
                         new Point((RenderSize.Width / 2.0) + xStart,
@@ -334,5 +327,4 @@ namespace PentagonHMI.UserControls
             }
         }
     }
-
 }

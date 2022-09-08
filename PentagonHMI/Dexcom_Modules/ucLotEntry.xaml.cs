@@ -1,35 +1,31 @@
-﻿using System;
-using System.Windows.Media;
+﻿using PentagonHMI.Modules.NumUpDown;
+using SimpleDatabase;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 using Utilities;
-using System.Windows;
-using System.Collections.Generic;
-using SimpleDatabase;
-using System.Reflection;
-using LiveCharts;
-using LiveCharts.Wpf;
-using System.Text.RegularExpressions;
-using System.Data;
-using PentagonHMI.Modules.NumUpDown;
 
 namespace PentagonHMI.ChildControls
 {
     public partial class ucLotEntry : UserControl, IDisposable
     {
-        SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
-        Dictionary<string, string> dic_BatteryType = new Dictionary<string, string>();
-        List<string> lst_DUTID = new List<string>();
-        List<string> lst_FirmwareVersion = new List<string>();
+        private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+        private Dictionary<string, string> dic_BatteryType = new Dictionary<string, string>();
+        private List<string> lst_DUTID = new List<string>();
+        private List<string> lst_FirmwareVersion = new List<string>();
 
         private LogicClasses.Main _Main;
 
-        const string Tag_LotID_str = "Lot_Info.HMI_LotID";
-        const string Tag_LotQty_dint = "Lot_Info.HMI_Lot_Quantity";
-        const string Tag_OprID_str20 = "Lot_Info.HMI_OperatorID";
-        const string Tag_DUTID_str20 = "Lot_Info.New_Lot_Created";
-        const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
-        const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
+        private const string Tag_LotID_str = "Lot_Info.HMI_LotID";
+        private const string Tag_LotQty_dint = "Lot_Info.HMI_Lot_Quantity";
+        private const string Tag_OprID_str20 = "Lot_Info.HMI_OperatorID";
+        private const string Tag_DUTID_str20 = "Lot_Info.New_Lot_Created";
+        private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
+        private const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
         //const string Tag_DUTID_str20 = "RecipeParams.DUTid";
         //const string Tag_FirmwareVersion_str20 = "RecipeParams.FirmwareVersion";
         //const string Tag_DayToExp_int = "Lot_Info.HMI_DaysToExpired";
@@ -44,7 +40,8 @@ namespace PentagonHMI.ChildControls
             InitializeComponent();
             _Main = main;
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP)) return;
+            if(!OPCore.Connect(Info.OPC.IP))
+                return;
             //btn_ServerTest.Visibility = Visibility.Collapsed;
 #endif
             Initialize();
@@ -55,20 +52,19 @@ namespace PentagonHMI.ChildControls
         {
             DataTable dt = SQLer.Exec_DTSelect("Select * From LotInfo");
 
-            foreach (DataRow dr in dt.Rows)
+            foreach(DataRow dr in dt.Rows)
             {
                 var values = dr["Value"].ToString().Split(';');
                 var keys = dr["Keys"].ToString().Split(';');
 
-
-                if (dr["Name"].ToString() == "BatteryType")
+                if(dr["Name"].ToString() == "BatteryType")
                 {
-                    for (int n = 0; n < keys.Length; n++)
+                    for(int n = 0; n < keys.Length; n++)
                         dic_BatteryType.Add(keys[n], values[n]);
                 }
-                else if (dr["Name"].ToString() == "DutID")
+                else if(dr["Name"].ToString() == "DutID")
                 {
-                    for (int n = 0; n < values.Length; n++)
+                    for(int n = 0; n < values.Length; n++)
                         lst_DUTID.Add(values[n]);
                 }
                 //else if (dr["Name"].ToString() == "FirmwareVersion")
@@ -95,7 +91,7 @@ namespace PentagonHMI.ChildControls
                     ucLotEntryUserControl.IsEnabled = !_Main.OPC.Read<bool>("Lot_Info.New_Lot_Created");
                     //grd_Main.IsEnabled = !OPCore.Read<bool>(Tag_LotCreated_bool);
 
-                    if (GetServerInfo())
+                    if(GetServerInfo())
                     {
                         //cbx_offlineDUT.Visibility = Visibility.Hidden;
                         //cbx_offlineFirmwareVersion.Visibility = Visibility.Hidden;
@@ -112,7 +108,7 @@ namespace PentagonHMI.ChildControls
 
                     //tbx_mdate.Text = DateTime.Now.ToShortDateString();
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
@@ -132,7 +128,7 @@ namespace PentagonHMI.ChildControls
         //Get From Server
         private bool GetServerInfo()
         {
-            if (test_ServerOn)
+            if(test_ServerOn)
             {
                 //tbx_onlineDUT.Text = "DUT1214";
                 tbx_onlineBtrytype.Text = "Murata";
@@ -164,10 +160,12 @@ namespace PentagonHMI.ChildControls
         //}
 
         private static readonly Regex _regex = new Regex("[^0-9]+");
+
         private static bool IsTextAllowed(string text)
         {
             return !_regex.IsMatch(text);
         }
+
         private void OnlyInt(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             e.Handled = !IsTextAllowed(e.Text);
@@ -177,7 +175,7 @@ namespace PentagonHMI.ChildControls
         {
             bool ServerOn = GetServerInfo();
 
-            if (string.IsNullOrWhiteSpace(tbx_LotID.Text))
+            if(string.IsNullOrWhiteSpace(tbx_LotID.Text))
             {
                 MessageBox.Show("Lot ID Not Defined");
                 return;
@@ -187,7 +185,7 @@ namespace PentagonHMI.ChildControls
                 MessageBox.Show("Lot Size Not Defined");
                 return;
             }
-            else if (string.IsNullOrWhiteSpace(tbx_OprID.Text))
+            else if(string.IsNullOrWhiteSpace(tbx_OprID.Text))
             {
                 MessageBox.Show("Operator ID Not Defined");
                 return;
@@ -197,15 +195,15 @@ namespace PentagonHMI.ChildControls
             //    MessageBox.Show("Days To Expire Not Defined");
             //    return;
             //}
-            else if (ServerOn)
+            else if(ServerOn)
             {
                 //if (string.IsNullOrWhiteSpace(tbx_onlineDUT.Text))
                 //{
                 //    MessageBox.Show("DUT ID Not Defined");
                 //    return;
                 //}
-                //else 
-                if (!dic_BatteryType.TryGetValue(tbx_onlineBtrytype.Text, out string btyEnum))
+                //else
+                if(!dic_BatteryType.TryGetValue(tbx_onlineBtrytype.Text, out string btyEnum))
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
@@ -216,15 +214,15 @@ namespace PentagonHMI.ChildControls
                 //    return;
                 //}
             }
-            else if (!ServerOn)
+            else if(!ServerOn)
             {
                 //if (string.IsNullOrWhiteSpace(cbx_offlineDUT.SelectedValue.ToString()))
                 //{
                 //    MessageBox.Show("DUT ID Not Defined");
                 //    return;
                 //}
-                //else 
-                if (string.IsNullOrWhiteSpace(cbx_offlineBtrytype.SelectedValue.ToString()))
+                //else
+                if(string.IsNullOrWhiteSpace(cbx_offlineBtrytype.SelectedValue.ToString()))
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
@@ -240,7 +238,7 @@ namespace PentagonHMI.ChildControls
             OPCore.Write(Tag_LotID_str, tbx_LotID.Text, typeof(string));
             OPCore.Write(Tag_LotQty_dint, LR_num_LotSize.Value, typeof(Int32));
             //OPCore.Write(Tag_DayToExp_int, tbx_day2Exp.Text, typeof(int));
-            if (ServerOn)
+            if(ServerOn)
             {
                 //OPCore.Write(Tag_DUTID_str20, tbx_onlineDUT.Text, typeof(string));
                 OPCore.Write(Tag_Btry_dint, dic_BatteryType[tbx_onlineBtrytype.Text], typeof(Int32));
@@ -258,10 +256,11 @@ namespace PentagonHMI.ChildControls
 
         private void NControl_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-                OPCore.Write(Tag_LotQty_dint, (sender as NumUpDown).Value, typeof(int));
+            OPCore.Write(Tag_LotQty_dint, (sender as NumUpDown).Value, typeof(int));
         }
 
-        bool test_ServerOn = false;
+        private bool test_ServerOn = false;
+
         private void Server_Toggle(object sender, RoutedEventArgs e)
         {
             test_ServerOn = !test_ServerOn;

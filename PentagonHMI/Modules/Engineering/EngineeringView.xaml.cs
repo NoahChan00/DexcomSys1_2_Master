@@ -11,14 +11,17 @@ namespace PentagonHMI
     public partial class EngineeringView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private List<EngineeringGroupModel> engineeringGroupList = new List<EngineeringGroupModel>();
         private LogicClasses.Main main = null;
-        //private readonly Tag engineeringModeTag = new Tag { Name = "MC_System_Tags.EngineeringMode", DataType = Logix.Tag.ATOMIC.BOOL };
-        private readonly Tag engineeringModeTag = new Tag(Tags.MainPage.EngineeringMode.Name,  Logix.Tag.ATOMIC.BOOL );
 
-        #endregion
+        //private readonly Tag engineeringModeTag = new Tag { Name = "MC_System_Tags.EngineeringMode", DataType = Logix.Tag.ATOMIC.BOOL };
+        private readonly Tag engineeringModeTag = new Tag(Tags.MainPage.EngineeringMode.Name, Logix.Tag.ATOMIC.BOOL);
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public EngineeringView(ref LogicClasses.Main _main)
         {
             try
@@ -28,19 +31,21 @@ namespace PentagonHMI
                 initializeOpc(_main);
                 readEngineeringUpdate();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeEngineering()
         {
             try
             {
-                switch (GlobalFunctions.ProjectType)
+                switch(GlobalFunctions.ProjectType)
                 {
                     case ProjectType.TLA:
                         engineeringGroupList = new List<EngineeringGroupModel>
@@ -114,6 +119,7 @@ namespace PentagonHMI
                             }
                         };
                         break;
+
                     case ProjectType.ARCADIA:
                     case ProjectType.DIMM:
                         engineeringGroupList = new List<EngineeringGroupModel>
@@ -187,6 +193,7 @@ namespace PentagonHMI
                             }
                         };
                         break;
+
                     case ProjectType.HDD:
                         engineeringGroupList = new List<EngineeringGroupModel>
                         {
@@ -401,13 +408,14 @@ namespace PentagonHMI
                             }
                         };
                         break;
+
                     default:
                         break;
                 }
 
                 EngineeringItemsControl.ItemsSource = engineeringGroupList;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -420,14 +428,16 @@ namespace PentagonHMI
                 main = _main;
                 main.OnEngineeringUpdate += main_OnEngineeringUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void setEngineeringGroupTextButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -436,7 +446,7 @@ namespace PentagonHMI
                 EngineeringGroupTextModel engineeringGroupTextModel =
                     button.Tag as EngineeringGroupTextModel;
 
-                if (MessageBox.Show($"Are you sure you want to set" +
+                if(MessageBox.Show($"Are you sure you want to set" +
                     $" {engineeringGroupTextModel.EngineeringTextName}?",
                     nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -445,11 +455,11 @@ namespace PentagonHMI
                         engineeringGroupTextModel.EngineeringTextValue;
 
                     main.MyPLC.WriteTag(engineeringGroupTextModel.EngineeringGroupTextTag);
-                    
+
                     readEngineeringUpdate();
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -462,21 +472,21 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 EngineeringGroupSelectionModel engineeringGroupSelectionModel =
                     button.Tag as EngineeringGroupSelectionModel;
-                
-                if (MessageBox.Show($"Are you sure you want to set" +
+
+                if(MessageBox.Show($"Are you sure you want to set" +
                     $" {engineeringGroupSelectionModel.EngineeringGroupSelectionName}?",
                     nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                 {
                     engineeringGroupSelectionModel.EngineeringGroupSelectionTag.Value =
                         engineeringGroupSelectionModel.EngineeringGroupSelectionSelectedIndex + 1;
-                    
+
                     main.MyPLC.WriteTag(engineeringGroupSelectionModel.EngineeringGroupSelectionTag);
-                    
+
                     readEngineeringUpdate();
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -490,7 +500,7 @@ namespace PentagonHMI
                 EngineeringGroupToggleModel engineeringGroupToggleModel =
                     button.Tag as EngineeringGroupToggleModel;
 
-                if (MessageBox.Show($"Are you sure you want to off" +
+                if(MessageBox.Show($"Are you sure you want to off" +
                     $" {engineeringGroupToggleModel.EngineeringGroupToggleName}?",
                     nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -500,7 +510,7 @@ namespace PentagonHMI
                     main.MyPLC.WriteTag(engineeringGroupToggleModel.EngineeringGroupToggleTag);
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -514,7 +524,7 @@ namespace PentagonHMI
                 EngineeringGroupToggleModel engineeringGroupToggleModel =
                     button.Tag as EngineeringGroupToggleModel;
 
-                if (MessageBox.Show($"Are you sure you want to on" +
+                if(MessageBox.Show($"Are you sure you want to on" +
                     $" {engineeringGroupToggleModel.EngineeringGroupToggleName}?",
                     nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -524,7 +534,7 @@ namespace PentagonHMI
                     main.MyPLC.WriteTag(engineeringGroupToggleModel.EngineeringGroupToggleTag);
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -538,7 +548,7 @@ namespace PentagonHMI
                 EngineeringGroupActionModel engineeringGroupActionModel =
                     button.Tag as EngineeringGroupActionModel;
 
-                if (MessageBox.Show($"Are you sure you want to" +
+                if(MessageBox.Show($"Are you sure you want to" +
                     $" {engineeringGroupActionModel.EngineeringGroupActionName}?",
                     nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -548,12 +558,12 @@ namespace PentagonHMI
                     main.MyPLC.WriteTag(engineeringGroupActionModel.EngineeringGroupActionTag);
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void main_OnEngineeringUpdate()
         {
             Dispatcher.Invoke(new Action(() =>
@@ -561,11 +571,11 @@ namespace PentagonHMI
                 try
                 {
                     main.MyPLC.ReadTag(engineeringModeTag);
-                    if (engineeringModeTag.Value != null)
+                    if(engineeringModeTag.Value != null)
                     {
                         bool value = Convert.ToBoolean(engineeringModeTag.Value);
 
-                        if (EngineeringItemsControl.IsEnabled != value)
+                        if(EngineeringItemsControl.IsEnabled != value)
                         {
                             EngineeringItemsControl.IsEnabled = value;
                         }
@@ -579,43 +589,45 @@ namespace PentagonHMI
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.EngineeringGroupToggleTag.Name))
+                                    if(!string.IsNullOrEmpty(y.EngineeringGroupToggleTag.Name))
                                     {
                                         main.MyPLC.ReadTag(y.EngineeringGroupToggleTag);
 
-                                        if (y.EngineeringGroupToggleTag.Value != null)
+                                        if(y.EngineeringGroupToggleTag.Value != null)
                                         {
                                             bool value = Convert.ToBoolean(
                                                 y.EngineeringGroupToggleTag.Value);
 
-                                            if (y.EngineeringGroupToggle != value)
+                                            if(y.EngineeringGroupToggle != value)
                                             {
                                                 y.EngineeringGroupToggle = value;
                                             }
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     FileLogger.logError(exception.Message, exception.ToString());
                                 }
                             });
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             FileLogger.logError(exception.Message, exception.ToString());
                         }
                     });
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PrivateMethods
+
         private void readEngineeringUpdate()
         {
             Dispatcher.Invoke(new Action(() =>
@@ -630,22 +642,22 @@ namespace PentagonHMI
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.EngineeringGroupTextTag.Name))
+                                    if(!string.IsNullOrEmpty(y.EngineeringGroupTextTag.Name))
                                     {
                                         main.MyPLC.ReadTag(y.EngineeringGroupTextTag);
 
-                                        if (y.EngineeringGroupTextTag.Value != null)
+                                        if(y.EngineeringGroupTextTag.Value != null)
                                         {
                                             string value = y.EngineeringGroupTextTag.Value.ToString();
 
-                                            if (y.EngineeringTextValue != value)
+                                            if(y.EngineeringTextValue != value)
                                             {
                                                 y.EngineeringTextValue = value;
                                             }
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     FileLogger.logError(exception.Message, exception.ToString());
                                 }
@@ -655,54 +667,57 @@ namespace PentagonHMI
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.EngineeringGroupSelectionTag.Name))
+                                    if(!string.IsNullOrEmpty(y.EngineeringGroupSelectionTag.Name))
                                     {
                                         main.MyPLC.ReadTag(y.EngineeringGroupSelectionTag);
 
-                                        if (y.EngineeringGroupSelectionTag.Value != null)
+                                        if(y.EngineeringGroupSelectionTag.Value != null)
                                         {
                                             int value = Convert.ToInt32(
                                                 y.EngineeringGroupSelectionTag.Value) - 1;
 
-                                            if (y.EngineeringGroupSelectionSelectedIndex != value)
+                                            if(y.EngineeringGroupSelectionSelectedIndex != value)
                                             {
                                                 y.EngineeringGroupSelectionSelectedIndex = value;
                                             }
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     FileLogger.logError(exception.Message, exception.ToString());
                                 }
                             });
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             FileLogger.logError(exception.Message, exception.ToString());
                         }
                     });
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateMethods
 
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
             try
             {
                 main.EngineeringPageOn = false;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

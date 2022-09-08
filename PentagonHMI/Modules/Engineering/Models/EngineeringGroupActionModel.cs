@@ -6,23 +6,28 @@ namespace PentagonHMI
     public class EngineeringGroupActionModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag EngineeringGroupActionTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string engineeringGroupActionName = string.Empty;
+
         public string EngineeringGroupActionName
         {
             get { return engineeringGroupActionName; }
             set
             {
-                if (engineeringGroupActionName != value)
+                if(engineeringGroupActionName != value)
                 {
                     engineeringGroupActionName = value;
                     RaisePropertyChanged(nameof(EngineeringGroupActionName));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

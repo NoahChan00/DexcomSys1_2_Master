@@ -6,17 +6,21 @@ namespace PentagonHMI
     public class EngineeringGroupToggleModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag EngineeringGroupToggleTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string engineeringGroupToggleName = string.Empty;
+
         public string EngineeringGroupToggleName
         {
             get { return engineeringGroupToggleName; }
             set
             {
-                if (engineeringGroupToggleName != value)
+                if(engineeringGroupToggleName != value)
                 {
                     engineeringGroupToggleName = value;
                     RaisePropertyChanged(nameof(EngineeringGroupToggleName));
@@ -25,18 +29,20 @@ namespace PentagonHMI
         }
 
         private bool engineeringGroupToggle = false;
+
         public bool EngineeringGroupToggle
         {
             get { return engineeringGroupToggle; }
             set
             {
-                if (engineeringGroupToggle != value)
+                if(engineeringGroupToggle != value)
                 {
                     engineeringGroupToggle = value;
                     RaisePropertyChanged(nameof(EngineeringGroupToggle));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

@@ -1,24 +1,22 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <SolidColorBrush x:Key="NormalButtonBrush" Color="#FF50A0E1"/>
-    <SolidColorBrush x:Key="NormalLightGreyButtonBrush" Color="#FFEEEEEE"/>
-    <SolidColorBrush x:Key="NormalDarkGreyBrush" Color="#FF666666"/>
-    <SolidColorBrush x:Key="NormalYellowBrush" Color="#FFFFFF00"/>
-    <SolidColorBrush x:Key="ConfigurationBrush" Color="Lime"/>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="NormalButtonBrush" Color="#FF50A0E1" />
+    <SolidColorBrush x:Key="NormalLightGreyButtonBrush" Color="#FFEEEEEE" />
+    <SolidColorBrush x:Key="NormalDarkGreyBrush" Color="#FF666666" />
+    <SolidColorBrush x:Key="NormalYellowBrush" Color="#FFFFFF00" />
+    <SolidColorBrush x:Key="ConfigurationBrush" Color="Lime" />
 
-    <!--<SolidColorBrush x:Key="NormalBackgroundBrush" Color="#FFFFFF00"/>
-    <SolidColorBrush x:Key="NormalForegroundBrush" Color="#FF000000"/>-->
-    <SolidColorBrush x:Key="NormalBackgroundBrush" Color="#FFD4D0C8"/>
-    <SolidColorBrush x:Key="NormalForegroundBrush" Color="#FF000000"/>
-    <SolidColorBrush x:Key="AmberBrush" Color="#FFFFC200"/>
-    <SolidColorBrush x:Key="GreenBrush" Color="Lime"/>
-
+    <!--<SolidColorBrush x:Key="NormalBackgroundBrush" Color="#FFFFFF00" />
+    <SolidColorBrush x:Key="NormalForegroundBrush" Color="#FF000000" />-->
+    <SolidColorBrush x:Key="NormalBackgroundBrush" Color="#FFD4D0C8" />
+    <SolidColorBrush x:Key="NormalForegroundBrush" Color="#FF000000" />
+    <SolidColorBrush x:Key="AmberBrush" Color="#FFFFC200" />
+    <SolidColorBrush x:Key="GreenBrush" Color="Lime" />
 
     <LinearGradientBrush x:Key="ButtonShineBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
-                <GradientStop Color="#FFFFFFFF" Offset="0"/>
-                <GradientStop Color="#33F0F0EA" Offset="1"/>
+                <GradientStop Color="#FFFFFFFF" Offset="0" />
+                <GradientStop Color="#33F0F0EA" Offset="1" />
             </GradientStopCollection>
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
@@ -26,8 +24,8 @@
     <LinearGradientBrush x:Key="ButtonOverShineBrush" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientBrush.GradientStops>
             <GradientStopCollection>
-                <GradientStop Color="#CCFFFFFF" Offset="0"/>
-                <GradientStop Color="#00F0F0EA" Offset="1"/>
+                <GradientStop Color="#CCFFFFFF" Offset="0" />
+                <GradientStop Color="#00F0F0EA" Offset="1" />
             </GradientStopCollection>
         </GradientBrush.GradientStops>
     </LinearGradientBrush>
@@ -42,22 +40,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonBorder" 
-                  CornerRadius="10,10,10,10" 
-                  BorderThickness="1, 1, 2, 2" 
-                  Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                  BorderBrush="#FF404040" 
-                  RenderTransformOrigin="0.5,0.5">
+                    <Border x:Name="ButtonBorder" CornerRadius="10,10,10,10" BorderThickness="1, 1, 2, 2"
+                            Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" BorderBrush="#FF404040"
+                            RenderTransformOrigin="0.5,0.5">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="1.0*"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1.0*" />
                             </Grid.RowDefinitions>
-                            <Border Name="Bd" Grid.Row="0" CornerRadius="10,10,10,10" Background="{StaticResource ButtonShineBrush}"/>
-                            <ContentPresenter x:Name="ButtonContentPresenter"
-                                VerticalAlignment="Center"  
-                                Grid.RowSpan="2" 
-                                HorizontalAlignment="Center"/>
+                            <Border Name="Bd" Grid.Row="0" CornerRadius="10,10,10,10" Background="{StaticResource ButtonShineBrush}" />
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -65,7 +57,7 @@
                             <Setter Property="RenderTransform" TargetName="ButtonBorder">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
@@ -83,8 +75,8 @@
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#33FFFFFF" Offset="0.9"/>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#33FFFFFF" Offset="0.9" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -100,31 +92,25 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonBorder" 
-                  CornerRadius="10,10,10,10" 
-                  BorderThickness="1, 1, 2, 2" 
-                  Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                  BorderBrush="#FF404040" 
-                  RenderTransformOrigin="0.5,0.5">
+                    <Border x:Name="ButtonBorder" CornerRadius="10,10,10,10" BorderThickness="1, 1, 2, 2"
+                            Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" BorderBrush="#FF404040"
+                            RenderTransformOrigin="0.5,0.5">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="1.0*"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1.0*" />
                             </Grid.RowDefinitions>
-                            <Border Name="Bd" Grid.Row="0" CornerRadius="10,10,10,10" Background="{StaticResource ButtonShineBrush}"/>
-                            <ContentPresenter x:Name="ButtonContentPresenter"
-                                VerticalAlignment="Center"  
-                                Grid.RowSpan="2" 
-                                HorizontalAlignment="Center"/>
+                            <Border Name="Bd" Grid.Row="0" CornerRadius="10,10,10,10" Background="{StaticResource ButtonShineBrush}" />
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="ButtonBorder" Value="LimeGreen"/>
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="LimeGreen" />
                             <Setter Property="RenderTransform" TargetName="ButtonBorder">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
@@ -142,13 +128,12 @@
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#33FFFFFF" Offset="0.9"/>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#33FFFFFF" Offset="0.9" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style x:Key="styGlassButtonNoClick" TargetType="{x:Type Button}">
         <!--<Setter Property="FontSize" Value="{Binding Path=FontSize, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />-->
@@ -157,25 +142,20 @@
         <Setter Property="Foreground" Value="Snow" />
         <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="IsEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonBorder" 
-                  BorderThickness="1, 1, 2, 2" 
-                  Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                  BorderBrush="#FF404040" 
-                  RenderTransformOrigin="0.5,0.5">
+                    <Border x:Name="ButtonBorder" BorderThickness="1, 1, 2, 2"
+                            Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" BorderBrush="#FF404040"
+                            RenderTransformOrigin="0.5,0.5">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="1.0*"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1.0*" />
                             </Grid.RowDefinitions>
-                            <Border Name="Bd" Grid.Row="0" Background="{StaticResource ButtonShineBrush}"/>
-                            <ContentPresenter x:Name="ButtonContentPresenter"
-                                VerticalAlignment="Center"  
-                                Grid.RowSpan="2" 
-                                HorizontalAlignment="Center"/>
+                            <Border Name="Bd" Grid.Row="0" Background="{StaticResource ButtonShineBrush}" />
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -188,13 +168,12 @@
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#33FFFFFF" Offset="0.9"/>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#33FFFFFF" Offset="0.9" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
     </Style>
-
 
     <Style x:Key="styRoundButton" TargetType="{x:Type Button}">
         <!--<Setter Property="FontSize" Value="{Binding Path=FontSize, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />-->
@@ -206,22 +185,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonBorder" 
-                  CornerRadius="30,30,30,30" 
-                  BorderThickness="1, 1, 2, 2" 
-                  Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                  BorderBrush="#FF404040" 
-                  RenderTransformOrigin="0.5,0.5">
+                    <Border x:Name="ButtonBorder" CornerRadius="30,30,30,30" BorderThickness="1, 1, 2, 2"
+                            Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" BorderBrush="#FF404040"
+                            RenderTransformOrigin="0.5,0.5">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="1.0*"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1.0*" />
                             </Grid.RowDefinitions>
-                            <Border Name="Bd" Grid.Row="0" CornerRadius="35,35,35,35" Background="{StaticResource ButtonShineBrush}"/>
-                            <ContentPresenter x:Name="ButtonContentPresenter"
-                                VerticalAlignment="Center"  
-                                Grid.RowSpan="2" 
-                                HorizontalAlignment="Center"/>
+                            <Border Name="Bd" Grid.Row="0" CornerRadius="35,35,35,35" Background="{StaticResource ButtonShineBrush}" />
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
@@ -229,7 +202,7 @@
                             <Setter Property="RenderTransform" TargetName="ButtonBorder">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
@@ -247,8 +220,8 @@
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#33FFFFFF" Offset="0.9"/>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#33FFFFFF" Offset="0.9" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>
@@ -263,38 +236,32 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="ButtonBorder" 
-                  CornerRadius="10,10,10,10" 
-                  BorderThickness="2,2,2,2" 
-                  Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
-                  BorderBrush="#88FFFFFF" 
-                  RenderTransformOrigin="0.5,0.5">
+                    <Border x:Name="ButtonBorder" CornerRadius="10,10,10,10" BorderThickness="2,2,2,2"
+                            Background="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" BorderBrush="#88FFFFFF"
+                            RenderTransformOrigin="0.5,0.5">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="1.0*"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="1.0*" />
                             </Grid.RowDefinitions>
                             <Border Name="Bd" Grid.Row="0" CornerRadius="10,10,10,10">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                        <GradientStop Color="#FFFFFFFF" Offset="0"/>
-                                        <GradientStop Color="#33F0F0EA" Offset="1"/>
+                                        <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                        <GradientStop Color="#33F0F0EA" Offset="1" />
                                     </LinearGradientBrush>
                                 </Border.Background>
                             </Border>
-                            <ContentPresenter x:Name="ButtonContentPresenter"
-                                VerticalAlignment="Center"  
-                                Grid.RowSpan="2" 
-                                HorizontalAlignment="Center"/>                            
+                            <ContentPresenter x:Name="ButtonContentPresenter" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center" />
                         </Grid>
                     </Border>
-                    
+
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter Property="RenderTransform" TargetName="ButtonBorder">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                        <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
@@ -303,7 +270,7 @@
                             <Setter Property="RenderTransform" TargetName="ButtonBorder">
                                 <Setter.Value>
                                     <TransformGroup>
-                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05" />
                                     </TransformGroup>
                                 </Setter.Value>
                             </Setter>
@@ -315,8 +282,8 @@
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="White" Offset="0"/>
-                    <GradientStop Color="#33FFFFFF" Offset="0.9"/>
+                    <GradientStop Color="White" Offset="0" />
+                    <GradientStop Color="#33FFFFFF" Offset="0.9" />
                 </LinearGradientBrush>
             </Setter.Value>
         </Setter>

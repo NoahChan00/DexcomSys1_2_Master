@@ -6,33 +6,33 @@
     <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Recipe">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
-                <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="Position"/>
+                <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="Position" />
             </Border>
 
             <ItemsControl Grid.Row="0" Grid.Column="1" x:Name="FieldListItemsControl" ItemsSource="{Binding FieldListView}"
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="1"/>
+                        <UniformGrid Rows="1" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding FieldName}"/>
+                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding FieldName}" />
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -42,13 +42,13 @@
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="1"/>
+                        <UniformGrid Rows="1" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SelectionName}"/>
+                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SelectionName}" />
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -58,27 +58,27 @@
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="1"/>
+                        <UniformGrid Rows="1" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <UniformGrid Columns="1">
                             <Border BorderBrush="Black" BorderThickness="1">
-                                <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SelectionName}"/>
+                                <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SelectionName}" />
                             </Border>
 
                             <ItemsControl ItemsSource="{Binding SelectionParameterListView}"
                                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Rows="1"/>
+                                        <UniformGrid Rows="1" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border BorderBrush="Black" BorderThickness="1">
-                                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SelectionParameterName}"/>
+                                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SelectionParameterName}" />
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -88,18 +88,17 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-                      
             <ItemsControl Grid.Row="1" Grid.Column="0" x:Name="RecipeListItemsControl" IsHitTestVisible="False"
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <TextBox FontSize="15" Text="{Binding Position}" TextAlignment="Center"/>
+                            <TextBox FontSize="15" Text="{Binding Position}" TextAlignment="Center" />
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
@@ -109,7 +108,7 @@
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -118,19 +117,19 @@
                                       VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Rows="1" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Border BorderBrush="Black" BorderThickness="1">
-                                        <TextBox FontSize="15" IsReadOnly="{Binding FieldIsReadOnly}" Text="{Binding Field}" Tag="{Binding Index}" >
+                                        <TextBox FontSize="15" IsReadOnly="{Binding FieldIsReadOnly}" Text="{Binding Field}" Tag="{Binding Index}">
                                             <i:Interaction.Triggers>
                                                 <i:EventTrigger EventName="KeyDown">
-                                                    <i:InvokeCommandAction Command="{Binding FieldTextChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource  
+                                                    <i:InvokeCommandAction Command="{Binding FieldTextChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource
                                                                                     Mode=FindAncestor,
                                                                                     AncestorType={x:Type TextBox},
-                                                                                    AncestorLevel=1}}"/>
+                                                                                    AncestorLevel=1}}" />
                                                 </i:EventTrigger>
                                             </i:Interaction.Triggers>
                                         </TextBox>
@@ -142,12 +141,11 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-
-            <ItemsControl Grid.Row="1" Grid.Column="2" x:Name="ictrl_ReelType" 
+            <ItemsControl Grid.Row="1" Grid.Column="2" x:Name="ictrl_ReelType"
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -156,16 +154,16 @@
                                       VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Rows="1" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ItemsControl ItemsSource="{Binding SelectionParameterListView}" 
+                                    <ItemsControl ItemsSource="{Binding SelectionParameterListView}"
                                                   VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <UniformGrid Rows="1"/>
+                                                <UniformGrid Rows="1" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
@@ -176,18 +174,18 @@
                                                             <Style TargetType="{x:Type ComboBox}">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding SelectionParameterMismatch}" Value="True">
-                                                                        <Setter Property="Foreground" Value="Red"/>
+                                                                        <Setter Property="Foreground" Value="Red" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </ComboBox.Style>
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="SelectionChanged">
-                                                                <i:InvokeCommandAction Command="{Binding SelectoinChangedCommand}" 
-                                                                                      CommandParameter="{Binding RelativeSource={RelativeSource  
+                                                                <i:InvokeCommandAction Command="{Binding SelectoinChangedCommand}"
+                                                                                      CommandParameter="{Binding RelativeSource={RelativeSource
                                                                                                                 Mode=FindAncestor,
                                                                                                                 AncestorType={x:Type ComboBox},
-                                                                                                                AncestorLevel=1}}"/>
+                                                                                                                AncestorLevel=1}}" />
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </ComboBox>
@@ -206,7 +204,7 @@
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -215,16 +213,16 @@
                                       VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Rows="1" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <ItemsControl ItemsSource="{Binding SelectionParameterListView}" 
+                                    <ItemsControl ItemsSource="{Binding SelectionParameterListView}"
                                                   VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <UniformGrid Rows="1"/>
+                                                <UniformGrid Rows="1" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
@@ -235,18 +233,18 @@
                                                             <Style TargetType="{x:Type ComboBox}">
                                                                 <Style.Triggers>
                                                                     <DataTrigger Binding="{Binding SelectionParameterMismatch}" Value="True">
-                                                                        <Setter Property="Foreground" Value="Red"/>
+                                                                        <Setter Property="Foreground" Value="Red" />
                                                                     </DataTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </ComboBox.Style>
                                                         <i:Interaction.Triggers>
                                                             <i:EventTrigger EventName="SelectionChanged">
-                                                                <i:InvokeCommandAction Command="{Binding SelectoinChangedCommand}" 
-                                                                                      CommandParameter="{Binding RelativeSource={RelativeSource  
+                                                                <i:InvokeCommandAction Command="{Binding SelectoinChangedCommand}"
+                                                                                      CommandParameter="{Binding RelativeSource={RelativeSource
                                                                                                                 Mode=FindAncestor,
                                                                                                                 AncestorType={x:Type ComboBox},
-                                                                                                                AncestorLevel=1}}"/>
+                                                                                                                AncestorLevel=1}}" />
                                                             </i:EventTrigger>
                                                         </i:Interaction.Triggers>
                                                     </ComboBox>
@@ -262,26 +260,25 @@
             </ItemsControl>
 
             <UniformGrid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Columns="1" Margin="600 20" TextElement.FontSize="16">
-                <Button x:Name="NewRecipeButton" Style="{StaticResource ButtonStyle}" Content="New Recipe" Click="newRecipeButton_Click"/>
+                <Button x:Name="NewRecipeButton" Style="{StaticResource ButtonStyle}" Content="New Recipe" Click="newRecipeButton_Click" />
 
                 <Button x:Name="ProceedToFirstRecipeSelectionButton" Style="{StaticResource ButtonStyle}"
-                        Content="Proceed To First Recipe Selection" Click="proceedToFirstRecipeSelectionButton_Click"/>
+                        Content="Proceed To First Recipe Selection" Click="proceedToFirstRecipeSelectionButton_Click" />
 
                 <Button x:Name="ProceedToSecondRecipeSelectionButton" Style="{StaticResource ButtonStyle}"
-                        Content="Proceed To Second Recipe Selection" Click="proceedToSecondRecipeSelectionButton_Click"/>
+                        Content="Proceed To Second Recipe Selection" Click="proceedToSecondRecipeSelectionButton_Click" />
 
                 <Button x:Name="ProceedToFinalRecipeConfirmationButton" Style="{StaticResource ButtonStyle}"
-                        Content="Proceed To Final Recipe Confirmation" Click="proceedToFinalRecipeConfirmationButton_Click"/>
+                        Content="Proceed To Final Recipe Confirmation" Click="proceedToFinalRecipeConfirmationButton_Click" />
 
-                <Button x:Name="LoadRecipeButton" Style="{StaticResource ButtonStyle}" Content="Load Recipe" Click="loadRecipeButton_Click"/>
+                <Button x:Name="LoadRecipeButton" Style="{StaticResource ButtonStyle}" Content="Load Recipe" Click="loadRecipeButton_Click" />
 
-                <Button x:Name="ResetButton" Style="{StaticResource ButtonStyle}" Content="Reset" Click="ResetButton_Click"/>
+                <Button x:Name="ResetButton" Style="{StaticResource ButtonStyle}" Content="Reset" Click="ResetButton_Click" />
             </UniformGrid>
 
             <Viewbox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="100 0">
-                <TextBlock x:Name="MessageTextBlock" FontWeight="Bold" Foreground="Red"/>
+                <TextBlock x:Name="MessageTextBlock" FontWeight="Bold" Foreground="Red" />
             </Viewbox>
         </Grid>
     </GroupBox>
-
 </UserControl>

@@ -1,20 +1,20 @@
-﻿using System.Windows.Controls;
-using GalaSoft.MvvmLight;
-using System;
-using System.Collections.ObjectModel;
+﻿using GalaSoft.MvvmLight;
 using LiveCharts;
 using LiveCharts.Wpf;
-using System.Windows.Media;
 using Logix;
-using System.Linq;
+using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace PentagonHMI.ChildControls
 {
     public partial class ucOEE_Gen2 : UserControl, IDisposable
     {
-        Controller ctrl = new Controller(Info.OPC.IP);
+        private Controller ctrl = new Controller(Info.OPC.IP);
         public Func<ChartPoint, string> PointLabel { get; set; }
         private LogicClasses.Main _Main;
         public OEEModel OEEList = new OEEModel();
@@ -24,24 +24,24 @@ namespace PentagonHMI.ChildControls
         private Brush Color4 = Brushes.LightGray;
         private bool isArcadiaMainConveyor = false;
 
-        Tag Tag_OEEStartDateTime = new Tag { Name = "OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
-        Tag Tag_TotalTime = new Tag { Name = "OEE_Tags.dint_MachineTotalTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_ProductiveTime = new Tag { Name = "OEE_Tags.dint_MachineProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_StandbyTime = new Tag { Name = "OEE_Tags.dint_MachineStandbyTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_EngineeringTime = new Tag { Name = "OEE_Tags.dint_MachineEngineeringTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_ScheduledDownTime = new Tag { Name = "OEE_Tags.dint_MachineScheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_UnscheduledDownTime = new Tag { Name = "OEE_Tags.dint_MachineUnscheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_NonscheduledTime = new Tag { Name = "OEE_Tags.dint_MachineNonScheduledTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_MeanDownTime = new Tag { Name = "OEE_Tags.dint_MeanDownTimeSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_SoftJam = new Tag { Name = "OEE_Tags.dint_SoftJam", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_HardJam = new Tag { Name = "OEE_Tags.dint_HardJam", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_MTBA = new Tag { Name = "OEE_Tags.dint_MTBASec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_MTBF = new Tag { Name = "OEE_Tags.dint_MTBFSec", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_TotalPass = new Tag { Name = "OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_TotalFail = new Tag { Name = "OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_IncomingPartFail = new Tag { Name = "OEE_Tags.dint_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_IncomingPartFail_Z1 = new Tag { Name = "OEE_Tags.dint_Z1_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
-        Tag Tag_IncomingPartFail_Z2 = new Tag { Name = "OEE_Tags.dint_Z2_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_OEEStartDateTime = new Tag { Name = "OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
+        private Tag Tag_TotalTime = new Tag { Name = "OEE_Tags.dint_MachineTotalTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_ProductiveTime = new Tag { Name = "OEE_Tags.dint_MachineProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_StandbyTime = new Tag { Name = "OEE_Tags.dint_MachineStandbyTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_EngineeringTime = new Tag { Name = "OEE_Tags.dint_MachineEngineeringTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_ScheduledDownTime = new Tag { Name = "OEE_Tags.dint_MachineScheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_UnscheduledDownTime = new Tag { Name = "OEE_Tags.dint_MachineUnscheduledDownTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_NonscheduledTime = new Tag { Name = "OEE_Tags.dint_MachineNonScheduledTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_MeanDownTime = new Tag { Name = "OEE_Tags.dint_MeanDownTimeSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_SoftJam = new Tag { Name = "OEE_Tags.dint_SoftJam", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_HardJam = new Tag { Name = "OEE_Tags.dint_HardJam", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_MTBA = new Tag { Name = "OEE_Tags.dint_MTBASec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_MTBF = new Tag { Name = "OEE_Tags.dint_MTBFSec", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_TotalPass = new Tag { Name = "OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_TotalFail = new Tag { Name = "OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_IncomingPartFail = new Tag { Name = "OEE_Tags.dint_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_IncomingPartFail_Z1 = new Tag { Name = "OEE_Tags.dint_Z1_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_IncomingPartFail_Z2 = new Tag { Name = "OEE_Tags.dint_Z2_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
 
         public enum Grouping
         {
@@ -75,7 +75,7 @@ namespace PentagonHMI.ChildControls
                 Initialize();
                 _Main.OnOEEUpdate += new LogicClasses.Main.onOEEUpdateHandler(Update);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -83,20 +83,20 @@ namespace PentagonHMI.ChildControls
 
         private void TagRename()
         {
-            if ((StationType.ARCADIA_Main == Classes.GlobalFunctions.StationType && ProjectType.ARCADIA == Classes.GlobalFunctions.ProjectType) || 
+            if((StationType.ARCADIA_Main == Classes.GlobalFunctions.StationType && ProjectType.ARCADIA == Classes.GlobalFunctions.ProjectType) ||
                 (Classes.GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("FINAL")))
             {
-                if (Classes.GlobalFunctions.ProjectType == ProjectType.ARCADIA)
+                if(Classes.GlobalFunctions.ProjectType == ProjectType.ARCADIA)
                 {
                     ctrl = new Controller("193.168.3.102");
                     isArcadiaMainConveyor = true;
                 }
-                else if (Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
+                else if(Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
                 {
                     ctrl = new Controller("194.168.3.2");
                     isArcadiaMainConveyor = true;
                 }
-                
+
                 Tag_OEEStartDateTime.Name = "OutputPnP_OEE_Tags.str_HMI_OEEStartDateTime";
                 Tag_TotalTime.Name = "OutputPnP_OEE_Tags.dint_MachineTotalTimeAccSec";
                 Tag_ProductiveTime.Name = "OutputPnP_OEE_Tags.dint_MachineProductiveTimeAccSec";
@@ -113,9 +113,9 @@ namespace PentagonHMI.ChildControls
                 Tag_TotalPass.Name = "OutputPnP_OEE_Tags.dint_Total_Pass";
                 Tag_TotalFail.Name = "OutputPnP_OEE_Tags.dint_Total_Fail";
             }
-            else if ((Classes.GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("CENTRAL")))
+            else if((Classes.GlobalFunctions.StationType == StationType.VISION && _Main.MachineName.ToUpper().Contains("CENTRAL")))
             {
-                if (Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
+                if(Classes.GlobalFunctions.ProjectType == ProjectType.TLA)
                 {
                     ctrl = new Controller("194.168.3.2");
                     isArcadiaMainConveyor = true;
@@ -140,7 +140,7 @@ namespace PentagonHMI.ChildControls
                 Tag_IncomingPartFail_Z1.Name = "CenVis_OEE_Tags.dint_Z1_Total_PartFail";
                 Tag_IncomingPartFail_Z2.Name = "CenVis_OEE_Tags.dint_Z2_Total_PartFail";
             }
-            else if (Classes.GlobalFunctions.ProjectType == ProjectType.TLA && Classes.GlobalFunctions.StationType == StationType.ARCADIA_Main)
+            else if(Classes.GlobalFunctions.ProjectType == ProjectType.TLA && Classes.GlobalFunctions.StationType == StationType.ARCADIA_Main)
             {
                 ctrl = new Controller("194.168.3.2");
                 isArcadiaMainConveyor = true;
@@ -387,7 +387,6 @@ namespace PentagonHMI.ChildControls
                          {
                               new PieSeries { Title = "Zone 1", Fill = Color1, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
                               new PieSeries { Title = "Zone 2", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-
                          }
                      }
                 }
@@ -395,16 +394,17 @@ namespace PentagonHMI.ChildControls
             DataContext = OEEList;
         }
 
-        double Productive, Standby, Engineering, Shift, NonSchedule, TotalPass, TotalFail,
+        private double Productive, Standby, Engineering, Shift, NonSchedule, TotalPass, TotalFail,
         IdealCycleTime, TotalCount, EquipmentUpTime, OperationTime, Quality, Performance,
         Availability, OEE, Loading, Teep, DeltaTime, IncomingPartFail, IncomingPartFail_Z1, IncomingPartFail_Z2;
+
         private void Update()
         {
             try
             {
-                if (isArcadiaMainConveyor)
+                if(isArcadiaMainConveyor)
                 {
-                    foreach (Tag tag in Info.OPC.TagGroups.OEE.Tags)
+                    foreach(Tag tag in Info.OPC.TagGroups.OEE.Tags)
                         ctrl.ReadTag(tag);
                 }
                 else
@@ -412,7 +412,7 @@ namespace PentagonHMI.ChildControls
                 _Main.IdealCycleTime = _Main.OPC.Read<double>("HMI_IdealCycleTime");
                 UpdateUI();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -420,10 +420,10 @@ namespace PentagonHMI.ChildControls
 
         private void UpdateUI()
         {
-            foreach (Tag _tag in Info.OPC.TagGroups.OEE.Tags)
+            foreach(Tag _tag in Info.OPC.TagGroups.OEE.Tags)
             {
                 var item = OEEList.OEEInfo.Where(x => x.Key == _tag.Name).FirstOrDefault();
-                if (item != null && _tag.QualityCode == ResultCode.QUAL_GOOD && _tag.Value != null)
+                if(item != null && _tag.QualityCode == ResultCode.QUAL_GOOD && _tag.Value != null)
                 {
                     item.Value = FormatString(item.Group, _tag.Value);
                 }
@@ -438,7 +438,7 @@ namespace PentagonHMI.ChildControls
 
             TotalPass = Tag_TotalPass.ToDouble();
             TotalFail = Tag_TotalFail.ToDouble();
-            
+
             IdealCycleTime = _Main.IdealCycleTime;
             OEEList.OEEInfo.First(x => x.Title == "Ideal Cycle Time").Value = FormatString(Grouping.sec, _Main.IdealCycleTime);
 
@@ -476,9 +476,9 @@ namespace PentagonHMI.ChildControls
             IncomingPartFail_Z2 = Tag_IncomingPartFail_Z2.ToDouble();
             IncomingPartFail = IncomingPartFail_Z1 + IncomingPartFail_Z2;
 
-            foreach (var item in OEEList.PieChartInfo)
+            foreach(var item in OEEList.PieChartInfo)
             {
-                switch (item.Chart)
+                switch(item.Chart)
                 {
                     case OEEChart.EquipmentUptime:
                         item.Value = FormatString(Grouping.sec, EquipmentUpTime);
@@ -486,58 +486,68 @@ namespace PentagonHMI.ChildControls
                         item.PieInfo[1].Values[0] = Standby.To2Dcml();
                         item.PieInfo[2].Values[0] = Engineering.To2Dcml();
                         break;
+
                     case OEEChart.OperationTime:
                         item.Value = FormatString(Grouping.sec, OperationTime);
                         item.PieInfo[0].Values[0] = (Shift - NonSchedule).To2Dcml();
                         item.PieInfo[1].Values[0] = NonSchedule.To2Dcml();
                         break;
+
                     case OEEChart.Quality:
                         double QualityPercent = Quality * 100;
                         item.Value = FormatString(Grouping.percent, QualityPercent);
                         item.PieInfo[0].Values[0] = QualityPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - QualityPercent.To2Dcml();
                         break;
+
                     case OEEChart.Performance:
                         double PerformancePercent = Performance * 100;
                         item.Value = FormatString(Grouping.percent, PerformancePercent);
                         item.PieInfo[0].Values[0] = PerformancePercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - PerformancePercent.To2Dcml();
                         break;
+
                     case OEEChart.Availability:
                         double AvailabilityPercent = Availability * 100;
                         item.Value = FormatString(Grouping.percent, AvailabilityPercent);
                         item.PieInfo[0].Values[0] = AvailabilityPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - AvailabilityPercent.To2Dcml();
                         break;
+
                     case OEEChart.OEE:
                         double OEEPercent = OEE * 100;
                         item.Value = FormatString(Grouping.percent, OEEPercent);
                         item.PieInfo[0].Values[0] = OEEPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - OEEPercent.To2Dcml();
                         break;
+
                     case OEEChart.Loading:
                         double LoadingPercent = Loading * 100;
                         item.Value = FormatString(Grouping.percent, LoadingPercent);
                         item.PieInfo[0].Values[0] = LoadingPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - LoadingPercent.To2Dcml();
                         break;
+
                     case OEEChart.TEEP:
                         double TeepPercent = Teep * 100;
                         item.Value = FormatString(Grouping.percent, TeepPercent);
                         item.PieInfo[0].Values[0] = TeepPercent.To2Dcml();
                         item.PieInfo[1].Values[0] = 100 - TeepPercent.To2Dcml();
                         break;
+
                     case OEEChart.DeltaTime:
                         item.Value = FormatString(Grouping.sec, DeltaTime);
                         item.PieInfo[0].Values[0] = DeltaTime.To2Dcml();
                         item.PieInfo[1].Values[0] = Productive.To2Dcml();
                         item.PieInfo[2].Values[0] = Standby.To2Dcml();
                         break;
+
                     case OEEChart.IncomingPartFail:
                         item.Value = IncomingPartFail.ToString();
                         item.PieInfo[0].Values[0] = IncomingPartFail_Z1;
                         item.PieInfo[1].Values[0] = IncomingPartFail_Z2;
                         break;
+
                     default:
                         break;
                 }
@@ -547,19 +557,20 @@ namespace PentagonHMI.ChildControls
         private string FormatString(Grouping grouping, object Value)
         {
             string strValue = Value?.ToString() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(strValue)) return strValue;
+            if(string.IsNullOrWhiteSpace(strValue))
+                return strValue;
 
-            if (grouping.Equals(Grouping.sec))
+            if(grouping.Equals(Grouping.sec))
             {
                 TimeSpan Ts = TimeSpan.FromSeconds(Convert.ToDouble(strValue));
                 int DayHours = Ts.Days * 24;
                 return string.Format("{0:D2}h:{1:D2}m:{2:D2}s", Ts.Hours + DayHours, Ts.Minutes, Ts.Seconds);
             }
-            else if (grouping.Equals(Grouping.number))
+            else if(grouping.Equals(Grouping.number))
             {
                 return strValue;
             }
-            else if (grouping.Equals(Grouping.stringtime))
+            else if(grouping.Equals(Grouping.stringtime))
             {
                 return string.IsNullOrWhiteSpace(strValue) ? "" : new DateTime(Convert.ToInt32(strValue.Substring(0, 4)),
                              Convert.ToInt32(strValue.Substring(4, 2)),
@@ -567,7 +578,7 @@ namespace PentagonHMI.ChildControls
                              Convert.ToInt32(strValue.Substring(8, 2)),
                              Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
             }
-            else if (grouping.Equals(Grouping.percent))
+            else if(grouping.Equals(Grouping.percent))
             {
                 return Math.Round(Convert.ToDouble(strValue), 2).ToString() + "%";
             }
@@ -583,7 +594,7 @@ namespace PentagonHMI.ChildControls
         private void btn_HELP_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var item = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "System Monitoring and Reliability Metrics.pdf");
-            if (File.Exists(item))
+            if(File.Exists(item))
                 System.Diagnostics.Process.Start(item);
         }
 
@@ -610,16 +621,16 @@ namespace PentagonHMI.ChildControls
             Info.OPC.TagGroups.OEE.AddTag(Tag_IncomingPartFail_Z2);
         }
 
-
         public class OEEModel : ViewModelBase
         {
             private ObservableCollection<PieChartBlockModel> _PieChartInfo = new ObservableCollection<PieChartBlockModel>();
+
             public ObservableCollection<PieChartBlockModel> PieChartInfo
             {
                 get { return _PieChartInfo; }
                 set
                 {
-                    if (_PieChartInfo != value)
+                    if(_PieChartInfo != value)
                     {
                         _PieChartInfo = value;
                         RaisePropertyChanged(nameof(PieChartInfo));
@@ -628,12 +639,13 @@ namespace PentagonHMI.ChildControls
             }
 
             private ObservableCollection<InfoBlockModel> _oeeinfo = new ObservableCollection<InfoBlockModel>();
+
             public ObservableCollection<InfoBlockModel> OEEInfo
             {
                 get { return _oeeinfo; }
                 set
                 {
-                    if (_oeeinfo != value)
+                    if(_oeeinfo != value)
                     {
                         _oeeinfo = value;
                         RaisePropertyChanged(nameof(OEEInfo));
@@ -654,7 +666,7 @@ namespace PentagonHMI.ChildControls
                 get { return _Title; }
                 set
                 {
-                    if (_Title != value)
+                    if(_Title != value)
                     {
                         _Title = value;
                         RaisePropertyChanged(nameof(Title));
@@ -663,12 +675,13 @@ namespace PentagonHMI.ChildControls
             }
 
             private string _Value = "NA";
+
             public string Value
             {
                 get { return _Value; }
                 set
                 {
-                    if (_Value != value)
+                    if(_Value != value)
                     {
                         _Value = value;
                         RaisePropertyChanged(nameof(Value));
@@ -677,12 +690,13 @@ namespace PentagonHMI.ChildControls
             }
 
             private SeriesCollection _PieInfo = new SeriesCollection();
+
             public SeriesCollection PieInfo
             {
                 get { return _PieInfo; }
                 set
                 {
-                    if (_PieInfo != value)
+                    if(_PieInfo != value)
                     {
                         _PieInfo = value;
                         RaisePropertyChanged(nameof(PieInfo));
@@ -697,12 +711,13 @@ namespace PentagonHMI.ChildControls
             public Grouping Group { get; set; }
 
             private string _Title = string.Empty;
+
             public string Title
             {
                 get { return _Title; }
                 set
                 {
-                    if (_Title != value)
+                    if(_Title != value)
                     {
                         _Title = value;
                         RaisePropertyChanged(nameof(Title));
@@ -711,12 +726,13 @@ namespace PentagonHMI.ChildControls
             }
 
             private string _Value = "NA";
+
             public string Value
             {
                 get { return _Value; }
                 set
                 {
-                    if (_Value != value)
+                    if(_Value != value)
                     {
                         _Value = value;
                         RaisePropertyChanged(nameof(Value));
@@ -724,20 +740,21 @@ namespace PentagonHMI.ChildControls
                 }
             }
         }
-
     }
 
     public static class Extension
     {
         public static double ToDouble(this Tag _tag)
         {
-            if (_tag.Value == null) return 0;
+            if(_tag.Value == null)
+                return 0;
             return Convert.ToDouble(_tag.Value);
         }
 
         public static int ToInt(this Tag _tag)
         {
-            if (_tag.Value == null) return 0;
+            if(_tag.Value == null)
+                return 0;
             return Convert.ToInt32(_tag.Value);
         }
 

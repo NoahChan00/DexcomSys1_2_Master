@@ -8,13 +8,15 @@ namespace PentagonHMI
     public class EngineeringGroupModel : ViewModelBase
     {
         #region PublicProperties
+
         private string engineeringGroupName = string.Empty;
+
         public string EngineeringGroupName
         {
             get { return engineeringGroupName; }
             set
             {
-                if (engineeringGroupName != value)
+                if(engineeringGroupName != value)
                 {
                     engineeringGroupName = value;
                     RaisePropertyChanged(nameof(EngineeringGroupName));
@@ -23,12 +25,13 @@ namespace PentagonHMI
         }
 
         private List<EngineeringGroupTextModel> engineeringGroupTextList = new List<EngineeringGroupTextModel>();
+
         public List<EngineeringGroupTextModel> EngineeringGroupTextList
         {
             get { return engineeringGroupTextList; }
             set
             {
-                if (engineeringGroupTextList != value)
+                if(engineeringGroupTextList != value)
                 {
                     engineeringGroupTextList = value;
                     RaisePropertyChanged(nameof(EngineeringGroupTextList));
@@ -38,6 +41,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView engineeringGroupTextListView = null;
+
         public ICollectionView EngineeringGroupTextListView
         {
             get
@@ -47,14 +51,15 @@ namespace PentagonHMI
                 return engineeringGroupTextListView;
             }
         }
-        
+
         private List<EngineeringGroupSelectionModel> engineeringGroupSelectionList = new List<EngineeringGroupSelectionModel>();
+
         public List<EngineeringGroupSelectionModel> EngineeringGroupSelectionList
         {
             get { return engineeringGroupSelectionList; }
             set
             {
-                if (engineeringGroupSelectionList != value)
+                if(engineeringGroupSelectionList != value)
                 {
                     engineeringGroupSelectionList = value;
                     RaisePropertyChanged(nameof(EngineeringGroupSelectionList));
@@ -62,8 +67,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView engineeringGroupSelectionListView = null;
+
         public ICollectionView EngineeringGroupSelectionListView
         {
             get
@@ -73,14 +79,15 @@ namespace PentagonHMI
                 return engineeringGroupSelectionListView;
             }
         }
-        
+
         private List<EngineeringGroupToggleModel> engineeringGroupToggleList = new List<EngineeringGroupToggleModel>();
+
         public List<EngineeringGroupToggleModel> EngineeringGroupToggleList
         {
             get { return engineeringGroupToggleList; }
             set
             {
-                if (engineeringGroupToggleList != value)
+                if(engineeringGroupToggleList != value)
                 {
                     engineeringGroupToggleList = value;
                     RaisePropertyChanged(nameof(EngineeringGroupToggleList));
@@ -88,8 +95,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView engineeringGroupToggleListView = null;
+
         public ICollectionView EngineeringGroupToggleListView
         {
             get
@@ -101,12 +109,13 @@ namespace PentagonHMI
         }
 
         private List<EngineeringGroupActionModel> engineeringGroupActionList = new List<EngineeringGroupActionModel>();
+
         public List<EngineeringGroupActionModel> EngineeringGroupActionList
         {
             get { return engineeringGroupActionList; }
             set
             {
-                if (engineeringGroupActionList != value)
+                if(engineeringGroupActionList != value)
                 {
                     engineeringGroupActionList = value;
                     RaisePropertyChanged(nameof(EngineeringGroupActionList));
@@ -116,6 +125,7 @@ namespace PentagonHMI
         }
 
         private ICollectionView engineeringGroupActionListView = null;
+
         public ICollectionView EngineeringGroupActionListView
         {
             get
@@ -125,6 +135,7 @@ namespace PentagonHMI
                 return engineeringGroupActionListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

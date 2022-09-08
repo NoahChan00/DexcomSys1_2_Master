@@ -8,37 +8,36 @@
     <GroupBox Name="grp_UPH" Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Hourly UPH">
         <Grid Width="300">
             <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="10" />
             </Grid.RowDefinitions>
             <Rectangle Name="UPHRec3" Height="40" Width="300" Fill="SteelBlue" Grid.Row ="1" HorizontalAlignment="Left" />
             <Rectangle Name="UPHRec2" Height="40" Width="300" Fill="DodgerBlue" Grid.Row ="3" HorizontalAlignment="Left" />
             <Rectangle Name="UPHRec1" Height="40" Width="300" Fill="DodgerBlue" Grid.Row ="5" HorizontalAlignment="Left" />
-            <Rectangle Name="UPHRecCur" Height="60" Width="300" Fill="DeepSkyBlue" Grid.Row ="7"  HorizontalAlignment="Left"/>
+            <Rectangle Name="UPHRecCur" Height="60" Width="300" Fill="DeepSkyBlue" Grid.Row ="7"  HorizontalAlignment="Left" />
             <Grid Height="40" Width="300" Grid.Row="1">
                 <Label Name="UPHL3" FontSize="14" FontWeight="Bold" HorizontalAlignment="Right" VerticalContentAlignment="Center" />
-                <TextBlock FontSize="25" Padding="15 0 0 0" Name="UPH3" Text="0" VerticalAlignment="Center"/>
+                <TextBlock FontSize="25" Padding="15 0 0 0" Name="UPH3" Text="0" VerticalAlignment="Center" />
             </Grid>
             <Grid Height="40" Width="300" Grid.Row="3">
                 <Label Name="UPHL2" HorizontalAlignment="Right" FontSize="14" FontWeight="Bold" VerticalContentAlignment="Center" />
-                <TextBlock FontSize="25" Padding="15 0 0 0" Name="UPH2" Text="0" VerticalAlignment="Center"/>
+                <TextBlock FontSize="25" Padding="15 0 0 0" Name="UPH2" Text="0" VerticalAlignment="Center" />
             </Grid>
             <Grid Height="40" Width="300" Grid.Row="5">
                 <Label Name="UPHL1" HorizontalAlignment="Right" Content="Hour Now" FontSize="14" FontWeight="Bold" VerticalContentAlignment="Center" />
-                <TextBlock FontSize="25" Name="UPH1" Padding="15 0 0 0" Text="0" VerticalAlignment="Center"/>
+                <TextBlock FontSize="25" Name="UPH1" Padding="15 0 0 0" Text="0" VerticalAlignment="Center" />
             </Grid>
             <StackPanel Height="60" Width="300" Orientation="Horizontal" Grid.Row="7">
                 <Label Content="Current Hour UPH:" FontSize="25" FontWeight="Bold" VerticalContentAlignment="Center" />
-                <TextBlock FontSize="30" Padding="10 0 0 0" Name="UPHCur" Text="0" VerticalAlignment="Center"/>
+                <TextBlock FontSize="30" Padding="10 0 0 0" Name="UPHCur" Text="0" VerticalAlignment="Center" />
             </StackPanel>
         </Grid>
     </GroupBox>
-
 </UserControl>

@@ -9,8 +9,6 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using Utilities;
-using GalaSoft.MvvmLight;
-using System.Collections.ObjectModel;
 
 namespace PentagonHMI
 {
@@ -18,18 +16,18 @@ namespace PentagonHMI
     {
         private LogicClasses.Main _Main;
         private VanillaDB.DataDBCall DBCall;
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
-        string Connstr = Properties.Settings.Default.DatabaseConnectionString.ToString();
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
+        private string Connstr = Properties.Settings.Default.DatabaseConnectionString.ToString();
         private Dictionary<string, string> shuttleBarcodeDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> robotGripperDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> dic_BatteryType = new Dictionary<string, string>();
-        string[] OEEShift = new string[3];
-        string OEELineShift = "";
+        private string[] OEEShift = new string[3];
+        private string OEELineShift = "";
         public INGEAR_Opc OPC;
 
-
         #region Test Station Tag
-        Tag Lot_Info_HMI_LotID = new Tag { Name = "Lot_Info.HMI_LotID", DataType = Logix.Tag.ATOMIC.STRING };
+
+        private Tag Lot_Info_HMI_LotID = new Tag { Name = "Lot_Info.HMI_LotID", DataType = Logix.Tag.ATOMIC.STRING };
         //Tag PartNumber = new Tag { Name = "a", DataType = Logix.Tag.ATOMIC.STRING };
         //Tag RecipeName;
         //Tag TxCreateDate;
@@ -46,47 +44,44 @@ namespace PentagonHMI
         //Tag RejectDesc;
         //Tag ProcessID;
         //Tag DummyTXSN;
-        #endregion
 
-
+        #endregion Test Station Tag
 
         #region OEETags
 
-        string StartDateTimeTag = "OEE_Tags.str_HMI_OEEStartDateTime";
-        string TotalPassTag = "OEE_Tags.dint_Total_Pass";
-        string TotalFailTag = "OEE_Tags.dint_Total_Fail";
-        string TotalTimeTag = "OEE_Tags.dint_MachineTotalTimeAccSec";
-        string ProductiveTimeTag = "OEE_Tags.dint_MachineProductiveTimeAccSec";
-        string StandbyTimeTag = "OEE_Tags.dint_MachineStandbyTimeAccSec";
-        string EngineeringTimeTag = "OEE_Tags.dint_MachineEngineeringTimeAccSec";
-        string NonScheduledTimeTag = "OEE_Tags.dint_MachineNonScheduledTimeAccSec";
-        string MachineScheduledDownTimeTag = "OEE_Tags.dint_MachineScheduledDownTimeAccSec";
-        string MachineUncheduledDownTimeTag = "OEE_Tags.dint_MachineUnscheduledDownTimeAccSec";
-        string MeanDownTimeTag = "OEE_Tags.dint_MeanDownTimeSec";
-        string SoftJamTag = "OEE_Tags.dint_SoftJam";
-        string HardJamTag = "OEE_Tags.dint_HardJam";
-        string MTBATag = "OEE_Tags.dint_MTBASec";
-        string MTBFTag = "OEE_Tags.dint_MTBFSec";
-        string Z1_TotalIncomingPartFailTag = "OEE_Tags.dint_Z1_Total_PartFail";
-        string Z2_TotalIncomingPartFailTag = "OEE_Tags.dint_Z2_Total_PartFail";
-        string bool_HMIOEEReset = "OEE_Tags.bool_OEE_Reset";
+        private string StartDateTimeTag = "OEE_Tags.str_HMI_OEEStartDateTime";
+        private string TotalPassTag = "OEE_Tags.dint_Total_Pass";
+        private string TotalFailTag = "OEE_Tags.dint_Total_Fail";
+        private string TotalTimeTag = "OEE_Tags.dint_MachineTotalTimeAccSec";
+        private string ProductiveTimeTag = "OEE_Tags.dint_MachineProductiveTimeAccSec";
+        private string StandbyTimeTag = "OEE_Tags.dint_MachineStandbyTimeAccSec";
+        private string EngineeringTimeTag = "OEE_Tags.dint_MachineEngineeringTimeAccSec";
+        private string NonScheduledTimeTag = "OEE_Tags.dint_MachineNonScheduledTimeAccSec";
+        private string MachineScheduledDownTimeTag = "OEE_Tags.dint_MachineScheduledDownTimeAccSec";
+        private string MachineUncheduledDownTimeTag = "OEE_Tags.dint_MachineUnscheduledDownTimeAccSec";
+        private string MeanDownTimeTag = "OEE_Tags.dint_MeanDownTimeSec";
+        private string SoftJamTag = "OEE_Tags.dint_SoftJam";
+        private string HardJamTag = "OEE_Tags.dint_HardJam";
+        private string MTBATag = "OEE_Tags.dint_MTBASec";
+        private string MTBFTag = "OEE_Tags.dint_MTBFSec";
+        private string Z1_TotalIncomingPartFailTag = "OEE_Tags.dint_Z1_Total_PartFail";
+        private string Z2_TotalIncomingPartFailTag = "OEE_Tags.dint_Z2_Total_PartFail";
+        private string bool_HMIOEEReset = "OEE_Tags.bool_OEE_Reset";
 
-        #endregion
+        #endregion OEETags
 
         public Main_Custom(LogicClasses.Main main)
         {
             _Main = main;
             OPC = _Main.OPC;
             DBCall = new VanillaDB.DataDBCall(Connstr);
-            if (GlobalFunctions.ProjectType == ProjectType.DIMM)
+            if(GlobalFunctions.ProjectType == ProjectType.DIMM)
             {
                 initializeShuttleBarcodeDictionary();
                 initializeRobotGripperDictionary();
             }
 
-
-
-            if ((GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.VISION) || GlobalFunctions.ProjectType == ProjectType.TLA)
+            if((GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.VISION) || GlobalFunctions.ProjectType == ProjectType.TLA)
             {
                 TagRename();
             }
@@ -94,7 +89,7 @@ namespace PentagonHMI
 
         private void TagRename()
         {
-            if (GlobalFunctions.ProjectType == ProjectType.TLA && GlobalFunctions.StationType == StationType.ARCADIA_Main)
+            if(GlobalFunctions.ProjectType == ProjectType.TLA && GlobalFunctions.StationType == StationType.ARCADIA_Main)
             {
                 bool_HMIOEEReset = "Labelling_OEE_Tags.bool_OEE_Reset";
 
@@ -114,7 +109,7 @@ namespace PentagonHMI
                 MTBATag = "Labelling_OEE_Tags.dint_MTBASec";
                 MTBFTag = "Labelling_OEE_Tags.dint_MTBFSec";
             }
-            else if (_Main.MachineName.ToUpper().Contains("FINAL"))
+            else if(_Main.MachineName.ToUpper().Contains("FINAL"))
             {
                 bool_HMIOEEReset = "OutputPnP_OEE_Tags.bool_OEE_Reset";
 
@@ -155,7 +150,6 @@ namespace PentagonHMI
                 MTBFTag = "CenVis_OEE_Tags.dint_MTBFSec";
                 Z1_TotalIncomingPartFailTag = "CenVis_OEE_Tags.dint_Z1_Total_PartFail";
                 Z2_TotalIncomingPartFailTag = "CenVis_OEE_Tags.dint_Z2_Total_PartFail";
-
             }
         }
 
@@ -164,24 +158,24 @@ namespace PentagonHMI
             try
             {
                 string ErrMsg = string.Empty;
-                if (GlobalFunctions.ProjectType== ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.ARCADIA_Main) // !!
+                if(GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.ARCADIA_Main) // !!
                 {
                     try
                     {
                         DataTable OEEShiftMachine = _Main.MainSQLer.Exec_DTSelect(@"Select * from Shift where ShiftID != '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1");
 
-                        if (OEEShiftMachine != null)
+                        if(OEEShiftMachine != null)
                         {
-                            foreach (DataRow dr in OEEShiftMachine.Rows)
+                            foreach(DataRow dr in OEEShiftMachine.Rows)
                             {
                                 string ShiftID = dr["ShiftID"].ToString();
 
                                 // If next shift date changes
-                                if (DateTime.Now > Convert.ToDateTime(dr["NextShiftDT"]))
+                                if(DateTime.Now > Convert.ToDateTime(dr["NextShiftDT"]))
                                 {
                                     DateTime ShiftDateTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " " + Convert.ToDateTime(dr["ShiftTime"]).ToShortTimeString());
 
-                                    if (DateTime.Now > ShiftDateTime)
+                                    if(DateTime.Now > ShiftDateTime)
                                         ShiftDateTime = ShiftDateTime.AddDays(1);
 
                                     DBCall.Shift_Reset(ShiftID, Classes.GlobalFunctions.StationName.ToString(), ShiftDateTime.ToString("yyyy/MM/dd HH:mm:ss"), "User", ref ErrMsg);
@@ -189,41 +183,41 @@ namespace PentagonHMI
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
-                else if (GlobalFunctions.ProjectType == ProjectType.ARCADIA)
+                else if(GlobalFunctions.ProjectType == ProjectType.ARCADIA)
                 {
                     try
                     {
                         bool skip = false;
                         // Manual line OEE reset
                         DataTable OEEShiftLine = _Main.MainSQLer.Exec_DTSelect(@"Select * from Shift where ShiftID = '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1");
-                        if (OEEShiftLine != null)
+                        if(OEEShiftLine != null)
                         {
                             // Should be only one row
-                            if (OEEShiftLine.Rows.Count == 1)
+                            if(OEEShiftLine.Rows.Count == 1)
                             {
                                 DataRow dr = OEEShiftLine.Rows[0];
                                 string ShiftID = dr["ShiftID"].ToString();
 
-                                if (string.IsNullOrEmpty(OEELineShift))
+                                if(string.IsNullOrEmpty(OEELineShift))
                                 {
                                     OEELineShift = dr["NextShiftDT"].ToString();
                                 }
-                                else if (OEELineShift != dr["NextShiftDT"].ToString())
+                                else if(OEELineShift != dr["NextShiftDT"].ToString())
                                 {
                                     LogOEE(ShiftID);
 
-                                    if (!OPC.Write(bool_HMIOEEReset, true))
+                                    if(!OPC.Write(bool_HMIOEEReset, true))
                                         Utilities.FileLogger.logError("OEE reset failed", "Write to PLC reset failed");
 
                                     OEELineShift = dr["NextShiftDT"].ToString();
 
                                     DataTable OEEShiftUpdate = _Main.MainSQLer.Exec_DTSelect(@"Select * from Shift where ShiftID != '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1 ORDER BY ShiftID");
-                                    foreach (DataRow dr1 in OEEShiftUpdate.Rows)
+                                    foreach(DataRow dr1 in OEEShiftUpdate.Rows)
                                     {
                                         OEEShift[Convert.ToInt32(dr1["ShiftID"]) - 1] = dr1["NextShiftDT"].ToString();
                                     }
@@ -232,29 +226,29 @@ namespace PentagonHMI
                             }
                         }
 
-                        if (!skip)
+                        if(!skip)
                         {
                             DataTable OEEShiftMachine = _Main.MainSQLer.Exec_DTSelect(@"Select * from Shift where ShiftID != '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1 ORDER BY ShiftID");
 
-                            if (OEEShiftMachine != null)
+                            if(OEEShiftMachine != null)
                             {
-                                foreach (DataRow dr in OEEShiftMachine.Rows)
+                                foreach(DataRow dr in OEEShiftMachine.Rows)
                                 {
                                     string ShiftID = dr["ShiftID"].ToString();
-                                    if (string.IsNullOrEmpty(OEEShift[Convert.ToInt32(ShiftID) - 1]))
+                                    if(string.IsNullOrEmpty(OEEShift[Convert.ToInt32(ShiftID) - 1]))
                                     {
                                         OEEShift[Convert.ToInt32(ShiftID) - 1] = dr["NextShiftDT"].ToString();
                                     }
                                     else
                                     {
                                         // If next shift date changes
-                                        if (OEEShift[Convert.ToInt32(ShiftID) - 1] != dr["NextShiftDT"].ToString())
+                                        if(OEEShift[Convert.ToInt32(ShiftID) - 1] != dr["NextShiftDT"].ToString())
                                         {
                                             // If next shift date is bigger than previous date
-                                            if (Convert.ToDateTime(dr["NextShiftDT"]) > Convert.ToDateTime(OEEShift[Convert.ToInt32(ShiftID) - 1]))
+                                            if(Convert.ToDateTime(dr["NextShiftDT"]) > Convert.ToDateTime(OEEShift[Convert.ToInt32(ShiftID) - 1]))
                                             {
                                                 LogOEE(ShiftID);
-                                                if (!OPC.Write(bool_HMIOEEReset, true))
+                                                if(!OPC.Write(bool_HMIOEEReset, true))
                                                     Utilities.FileLogger.logError("OEE reset failed", "Write to PLC reset failed");
                                                 OEEShift[Convert.ToInt32(ShiftID) - 1] = dr["NextShiftDT"].ToString();
                                             }
@@ -264,7 +258,7 @@ namespace PentagonHMI
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
@@ -275,26 +269,26 @@ namespace PentagonHMI
                     {
                         DataTable OEEShift = _Main.SQLer.Exec_DTSelect(@"Select * from Shift where ShiftID != '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1 ORDER BY ShiftID");
                         string ShiftID = "";
-                        foreach (DataRow dr in OEEShift.Rows)
+                        foreach(DataRow dr in OEEShift.Rows)
                         {
-                            if (DateTime.Now > Convert.ToDateTime(dr["NextShiftDT"]))
+                            if(DateTime.Now > Convert.ToDateTime(dr["NextShiftDT"]))
                             {
                                 ShiftID = dr["ShiftID"].ToString();
                                 break;
                             }
                         }
 
-                        if (!string.IsNullOrEmpty(ShiftID))
+                        if(!string.IsNullOrEmpty(ShiftID))
                         {
                             LogOEE(ShiftID);
 
-                            if (GlobalFunctions.ProjectType == ProjectType.DIMM)
+                            if(GlobalFunctions.ProjectType == ProjectType.DIMM)
                             {
                                 logShuttleBarcode();
                                 logRobotGripper();
                             }
 
-                            if (GlobalFunctions.ProjectType == ProjectType.TLA && GlobalFunctions.StationType == StationType.ARCADIA_Main)
+                            if(GlobalFunctions.ProjectType == ProjectType.TLA && GlobalFunctions.StationType == StationType.ARCADIA_Main)
                             {
                                 _Main.CSSDController.WriteTag(new Logix.Tag
                                 {
@@ -321,7 +315,7 @@ namespace PentagonHMI
                                 _Main.OPC.Write("CenVis_OEE_Tags.bool_OEE_Reset", true);
                             }
 
-                            if (!_Main.OPC.Write(bool_HMIOEEReset, true))
+                            if(!_Main.OPC.Write(bool_HMIOEEReset, true))
                             {
                                 Utilities.FileLogger.logError("OEE reset failed", "Write to PLC reset failed");
                             }
@@ -329,32 +323,32 @@ namespace PentagonHMI
                             {
                                 OEEShift = DBCall.Shift_Select(ShiftID, Classes.GlobalFunctions.StationName.ToString(), ref ErrMsg);
 
-                                if (ErrMsg == "")
+                                if(ErrMsg == "")
                                 {
                                     DateTime ShiftDateTime = DateTime.Now;
                                     // Should be one row only
-                                    foreach (DataRow DR in OEEShift.Rows)
+                                    foreach(DataRow DR in OEEShift.Rows)
                                     {
                                         ShiftDateTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " " + Convert.ToDateTime(DR["ShiftTime"]).ToShortTimeString());
 
                                         // if time is earlier than current time, set as tomorrow
-                                        if (DateTime.Now > ShiftDateTime)
+                                        if(DateTime.Now > ShiftDateTime)
                                             ShiftDateTime = ShiftDateTime.AddDays(1);
                                     }
 
-                                    if (ShiftDateTime != null)
+                                    if(ShiftDateTime != null)
                                         DBCall.Shift_Reset(ShiftID, Classes.GlobalFunctions.StationName.ToString(), ShiftDateTime.ToString("yyyy/MM/dd HH:mm:ss"), "User", ref ErrMsg);
                                 }
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 //Utilities.FileLogger.logError(ex.Message, "Read OEE Info Failed Major");
                 FileLogger.logError(ex.Message, ex.ToString());
@@ -366,17 +360,18 @@ namespace PentagonHMI
             try
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"OEE";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"OEE_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                        using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("DateTime");
                                 csv.WriteField("ShiftID");
@@ -483,7 +478,7 @@ namespace PentagonHMI
 
                             //string LineOfUPH = _Main.SQLer.Exec_Scalar<string>($@"DECLARE @RESULT VARCHAR(500)
                             //SET @RESULT = ''
-                            //SELECT @RESULT = @RESULT + CAST([UPH] AS NVARCHAR) + ';' 
+                            //SELECT @RESULT = @RESULT + CAST([UPH] AS NVARCHAR) + ';'
                             //FROM [UPH]
                             //WHERE [UPDATED_ON] > '{ShiftStartTime}' ORDER BY  [DAY], [MONTH], [YEAR], [HRS]
                             //SELECT @RESULT");
@@ -504,101 +499,102 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "OEELog");
             }
         }
 
         #region LotSummary
-        string LotID = "Lot_Info.HMI_LotID";
-        string DutInfo = "RecipeParams.DUTid";
-        string BatteryType = "Lot_Info.HMI_BatteryType";
-        string FirmwareVer = "RecipeParams.FirmwareVersion";
-        string ManufactureDate = "Lot_Info.HMI_ManufactureDate";
-        string ExpirationDate = "Lot_Info.HMI_Expiration_Date";
-        string OperatorID = "Lot_Info.HMI_OperatorID";
-        string StartDateTime = "Lot_OEE_Tags.str_HMI_OEEStartDateTime";
-        string SystemUpTime = "Lot_OEE_Tags.dint_MachineUpTimeAccSec";
-        string OperationTime = "Lot_OEE_Tags.dint_MachineProductiveTimeAccSec";
-        string DownTime = "Lot_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec";
-        string IdleTime = "Lot_OEE_Tags.dint_MachineStandbyTimeAccSe";
-        string MaintenanceTime = "Lot_OEE_Tags.dint_MachineScheduledDownTimeAccSec";
-        string LotSize = "Lot_Info.HMI_Lot_Quantity";
-        string TotalQtyIn = "Lot_OEE_Tags.dint_TotalQuantityIn";
-        string TotalQtyOut = "Lot_OEE_Tags.dint_TotalProductiveUnit";
-        string OverallTotalPassed = "Lot_OEE_Tags.dint_Total_Pass";
-        string OverallTotalFailed = "Lot_OEE_Tags.dint_Total_Fail";
-        string TotalBarcodePass = "Lot_Summary.dint_Total_Barcode_Pass";
-        string TotalBarcodeFail = "Lot_Summary.dint_Total_Barcode_Fail";
-        string TotalMarked = "Lot_Summary.dint_Total_Laser_Pass";
-        string TotalMarkedFail = "Lot_Summary.dint_Total_Laser_Fail";
-        string TotalCorrectOrientation = "Lot_Summary.dint_Total_Correct_Orientation";
-        string TotalWrongOrientation = "Lot_Summary.dint_Total_Wrong_Orientation";
-        string TotalEmptyPocket = "Lot_Summary.dint_Total_Empty_Pocket";
-        string TotalInputRobotPickFail = "Lot_Summary.dint_Total_Pick_Fail";
-        string TotalInputRobotPickDrop = "Lot_Summary.dint_Total_Pick_Drop";
-        string ProductionUPH = Tags.MainPage.dint_ProductionUPH.Name;
-        string SprintUPH = Tags.MainPage.dint_SprintUPH.Name;
-        string SoftJam = "Lot_OEE_Tags.dint_SoftJam";
-        string HardJam = "Lot_OEE_Tags.dint_HardJam";
-        string MTBA = "Lot_OEE_Tags.dint_MTBASec";
-        string MTBF = "Lot_OEE_Tags.dint_MTBFSec";
-        string OverallTotalYield = "Lot_OEE_Tags.dint_Quality";
-        string TOPMEnabledLotStart = "Lot_Summary.dint_TOPM_Enabled_Star";
-        string TOPMEnabledLotEnd = "Lot_Summary.dint_TOPM_Enabled_End";
-        string TOPM1P = "Lot_Summary.dint_TOPM1_Pass";
-        string TOPM2P = "Lot_Summary.dint_TOPM2_Pass";
-        string TOPM3P = "Lot_Summary.dint_TOPM3_Pass";
-        string TOPM4P = "Lot_Summary.dint_TOPM4_Pass";
-        string TOPM5P = "Lot_Summary.dint_TOPM5_Pass";
-        string TOPM6P = "Lot_Summary.dint_TOPM6_Pass";
-        string TOPM1F = "Lot_Summary.dint_TOPM1_Fail";
-        string TOPM2F = "Lot_Summary.dint_TOPM2_Fail";
-        string TOPM3F = "Lot_Summary.dint_TOPM3_Fail";
-        string TOPM4F = "Lot_Summary.dint_TOPM4_Fail";
-        string TOPM5F = "Lot_Summary.dint_TOPM5_Fail";
-        string TOPM6F = "Lot_Summary.dint_TOPM6_Fail";
-        string TwoDBC1P = "Lot_Summary.dint_2DBC1_Pass";
-        string TwoDBC2P = "Lot_Summary.dint_2DBC2_Pass";
-        string TwoDBC3P = "Lot_Summary.dint_2DBC3_Pass";
-        string TwoDBC4P = "Lot_Summary.dint_2DBC4_Pass";
-        string TwoDBC5P = "Lot_Summary.dint_2DBC5_Pass";
-        string TwoDBC6P = "Lot_Summary.dint_2DBC6_Pass";
-        string TwoDBC1F = "Lot_Summary.dint_2DBC1_Fail";
-        string TwoDBC2F = "Lot_Summary.dint_2DBC2_Fail";
-        string TwoDBC3F = "Lot_Summary.dint_2DBC3_Fail";
-        string TwoDBC4F = "Lot_Summary.dint_2DBC4_Fail";
-        string TwoDBC5F = "Lot_Summary.dint_2DBC5_Fail";
-        string TwoDBC6F = "Lot_Summary.dint_2DBC6_Fail";
-        string TnR1OutputReelQty = "ISL0_TnR1_TotalOutputQty";
-        string TnR1LeaderQty = "ISL0_TnR1_QtyInLeader";
-        string TnR1TrailerQty = "ISL0_TnR1_QtyInTrailer";
-        string TnR2OutputReelQty = "ISL0_TnR2_TotalOutputQty";
-        string TnR2LeaderQty = "ISL0_TnR2_QtyInLeader";
-        string TnR2TrailerQty = "ISL0_TnR2_QtyInTrailer";
 
+        private string LotID = "Lot_Info.HMI_LotID";
+        private string DutInfo = "RecipeParams.DUTid";
+        private string BatteryType = "Lot_Info.HMI_BatteryType";
+        private string FirmwareVer = "RecipeParams.FirmwareVersion";
+        private string ManufactureDate = "Lot_Info.HMI_ManufactureDate";
+        private string ExpirationDate = "Lot_Info.HMI_Expiration_Date";
+        private string OperatorID = "Lot_Info.HMI_OperatorID";
+        private string StartDateTime = "Lot_OEE_Tags.str_HMI_OEEStartDateTime";
+        private string SystemUpTime = "Lot_OEE_Tags.dint_MachineUpTimeAccSec";
+        private string OperationTime = "Lot_OEE_Tags.dint_MachineProductiveTimeAccSec";
+        private string DownTime = "Lot_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec";
+        private string IdleTime = "Lot_OEE_Tags.dint_MachineStandbyTimeAccSe";
+        private string MaintenanceTime = "Lot_OEE_Tags.dint_MachineScheduledDownTimeAccSec";
+        private string LotSize = "Lot_Info.HMI_Lot_Quantity";
+        private string TotalQtyIn = "Lot_OEE_Tags.dint_TotalQuantityIn";
+        private string TotalQtyOut = "Lot_OEE_Tags.dint_TotalProductiveUnit";
+        private string OverallTotalPassed = "Lot_OEE_Tags.dint_Total_Pass";
+        private string OverallTotalFailed = "Lot_OEE_Tags.dint_Total_Fail";
+        private string TotalBarcodePass = "Lot_Summary.dint_Total_Barcode_Pass";
+        private string TotalBarcodeFail = "Lot_Summary.dint_Total_Barcode_Fail";
+        private string TotalMarked = "Lot_Summary.dint_Total_Laser_Pass";
+        private string TotalMarkedFail = "Lot_Summary.dint_Total_Laser_Fail";
+        private string TotalCorrectOrientation = "Lot_Summary.dint_Total_Correct_Orientation";
+        private string TotalWrongOrientation = "Lot_Summary.dint_Total_Wrong_Orientation";
+        private string TotalEmptyPocket = "Lot_Summary.dint_Total_Empty_Pocket";
+        private string TotalInputRobotPickFail = "Lot_Summary.dint_Total_Pick_Fail";
+        private string TotalInputRobotPickDrop = "Lot_Summary.dint_Total_Pick_Drop";
+        private string ProductionUPH = Tags.MainPage.dint_ProductionUPH.Name;
+        private string SprintUPH = Tags.MainPage.dint_SprintUPH.Name;
+        private string SoftJam = "Lot_OEE_Tags.dint_SoftJam";
+        private string HardJam = "Lot_OEE_Tags.dint_HardJam";
+        private string MTBA = "Lot_OEE_Tags.dint_MTBASec";
+        private string MTBF = "Lot_OEE_Tags.dint_MTBFSec";
+        private string OverallTotalYield = "Lot_OEE_Tags.dint_Quality";
+        private string TOPMEnabledLotStart = "Lot_Summary.dint_TOPM_Enabled_Star";
+        private string TOPMEnabledLotEnd = "Lot_Summary.dint_TOPM_Enabled_End";
+        private string TOPM1P = "Lot_Summary.dint_TOPM1_Pass";
+        private string TOPM2P = "Lot_Summary.dint_TOPM2_Pass";
+        private string TOPM3P = "Lot_Summary.dint_TOPM3_Pass";
+        private string TOPM4P = "Lot_Summary.dint_TOPM4_Pass";
+        private string TOPM5P = "Lot_Summary.dint_TOPM5_Pass";
+        private string TOPM6P = "Lot_Summary.dint_TOPM6_Pass";
+        private string TOPM1F = "Lot_Summary.dint_TOPM1_Fail";
+        private string TOPM2F = "Lot_Summary.dint_TOPM2_Fail";
+        private string TOPM3F = "Lot_Summary.dint_TOPM3_Fail";
+        private string TOPM4F = "Lot_Summary.dint_TOPM4_Fail";
+        private string TOPM5F = "Lot_Summary.dint_TOPM5_Fail";
+        private string TOPM6F = "Lot_Summary.dint_TOPM6_Fail";
+        private string TwoDBC1P = "Lot_Summary.dint_2DBC1_Pass";
+        private string TwoDBC2P = "Lot_Summary.dint_2DBC2_Pass";
+        private string TwoDBC3P = "Lot_Summary.dint_2DBC3_Pass";
+        private string TwoDBC4P = "Lot_Summary.dint_2DBC4_Pass";
+        private string TwoDBC5P = "Lot_Summary.dint_2DBC5_Pass";
+        private string TwoDBC6P = "Lot_Summary.dint_2DBC6_Pass";
+        private string TwoDBC1F = "Lot_Summary.dint_2DBC1_Fail";
+        private string TwoDBC2F = "Lot_Summary.dint_2DBC2_Fail";
+        private string TwoDBC3F = "Lot_Summary.dint_2DBC3_Fail";
+        private string TwoDBC4F = "Lot_Summary.dint_2DBC4_Fail";
+        private string TwoDBC5F = "Lot_Summary.dint_2DBC5_Fail";
+        private string TwoDBC6F = "Lot_Summary.dint_2DBC6_Fail";
+        private string TnR1OutputReelQty = "ISL0_TnR1_TotalOutputQty";
+        private string TnR1LeaderQty = "ISL0_TnR1_QtyInLeader";
+        private string TnR1TrailerQty = "ISL0_TnR1_QtyInTrailer";
+        private string TnR2OutputReelQty = "ISL0_TnR2_TotalOutputQty";
+        private string TnR2LeaderQty = "ISL0_TnR2_QtyInLeader";
+        private string TnR2TrailerQty = "ISL0_TnR2_QtyInTrailer";
 
-        #endregion
+        #endregion LotSummary
 
         public void LotSummary()
         {
             try
             {
-                var lotID = OPC.Read<string>(LotID); // 
+                var lotID = OPC.Read<string>(LotID); //
 
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"LotSummary";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"{lotID}_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                        using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("Lot ID");
                                 csv.WriteField("DUT Info");
@@ -742,24 +738,23 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                Utilities.FileLogger.logError(ex.Message, "LotSummary"); 
+                Utilities.FileLogger.logError(ex.Message, "LotSummary");
             }
         }
-
 
         public void LotSummaryCheck()
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_LotSummary") == true)
+                if(OPC.Read<bool>("HMI_Log_LotSummary") == true)
                 {
                     OPC.Write("HMI_Log_LotSummary", false);
                     LotSummary();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("LotSummaryCheck", ex.Message);
             }
@@ -769,26 +764,26 @@ namespace PentagonHMI
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_TestCSV") == true)
+                if(OPC.Read<bool>("HMI_Log_TestCSV") == true)
                 {
                     OPC.Write("HMI_Log_TestCSV", false);
                     TestCSV();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("TestCSVCheck", ex.Message);
             }
 
             try
             {
-                if (OPC.Read<bool>("HMI_Log_TestCSV_NewLog") == true)
+                if(OPC.Read<bool>("HMI_Log_TestCSV_NewLog") == true)
                 {
                     OPC.Write("HMI_Log_TestCSV_NewLog", false);
                     //
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("TestCSVCheck_NewLog", ex.Message);
             }
@@ -798,13 +793,13 @@ namespace PentagonHMI
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_TestStationUnitTracker") == true)
+                if(OPC.Read<bool>("HMI_Log_TestStationUnitTracker") == true)
                 {
                     OPC.Write("HMI_Log_TestStationUnitTracker", false);
                     TesterStnUnitTracker();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("TesterStnUnitTrackerCheck", ex.Message);
             }
@@ -814,13 +809,13 @@ namespace PentagonHMI
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_LaserStationUnitTracker") == true)
+                if(OPC.Read<bool>("HMI_Log_LaserStationUnitTracker") == true)
                 {
                     OPC.Write("HMI_Log_LaserStationUnitTracker", false);
                     LaserStnUnitTracker();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("LaserStnUnitTrackerCheck", ex.Message);
             }
@@ -830,13 +825,13 @@ namespace PentagonHMI
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_UldStationUnitTracker") == true)
+                if(OPC.Read<bool>("HMI_Log_UldStationUnitTracker") == true)
                 {
                     OPC.Write("HMI_Log_UldStationUnitTracker", false);
                     UnldStnUnitTracker();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("UnldStnUnitTrackerCheck", ex.Message);
             }
@@ -846,94 +841,96 @@ namespace PentagonHMI
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_TnRStationUnitTracker") == true)
+                if(OPC.Read<bool>("HMI_Log_TnRStationUnitTracker") == true)
                 {
                     OPC.Write("HMI_Log_TnRStationUnitTracker", false);
                     TnRStnUnitTracker();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("HMI_Log_TnRStationUnitTracker", ex.Message);
             }
         }
 
         #region Test CSV
-        string PartNumber = "HMI_LogTestCSV[1].PartNumber";
-        string Lot = "Lot_Info.HMI_LotID";
-        string TXSN = "HMI_LogTestCSV[1].TxID";
-        string Result = "HMI_LogTestCSV[1].TFT_TEST.sPass";
-        string RejectCode = "HMI_LogTestCSV[1].RejectCode";
-        string RejectDesc = "HMI_LogTestCSV[1].RejectDesc";
-        string TimestampsTFT = "HMI_LogTestCSV[1].EnterStationTime";
-        string TFTPos = "HMI_LogTestCSV[1].TFT_POS";
-        string TFTBatteryType = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.oBatteryTypeLim ";
-        string TestBatteryViDynamic = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iDynamic";
-        string TestBatteryViDynamicHL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iDynamicHL";
-        string TestBatteryViDynamicLL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iDynamicLL";
-        string TestBatteryViPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.2";
-        string TestBatteryViStatic = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iStatic";
-        string TestBatteryViStaticHL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iStaticHL";
-        string TestBatteryViStaticLL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iStaticLL";
-        string TestBatteryViTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[2]";
-        string TestBatteryVoBatteryTypeLim = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.oBatteryTypeLim ";
-        string TestiCmdCount = "HMI_LogTestCSV[1].TFT_TEST.iCmdCount";
-        string TestiTTime = "HMI_LogTestCSV[1].TFT_TEST.iTTime";
-        string TestNFCiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.0";
-        string TestNFCiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[0]";
-        string TestNVMiBatteryType = "HMI_LogTestCSV[1].TFT_TEST.NVM.iBatteryType";
-        string TestNVMiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.5";
-        string TestNVMiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[5]";
-        string TestNVMiTOM1 = "HMI_LogTestCSV[1].TFT_TEST.NVM.iTOM1";
-        string TestRadioiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.4";
-        string TestRadioiRSSIHL = "HMI_LogTestCSV[1].TFT_TEST.Radio.iRSSIHL";
-        string TestRadioiRSSILL = "HMI_LogTestCSV[1].TFT_TEST.Radio.iRSSILL";
-        string TestRadioiRXRSSI = "HMI_LogTestCSV[1].TFT_TEST.Radio.iRXRSSI";
-        string RxRSSI = "HMI_LogTestCSV[1].RxRSSI_32767";
-        string TestRadioiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[4]";
-        string TestRadioiTXRSSI = "HMI_LogTestCSV[1].TFT_TEST.Radio.iTXRSSI";
-        string TestsPass = "HMI_LogTestCSV[1].TFT_TEST.sPass";
-        string TFTTestsStatus = "HMI_LogTestCSV[1].TFT_TEST.sStatus";
-        string TestsStorageiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.7";
-        string TestsStorageiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[7]";
-        string TestTempiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.1";
-        string TestTempiTemp = "HMI_LogTestCSV[1].TFT_TEST.Temp.iTemp";
-        string TestTempiTempHL = "HMI_LogTestCSV[1].TFT_TEST.Temp.iTempHL";
-        string TestTempiTempLL = "HMI_LogTestCSV[1].TFT_TEST.Temp.iTempLL";
-        string TestTempiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[1]";
-        string TestTOMiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.3";
-        string TestTOMiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[3]";
-        string TestTUARTiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.6";
-        string TestTUARTiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[6]";
-        string TestiSbRioSN = "HMI_LogTestCSV[1].TFT_TEST.iSbRioSN";
-        string TestiStationSoftware = "HMI_LogTestCSV[1].TFT_TEST.iStationSoftware";
-        string TestiNFCiFWVersion = "HMI_LogTestCSV[1].TFT_TEST.NFC.iFWVersion";
-        string TestiNFCiTXSN = "HMI_LogTestCSV[1].TFT_TEST.NFC.iTXSN";
-        string TestiNFCoFWVersionLim = "HMI_LogTestCSV[1].TFT_TEST.NFC.iFWVersionLim";
-        string TestoDUTId = "HMI_LogTestCSV[1].TFT_TEST.oDUTId";
-        string TestsStatus = "HMI_LogTestCSV[1].TFT_TEST.sStatus";
-        string TestTempiStatus = "HMI_LogTestCSV[1].TFT_TEST.Temp.iStatus";
-        string TestTempiStatusLim = "HMI_LogTestCSV[1].TFT_TEST.Temp.iStatusLim";
-        string IRxRSSI = "HMI_LogTestStn[1].TFT_TEST.Radio.iRXRSSI";
-        #endregion
+
+        private string PartNumber = "HMI_LogTestCSV[1].PartNumber";
+        private string Lot = "Lot_Info.HMI_LotID";
+        private string TXSN = "HMI_LogTestCSV[1].TxID";
+        private string Result = "HMI_LogTestCSV[1].TFT_TEST.sPass";
+        private string RejectCode = "HMI_LogTestCSV[1].RejectCode";
+        private string RejectDesc = "HMI_LogTestCSV[1].RejectDesc";
+        private string TimestampsTFT = "HMI_LogTestCSV[1].EnterStationTime";
+        private string TFTPos = "HMI_LogTestCSV[1].TFT_POS";
+        private string TFTBatteryType = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.oBatteryTypeLim ";
+        private string TestBatteryViDynamic = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iDynamic";
+        private string TestBatteryViDynamicHL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iDynamicHL";
+        private string TestBatteryViDynamicLL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iDynamicLL";
+        private string TestBatteryViPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.2";
+        private string TestBatteryViStatic = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iStatic";
+        private string TestBatteryViStaticHL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iStaticHL";
+        private string TestBatteryViStaticLL = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.iStaticLL";
+        private string TestBatteryViTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[2]";
+        private string TestBatteryVoBatteryTypeLim = "HMI_LogTestCSV[1].TFT_TEST.BatteryV.oBatteryTypeLim ";
+        private string TestiCmdCount = "HMI_LogTestCSV[1].TFT_TEST.iCmdCount";
+        private string TestiTTime = "HMI_LogTestCSV[1].TFT_TEST.iTTime";
+        private string TestNFCiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.0";
+        private string TestNFCiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[0]";
+        private string TestNVMiBatteryType = "HMI_LogTestCSV[1].TFT_TEST.NVM.iBatteryType";
+        private string TestNVMiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.5";
+        private string TestNVMiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[5]";
+        private string TestNVMiTOM1 = "HMI_LogTestCSV[1].TFT_TEST.NVM.iTOM1";
+        private string TestRadioiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.4";
+        private string TestRadioiRSSIHL = "HMI_LogTestCSV[1].TFT_TEST.Radio.iRSSIHL";
+        private string TestRadioiRSSILL = "HMI_LogTestCSV[1].TFT_TEST.Radio.iRSSILL";
+        private string TestRadioiRXRSSI = "HMI_LogTestCSV[1].TFT_TEST.Radio.iRXRSSI";
+        private string RxRSSI = "HMI_LogTestCSV[1].RxRSSI_32767";
+        private string TestRadioiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[4]";
+        private string TestRadioiTXRSSI = "HMI_LogTestCSV[1].TFT_TEST.Radio.iTXRSSI";
+        private string TestsPass = "HMI_LogTestCSV[1].TFT_TEST.sPass";
+        private string TFTTestsStatus = "HMI_LogTestCSV[1].TFT_TEST.sStatus";
+        private string TestsStorageiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.7";
+        private string TestsStorageiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[7]";
+        private string TestTempiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.1";
+        private string TestTempiTemp = "HMI_LogTestCSV[1].TFT_TEST.Temp.iTemp";
+        private string TestTempiTempHL = "HMI_LogTestCSV[1].TFT_TEST.Temp.iTempHL";
+        private string TestTempiTempLL = "HMI_LogTestCSV[1].TFT_TEST.Temp.iTempLL";
+        private string TestTempiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[1]";
+        private string TestTOMiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.3";
+        private string TestTOMiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[3]";
+        private string TestTUARTiPass = "HMI_LogTestCSV[1].TFT_TEST.iPassArray.6";
+        private string TestTUARTiTime = "HMI_LogTestCSV[1].TFT_TEST.iTimeArray[6]";
+        private string TestiSbRioSN = "HMI_LogTestCSV[1].TFT_TEST.iSbRioSN";
+        private string TestiStationSoftware = "HMI_LogTestCSV[1].TFT_TEST.iStationSoftware";
+        private string TestiNFCiFWVersion = "HMI_LogTestCSV[1].TFT_TEST.NFC.iFWVersion";
+        private string TestiNFCiTXSN = "HMI_LogTestCSV[1].TFT_TEST.NFC.iTXSN";
+        private string TestiNFCoFWVersionLim = "HMI_LogTestCSV[1].TFT_TEST.NFC.iFWVersionLim";
+        private string TestoDUTId = "HMI_LogTestCSV[1].TFT_TEST.oDUTId";
+        private string TestsStatus = "HMI_LogTestCSV[1].TFT_TEST.sStatus";
+        private string TestTempiStatus = "HMI_LogTestCSV[1].TFT_TEST.Temp.iStatus";
+        private string TestTempiStatusLim = "HMI_LogTestCSV[1].TFT_TEST.Temp.iStatusLim";
+        private string IRxRSSI = "HMI_LogTestStn[1].TFT_TEST.Radio.iRXRSSI";
+
+        #endregion Test CSV
 
         public void TestCSV()
         {
-
             try
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"TestCSV";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"TestCSV_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
+                        using(var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("PartNumber");
                                 csv.WriteField("Lot");
@@ -1060,7 +1057,7 @@ namespace PentagonHMI
 
                             var iRxRSSI = OPC.Read<int[]>(IRxRSSI, typeof(int), 6);
 
-                            for (int i = 0; i < 6; i++)
+                            for(int i = 0; i < 6; i++)
                             {
                                 string partNumberdb = _Main.SQLer.Exec_Scalar<string>("SELECT [Info] FROM dbo.Config WHERE Item = 'PartNumber'");
                                 csv.WriteField(partNumberdb); //
@@ -1068,7 +1065,7 @@ namespace PentagonHMI
                                 csv.WriteField(partNumber[i]); //
                                 csv.WriteField(OPC.Read<string>(Lot));
 
-                                if (testsPass[i] == true) // 
+                                if(testsPass[i] == true) //
                                 {
                                     csv.WriteField(txSN[i]);
                                 }
@@ -1083,7 +1080,6 @@ namespace PentagonHMI
 
                                 string tOPMEQ = _Main.SQLer.Exec_Scalar<string>(" SELECT [TOPMEQ] FROM [dbo.Config]");
                                 csv.WriteField(tOPMEQ); //
-
 
                                 csv.WriteField(timestampsTFT[i]); // topm
                                 csv.WriteField(dateTime); // traypick
@@ -1111,7 +1107,7 @@ namespace PentagonHMI
                                 csv.WriteField(testRadioiRSSILL[i]);
                                 csv.WriteField(testRadioiRXRSSI[i]);
                                 //csv.WriteField(iRxRSSI[i] == 32767 ? "1" : "0", rxRSSI[i]);
-                                if (iRxRSSI[i] == 32767)
+                                if(iRxRSSI[i] == 32767)
                                 {
                                     csv.WriteField(rxRSSI[i] ? "1" : "0");
                                 }
@@ -1147,42 +1143,45 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "TestCSV");
             }
         }
 
         #region TesterStn
-        string LotTester = "Lot_Info.HMI_LotID";
-        string PartNumberTester = "HM_LogTestUnitTracker[1].TFT_Test.oDUTId";
-        string RecipeNameTester = "HM_LogTestUnitTracker[1].RecipeName";
-        string TXSNTester = "HM_LogTestUnitTracker[1].TFT_Test.NFC.iTXSN";
-        string TestPositionTester = "HM_LogTestUnitTracker[1].TestPosition";
-        string OverallResultTester = "HM_LogTestUnitTracker[1].TFT_Test.sPass";
-        string PrRecValCreatedDateTester = "HM_LogTestUnitTracker[1].TimeRecorded";
-        string RejectCodeTester = "HM_LogTestUnitTracker.RejectCode";
-        string RejectDescTester = "HM_LogTestUnitTracker.RejectDesc";
-        string ProcessIDTester = "51";
-        string DummyTXSNTester = "HM_LogTestUnitTracker[1].Virtual_ID";
-        #endregion
+
+        private string LotTester = "Lot_Info.HMI_LotID";
+        private string PartNumberTester = "HM_LogTestUnitTracker[1].TFT_Test.oDUTId";
+        private string RecipeNameTester = "HM_LogTestUnitTracker[1].RecipeName";
+        private string TXSNTester = "HM_LogTestUnitTracker[1].TFT_Test.NFC.iTXSN";
+        private string TestPositionTester = "HM_LogTestUnitTracker[1].TestPosition";
+        private string OverallResultTester = "HM_LogTestUnitTracker[1].TFT_Test.sPass";
+        private string PrRecValCreatedDateTester = "HM_LogTestUnitTracker[1].TimeRecorded";
+        private string RejectCodeTester = "HM_LogTestUnitTracker.RejectCode";
+        private string RejectDescTester = "HM_LogTestUnitTracker.RejectDesc";
+        private string ProcessIDTester = "51";
+        private string DummyTXSNTester = "HM_LogTestUnitTracker[1].Virtual_ID";
+
+        #endregion TesterStn
 
         public void TesterStnUnitTracker()
         {
             try
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"TesterStnUnitTracker";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"TesterStnUnitTracker_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
+                        using(var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("Site");
                                 csv.WriteField("EQNumber");
@@ -1205,7 +1204,6 @@ namespace PentagonHMI
                                 csv.WriteField("ProcessID");
                                 csv.WriteField("Dummy TXSN");
 
-
                                 csv.NextRecord();
                             }
 
@@ -1219,7 +1217,7 @@ namespace PentagonHMI
                             var prRecValCreatedDateTester = OPC.Read<string[]>(PrRecValCreatedDateTester, typeof(string), 6);
                             var dummyTXSNTester = OPC.Read<string[]>(DummyTXSNTester, typeof(string), 6);
 
-                            for (int i = 0; i < 6; i++)
+                            for(int i = 0; i < 6; i++)
                             {
                                 string SiteTestStn = _Main.SQLer.Exec_Scalar<string>("SELECT [Info] FROM dbo.Config WHERE Item = 'Site'");
                                 csv.WriteField(SiteTestStn);
@@ -1251,48 +1249,50 @@ namespace PentagonHMI
 
                                 csv.NextRecord();
                             }
-
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "TesterStnUnitTracker");
             }
         }
 
         #region UnldStn
-        string LotUld = "Lot_Info.HMI_LotID";
-        string PartNumberUld = "HMI_LogUldStnUnitTracker[1].oDUTId";
-        string RecipeNameUld = "HMI_LogUldStnUnitTracker[1].RecipeName";
-        string TxCreateDateUld = "HMI_LogUldStnUnitTracker[1].LaserDoneTime";
-        string TXSNUld = "HMI_LogUldStnUnitTracker[1].TxID";
-        string TestPositionUld = "HMI_LogUldStnUnitTracker[1].TestPosition";
-        string OverallResultUld = "HMI_LogUldStnUnitTracker[1].Result";
-        string PrRecValCreatedDateUld = "HMI_LogUldStnUnitTracker[1].RecordedTime";
-        string CompletedDateUld = "HMI_LogUldStnUnitTracker[1].LaserDoneTime";
-        string RejectCodeUld = "HMI_LogUldStnUnitTracker[1].RejectCode";
-        string RejectDescUld = "HMI_LogUldStnUnitTracker[1].RejectDesc";
-        string ProcessIDUld = "52";
-        string DummyTXSNUld = "HMI_LogUldStnUnitTracker[1].Virtual_ID";
-        #endregion
+
+        private string LotUld = "Lot_Info.HMI_LotID";
+        private string PartNumberUld = "HMI_LogUldStnUnitTracker[1].oDUTId";
+        private string RecipeNameUld = "HMI_LogUldStnUnitTracker[1].RecipeName";
+        private string TxCreateDateUld = "HMI_LogUldStnUnitTracker[1].LaserDoneTime";
+        private string TXSNUld = "HMI_LogUldStnUnitTracker[1].TxID";
+        private string TestPositionUld = "HMI_LogUldStnUnitTracker[1].TestPosition";
+        private string OverallResultUld = "HMI_LogUldStnUnitTracker[1].Result";
+        private string PrRecValCreatedDateUld = "HMI_LogUldStnUnitTracker[1].RecordedTime";
+        private string CompletedDateUld = "HMI_LogUldStnUnitTracker[1].LaserDoneTime";
+        private string RejectCodeUld = "HMI_LogUldStnUnitTracker[1].RejectCode";
+        private string RejectDescUld = "HMI_LogUldStnUnitTracker[1].RejectDesc";
+        private string ProcessIDUld = "52";
+        private string DummyTXSNUld = "HMI_LogUldStnUnitTracker[1].Virtual_ID";
+
+        #endregion UnldStn
 
         public void UnldStnUnitTracker()
         {
             try
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"UnldStnUnitTracker";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"UnldStnUnitTracker_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path, HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using(FileStream stream = new FileStream(_Path, HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
+                        using(var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("Site");
                                 csv.WriteField("EQNumber");
@@ -1337,7 +1337,7 @@ namespace PentagonHMI
                             var processIDUld = OPC.Read<string[]>(ProcessIDUld, typeof(string), 6);
                             var dummyTXSNUld = OPC.Read<string[]>(DummyTXSNUld, typeof(string), 6);
 
-                            for (int i = 0; i < 6; i++)
+                            for(int i = 0; i < 6; i++)
                             {
                                 string SiteTestStn = _Main.SQLer.Exec_Scalar<string>("SELECT [Info] FROM dbo.Config WHERE Item = 'Site'");
                                 csv.WriteField(SiteTestStn);
@@ -1375,44 +1375,47 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "UnldStnUnitTracker");
             }
         }
 
         #region TnRStn
-        string LotTnR = "Lot_Info.HMI_LotID";
-        string PartNumberTnR = "HMI_LogTnRStnUnitTracker[1].oDUTId";
-        string RecipeNameTnR = "HMI_LogTnRStnUnitTracker[1].RecipeName";
-        string TxCreateDateTnR = "HMI_LogTnRStnUnitTracker[1].LaserDoneTime";
-        string TXSNTnR = "HMI_LogTnRStnUnitTracker[1].TxID";
-        string TestPositionTnR = "HMI_LogTnRStnUnitTracker[1].TestPosition";
-        string OverallResultTnR = "HMI_LogTnRStnUnitTracker[1].Result";
-        string PrRecValCreatedDateTnR = "HMI_LogTnRStnUnitTracker[1].RecordedTime";
-        string CompletedDateTnR = "HMI_LogTnRStnUnitTracker[1].LaserDoneTime";
-        string RejectCodeTnR = "HMI_LogTnRStnUnitTracker[1].RejectCode";
-        string RejectDescTnR = "HMI_LogTnRStnUnitTracker[1].RejectDesc";
-        string ProcessIDTnR = "52";
-        string DummyTXSNTnR = "HMI_LogTnRStnUnitTracker[1].Virtual_ID";
-        #endregion
+
+        private string LotTnR = "Lot_Info.HMI_LotID";
+        private string PartNumberTnR = "HMI_LogTnRStnUnitTracker[1].oDUTId";
+        private string RecipeNameTnR = "HMI_LogTnRStnUnitTracker[1].RecipeName";
+        private string TxCreateDateTnR = "HMI_LogTnRStnUnitTracker[1].LaserDoneTime";
+        private string TXSNTnR = "HMI_LogTnRStnUnitTracker[1].TxID";
+        private string TestPositionTnR = "HMI_LogTnRStnUnitTracker[1].TestPosition";
+        private string OverallResultTnR = "HMI_LogTnRStnUnitTracker[1].Result";
+        private string PrRecValCreatedDateTnR = "HMI_LogTnRStnUnitTracker[1].RecordedTime";
+        private string CompletedDateTnR = "HMI_LogTnRStnUnitTracker[1].LaserDoneTime";
+        private string RejectCodeTnR = "HMI_LogTnRStnUnitTracker[1].RejectCode";
+        private string RejectDescTnR = "HMI_LogTnRStnUnitTracker[1].RejectDesc";
+        private string ProcessIDTnR = "52";
+        private string DummyTXSNTnR = "HMI_LogTnRStnUnitTracker[1].Virtual_ID";
+
+        #endregion TnRStn
 
         public void TnRStnUnitTracker()
         {
             try
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"TnRStnUnitTracker";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"TnRStnUnitTracker_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
+                        using(var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("Site");
                                 csv.WriteField("EQNumber");
@@ -1457,7 +1460,7 @@ namespace PentagonHMI
                             var processIDTnR = OPC.Read<string[]>(ProcessIDTnR, typeof(string), 6);
                             var dummyTXSNTnR = OPC.Read<string[]>(DummyTXSNTnR, typeof(string), 6);
 
-                            for (int i = 0; i < 6; i++)
+                            for(int i = 0; i < 6; i++)
                             {
                                 string SiteTestStn = _Main.SQLer.Exec_Scalar<string>("SELECT [Info] FROM dbo.Config WHERE Item = 'Site'");
                                 csv.WriteField(SiteTestStn);
@@ -1495,31 +1498,32 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "UnldStnUnitTracker");
             }
         }
 
         #region LaserStn
-        string LotLaser = "Lot_Info.HMI_LotID";
-        string PartNumberLaser = "HMI_LogLaserUnitTracker[1].oDUTId";
-        string RecipeNameLaser = "HMI_LogLaserUnitTracker[1].RecipeName";
-        string TxCreateDateLaser = "HMI_LogLaserUnitTracker[1].LaserDoneTime";
-        string TXSNLaser = "HMI_LogLaserUnitTracker[1].TxID";
-        string TestPositionLaser = "HMI_LogLaserUnitTracker[1].TestPosition";
-        string OverallResultLaser = "HMI_LogLaserUnitTracker[1].Result";
-        string PrRecValCreatedDateLaser = "HMI_LogLaserUnitTracker[1].RecordedTime";
-        string CompletedDateLaser = "HMI_LogLaserUnitTracker[1].LaserDoneTime";
-        string ValueNameLaser = "HMI_LogLaserUnitTracker[1].ValueName";
-        string ValueLaser = "HMI_LogLaserUnitTracker[1].Value";
-        string ValueStringLaser = "";
-        string RejectCodeLaser = "HMI_LogLaserUnitTracker[1].RejectCode";
-        string RejectDescLaser = "HMI_LogLaserUnitTracker[1].RejectDesc";
-        string ProcessIDLaser = "52";
-        string DummyTXSNLaser = "HMI_LogLaserUnitTracker[1].Virtual_ID";
 
-        #endregion
+        private string LotLaser = "Lot_Info.HMI_LotID";
+        private string PartNumberLaser = "HMI_LogLaserUnitTracker[1].oDUTId";
+        private string RecipeNameLaser = "HMI_LogLaserUnitTracker[1].RecipeName";
+        private string TxCreateDateLaser = "HMI_LogLaserUnitTracker[1].LaserDoneTime";
+        private string TXSNLaser = "HMI_LogLaserUnitTracker[1].TxID";
+        private string TestPositionLaser = "HMI_LogLaserUnitTracker[1].TestPosition";
+        private string OverallResultLaser = "HMI_LogLaserUnitTracker[1].Result";
+        private string PrRecValCreatedDateLaser = "HMI_LogLaserUnitTracker[1].RecordedTime";
+        private string CompletedDateLaser = "HMI_LogLaserUnitTracker[1].LaserDoneTime";
+        private string ValueNameLaser = "HMI_LogLaserUnitTracker[1].ValueName";
+        private string ValueLaser = "HMI_LogLaserUnitTracker[1].Value";
+        private string ValueStringLaser = "";
+        private string RejectCodeLaser = "HMI_LogLaserUnitTracker[1].RejectCode";
+        private string RejectDescLaser = "HMI_LogLaserUnitTracker[1].RejectDesc";
+        private string ProcessIDLaser = "52";
+        private string DummyTXSNLaser = "HMI_LogLaserUnitTracker[1].Virtual_ID";
+
+        #endregion LaserStn
 
         public void LaserStnUnitTracker()
         {
@@ -1530,17 +1534,18 @@ namespace PentagonHMI
             try
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"LaserStnUnitTracker";
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"LaserStnUnitTracker_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
+                        using(var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("Site");
                                 csv.WriteField("EQNumber");
@@ -1562,7 +1567,6 @@ namespace PentagonHMI
                                 csv.WriteField("RejectDesc");
                                 csv.WriteField("ProcessID");
                                 csv.WriteField("Dummy TXSN");
-
 
                                 csv.NextRecord();
                             }
@@ -1588,7 +1592,7 @@ namespace PentagonHMI
                             var rejectDescLaser = OPC.Read<string[]>(RejectDescLaser, typeof(string), 6);
                             var dummyTXSNLaser = OPC.Read<string[]>(DummyTXSNLaser, typeof(string), 6);
 
-                            for (int i = 0; i < 6; i++)
+                            for(int i = 0; i < 6; i++)
                             {
                                 string SiteTestStn = _Main.SQLer.Exec_Scalar<string>("SELECT [Info] FROM dbo.Config WHERE Item = 'Site'");
                                 csv.WriteField(SiteTestStn);
@@ -1623,12 +1627,11 @@ namespace PentagonHMI
 
                                 csv.NextRecord();
                             }
-
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "LaserStnUnitTracker");
             }
@@ -1640,53 +1643,53 @@ namespace PentagonHMI
             {
                 shuttleBarcodeDictionary = new Dictionary<string, string>();
 
-                for (int x = 1; x <= 2; x++)
+                for(int x = 1; x <= 2; x++)
                 {
                     try
                     {
-                        for (int y = 1; y <= 2; y++)
+                        for(int y = 1; y <= 2; y++)
                         {
                             try
                             {
-                                for (int z = 0; z < 8; z++)
+                                for(int z = 0; z < 8; z++)
                                 {
                                     try
                                     {
                                         shuttleBarcodeDictionary.Add($"Shuttle {x} Barcode {y} Pass {z + 1}",
                                             $"HMI_Display_Shuttle{x}_Scanner{y}_PASS[{z}]");
                                     }
-                                    catch (Exception exception)
+                                    catch(Exception exception)
                                     {
                                         FileLogger.logError(exception.Message, exception.ToString());
                                     }
                                 }
 
-                                for (int z = 0; z < 8; z++)
+                                for(int z = 0; z < 8; z++)
                                 {
                                     try
                                     {
                                         shuttleBarcodeDictionary.Add($"Shuttle {x} Barcode {y} Fail {z + 1}",
                                             $"HMI_Display_Shuttle{x}_Scanner{y}_FAIL[{z}]");
                                     }
-                                    catch (Exception exception)
+                                    catch(Exception exception)
                                     {
                                         FileLogger.logError(exception.Message, exception.ToString());
                                     }
                                 }
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 FileLogger.logError(exception.Message, exception.ToString());
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1696,20 +1699,21 @@ namespace PentagonHMI
         {
             try
             {
-                if (_Main.OPC.Read<bool>("bool_RackLogSave"))
+                if(_Main.OPC.Read<bool>("bool_RackLogSave"))
                 {
                     string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "Barcode/RackBarcodeLog");
-                    if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                    if(!Directory.Exists(LogsPath))
+                    { Directory.CreateDirectory(LogsPath); }
                     string _Path = Path.Combine(LogsPath, $"RackBarcode_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                     bool HasFile = File.Exists(_Path);
-                    using (FileStream stream = new FileStream(_Path,
+                    using(FileStream stream = new FileStream(_Path,
                        HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                     {
-                        using (var writer = new StreamWriter(stream))
+                        using(var writer = new StreamWriter(stream))
                         {
-                            using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                            using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                             {
-                                if (!HasFile)
+                                if(!HasFile)
                                 {
                                     csv.WriteField("");
                                     csv.WriteField("Rack Left Zone");
@@ -1736,7 +1740,7 @@ namespace PentagonHMI
                     _Main.OPC.Write("bool_RackLogSaveDone", true);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "InputZoneBarcodeLog");
             }
@@ -1746,20 +1750,21 @@ namespace PentagonHMI
         {
             try
             {
-                if (_Main.OPC.Read<bool>("bool_LogSave"))
+                if(_Main.OPC.Read<bool>("bool_LogSave"))
                 {
                     string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "Barcode/InputZoneBarcodeLog");
-                    if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                    if(!Directory.Exists(LogsPath))
+                    { Directory.CreateDirectory(LogsPath); }
                     string _Path = Path.Combine(LogsPath, $"InputZoneBarcode_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                     bool HasFile = File.Exists(_Path);
-                    using (FileStream stream = new FileStream(_Path,
+                    using(FileStream stream = new FileStream(_Path,
                        HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                     {
-                        using (var writer = new StreamWriter(stream))
+                        using(var writer = new StreamWriter(stream))
                         {
-                            using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                            using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                             {
-                                if (!HasFile)
+                                if(!HasFile)
                                 {
                                     csv.WriteField("Date Time");
                                     csv.WriteField("Asset Tag");
@@ -1767,7 +1772,6 @@ namespace PentagonHMI
                                     csv.WriteField("Status");
                                     csv.WriteField("Reason");
                                     csv.NextRecord();
-
                                 }
                                 csv.WriteField(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff"));
                                 csv.WriteField(_Main.OPC.Read<string>("str_AssetTagReceived"));
@@ -1782,14 +1786,13 @@ namespace PentagonHMI
                     _Main.OPC.Write("bool_LogSaveDone", true);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "InputZoneBarcodeLog");
             }
         }
 
-
-        Dictionary<int, string> Dic_TrayRejectCode_Reason = new Dictionary<int, string>
+        private Dictionary<int, string> Dic_TrayRejectCode_Reason = new Dictionary<int, string>
         {
             [1] = "Tray Unable to Enter Rack Slot",
             [2] = "Tray Stuck Inside Rack Slot / Tray Collide With Rack Tray Splitter",
@@ -1801,20 +1804,21 @@ namespace PentagonHMI
         {
             try
             {
-                if (_Main.OPC.Read<bool>("HMI_PLCTrigger_Record_TrayReject"))
+                if(_Main.OPC.Read<bool>("HMI_PLCTrigger_Record_TrayReject"))
                 {
                     string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "TrayRejectReasonLog");
-                    if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                    if(!Directory.Exists(LogsPath))
+                    { Directory.CreateDirectory(LogsPath); }
                     string _Path = Path.Combine(LogsPath, $"TrayRejectReason_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                     bool HasFile = File.Exists(_Path);
-                    using (FileStream stream = new FileStream(_Path,
+                    using(FileStream stream = new FileStream(_Path,
                        HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                     {
-                        using (var writer = new StreamWriter(stream))
+                        using(var writer = new StreamWriter(stream))
                         {
-                            using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                            using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                             {
-                                if (!HasFile)
+                                if(!HasFile)
                                 {
                                     csv.WriteField("Date Time");
                                     csv.WriteField("Barcode");
@@ -1835,19 +1839,18 @@ namespace PentagonHMI
                     _Main.OPC.Write("HMI_PLCTrigger_Record_TrayReject", false);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "InputZoneBarcodeLog");
             }
         }
-
 
         private void logShuttleBarcode()
         {
             try
             {
                 string folderPath = $"{FileLogger.DefaultLocation_Time}{Path.DirectorySeparatorChar}ShuttleBarcode";
-                if (!Directory.Exists(folderPath))
+                if(!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
@@ -1855,22 +1858,22 @@ namespace PentagonHMI
                 string filePath = Path.Combine(folderPath, $"ShuttleBarcode_{DateTime.Now:yyyy-MM-dd}.txt");
                 bool fileExists = File.Exists(filePath);
 
-                using (FileStream fileStream = new FileStream(filePath,
+                using(FileStream fileStream = new FileStream(filePath,
                     FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                using (CsvWriter csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+                using(StreamWriter streamWriter = new StreamWriter(fileStream))
+                using(CsvWriter csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    if (!fileExists)
+                    if(!fileExists)
                     {
                         csvWriter.WriteField("Date Time");
 
-                        foreach (var item in shuttleBarcodeDictionary)
+                        foreach(var item in shuttleBarcodeDictionary)
                         {
                             try
                             {
                                 csvWriter.WriteField(item.Key);
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 csvWriter.WriteField(string.Empty);
                                 FileLogger.logError(exception.Message, exception.ToString());
@@ -1882,13 +1885,13 @@ namespace PentagonHMI
 
                     csvWriter.WriteField(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff"));
 
-                    foreach (var item in shuttleBarcodeDictionary)
+                    foreach(var item in shuttleBarcodeDictionary)
                     {
                         try
                         {
                             csvWriter.WriteField(_Main.OPC.Read<string>(item.Value));
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             csvWriter.WriteField(string.Empty);
                             FileLogger.logError(exception.Message, exception.ToString());
@@ -1898,7 +1901,7 @@ namespace PentagonHMI
                     csvWriter.NextRecord();
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1910,17 +1913,17 @@ namespace PentagonHMI
             {
                 robotGripperDictionary = new Dictionary<string, string>();
 
-                for (int x = 3; x <= 4; x++)
+                for(int x = 3; x <= 4; x++)
                 {
                     try
                     {
-                        for (int y = 1; y <= 2; y++)
+                        for(int y = 1; y <= 2; y++)
                         {
                             try
                             {
                                 int pickTrayNo = x == 3 ? y : y + 2;
 
-                                for (int z = 1; z <= 8; z++)
+                                for(int z = 1; z <= 8; z++)
                                 {
                                     try
                                     {
@@ -1928,13 +1931,13 @@ namespace PentagonHMI
                                             $"Robot {x} Gripper {z} Pick Tray {pickTrayNo} Pass Count",
                                             $"DIMM_Rbt{x}_PickTray{pickTrayNo}_PassCount[{z}]");
                                     }
-                                    catch (Exception exception)
+                                    catch(Exception exception)
                                     {
                                         FileLogger.logError(exception.Message, exception.ToString());
                                     }
                                 }
 
-                                for (int z = 1; z <= 8; z++)
+                                for(int z = 1; z <= 8; z++)
                                 {
                                     try
                                     {
@@ -1942,48 +1945,48 @@ namespace PentagonHMI
                                             $"Robot {x} Gripper {z} Pick Tray {pickTrayNo} Fail Count",
                                             $"DIMM_Rbt{x}_PickTray{pickTrayNo}_FailCount[{z}]");
                                     }
-                                    catch (Exception exception)
+                                    catch(Exception exception)
                                     {
                                         FileLogger.logError(exception.Message, exception.ToString());
                                     }
                                 }
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 FileLogger.logError(exception.Message, exception.ToString());
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
 
-                for (int i = 3; i <= 4; i++)
+                for(int i = 3; i <= 4; i++)
                 {
                     try
                     {
-                        for (int j = 1; j <= 8; j++)
+                        for(int j = 1; j <= 8; j++)
                         {
                             try
                             {
                                 robotGripperDictionary.Add($"Robot {i} Unit Dropped at Gripper {j}",
                                     $"DIMM_Rbt{i}_Unit_Dropped[{j}]");
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 FileLogger.logError(exception.Message, exception.ToString());
                             }
                         }
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -1994,7 +1997,7 @@ namespace PentagonHMI
             try
             {
                 string folderPath = $"{FileLogger.DefaultLocation_Time}{Path.DirectorySeparatorChar}RobotGripper";
-                if (!Directory.Exists(folderPath))
+                if(!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
@@ -2002,22 +2005,22 @@ namespace PentagonHMI
                 string filePath = Path.Combine(folderPath, $"RobotGripper_{DateTime.Now:yyyy-MM-dd}.txt");
                 bool fileExists = File.Exists(filePath);
 
-                using (FileStream fileStream = new FileStream(filePath,
+                using(FileStream fileStream = new FileStream(filePath,
                     FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
-                using (StreamWriter streamWriter = new StreamWriter(fileStream))
-                using (CsvWriter csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+                using(StreamWriter streamWriter = new StreamWriter(fileStream))
+                using(CsvWriter csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
                 {
-                    if (!fileExists)
+                    if(!fileExists)
                     {
                         csvWriter.WriteField("Date Time");
 
-                        foreach (var item in robotGripperDictionary)
+                        foreach(var item in robotGripperDictionary)
                         {
                             try
                             {
                                 csvWriter.WriteField(item.Key);
                             }
-                            catch (Exception exception)
+                            catch(Exception exception)
                             {
                                 csvWriter.WriteField(string.Empty);
                                 FileLogger.logError(exception.Message, exception.ToString());
@@ -2029,13 +2032,13 @@ namespace PentagonHMI
 
                     csvWriter.WriteField(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff"));
 
-                    foreach (var item in robotGripperDictionary)
+                    foreach(var item in robotGripperDictionary)
                     {
                         try
                         {
                             csvWriter.WriteField(_Main.OPC.Read<string>(item.Value));
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             csvWriter.WriteField(string.Empty);
                             FileLogger.logError(exception.Message, exception.ToString());
@@ -2045,7 +2048,7 @@ namespace PentagonHMI
                     csvWriter.NextRecord();
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -2062,19 +2065,20 @@ namespace PentagonHMI
         private string FormatString(Grouping grouping, object Value)
         {
             string strValue = Value?.ToString() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(strValue)) return strValue;
+            if(string.IsNullOrWhiteSpace(strValue))
+                return strValue;
 
-            if (grouping.Equals(Grouping.sec))
+            if(grouping.Equals(Grouping.sec))
             {
                 TimeSpan Ts = TimeSpan.FromSeconds(Convert.ToDouble(strValue));
                 int DayHours = Ts.Days * 24;
                 return string.Format("{0:D2}:{1:D2}:{2:D2}", Ts.Hours + DayHours, Ts.Minutes, Ts.Seconds);
             }
-            else if (grouping.Equals(Grouping.number))
+            else if(grouping.Equals(Grouping.number))
             {
                 return strValue;
             }
-            else if (grouping.Equals(Grouping.stringtime))
+            else if(grouping.Equals(Grouping.stringtime))
             {
                 return string.IsNullOrWhiteSpace(strValue) ? "" : new DateTime(Convert.ToInt32(strValue.Substring(0, 4)),
                              Convert.ToInt32(strValue.Substring(4, 2)),
@@ -2082,7 +2086,7 @@ namespace PentagonHMI
                              Convert.ToInt32(strValue.Substring(8, 2)),
                              Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
             }
-            else if (grouping.Equals(Grouping.percent))
+            else if(grouping.Equals(Grouping.percent))
             {
                 return Math.Round(Convert.ToDouble(strValue), 2).ToString() + "%";
             }
@@ -2094,28 +2098,29 @@ namespace PentagonHMI
             try
             {
                 string Tag_BarcodeLog = $"HMI_PLCTrigger_Record_RAMBarcd_Z{Zone}";
-                if (_Main.OPC.Read<bool>(Tag_BarcodeLog))
+                if(_Main.OPC.Read<bool>(Tag_BarcodeLog))
                 {
                     string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "RamBarcodeInstalled");
-                    if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                    if(!Directory.Exists(LogsPath))
+                    { Directory.CreateDirectory(LogsPath); }
                     string _Path = Path.Combine(LogsPath, $"RamBarcodeInstalled_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                     bool HasFile = File.Exists(_Path);
-                    using (FileStream stream = new FileStream(_Path,
+                    using(FileStream stream = new FileStream(_Path,
                        HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                     {
-                        using (var writer = new StreamWriter(stream))
+                        using(var writer = new StreamWriter(stream))
                         {
-                            using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                            using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                             {
-                                if (!HasFile)
+                                if(!HasFile)
                                 {
                                     csv.WriteField(string.Empty);
                                     csv.WriteField(string.Empty);
                                     csv.WriteField(string.Empty);
-                                    for (int n1 = 1; n1 <= 4; n1++)
+                                    for(int n1 = 1; n1 <= 4; n1++)
                                     {
                                         csv.WriteField($"G{n1}");
-                                        for (int n = 1; n < 8; n++)
+                                        for(int n = 1; n < 8; n++)
                                             csv.WriteField(string.Empty);
                                     }
                                     csv.NextRecord();
@@ -2123,8 +2128,8 @@ namespace PentagonHMI
                                     csv.WriteField("End Date Time");
                                     csv.WriteField("Asset Tag");
                                     csv.WriteField("Zone Num");
-                                    for (int n = 1; n <= 4; n++)
-                                        for (int ns = 1; ns <= 8; ns++)
+                                    for(int n = 1; n <= 4; n++)
+                                        for(int ns = 1; ns <= 8; ns++)
                                             csv.WriteField($"Slot{ns}");
                                     csv.NextRecord();
                                 }
@@ -2134,8 +2139,8 @@ namespace PentagonHMI
 
                                 csv.WriteField(_Main.OPC.Read<string>($"HMI_PLCTrigger_Record_RAMBarcd_AssTg_Z{Zone}"));
                                 csv.WriteField(_Main.OPC.Read<int>($"HMI_PLCTrigger_Record_RAMBarcd_Z{Zone}_ZNum"));
-                                for (int ng = 1; ng <= 4; ng++)
-                                    for (int nb = 0; nb < 8; nb++)
+                                for(int ng = 1; ng <= 4; ng++)
+                                    for(int nb = 0; nb < 8; nb++)
                                     {
                                         csv.WriteField(_Main.OPC.Read<string>($"DIMM_Data_Tracking_Barcd_Z{Zone}_G{ng}[{nb}]"));
                                         //foreach (string result in _Main.OPC.Read<string[]>($"DIMM_Data_Tracking_Barcd_Z{Zone}_G{ng}[0]", typeof(string), 8))
@@ -2150,19 +2155,21 @@ namespace PentagonHMI
                     _Main.OPC.Write(Tag_BarcodeLog, false);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "VisionResult");
             }
         }
 
-        string Last_OprLoadTime = string.Empty;
+        private string Last_OprLoadTime = string.Empty;
+
         public void HDD_CheckAndLogOperatorLoadTimeTaken()
         {
             try
             {
                 string HMI_OprLoadTimeLog = "HMI_OprLoadTimeLog";
-                if (!_Main.OPC.Read<bool>(HMI_OprLoadTimeLog)) return;
+                if(!_Main.OPC.Read<bool>(HMI_OprLoadTimeLog))
+                    return;
 
                 _Main.OPC.Write(HMI_OprLoadTimeLog, false);
 
@@ -2172,17 +2179,18 @@ namespace PentagonHMI
                 //{
                 //Last_OprLoadTime = OprLoadTime;
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "OperatorLoadTimeTaken");
-                if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
+                if(!Directory.Exists(LogsPath))
+                { Directory.CreateDirectory(LogsPath); }
                 string _Path = Path.Combine(LogsPath, $"OprLoadTimeTaken_{DateTime.Today.ToString("yyyyMMdd")}.txt");
                 bool HasFile = File.Exists(_Path);
-                using (FileStream stream = new FileStream(_Path,
+                using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 {
-                    using (var writer = new StreamWriter(stream))
+                    using(var writer = new StreamWriter(stream))
                     {
-                        using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
+                        using(var csv = new CsvWriter(writer, CultureInfo.CurrentCulture))
                         {
-                            if (!HasFile)
+                            if(!HasFile)
                             {
                                 csv.WriteField("DateTime");
                                 csv.WriteField("Z1 Asset Tag");
@@ -2200,7 +2208,7 @@ namespace PentagonHMI
                 }
                 //}
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Check Operator LoadTime");
             }

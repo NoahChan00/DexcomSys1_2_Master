@@ -5,23 +5,23 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PentagonHMI"
              mc:Ignorable="d">
-    
+
     <ScrollViewer CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <ItemsControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" x:Name="RackStatusTypeListItemsControl" Margin="2"
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="1"/>
+                        <UniformGrid Rows="1" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -31,24 +31,24 @@
                                       VirtualizingPanel.VirtualizationMode="Recycling">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Columns="1"/>
+                                        <UniformGrid Columns="1" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="50" />
+                                                <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
 
                                             <Label Grid.Column="0" BorderBrush="Black" BorderThickness="1" Content="{Binding RackStatusSlotName}"
-                                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
 
                                             <Label Grid.Column="1" BorderBrush="Black" BorderThickness="1"
                                                DataContext="{Binding RackStatusSlotStatusModel}"
                                                Background="{Binding RackStatusSlotStatusColor}" Content="{Binding RackStatusSlotStatusName}"
-                                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -63,33 +63,32 @@
                               VirtualizingPanel.VirtualizationMode="Recycling">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                            <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Background="{Binding RackStatusSlotStatusColor}" Padding="10 4"
-                                       Text="{Binding RackStatusSlotStatusName}" TextAlignment="Center"/>
+                                       Text="{Binding RackStatusSlotStatusName}" TextAlignment="Center" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </GroupBox>
-            
+
             <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="RackStatusActionListItemsControl"
                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Button x:Name="RackStatusActionButton" Content="{Binding RackStatusActionName}" Cursor="Hand"
-                                Margin="4" Padding="10" Tag="{Binding}" Click="rackStatusActionButton_Click"/>
+                                Margin="4" Padding="10" Tag="{Binding}" Click="rackStatusActionButton_Click" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Grid>
     </ScrollViewer>
-
 </UserControl>

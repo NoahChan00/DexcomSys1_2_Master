@@ -8,13 +8,15 @@ namespace PentagonHMI.Models
     public class RecipeModel : ViewModelBase
     {
         #region PublicProperties
+
         private string position = string.Empty;
+
         public string Position
         {
             get { return position; }
             set
             {
-                if (position != value)
+                if(position != value)
                 {
                     position = value;
                     RaisePropertyChanged(nameof(Position));
@@ -23,12 +25,13 @@ namespace PentagonHMI.Models
         }
 
         private List<RecipeFieldModel> fieldList = new List<RecipeFieldModel>();
+
         public List<RecipeFieldModel> FieldList
         {
             get { return fieldList; }
             set
             {
-                if (fieldList != value)
+                if(fieldList != value)
                 {
                     fieldList = value;
                     RaisePropertyChanged(nameof(FieldList));
@@ -36,8 +39,9 @@ namespace PentagonHMI.Models
                 }
             }
         }
-        
+
         private ICollectionView fieldListView = null;
+
         public ICollectionView FieldListView
         {
             get
@@ -49,12 +53,13 @@ namespace PentagonHMI.Models
         }
 
         private List<RecipeSelectionModel> selectionList = new List<RecipeSelectionModel>();
+
         public List<RecipeSelectionModel> SelectionList
         {
             get { return selectionList; }
             set
             {
-                if (selectionList != value)
+                if(selectionList != value)
                 {
                     selectionList = value;
                     RaisePropertyChanged(nameof(SelectionList));
@@ -62,8 +67,9 @@ namespace PentagonHMI.Models
                 }
             }
         }
-        
+
         private ICollectionView selectionListView = null;
+
         public ICollectionView SelectionListView
         {
             get
@@ -79,14 +85,14 @@ namespace PentagonHMI.Models
             }
         }
 
-
         private List<RecipeSelectionModel> comboList = new List<RecipeSelectionModel>();
+
         public List<RecipeSelectionModel> ComboList
         {
             get { return comboList; }
             set
             {
-                if (comboList != value)
+                if(comboList != value)
                 {
                     comboList = value;
                     RaisePropertyChanged(nameof(ComboList));
@@ -96,6 +102,7 @@ namespace PentagonHMI.Models
         }
 
         private ICollectionView comboListView = null;
+
         public ICollectionView ComboListView
         {
             get
@@ -110,6 +117,7 @@ namespace PentagonHMI.Models
                 return comboListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

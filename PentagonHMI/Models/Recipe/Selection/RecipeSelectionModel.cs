@@ -8,41 +8,45 @@ namespace PentagonHMI.Models
     public class RecipeSelectionModel : ViewModelBase
     {
         #region PublicProperties
+
         private string selectionName = string.Empty;
+
         public string SelectionName
         {
             get { return selectionName; }
             set
             {
-                if (selectionName != value)
+                if(selectionName != value)
                 {
                     selectionName = value;
                     RaisePropertyChanged(nameof(SelectionName));
                 }
             }
         }
-        
+
         private bool selectionEnable = false;
+
         public bool SelectionEnable
         {
             get { return selectionEnable; }
             set
             {
-                if (selectionEnable != value)
+                if(selectionEnable != value)
                 {
                     selectionEnable = value;
                     RaisePropertyChanged(nameof(SelectionEnable));
                 }
             }
         }
-        
+
         private List<RecipeSelectionParameterModel> selectionParameterList = new List<RecipeSelectionParameterModel>();
+
         public List<RecipeSelectionParameterModel> SelectionParameterList
         {
             get { return selectionParameterList; }
             set
             {
-                if (selectionParameterList != value)
+                if(selectionParameterList != value)
                 {
                     selectionParameterList = value;
                     RaisePropertyChanged(nameof(SelectionParameterList));
@@ -50,8 +54,9 @@ namespace PentagonHMI.Models
                 }
             }
         }
-        
+
         private ICollectionView selectionParameterListView = null;
+
         public ICollectionView SelectionParameterListView
         {
             get
@@ -61,6 +66,7 @@ namespace PentagonHMI.Models
                 return selectionParameterListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

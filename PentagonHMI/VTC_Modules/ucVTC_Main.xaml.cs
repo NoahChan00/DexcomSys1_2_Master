@@ -1,13 +1,13 @@
-﻿using System;
-using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Controls;
-using Logix;
-using GalaSoft.MvvmLight;
-using System.Windows.Media;
+﻿using GalaSoft.MvvmLight;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Logix;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Frm = System.Windows.Forms;
 
 namespace PentagonHMI.VTC_Modules
@@ -22,6 +22,7 @@ namespace PentagonHMI.VTC_Modules
         private TagGroup Tgp_Rack = new TagGroup();
         private Dictionary<Context, Tuple<Tag, TextBlock>> Dic_Conveyor_Context_Tuple_Tag_Tbk = new Dictionary<Context, Tuple<Tag, TextBlock>>();
         private Dictionary<Context, Tuple<Tag, TextBlock>> Dic_Rack_Context_Tuple_Tag_Tbk = new Dictionary<Context, Tuple<Tag, TextBlock>>();
+
         private Dictionary<SlotStatus, Brush> Dic_Mode_Color = new Dictionary<SlotStatus, Brush>
         {
             [SlotStatus.Disable] = Brushes.DimGray,
@@ -65,13 +66,14 @@ namespace PentagonHMI.VTC_Modules
         public SeriesCollection SeriesCollection { get; set; }
         public string[] Labels { get; set; }
         public Func<int, string> YFormatter { get; set; }
-        enum Context
+
+        private enum Context
         {
             Loading, Turn, Buffer, LifterZone1, LifterZone2, RejectZone1, RejectZone2,
             TrayLifterStatus,
         }
 
-        enum SlotStatus
+        private enum SlotStatus
         {
             Empty, Present, Disable, Working, Default
         }
@@ -93,7 +95,7 @@ namespace PentagonHMI.VTC_Modules
                 SetupRack();
                 SetupUPHGraph();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             };
@@ -116,16 +118,16 @@ namespace PentagonHMI.VTC_Modules
                 [Context.TrayLifterStatus] = Tuple.Create<Tag, TextBlock>(new Tag { Name = "VTC_TrayLifter_Status", MyObject = Context.TrayLifterStatus, DataType = Logix.Tag.ATOMIC.DINT }, tbk_TrayLifterStatus),
             };
 
-            foreach (var tuple_Tag_Tbk in Dic_Conveyor_Context_Tuple_Tag_Tbk.Values)
+            foreach(var tuple_Tag_Tbk in Dic_Conveyor_Context_Tuple_Tag_Tbk.Values)
                 Tgp_Conveyor.AddTag(tuple_Tag_Tbk.Item1);
         }
 
-        Tag Tag_ZoneLeft_PlaceinProgress = new Tag { Name = "VTC_Rack_ZoneA_PlaceInProgress", DataType = Logix.Tag.ATOMIC.BOOL };
-        Tag Tag_ZoneRight_PlaceinProgress = new Tag { Name = "VTC_Rack_ZoneB_PlaceInProgress", DataType = Logix.Tag.ATOMIC.BOOL };
-        Tag Tag_ZoneLeft_Row = new Tag { Name = "VTC_Lifter_ZoneB_Current_PlaceNum", DataType = Logix.Tag.ATOMIC.BOOL };
-        Tag Tag_ZoneRight_Row = new Tag { Name = "VTC_Lifter_ZoneB_Current_PlaceNum", DataType = Logix.Tag.ATOMIC.BOOL };
-        string TagName_SlotStatus = "VTC_Rack_Matrix[{0},0]";
-        string TagName_SlotAssetTag = "VTC_Rack_AssetTag_Matrix[{0},0]";
+        private Tag Tag_ZoneLeft_PlaceinProgress = new Tag { Name = "VTC_Rack_ZoneA_PlaceInProgress", DataType = Logix.Tag.ATOMIC.BOOL };
+        private Tag Tag_ZoneRight_PlaceinProgress = new Tag { Name = "VTC_Rack_ZoneB_PlaceInProgress", DataType = Logix.Tag.ATOMIC.BOOL };
+        private Tag Tag_ZoneLeft_Row = new Tag { Name = "VTC_Lifter_ZoneB_Current_PlaceNum", DataType = Logix.Tag.ATOMIC.BOOL };
+        private Tag Tag_ZoneRight_Row = new Tag { Name = "VTC_Lifter_ZoneB_Current_PlaceNum", DataType = Logix.Tag.ATOMIC.BOOL };
+        private string TagName_SlotStatus = "VTC_Rack_Matrix[{0},0]";
+        private string TagName_SlotAssetTag = "VTC_Rack_AssetTag_Matrix[{0},0]";
 
         private void SetupRack()
         {
@@ -138,13 +140,13 @@ namespace PentagonHMI.VTC_Modules
             };
 
             Tgp_General.AddTag(Tag_ZoneLeft_PlaceinProgress, Tag_ZoneLeft_Row, Tag_ZoneRight_PlaceinProgress, Tag_ZoneRight_Row);
-            for (int n = 1; n <= 2; n++)
+            for(int n = 1; n <= 2; n++)
             {
                 Tgp_Rack.AddTag(new Tag { Name = string.Format(TagName_SlotAssetTag, n.ToString()), DataType = Logix.Tag.ATOMIC.STRING, Length = 16 });
                 Tgp_Rack.AddTag(new Tag { Name = string.Format(TagName_SlotStatus, n.ToString()), DataType = Logix.Tag.ATOMIC.DINT, Length = 16 });
             }
 
-            for (int r = Row; r > 0; r--)
+            for(int r = Row; r > 0; r--)
             {
                 Brush Color = Dic_Mode_Color[SlotStatus.Empty];
                 string Text = "ASSET TAG";
@@ -172,7 +174,7 @@ namespace PentagonHMI.VTC_Modules
             SeriesCollection = new SeriesCollection();
 
             string[] ary_str = new string[24];
-            for (int n = 1; n < 24; n++)
+            for(int n = 1; n < 24; n++)
                 ary_str[n] = $"-{n.ToString()}hrs";
             ary_str[0] = "Now";
             Labels = ary_str;
@@ -180,7 +182,8 @@ namespace PentagonHMI.VTC_Modules
             YFormatter = value => value.ToString();
 
             ChartValues<int> cv = new ChartValues<int>();
-            for (int n = 1; n <= 24; n++) cv.Add(0);
+            for(int n = 1; n <= 24; n++)
+                cv.Add(0);
             SeriesCollection.Add(new LineSeries
             {
                 Values = cv,
@@ -188,14 +191,13 @@ namespace PentagonHMI.VTC_Modules
             });
         }
 
-
         private void Update()
         {
             try
             {
                 Dispatcher.Invoke(() => UpdateUI());
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             };
@@ -217,10 +219,10 @@ namespace PentagonHMI.VTC_Modules
             var lst_YtdUPH = _Main.Lst_UPH.Skip(HrsNow);
 
             int count = 0;
-            foreach (string uph in lst_TodayUPH.Reverse())
+            foreach(string uph in lst_TodayUPH.Reverse())
                 SeriesCollection[0].Values[count++] = Convert.ToInt32(uph);
 
-            foreach (string uph in lst_YtdUPH.Reverse())
+            foreach(string uph in lst_YtdUPH.Reverse())
                 SeriesCollection[0].Values[count++] = Convert.ToInt32(uph);
         }
 
@@ -232,19 +234,19 @@ namespace PentagonHMI.VTC_Modules
 
             Int16[] Ary_LSValue = null, Ary_RSValue = null;
             string[] Ary_LAValue = null, Ary_RAValue = null;
-            foreach (Tag tag in Tgp_Rack.Tags)
+            foreach(Tag tag in Tgp_Rack.Tags)
             {
-                if (tag.Name == string.Format(TagName_SlotStatus, "1"))
+                if(tag.Name == string.Format(TagName_SlotStatus, "1"))
                     Ary_LSValue = (Int16[])tag.Value;
-                else if (tag.Name == string.Format(TagName_SlotStatus, "2"))
+                else if(tag.Name == string.Format(TagName_SlotStatus, "2"))
                     Ary_RSValue = (Int16[])tag.Value;
-                else if (tag.Name == string.Format(TagName_SlotAssetTag, "1"))
+                else if(tag.Name == string.Format(TagName_SlotAssetTag, "1"))
                     Ary_LAValue = (string[])tag.Value;
-                else if (tag.Name == string.Format(TagName_SlotAssetTag, "2"))
+                else if(tag.Name == string.Format(TagName_SlotAssetTag, "2"))
                     Ary_RAValue = (string[])tag.Value;
             }
 
-            foreach (var item in lst_RSM)
+            foreach(var item in lst_RSM)
             {
                 int itemRow = Convert.ToInt32(item.SlotIndex.Remove(0, 1));
                 int itemCol = item.SlotIndex.Remove(1).ToString() == "L" ? 1 : 2;
@@ -260,15 +262,15 @@ namespace PentagonHMI.VTC_Modules
 
         private void UpdateConveyor()
         {
-            foreach (Tag tag in Tgp_Conveyor.Tags)
+            foreach(Tag tag in Tgp_Conveyor.Tags)
                 Dispatcher.Invoke(() => HiddenTextblockUIUpdate(Dic_Conveyor_Context_Tuple_Tag_Tbk[(Context)tag.MyObject].Item2, tag.GetValue<string>()));
         }
 
         private void HiddenTextblockUIUpdate(TextBlock tbk, string Value)
         {
-            if (tbk.Text != Value)
+            if(tbk.Text != Value)
             {
-                if (tbk == tbk_TrayLifterStatus)
+                if(tbk == tbk_TrayLifterStatus)
                 {
                     tbk.Text = Dic_Code_Status[Value];
                 }
@@ -282,12 +284,12 @@ namespace PentagonHMI.VTC_Modules
 
         public void Dispose()
         {
-
         }
 
         private void lbl_Disable_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (_Main.UserAccessLevel.ToUpper() == "OPERATOR") return;
+            if(_Main.UserAccessLevel.ToUpper() == "OPERATOR")
+                return;
 
             Grid grd = sender as Grid;
             string Code = grd.Tag.ToString();
@@ -295,10 +297,11 @@ namespace PentagonHMI.VTC_Modules
             int Row = Convert.ToInt32(Code.Substring(1));
 
             int Statusindex = _Main.OPC.Read<int>($"VTC_Rack_Matrix[{(IsLeft ? 1 : 2)},{Row}]");
-            if (Statusindex == 1) return;
+            if(Statusindex == 1)
+                return;
             bool isEnable = Statusindex == 2;
 
-            if (Frm.DialogResult.Yes == Frm.MessageBox.Show((isEnable ? "Enable Slot: " : "Disable Slot: ") + (IsLeft ? "L" : "R") + Row, "Info", Frm.MessageBoxButtons.YesNo))
+            if(Frm.DialogResult.Yes == Frm.MessageBox.Show((isEnable ? "Enable Slot: " : "Disable Slot: ") + (IsLeft ? "L" : "R") + Row, "Info", Frm.MessageBoxButtons.YesNo))
             {
                 _Main.OPC.Write(IsLeft ? "HMI_VTC_Disable_RackZone_Left" : "HMI_VTC_Disable_RackZone_Right", true);
                 _Main.OPC.Read<int>("HMI_VTC_Disable_RackSlot");
@@ -309,9 +312,10 @@ namespace PentagonHMI.VTC_Modules
 
         private void btn_AbortRack_Click(object sender, RoutedEventArgs e)
         {
-            if (_Main.UserAccessLevel.ToUpper() == "OPERATOR") return;
+            if(_Main.UserAccessLevel.ToUpper() == "OPERATOR")
+                return;
 
-            if (Frm.DialogResult.Yes == Frm.MessageBox.Show("Proceed to Abort Rack", "Confirmation", Frm.MessageBoxButtons.YesNo))
+            if(Frm.DialogResult.Yes == Frm.MessageBox.Show("Proceed to Abort Rack", "Confirmation", Frm.MessageBoxButtons.YesNo))
                 _Main.OPC.Write("HMI_VTC_Abort_Rack", true);
         }
     }
@@ -322,6 +326,7 @@ namespace PentagonHMI.VTC_Modules
         {
             return _tag?.Value?.ToString() ?? string.Empty;
         }
+
         public static bool ToTagBool(this Tag _tag)
         {
             return Convert.ToBoolean(_tag?.Value ?? "False");
@@ -338,12 +343,13 @@ namespace PentagonHMI.VTC_Modules
     public class RackSlotModel : ViewModelBase
     {
         private string _SlotIndex = string.Empty;
+
         public string SlotIndex
         {
             get { return _SlotIndex; }
             set
             {
-                if (_SlotIndex != value)
+                if(_SlotIndex != value)
                 {
                     _SlotIndex = value;
                     RaisePropertyChanged(nameof(SlotIndex));
@@ -352,12 +358,13 @@ namespace PentagonHMI.VTC_Modules
         }
 
         private Brush _SlotIdexBackground = Brushes.White;
+
         public Brush SlotIdexBackground
         {
             get { return _SlotIdexBackground; }
             set
             {
-                if (_SlotIdexBackground != value)
+                if(_SlotIdexBackground != value)
                 {
                     _SlotIdexBackground = value;
                     RaisePropertyChanged(nameof(SlotIdexBackground));
@@ -366,12 +373,13 @@ namespace PentagonHMI.VTC_Modules
         }
 
         private string _SlotStatusText = string.Empty;
+
         public string SlotStatusText
         {
             get { return _SlotStatusText; }
             set
             {
-                if (_SlotStatusText != value)
+                if(_SlotStatusText != value)
                 {
                     _SlotStatusText = value;
                     RaisePropertyChanged(nameof(SlotStatusText));
@@ -380,12 +388,13 @@ namespace PentagonHMI.VTC_Modules
         }
 
         private Brush _SlotStatusBackground = Brushes.White;
+
         public Brush SlotStatusBackground
         {
             get { return _SlotStatusBackground; }
             set
             {
-                if (_SlotStatusBackground != value)
+                if(_SlotStatusBackground != value)
                 {
                     _SlotStatusBackground = value;
                     RaisePropertyChanged(nameof(SlotStatusBackground));
@@ -394,12 +403,11 @@ namespace PentagonHMI.VTC_Modules
         }
     }
 
-    static class Extensions
+    internal static class Extensions
     {
         public static T GetValue<T>(this Tag item)
         {
             return (T)Convert.ChangeType(item.Value?.ToString() ?? default, typeof(T));
         }
     }
-
 }

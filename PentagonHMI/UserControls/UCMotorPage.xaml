@@ -1,63 +1,59 @@
-﻿<UserControl x:Class="PentagonHMI.UserControls.UCMotorPage"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:PentagonHMI.UserControls"
-             mc:Ignorable="d" >
+﻿<UserControl x:Class="PentagonHMI.UserControls.UCMotorPage" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="tbk_unit" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="DarkGray"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="DarkGray" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
         <Style x:Key="ToggleLabel" TargetType="Label">
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="50" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
         <Style x:Key="ToggleStatus" TargetType="ToggleButton">
-            <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Margin" Value="10"/>
+            <Setter Property="DockPanel.Dock" Value="Top" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Margin" Value="10" />
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="2">
-                            <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LightGray" Content="Start Homing"/>
+                            <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LightGray" Content="Start Homing" />
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="true">
-                    <Setter Property="IsEnabled" Value="False"/>
+                    <Setter Property="IsEnabled" Value="False" />
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
                                 <Border BorderBrush="Black" BorderThickness="2">
-                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LimeGreen" Content="Homing"/>
+                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LimeGreen" Content="Homing" />
                                 </Border>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
                 <Trigger Property="IsChecked" Value="false">
-                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="IsEnabled" Value="True" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="RenderTransform">
                         <Setter.Value>
                             <TransformGroup>
-                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                             </TransformGroup>
                         </Setter.Value>
                     </Setter>
@@ -66,17 +62,17 @@
         </Style>
 
         <Style x:Key="ToggleJog" TargetType="ToggleButton">
-            <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Margin" Value="10"/>
+            <Setter Property="DockPanel.Dock" Value="Top" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Margin" Value="10" />
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="2">
-                            <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LightGray" Content="JOG MODE (OFF)"/>
+                            <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LightGray" Content="JOG MODE (OFF)" />
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
@@ -87,20 +83,20 @@
                         <Setter.Value>
                             <DataTemplate>
                                 <Border BorderBrush="Black" BorderThickness="2">
-                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LimeGreen" Content="JOG MODE (ON)"/>
+                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="146" Foreground="Black" Background="LimeGreen" Content="JOG MODE (ON)" />
                                 </Border>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
                 <Trigger Property="IsChecked" Value="false">
-                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="IsEnabled" Value="True" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="RenderTransform">
                         <Setter.Value>
                             <TransformGroup>
-                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                             </TransformGroup>
                         </Setter.Value>
                     </Setter>
@@ -109,42 +105,42 @@
         </Style>
 
         <Style x:Key="ToggleMove" TargetType="ToggleButton">
-            <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Margin" Value="10"/>
+            <Setter Property="DockPanel.Dock" Value="Top" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Margin" Value="10" />
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="2">
-                            <Label Style="{StaticResource ToggleLabel}" MinWidth="96" Foreground="Black" Background="LightGray" Content="MOVE"/>
+                            <Label Style="{StaticResource ToggleLabel}" MinWidth="96" Foreground="Black" Background="LightGray" Content="MOVE" />
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsChecked" Value="true">
-                    <Setter Property="IsEnabled" Value="False"/>
+                    <Setter Property="IsEnabled" Value="False" />
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
                                 <Border BorderBrush="Black" BorderThickness="2">
-                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="96" Foreground="Black" Background="LimeGreen" Content="MOVING"/>
+                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="96" Foreground="Black" Background="LimeGreen" Content="MOVING" />
                                 </Border>
                             </DataTemplate>
                         </Setter.Value>
                     </Setter>
                 </Trigger>
                 <Trigger Property="IsChecked" Value="false">
-                    <Setter Property="IsEnabled" Value="True"/>
+                    <Setter Property="IsEnabled" Value="True" />
                 </Trigger>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="RenderTransform">
                         <Setter.Value>
                             <TransformGroup>
-                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                             </TransformGroup>
                         </Setter.Value>
                     </Setter>
@@ -153,18 +149,18 @@
         </Style>
 
         <Style x:Key="ToggleEdit" TargetType="ToggleButton">
-            <Setter Property="DockPanel.Dock" Value="Top"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="Width" Value="70"/>
-            <Setter Property="Margin" Value="5"/>
+            <Setter Property="DockPanel.Dock" Value="Top" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Width" Value="70" />
+            <Setter Property="Margin" Value="5" />
             <Setter Property="ContentTemplate">
                 <Setter.Value>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="1">
-                            <Label Style="{StaticResource ToggleLabel}" MinWidth="66" Foreground="Black" Background="LightGray" Content="EDIT"/>
+                            <Label Style="{StaticResource ToggleLabel}" MinWidth="66" Foreground="Black" Background="LightGray" Content="EDIT" />
                         </Border>
                     </DataTemplate>
                 </Setter.Value>
@@ -175,7 +171,7 @@
                         <Setter.Value>
                             <DataTemplate>
                                 <Border BorderBrush="Black" BorderThickness="1">
-                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="66" Foreground="Black" Background="LightGray" Content="DONE"/>
+                                    <Label Style="{StaticResource ToggleLabel}" MinWidth="66" Foreground="Black" Background="LightGray" Content="DONE" />
                                 </Border>
                             </DataTemplate>
                         </Setter.Value>
@@ -185,7 +181,7 @@
                     <Setter Property="RenderTransform">
                         <Setter.Value>
                             <TransformGroup>
-                                <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                                <ScaleTransform ScaleX="0.9" ScaleY="0.9" />
                             </TransformGroup>
                         </Setter.Value>
                     </Setter>
@@ -193,57 +189,56 @@
             </Style.Triggers>
         </Style>
 
-
         <Style x:Key="StatusBox" TargetType="TextBox">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="IsEnabled" Value="False"/>
+            <Setter Property="Height" Value="35" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="IsEnabled" Value="False" />
             <Setter Property="Background">
                 <Setter.Value>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FFC3C3C3" Offset="0"/>
-                        <GradientStop Color="#FFF1F1F1" Offset="0.498"/>
+                        <GradientStop Color="#FFC3C3C3" Offset="0" />
+                        <GradientStop Color="#FFF1F1F1" Offset="0.498" />
                     </LinearGradientBrush>
                 </Setter.Value>
             </Setter>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Text" Value=""/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="5 10 5 10"/>
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Text" Value="" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="5 10 5 10" />
         </Style>
 
         <Style x:Key="CommonTxtBox" TargetType="TextBox">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="BorderBrush" Value="DodgerBlue"/>
-            <Setter Property="IsEnabled" Value="True"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Text" Value=""/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="Margin" Value="5 10 5 10"/>
+            <Setter Property="Height" Value="35" />
+            <Setter Property="BorderBrush" Value="DodgerBlue" />
+            <Setter Property="IsEnabled" Value="True" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Text" Value="" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="5 10 5 10" />
         </Style>
 
         <Style x:Key="CommonLabel" TargetType="Label">
-            <Setter Property="Height" Value="35"/>
-            <Setter Property="MinWidth" Value="150"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="35" />
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Bold" />
         </Style>
 
         <Style TargetType="GroupBox">
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="Margin" Value="2"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource GridLineBrush}"/>
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="BorderBrush" Value="{DynamicResource GridLineBrush}" />
         </Style>
     </UserControl.Resources>
 
@@ -263,22 +258,24 @@
             <Grid Grid.Row="0" Grid.Column="0" Height="60">
                 <StackPanel Orientation="Horizontal">
                     <Label Style="{StaticResource CommonLabel}" Content="Current Position:"></Label>
-                    <TextBox Text="{Binding CurrentPosition}" Style="{StaticResource StatusBox}" Name="tbCurrentPostion" ></TextBox>
-                    <TextBlock Name="unit_CurrentPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
+                    <TextBox Text="{Binding CurrentPosition}" Style="{StaticResource StatusBox}" Name="tbCurrentPostion"></TextBox>
+                    <TextBlock Name="unit_CurrentPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
                     <Label Style="{StaticResource CommonLabel}" Content="Current Speed:"></Label>
                     <TextBox Text="{Binding CurrentSpeed}" Style="{StaticResource StatusBox}" Name="tbCurrentSpeed"></TextBox>
-                    <TextBlock Name="unit_CurrentSpd" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
+                    <TextBlock Name="unit_CurrentSpd" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
                     <GroupBox Header="HOMING">
-                        <ToggleButton Checked="TbtnHoming_Checked" Name="TbtnHoming" Style="{StaticResource ToggleStatus}"/>
+                        <ToggleButton Checked="TbtnHoming_Checked" Name="TbtnHoming" Style="{StaticResource ToggleStatus}" />
                     </GroupBox>
                     <GroupBox Header="EXPORT CSV" BorderBrush="{DynamicResource GridLineBrush}">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                            <Button Click="CurrentPointButton_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver" Width="200" Height="40" Margin="10" Content="Export Current Points"  Foreground="{DynamicResource NormalForegroundBrush}"/>
-                            <Button Click="LocationButton_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver" Width="200" Height="40" Margin="10" Content="Open File Location"  Foreground="{DynamicResource NormalForegroundBrush}"/>
+                            <Button Click="CurrentPointButton_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver"
+                                    Width="200" Height="40" Margin="10" Content="Export Current Points" Foreground="{DynamicResource NormalForegroundBrush}" />
+                            <Button Click="LocationButton_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver" Width="200"
+                                    Height="40" Margin="10" Content="Open File Location" Foreground="{DynamicResource NormalForegroundBrush}" />
                         </StackPanel>
                     </GroupBox>
                 </StackPanel>
@@ -287,16 +284,15 @@
                 <GroupBox Header="JOG MODE" BorderBrush="{DynamicResource GridLineBrush}">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <Label Style="{StaticResource CommonLabel}"  MinWidth="200"  Content="JOG SPEED:"/>
+                            <Label Style="{StaticResource CommonLabel}" MinWidth="200" Content="JOG SPEED:" />
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBox Style="{StaticResource CommonTxtBox}" Name="tbJogSpd" Margin="5 10 5 5"/>
-                                    <TextBlock Name="unit_JogSpd" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
+                                    <TextBox Style="{StaticResource CommonTxtBox}" Name="tbJogSpd" Margin="5 10 5 5" />
+                                    <TextBlock Name="unit_JogSpd" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
                                 </StackPanel>
-                                <TextBlock Name="unit_desp_spd" FontSize="10" Text="Actual Motor Speed in mm/s" Margin="5 0 0 0"/>
+                                <TextBlock Name="unit_desp_spd" FontSize="10" Text="Actual Motor Speed in mm/s" Margin="5 0 0 0" />
                             </StackPanel>
-                            <ToggleButton Name="TBtnJogMode" Checked="TBtnJogMode_Checked" Unchecked="TBtnJogMode_Checked" Style="{StaticResource ToggleJog}"/>
-                        
+                            <ToggleButton Name="TBtnJogMode" Checked="TBtnJogMode_Checked" Unchecked="TBtnJogMode_Checked" Style="{StaticResource ToggleJog}" />
                         </StackPanel>
                         <StackPanel Margin="20 0 0 0" Visibility="Collapsed" Name="JogInfo">
                             <Label FontWeight="Normal" HorizontalAlignment="Left" Margin="0" FontSize="16">
@@ -313,16 +309,16 @@
                 <GroupBox Name="GbMove" Header="MOVE" BorderBrush="{DynamicResource GridLineBrush}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Style="{StaticResource CommonLabel}" MinWidth="200" Content="Absolute Position: "/>
-                            <TextBox Name="TBAbsPos" Style="{StaticResource CommonTxtBox}"/>
-                            <TextBlock Name="unit_AbsPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
-                            <ToggleButton Checked="TBtnAbsMove_Checked" Name="TBtnAbsMove" Style="{StaticResource ToggleMove}"/>
+                            <Label Style="{StaticResource CommonLabel}" MinWidth="200" Content="Absolute Position: " />
+                            <TextBox Name="TBAbsPos" Style="{StaticResource CommonTxtBox}" />
+                            <TextBlock Name="unit_AbsPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
+                            <ToggleButton Checked="TBtnAbsMove_Checked" Name="TBtnAbsMove" Style="{StaticResource ToggleMove}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Style="{StaticResource CommonLabel}"  MinWidth="200" Content="Relative Position: "/>
-                            <TextBox Name="TBRelPos" Style="{StaticResource CommonTxtBox}"/>
-                            <TextBlock Name="unit_RelPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
-                            <ToggleButton Checked="TBtnRelMove_Checked" Name="TBtnRelMove" Style="{StaticResource ToggleMove}"/>
+                            <Label Style="{StaticResource CommonLabel}" MinWidth="200" Content="Relative Position: " />
+                            <TextBox Name="TBRelPos" Style="{StaticResource CommonTxtBox}" />
+                            <TextBlock Name="unit_RelPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
+                            <ToggleButton Checked="TBtnRelMove_Checked" Name="TBtnRelMove" Style="{StaticResource ToggleMove}" />
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
@@ -331,13 +327,13 @@
                 <GroupBox Header="Error" BorderBrush="{DynamicResource GridLineBrush}" VerticalAlignment="Top">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label Style="{StaticResource CommonLabel}" MinWidth="200" Content="Error ID: "/>
-                            <TextBox Name="tbx_ErrorID" Text="{Binding CurrentSpeed}" Style="{StaticResource StatusBox}"/>
+                            <Label Style="{StaticResource CommonLabel}" MinWidth="200" Content="Error ID: " />
+                            <TextBox Name="tbx_ErrorID" Text="{Binding CurrentSpeed}" Style="{StaticResource StatusBox}" />
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
             </Grid>
-            
+
             <Grid Grid.Row="5" Grid.Column="0">
                 <GroupBox Visibility="Collapsed" MaxHeight="300" Header="IO">
                     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -347,13 +343,14 @@
                                     <ItemsControl ItemsSource="{Binding ICollection}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <StackPanel/>
+                                                <StackPanel />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Border BorderBrush="Gray" Margin="1" BorderThickness="1">
-                                                    <CheckBox IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" Content="{Binding Content}" IsChecked="{Binding Status}" />
+                                                    <CheckBox IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" Content="{Binding Content}"
+                                                            IsChecked="{Binding Status}" />
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
@@ -363,68 +360,74 @@
                                     <ItemsControl ItemsSource="{Binding OCollection}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <StackPanel/>
+                                                <StackPanel />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Border BorderBrush="Gray" Margin="1" BorderThickness="1">
-                                                    <CheckBox Click="CheckBox_Click" Tag="{Binding OutputTagName}" Style="{StaticResource IndicatorCheckBox}" Content="{Binding Content}" IsChecked="{Binding Status}"/>
+                                                    <CheckBox Click="CheckBox_Click" Tag="{Binding OutputTagName}" Style="{StaticResource IndicatorCheckBox}"
+                                                            Content="{Binding Content}" IsChecked="{Binding Status}" />
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </TabItem>
                             </TabControl>
-                            <DataGrid Visibility="Collapsed" Grid.Row="0" Name="DgEditIO" 
-                                    CanUserAddRows="False" AutoGenerateColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" Margin="5 5 80 5" FontWeight="Normal" FontSize="14">
+                            <DataGrid Visibility="Collapsed" Grid.Row="0" Name="DgEditIO" CanUserAddRows="False" AutoGenerateColumns="False"
+                                    CanUserResizeColumns="False" CanUserResizeRows="False" Margin="5 5 80 5" FontWeight="Normal" FontSize="14">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn IsReadOnly="True" Header="IO Name" Binding="{Binding DisplayName}"/>
-                                    <DataGridTextColumn IsReadOnly="True" Header="I/O" Binding="{Binding IO}"/>
-                                    <DataGridCheckBoxColumn Header="Add" Binding="{Binding Check}"/>
+                                    <DataGridTextColumn IsReadOnly="True" Header="IO Name" Binding="{Binding DisplayName}" />
+                                    <DataGridTextColumn IsReadOnly="True" Header="I/O" Binding="{Binding IO}" />
+                                    <DataGridCheckBoxColumn Header="Add" Binding="{Binding Check}" />
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <ToggleButton Name="TbtnEdit" Style="{StaticResource ToggleEdit}" Checked="TbtnEdit_Checked" Unchecked='TbtnEdit_Unchecked'/>
+                            <ToggleButton Name="TbtnEdit" Style="{StaticResource ToggleEdit}" Checked="TbtnEdit_Checked" Unchecked='TbtnEdit_Unchecked' />
                         </Grid>
                     </ScrollViewer>
                 </GroupBox>
             </Grid>
             <Grid Grid.Row="0" Grid.RowSpan="5" Grid.Column="1">
-                <GroupBox Header="SAVE POSITION"  BorderBrush="{DynamicResource GridLineBrush}">
+                <GroupBox Header="SAVE POSITION" BorderBrush="{DynamicResource GridLineBrush}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid Grid.Row="0" Name="DgSavePosition" SelectionChanged="DgSavePosition_SelectionChanged" 
-                                  MaxHeight="220" MaxWidth="1100"
-                                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                                    CanUserAddRows="False" IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" Margin="5" FontWeight="Normal" FontSize="16"/>
-                        <StackPanel Name="spCurrentPoint"  Grid.Row="1" MinHeight="290" >
+                        <DataGrid Grid.Row="0" Name="DgSavePosition" SelectionChanged="DgSavePosition_SelectionChanged" MaxHeight="220" MaxWidth="1100"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" CanUserAddRows="False"
+                                IsReadOnly="True" CanUserResizeColumns="False" CanUserResizeRows="False" Margin="5" FontWeight="Normal" FontSize="16" />
+                        <StackPanel Name="spCurrentPoint" Grid.Row="1" MinHeight="290">
                             <StackPanel Orientation="Horizontal">
                                 <Label Name="DgvPositionName" Style="{StaticResource CommonLabel}" Content="Position Name" Width="Auto" />
-                                <TextBox Name="DgvCrntSvPos" Width="200" Style="{StaticResource StatusBox}"/>
-                                <TextBlock Name="unit_SavePos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
+                                <TextBox Name="DgvCrntSvPos" Width="200" Style="{StaticResource StatusBox}" />
+                                <TextBlock Name="unit_SavePos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
                             </StackPanel>
                             <GroupBox Header="TEACHING">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBox Name="DgvCustomPos" Style="{StaticResource CommonTxtBox}" Width="150" />
-                                    <TextBlock Name="unit_Teach" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
-                                    <ToggleButton Checked="SavePositionMove_Checked" x:Name="TBtnSavePositionMove" Style="{StaticResource ToggleMove}"/>
-                                    <Button Name="SaveReset" Click="SaveReset_Click"  FontSize="16" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver" Width="70" Height="50" Margin="5" Content="Reset"  Foreground="{DynamicResource NormalForegroundBrush}"/>
+                                    <TextBlock Name="unit_Teach" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
+                                    <ToggleButton Checked="SavePositionMove_Checked" x:Name="TBtnSavePositionMove" Style="{StaticResource ToggleMove}" />
+                                    <Button Name="SaveReset" Click="SaveReset_Click" FontSize="16" Style="{DynamicResource styGlassButtonAutoColor}"
+                                            Background="Silver" Width="70" Height="50" Margin="5" Content="Reset"
+                                            Foreground="{DynamicResource NormalForegroundBrush}" />
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="SAVE">
                                 <StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBox Name="DgvCustomPos1" Text="{Binding ElementName=DgvCustomPos, Path=Text}" Style="{StaticResource StatusBox}"/>
-                                        <TextBlock Name="unit_SaveCusPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
-                                        <Button Name="SaveCus" Click="SaveCus_Click"  FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver" Width="190" Height="40" Margin="5" Content="Save Custom Position"  Foreground="{DynamicResource NormalForegroundBrush}"/>
+                                        <TextBox Name="DgvCustomPos1" Text="{Binding ElementName=DgvCustomPos, Path=Text}" Style="{StaticResource StatusBox}" />
+                                        <TextBlock Name="unit_SaveCusPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
+                                        <Button Name="SaveCus" Click="SaveCus_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}"
+                                                Background="Silver" Width="190" Height="40" Margin="5" Content="Save Custom Position"
+                                                Foreground="{DynamicResource NormalForegroundBrush}" />
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBox Text="{Binding CurrentPosition}" Style="{StaticResource StatusBox}"/>
-                                        <TextBlock Name="unit_SaveCurPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0"/>
-                                        <Button Name="SaveCur" Click="SaveCur_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}" Background="Silver" Width="190" Height="40" Margin="5" Content="Save Current Position"  Foreground="{DynamicResource NormalForegroundBrush}"/>
+                                        <TextBox Text="{Binding CurrentPosition}" Style="{StaticResource StatusBox}" />
+                                        <TextBlock Name="unit_SaveCurPos" Style="{StaticResource tbk_unit}" Margin="0 0 5 0" />
+                                        <Button Name="SaveCur" Click="SaveCur_Click" FontSize="14" Style="{DynamicResource styGlassButtonAutoColor}"
+                                                Background="Silver" Width="190" Height="40" Margin="5" Content="Save Current Position"
+                                                Foreground="{DynamicResource NormalForegroundBrush}" />
                                     </StackPanel>
                                 </StackPanel>
                             </GroupBox>

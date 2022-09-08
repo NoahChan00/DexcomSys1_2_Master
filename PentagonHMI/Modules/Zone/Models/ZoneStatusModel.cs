@@ -9,17 +9,21 @@ namespace PentagonHMI
     public class ZoneStatusModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag ZoneStatusTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string zoneStatusName = string.Empty;
+
         public string ZoneStatusName
         {
             get { return zoneStatusName; }
             set
             {
-                if (zoneStatusName != value)
+                if(zoneStatusName != value)
                 {
                     zoneStatusName = value;
                     RaisePropertyChanged(nameof(ZoneStatusName));
@@ -28,26 +32,28 @@ namespace PentagonHMI
         }
 
         private string zoneStatus = string.Empty;
+
         public string ZoneStatus
         {
             get { return zoneStatus; }
             set
             {
-                if (zoneStatus != value)
+                if(zoneStatus != value)
                 {
                     zoneStatus = value;
                     RaisePropertyChanged(nameof(ZoneStatus));
                 }
             }
         }
-        
+
         private List<ZoneStatusDescriptionModel> zoneStatusDescriptionList = new List<ZoneStatusDescriptionModel>();
+
         public List<ZoneStatusDescriptionModel> ZoneStatusDescriptionList
         {
             get { return zoneStatusDescriptionList; }
             set
             {
-                if (zoneStatusDescriptionList != value)
+                if(zoneStatusDescriptionList != value)
                 {
                     zoneStatusDescriptionList = value;
                     RaisePropertyChanged(nameof(ZoneStatusDescriptionList));
@@ -55,8 +61,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView zoneStatusDescriptionListView = null;
+
         public ICollectionView ZoneStatusDescriptionListView
         {
             get
@@ -66,6 +73,7 @@ namespace PentagonHMI
                 return zoneStatusDescriptionListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

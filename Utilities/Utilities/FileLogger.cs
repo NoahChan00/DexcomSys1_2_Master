@@ -1,7 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Data;
-using System.Net.Configuration;
+using System.IO;
 
 namespace Utilities
 {
@@ -21,10 +20,8 @@ namespace Utilities
             if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-
             if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -33,7 +30,6 @@ namespace Utilities
                     writer.Flush();
                     writer.Close();
                     stream.Close();
-
                 }
             }
             else
@@ -51,7 +47,6 @@ namespace Utilities
 
         public static void DryRun(string RunTime, string IdleTime, string DownTime, string MTBA, string MTBF, string SoftJam, string HardJam)
         {
-
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Dryrun";
             string Filename = "Dryrun_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
@@ -100,7 +95,6 @@ namespace Utilities
             }
         }
 
-
         public static void LogAlertWarning(DataTable dt, DataTable prevdt, string ErrorCode, string ErrorAction)
         {
             //Log to Log & DT
@@ -135,7 +129,6 @@ namespace Utilities
 
                 dt.Rows.Add(dr);// InsertAt(dr, 0);
 
-
                 if(dt.Rows.Count > 31)
                 {
                     dt.Rows.RemoveAt(dt.Rows.Count - 1);
@@ -148,7 +141,6 @@ namespace Utilities
             }
             catch(Exception)
             {
-
             }
         }
 
@@ -172,13 +164,10 @@ namespace Utilities
                     }
                 }
 
-
                 Utilities.FileLogger.logEvent(type, descriptions);
-
             }
             catch(Exception error)
             {
-
                 logError(error.Message, error.ToString());
             }
         }
@@ -191,10 +180,8 @@ namespace Utilities
             if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-
             if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -206,7 +193,6 @@ namespace Utilities
             }
             else
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -223,17 +209,14 @@ namespace Utilities
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Error_logs";
             string Filename = "Error_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
-
             if(descriptions.Length == 0)
                 return;
 
             if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-
             if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -265,17 +248,14 @@ namespace Utilities
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Others";
             string Filename = "Else_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
-
             if(descriptions.Length == 0)
                 return;
 
             if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-
             if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -310,10 +290,8 @@ namespace Utilities
             if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-
             if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -335,7 +313,6 @@ namespace Utilities
                     stream.Close();
                 }
             }
-
         }
 
         public static void logPlcEvent(string msg)
@@ -346,10 +323,8 @@ namespace Utilities
             if(!Directory.Exists(strPath))
                 Directory.CreateDirectory(strPath);
 
-
             if(!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -362,7 +337,6 @@ namespace Utilities
             }
             else
             {
-
                 using(FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
                 using(StreamWriter writer = new StreamWriter(stream))
                 {
@@ -371,7 +345,6 @@ namespace Utilities
                     writer.Close();
                     stream.Close();
                 }
-
             }
         }
     }

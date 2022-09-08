@@ -1,24 +1,20 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:PentagonHMI.Themes">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/ButtonBase.xaml"/>
+        <ResourceDictionary Source="/Themes/ButtonBase.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Style x:Key="IndicatorCheckBoxStyle" TargetType="{x:Type CheckBox}"
-           BasedOn="{StaticResource IndicatorButtonBaseStyle}">
+    <Style x:Key="IndicatorCheckBoxStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource IndicatorButtonBaseStyle}">
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="{x:Null}">
-                <Setter Property="BorderBrush" Value="Orange"/>
+                <Setter Property="BorderBrush" Value="Orange" />
             </Trigger>
             <Trigger Property="IsChecked" Value="False">
-                <Setter Property="BorderBrush" Value="Red"/>
+                <Setter Property="BorderBrush" Value="Red" />
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="BorderBrush" Value="Green"/>
+                <Setter Property="BorderBrush" Value="Green" />
             </Trigger>
         </Style.Triggers>
     </Style>
-
 </ResourceDictionary>

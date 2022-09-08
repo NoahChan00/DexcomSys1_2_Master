@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-//using TwinCAT.Ads;
+﻿//using TwinCAT.Ads;
 //using TwinCAT.Ads.SumCommand;
 
 namespace PentagonHMI.LogicClasses
 {
     public class IOLocation //:  IDisposable
     {
-        
         //#region Variables
         //LogicClasses.Main _MainConnection;
         //public delegate void onUpdateHandler();
@@ -48,7 +42,6 @@ namespace PentagonHMI.LogicClasses
         //    {}
         //}
 
-
         //public void Dispose()
         //{
         //    if (_MainConnection != null)
@@ -67,7 +60,6 @@ namespace PentagonHMI.LogicClasses
         //    {
         //        switch (_MainConnection.StationID)
         //        {
-
         //            case ("0"):
         //                getMainConveyor();
         //                break;
@@ -837,7 +829,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Input.IX5_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX5_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
 
-
         //    Utilities.BeckHoff.Output.QX0_00 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_01 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_02 = Convert.ToBoolean(readValues[i]); i = i + 1;
@@ -891,7 +882,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Output.QX5_05 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX5_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX5_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
-
 
         //}
         //private void getKoolaidTang()
@@ -1043,7 +1033,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Input.IX10_05 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
-
 
         //    Utilities.BeckHoff.Output.QX0_00 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_01 = Convert.ToBoolean(readValues[i]); i = i + 1;
@@ -1249,7 +1238,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Input.IX10_05 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
-
 
         //    Utilities.BeckHoff.Output.QX0_00 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_01 = Convert.ToBoolean(readValues[i]); i = i + 1;
@@ -1459,7 +1447,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Input.IX10_05 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
-
 
         //    Utilities.BeckHoff.Output.QX0_00 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_01 = Convert.ToBoolean(readValues[i]); i = i + 1;
@@ -1684,7 +1671,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Input.IX10_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
 
-
         //    Utilities.BeckHoff.Output.QX0_00 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_01 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_02 = Convert.ToBoolean(readValues[i]); i = i + 1;
@@ -1738,7 +1724,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Output.QX5_05 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX5_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX5_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
-
 
         //}
         //private void getLargeHeatsink()
@@ -2072,7 +2057,6 @@ namespace PentagonHMI.LogicClasses
         //    Utilities.BeckHoff.Input.IX10_06 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Input.IX10_07 = Convert.ToBoolean(readValues[i]); i = i + 1;
 
-
         //    Utilities.BeckHoff.Output.QX0_00 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_01 = Convert.ToBoolean(readValues[i]); i = i + 1;
         //    Utilities.BeckHoff.Output.QX0_02 = Convert.ToBoolean(readValues[i]); i = i + 1;
@@ -2381,7 +2365,6 @@ namespace PentagonHMI.LogicClasses
         //    ".Qx79_0",  ".Qx79_1",  ".Qx79_3",  ".Qx79_4",  ".Qx79_5",  ".Qx79_6",  ".Qx79_7",
         //    };
 
-
         //    createHandlesCommand = new SumCreateHandles(A_tcClient, InputList);
         //    uint[] inputhandles = createHandlesCommand.CreateHandles();
 
@@ -2432,7 +2415,6 @@ namespace PentagonHMI.LogicClasses
 
         //    createHandlesCommand = new SumCreateHandles(A_tcClient, InputListQ7);
         //    uint[] inputhandlesQ7 = createHandlesCommand.CreateHandles();
-
 
         //    Type[] InputvalueTypes = new Type[]
         //    {typeof(Boolean),typeof(Boolean),typeof(Boolean),typeof(Boolean),typeof(Boolean),typeof(Boolean),typeof(Boolean),typeof(Boolean),//0

@@ -1,36 +1,36 @@
 ﻿<UserControl x:Class="PentagonHMI.UserControls.UCErrorMessage"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"  Name="ucEM">
     <UserControl.Resources>
         <Style x:Key="TextBlockGnl" TargetType="TextBlock">
-            <Setter Property="Padding" Value="2 5 2 5"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="2 5 2 5" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="TextAlignment" Value="Center" />
         </Style>
         <Style x:Key="BorderGnl" TargetType="Border">
-            <Setter Property="Margin" Value="1"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
         </Style>
     </UserControl.Resources>
     <StackPanel Name="ErrorBar" Background="White" Orientation="Horizontal">
         <Border Style="{StaticResource BorderGnl}">
-            <TextBlock Name="tb_ErrorCode" Width="100" Text="{Binding ElementName=ucEM, Path=ErrorCode}" Style="{StaticResource TextBlockGnl}"/>
+            <TextBlock Name="tb_ErrorCode" Width="100" Text="{Binding ElementName=ucEM, Path=ErrorCode}" Style="{StaticResource TextBlockGnl}" />
         </Border>
         <Border Style="{StaticResource BorderGnl}">
-            <TextBlock Name="tb_Module" Width="100" Text="{Binding ElementName=ucEM, Path=Module}" Style="{StaticResource TextBlockGnl}"/>
+            <TextBlock Name="tb_Module" Width="100" Text="{Binding ElementName=ucEM, Path=Module}" Style="{StaticResource TextBlockGnl}" />
         </Border>
         <Border Style="{StaticResource BorderGnl}">
-            <TextBlock Name="tb_DateTime" Width="225" Text="{Binding ElementName=ucEM, Path=DateTime}" Style="{StaticResource TextBlockGnl}"/>
+            <TextBlock Name="tb_DateTime" Width="225" Text="{Binding ElementName=ucEM, Path=DateTime}" Style="{StaticResource TextBlockGnl}" />
         </Border>
         <Border Style="{StaticResource BorderGnl}">
-            <TextBlock Name="tb_Message" Width="680" Text="{Binding ElementName=ucEM, Path=Message}" Style="{StaticResource TextBlockGnl}"/>
+            <TextBlock Name="tb_Message" Width="680" Text="{Binding ElementName=ucEM, Path=Message}" Style="{StaticResource TextBlockGnl}" />
         </Border>
         <Border Style="{StaticResource BorderGnl}">
-            <TextBlock Name="tb_Action" Width="680" Text="{Binding ElementName=ucEM, Path=Action}" Style="{StaticResource TextBlockGnl}"/>
+            <TextBlock Name="tb_Action" Width="680" Text="{Binding ElementName=ucEM, Path=Action}" Style="{StaticResource TextBlockGnl}" />
         </Border>
     </StackPanel>
 </UserControl>

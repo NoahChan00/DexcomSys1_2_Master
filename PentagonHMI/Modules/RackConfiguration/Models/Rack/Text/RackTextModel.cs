@@ -6,19 +6,23 @@ namespace PentagonHMI
     public class RackTextModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag RackTextTag = new Tag();
-        
+
         public Tag RackTextEnableTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string rackTextName = string.Empty;
+
         public string RackTextName
         {
             get { return rackTextName; }
             set
             {
-                if (rackTextName != value)
+                if(rackTextName != value)
                 {
                     rackTextName = value;
                     RaisePropertyChanged(nameof(RackTextName));
@@ -27,32 +31,35 @@ namespace PentagonHMI
         }
 
         private bool rackTextEnable = false;
+
         public bool RackTextEnable
         {
             get { return rackTextEnable; }
             set
             {
-                if (rackTextEnable != value)
+                if(rackTextEnable != value)
                 {
                     rackTextEnable = value;
                     RaisePropertyChanged(nameof(RackTextEnable));
                 }
             }
         }
-        
+
         private string rackText = string.Empty;
+
         public string RackText
         {
             get { return rackText; }
             set
             {
-                if (rackText != value)
+                if(rackText != value)
                 {
                     rackText = value;
                     RaisePropertyChanged(nameof(RackText));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

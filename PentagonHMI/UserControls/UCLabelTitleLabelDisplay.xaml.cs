@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,14 +10,18 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelTitleLabelDisplay : UserControl
     {
         #region Constructor
+
         public UCLabelTitleLabelDisplay()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleContentProperty =
@@ -42,15 +36,16 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleContentProperty); }
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
-        #endregion
+
+        #endregion ucLabelTitle Properties
 
         public double ucLabelTitleWidth
         {
-            get 
+            get
             {
                 return ucLabelTitle.Width;
             }
-            set 
+            set
             {
                 ucLabelTitle.Width = value;
                 ucLabelDisplay.Margin = new Thickness(value, 0, 0, 0);
@@ -65,21 +60,23 @@ namespace PentagonHMI.UserControls
             }
             set
             {
-                ucLabelDisplay.MinWidth = value;                
+                ucLabelDisplay.MinWidth = value;
             }
         }
+
         public double ucFontSize
         {
-            get 
+            get
             {
                 return ucLabelTitle.FontSize;
             }
-            set 
+            set
             {
                 this.ucLabelTitle.FontSize = value;
                 this.ucLabelDisplay.FontSize = value;
             }
         }
+
         public FontWeight ucFontWeight
         {
             get
@@ -92,6 +89,7 @@ namespace PentagonHMI.UserControls
                 this.ucLabelDisplay.FontWeight = value;
             }
         }
+
         public string ucText
         {
             get
@@ -99,7 +97,7 @@ namespace PentagonHMI.UserControls
                 return ucLabelDisplay.Content.ToString();
             }
             set
-            {                
+            {
                 //this.ucLabelDisplay.Dispatcher.Invoke(new Action(() => this.ucLabelDisplay.Content = value));
                 this.ucLabelDisplay.Content = value;
             }
@@ -114,7 +112,7 @@ namespace PentagonHMI.UserControls
             set
             {
                 this.ucLabelDisplay.Foreground = value;
-               // this.ucLabelTitle.Foreground = value;
+                // this.ucLabelTitle.Foreground = value;
             }
         }
 
@@ -130,6 +128,7 @@ namespace PentagonHMI.UserControls
                 this.ucLabelTitle.Style = value;
             }
         }
-        #endregion
+
+        #endregion Properties
     }
 }

@@ -1,74 +1,74 @@
 ﻿<UserControl x:Class="PentagonHMI.UserControls.UCIOLocMain"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
     <UserControl.Resources>
 
         <Style TargetType="Canvas" x:Key="SubPage">
-            <Setter Property="Width" Value="1300"/>
-            <Setter Property="Height" Value="600"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Visibility" Value="Collapsed"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Width" Value="1300" />
+            <Setter Property="Height" Value="600" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Visibility" Value="Collapsed" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
         </Style>
 
         <Style TargetType="Image" x:Key="Background">
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
 
         <Style TargetType="Image" x:Key="Icon">
-            <Setter Property="Canvas.Top" Value="0"/>
-            <Setter Property="Canvas.Left" Value="0"/>
-            <EventSetter Event="MouseLeftButtonDown" Handler="Paging_MouseLeftButtonDown"/>
+            <Setter Property="Canvas.Top" Value="0" />
+            <Setter Property="Canvas.Left" Value="0" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="Paging_MouseLeftButtonDown" />
         </Style>
 
         <Style TargetType="Image" x:Key="Menu">
-            <Setter Property="Margin" Value="22 5 22 5"/>
-            <Setter Property="Width" Value="270"/>
-            <EventSetter Event="MouseLeftButtonDown" Handler="Image_MouseLeftButtonDown"/>
+            <Setter Property="Margin" Value="22 5 22 5" />
+            <Setter Property="Width" Value="270" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="Image_MouseLeftButtonDown" />
         </Style>
 
         <Style TargetType="Grid" x:Key="Grid">
-            <Setter Property="Width" Value="1300"/>
-            <Setter Property="Height" Value="600"/>
+            <Setter Property="Width" Value="1300" />
+            <Setter Property="Height" Value="600" />
         </Style>
 
         <Style TargetType="TabItem">
-            <Setter Property="Visibility" Value="Visible"/>
+            <Setter Property="Visibility" Value="Visible" />
         </Style>
 
         <Style TargetType="Ellipse">
-            <Setter Property="Width" Value="23"/>
-            <Setter Property="Height" Value="23"/>
-            <Setter Property="Stroke" Value="LawnGreen"/>
-            <Setter Property="StrokeThickness" Value="2"/>
+            <Setter Property="Width" Value="23" />
+            <Setter Property="Height" Value="23" />
+            <Setter Property="Stroke" Value="LawnGreen" />
+            <Setter Property="StrokeThickness" Value="2" />
         </Style>
 
         <Style TargetType="Line">
-            <Setter Property="Stroke" Value="LawnGreen"/>
-            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Stroke" Value="LawnGreen" />
+            <Setter Property="StrokeThickness" Value="1" />
         </Style>
 
         <Style TargetType="Button">
-            <Setter Property="Content" Value="Main Menu"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Width" Value="150"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="FontSize" Value="20"/>
-            <EventSetter Event="Click" Handler="Button_Click"/>
+            <Setter Property="Content" Value="Main Menu" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="FontSize" Value="20" />
+            <EventSetter Event="Click" Handler="Button_Click" />
             <Style.Triggers>
                 <Trigger Property="IsPressed" Value="True">
                     <Setter Property="RenderTransform">
                         <Setter.Value>
                             <TransformGroup>
-                                <ScaleTransform CenterX="75" CenterY="25"  ScaleX="0.9" ScaleY="0.9"/>
+                                <ScaleTransform CenterX="75" CenterY="25"  ScaleX="0.9" ScaleY="0.9" />
                             </TransformGroup>
                         </Setter.Value>
                     </Setter>
@@ -86,57 +86,56 @@
                     </BeginStoryboard>
                 </EventTrigger>
             </Style.Triggers>
-            <Setter Property="Fill" Value="LawnGreen"/>
-            <Setter Property="Opacity" Value="0.5"/>
-            <EventSetter Event="MouseLeftButtonDown" Handler="Paging_MouseLeftButtonDown"/>
+            <Setter Property="Fill" Value="LawnGreen" />
+            <Setter Property="Opacity" Value="0.5" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="Paging_MouseLeftButtonDown" />
         </Style>
 
-
         <Style x:Key="Area" TargetType="Polygon" BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 70 120, 180 60, 110 20"/>
+            <Setter Property="Points" Value="0 80, 70 120, 180 60, 110 20" />
         </Style>
 
         <Style x:Key="Area2" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 140 165, 250 100, 110 20"/>
+            <Setter Property="Points" Value="0 80, 140 165, 250 100, 110 20" />
         </Style>
 
         <Style x:Key="Area3" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 45 105, 125 60, 80 35"/>
+            <Setter Property="Points" Value="0 80, 45 105, 125 60, 80 35" />
         </Style>
 
         <Style x:Key="Area4" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 45 105, 145 45, 100 20"/>
+            <Setter Property="Points" Value="0 80, 45 105, 145 45, 100 20" />
         </Style>
 
         <Style x:Key="Area5" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="-10 90, 155 180, 245 130, 80 40"/>
+            <Setter Property="Points" Value="-10 90, 155 180, 245 130, 80 40" />
         </Style>
 
         <Style x:Key="Area6" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 110 140, 180 100, 70 40"/>
+            <Setter Property="Points" Value="0 80, 110 140, 180 100, 70 40" />
         </Style>
 
         <Style x:Key="Area7" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="110 40, 110 200, 180 160, 180 0"/>
+            <Setter Property="Points" Value="110 40, 110 200, 180 160, 180 0" />
         </Style>
 
         <Style x:Key="Area8" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 60 115, 145 70, 85 35"/>
+            <Setter Property="Points" Value="0 80, 60 115, 145 70, 85 35" />
         </Style>
 
         <Style x:Key="Area9" TargetType="Polygon"  BasedOn="{StaticResource General}">
-            <Setter Property="Points" Value="0 80, 60 115, 165 55, 105 20"/>
+            <Setter Property="Points" Value="0 80, 60 115, 165 55, 105 20" />
         </Style>
 
         <Style x:Key="AreaSub" TargetType="Polygon" BasedOn="{StaticResource Area}">
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -152,11 +151,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -172,11 +171,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -192,11 +191,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -212,11 +211,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -232,11 +231,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -252,11 +251,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -272,11 +271,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -292,11 +291,11 @@
             <Setter Property="RenderTransform">
                 <Setter.Value>
                     <TransformGroup>
-                        <ScaleTransform ScaleX="0.4" ScaleY="0.4"/>
+                        <ScaleTransform ScaleX="0.4" ScaleY="0.4" />
                     </TransformGroup>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Visibility" Value="Collapsed"/>
+            <Setter Property="Visibility" Value="Collapsed" />
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Polygon.Loaded">
                     <BeginStoryboard>
@@ -317,33 +316,33 @@
                             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
-                                        <Image Tag="1" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/A0.png"/>
+                                        <Image Tag="1" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/A0.png" />
                                         <Label HorizontalAlignment="Center" Content="FRONT LINK" />
                                     </StackPanel>
                                     <StackPanel>
-                                        <Image Tag="2" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/D0.png"/>
+                                        <Image Tag="2" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/D0.png" />
                                         <Label HorizontalAlignment="Center" Content="LINE SETTING (FRONT)" />
                                     </StackPanel>
                                     <StackPanel>
-                                        <Image Tag="3" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/E0.png"/>
+                                        <Image Tag="3" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/E0.png" />
                                         <Label HorizontalAlignment="Center" Content="BIOS &amp; COBRA" />
                                     </StackPanel>
                                     <StackPanel>
-                                        <Image Tag="4" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/F0.png"/>
+                                        <Image Tag="4" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/F0.png" />
                                         <Label HorizontalAlignment="Center" Content="LARGE HEATSINK" />
                                     </StackPanel>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
-                                        <Image Tag="5" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/G0.png"/>
+                                        <Image Tag="5" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/G0.png" />
                                         <Label HorizontalAlignment="Center" Content="SMALL HEATSINK" />
                                     </StackPanel>
                                     <StackPanel>
-                                        <Image Tag="6" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/H0.png"/>
+                                        <Image Tag="6" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/H0.png" />
                                         <Label HorizontalAlignment="Center" Content="LINE SETTING (BACK)" />
                                     </StackPanel>
                                     <StackPanel>
-                                        <Image Tag="7" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/I0.png"/>
+                                        <Image Tag="7" Style="{StaticResource Menu}" Source="/HMI;component/Images/IOLocation/Main/IMG/I0.png" />
                                         <Label HorizontalAlignment="Center" Content="BACK LINK" />
                                     </StackPanel>
                                 </StackPanel>
@@ -357,14 +356,14 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/A0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area8}" Tag="A1" Canvas.Left="323" Canvas.Top="142"/>
-                            <Polygon Style="{StaticResource Area8}" Tag="A2Sub1" Canvas.Left="412" Canvas.Top="195"/>
-                            <Polygon Style="{StaticResource Area8}" Tag="A2Sub2" Canvas.Left="502" Canvas.Top="246"/>
-                            <Polygon Style="{StaticResource Area8}" Tag="A3" Canvas.Left="592" Canvas.Top="300"/>
-                            <Polygon Style="{StaticResource Area8}" Tag="A6" Canvas.Left="727" Canvas.Top="223"/>
-                            <Polygon Style="{StaticResource Area8}" Tag="A5" Canvas.Left="809" Canvas.Top="267"/>
-                            <Polygon Style="{StaticResource Area9}" Tag="A4" Canvas.Left="550" Canvas.Top="108"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area8}" Tag="A1" Canvas.Left="323" Canvas.Top="142" />
+                            <Polygon Style="{StaticResource Area8}" Tag="A2Sub1" Canvas.Left="412" Canvas.Top="195" />
+                            <Polygon Style="{StaticResource Area8}" Tag="A2Sub2" Canvas.Left="502" Canvas.Top="246" />
+                            <Polygon Style="{StaticResource Area8}" Tag="A3" Canvas.Left="592" Canvas.Top="300" />
+                            <Polygon Style="{StaticResource Area8}" Tag="A6" Canvas.Left="727" Canvas.Top="223" />
+                            <Polygon Style="{StaticResource Area8}" Tag="A5" Canvas.Left="809" Canvas.Top="267" />
+                            <Polygon Style="{StaticResource Area9}" Tag="A4" Canvas.Left="550" Canvas.Top="108" />
                         </Canvas>
                         <Canvas Name="A1" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -372,36 +371,35 @@
                             </Grid>
                             <Image Tag="A0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/A0.ico" />
 
-                            <Polygon Name="PolyA1" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="71" Canvas.Left="16"/>
+                            <Polygon Name="PolyA1" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="71" Canvas.Left="16" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="515" Canvas.Top="155"/>
-                            <Line X1="515" X2="425" Y1="170" Y2="231"/>
+                            <Ellipse Canvas.Left="515" Canvas.Top="155" />
+                            <Line X1="515" X2="425" Y1="170" Y2="231" />
                             <Border Canvas.Left="120" Canvas.Top="230" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="595" Canvas.Top="195"/>
-                            <Line X1="595" X2="425" Y1="210" Y2="281"/>
+                            <Ellipse Canvas.Left="595" Canvas.Top="195" />
+                            <Line X1="595" X2="425" Y1="210" Y2="281" />
                             <Border Canvas.Left="120" Canvas.Top="280" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="548" Canvas.Top="235"/>
-                            <Line X1="550" X2="425" Y1="250" Y2="321"/>
+                            <Ellipse Canvas.Left="548" Canvas.Top="235" />
+                            <Line X1="550" X2="425" Y1="250" Y2="321" />
                             <Border Canvas.Left="120" Canvas.Top="320" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="825" Canvas.Top="125"/>
-                            <Ellipse Canvas.Left="660" Canvas.Top="25"/>
-                            <Line X1="680" X2="830" Y1="40" Y2="127"/>
-                            <Line X1="820" X2="750" Y1="50" Y2="80"/>
+                            <Ellipse Canvas.Left="825" Canvas.Top="125" />
+                            <Ellipse Canvas.Left="660" Canvas.Top="25" />
+                            <Line X1="680" X2="830" Y1="40" Y2="127" />
+                            <Line X1="820" X2="750" Y1="50" Y2="80" />
                             <Border Canvas.Left="770" Canvas.Top="25" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="A2" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -409,24 +407,23 @@
                             </Grid>
                             <Image Tag="A0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/A0.ico" />
 
-                            <Polygon Name="PolyA2Sub1" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="88" Canvas.Left="45"/>
+                            <Polygon Name="PolyA2Sub1" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="88" Canvas.Left="45" />
 
-                            <Polygon Name="PolyA2Sub2" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="106" Canvas.Left="77"/>
+                            <Polygon Name="PolyA2Sub2" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="106" Canvas.Left="77" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="525" Canvas.Top="140"/>
-                            <Line X1="525" X2="425" Y1="155" Y2="231"/>
+                            <Ellipse Canvas.Left="525" Canvas.Top="140" />
+                            <Line X1="525" X2="425" Y1="155" Y2="231" />
                             <Border Canvas.Left="120" Canvas.Top="230" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="605" Canvas.Top="185"/>
-                            <Line X1="610" X2="425" Y1="205" Y2="321"/>
+                            <Ellipse Canvas.Left="605" Canvas.Top="185" />
+                            <Line X1="610" X2="425" Y1="205" Y2="321" />
                             <Border Canvas.Left="120" Canvas.Top="320" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="A3" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -434,22 +431,21 @@
                             </Grid>
                             <Image Tag="A0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/A0.ico" />
 
-                            <Polygon Name="PolyA3" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="124" Canvas.Left="105"/>
+                            <Polygon Name="PolyA3" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="124" Canvas.Left="105" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="530" Canvas.Top="170"/>
-                            <Line X1="530" X2="425" Y1="185" Y2="221"/>
+                            <Ellipse Canvas.Left="530" Canvas.Top="170" />
+                            <Line X1="530" X2="425" Y1="185" Y2="221" />
                             <Border Canvas.Left="120" Canvas.Top="220" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="610" Canvas.Top="215"/>
-                            <Line X1="610" X2="425" Y1="225" Y2="291"/>
+                            <Ellipse Canvas.Left="610" Canvas.Top="215" />
+                            <Line X1="610" X2="425" Y1="225" Y2="291" />
                             <Border Canvas.Left="120" Canvas.Top="290" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="A4" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -457,22 +453,21 @@
                             </Grid>
                             <Image Tag="A0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/A0.ico" />
 
-                            <Polygon Name="PolyA4" Tag="A0" Style="{StaticResource Area9Sub}" Canvas.Top="61" Canvas.Left="89"/>
+                            <Polygon Name="PolyA4" Tag="A0" Style="{StaticResource Area9Sub}" Canvas.Top="61" Canvas.Left="89" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="445" Canvas.Top="170"/>
-                            <Line X1="447" X2="325" Y1="185" Y2="251"/>
+                            <Ellipse Canvas.Left="445" Canvas.Top="170" />
+                            <Line X1="447" X2="325" Y1="185" Y2="251" />
                             <Border Canvas.Left="20" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="660" Canvas.Top="295"/>
-                            <Line X1="660" X2="325" Y1="305" Y2="381"/>
+                            <Ellipse Canvas.Left="660" Canvas.Top="295" />
+                            <Line X1="660" X2="325" Y1="305" Y2="381" />
                             <Border Canvas.Left="20" Canvas.Top="380" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="A5" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -480,34 +475,33 @@
                             </Grid>
                             <Image Tag="A0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/A0.ico" />
 
-                            <Polygon Name="PolyA5" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="113" Canvas.Left="168"/>
+                            <Polygon Name="PolyA5" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="113" Canvas.Left="168" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="680" Canvas.Top="145"/>
-                            <Line X1="680" X2="565" Y1="158" Y2="125"/>
+                            <Ellipse Canvas.Left="680" Canvas.Top="145" />
+                            <Line X1="680" X2="565" Y1="158" Y2="125" />
                             <Border Canvas.Left="260" Canvas.Top="100" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="680" Canvas.Top="55"/>
-                            <Line X1="702" X2="800" Y1="65" Y2="86"/>
+                            <Ellipse Canvas.Left="680" Canvas.Top="55" />
+                            <Line X1="702" X2="800" Y1="65" Y2="86" />
                             <Border Canvas.Left="800" Canvas.Top="85" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="812" Canvas.Top="135"/>
-                            <Line X1="835" X2="900" Y1="145" Y2="165"/>
+                            <Ellipse Canvas.Left="812" Canvas.Top="135" />
+                            <Line X1="835" X2="900" Y1="145" Y2="165" />
                             <Border Canvas.Left="900" Canvas.Top="165" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="812" Canvas.Top="222"/>
-                            <Line X1="835" X2="900" Y1="235" Y2="245"/>
+                            <Ellipse Canvas.Left="812" Canvas.Top="222" />
+                            <Line X1="835" X2="900" Y1="235" Y2="245" />
                             <Border Canvas.Left="900" Canvas.Top="245" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="A6" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -515,34 +509,33 @@
                             </Grid>
                             <Image Tag="A0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/A0.ico" />
 
-                            <Polygon Name="PolyA6" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="95" Canvas.Left="141"/>
+                            <Polygon Name="PolyA6" Tag="A0" Style="{StaticResource Area8Sub}" Canvas.Top="95" Canvas.Left="141" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="490" Canvas.Top="218"/>
-                            <Line X1="490" X2="325" Y1="230" Y2="251"/>
+                            <Ellipse Canvas.Left="490" Canvas.Top="218" />
+                            <Line X1="490" X2="325" Y1="230" Y2="251" />
                             <Border Canvas.Left="20" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="610" Canvas.Top="290"/>
-                            <Line X1="610" X2="325" Y1="300" Y2="331"/>
+                            <Ellipse Canvas.Left="610" Canvas.Top="290" />
+                            <Line X1="610" X2="325" Y1="300" Y2="331" />
                             <Border Canvas.Left="20" Canvas.Top="330" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="610" Canvas.Top="370"/>
-                            <Line X1="610" X2="325" Y1="380" Y2="411"/>
+                            <Ellipse Canvas.Left="610" Canvas.Top="370" />
+                            <Line X1="610" X2="325" Y1="380" Y2="411" />
                             <Border Canvas.Left="20" Canvas.Top="410" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="690" Canvas.Top="260"/>
-                            <Line X1="712" X2="850" Y1="270" Y2="300"/>
+                            <Ellipse Canvas.Left="690" Canvas.Top="260" />
+                            <Line X1="712" X2="850" Y1="270" Y2="300" />
                             <Border Canvas.Left="850" Canvas.Top="300" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                     </Grid>
                 </TabItem>
@@ -552,17 +545,17 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/D0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub1" Canvas.Left="344" Canvas.Top="102"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub1" Canvas.Left="403" Canvas.Top="136"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub2" Canvas.Left="454" Canvas.Top="168"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub2" Canvas.Left="508" Canvas.Top="198"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub3" Canvas.Left="564" Canvas.Top="231"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub3" Canvas.Left="618" Canvas.Top="262"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub4" Canvas.Left="673" Canvas.Top="294"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub4" Canvas.Left="726" Canvas.Top="324"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub5" Canvas.Left="782" Canvas.Top="355"/>
-                            <Polygon Style="{StaticResource Area7}" Tag="D2" Canvas.Left="773" Canvas.Top="363"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub1" Canvas.Left="344" Canvas.Top="102" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub1" Canvas.Left="403" Canvas.Top="136" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub2" Canvas.Left="454" Canvas.Top="168" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub2" Canvas.Left="508" Canvas.Top="198" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub3" Canvas.Left="564" Canvas.Top="231" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub3" Canvas.Left="618" Canvas.Top="262" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub4" Canvas.Left="673" Canvas.Top="294" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D3Sub4" Canvas.Left="726" Canvas.Top="324" />
+                            <Polygon Style="{StaticResource Area3}" Tag="D1Sub5" Canvas.Left="782" Canvas.Top="355" />
+                            <Polygon Style="{StaticResource Area7}" Tag="D2" Canvas.Left="773" Canvas.Top="363" />
                         </Canvas>
                         <Canvas Name="D1" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -570,67 +563,66 @@
                             </Grid>
                             <Image Tag="D0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/D0.ico" />
 
-                            <Polygon Name="PolyD1Sub1" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="59" Canvas.Left="24"/>
+                            <Polygon Name="PolyD1Sub1" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="59" Canvas.Left="24" />
 
-                            <Polygon Name="PolyD1Sub2" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="79" Canvas.Left="56"/>
+                            <Polygon Name="PolyD1Sub2" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="79" Canvas.Left="56" />
 
-                            <Polygon Name="PolyD1Sub3" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="99" Canvas.Left="91"/>
+                            <Polygon Name="PolyD1Sub3" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="99" Canvas.Left="91" />
 
-                            <Polygon Name="PolyD1Sub4" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="120" Canvas.Left="127"/>
+                            <Polygon Name="PolyD1Sub4" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="120" Canvas.Left="127" />
 
-                            <Polygon Name="PolyD1Sub5" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="141" Canvas.Left="166"/>
+                            <Polygon Name="PolyD1Sub5" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="141" Canvas.Left="166" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="445" Canvas.Top="180"/>
-                            <Ellipse Canvas.Left="615" Canvas.Top="280"/>
-                            <Line X1="465" X2="620" Y1="195" Y2="285"/>
-                            <Line X1="550" X2="485" Y1="245" Y2="290"/>
+                            <Ellipse Canvas.Left="445" Canvas.Top="180" />
+                            <Ellipse Canvas.Left="615" Canvas.Top="280" />
+                            <Line X1="465" X2="620" Y1="195" Y2="285" />
+                            <Line X1="550" X2="485" Y1="245" Y2="290" />
                             <Border Canvas.Left="222" Canvas.Top="280" BorderBrush="LawnGreen" BorderThickness="1">
                                 <StackPanel>
-                                    <CheckBox Tag="I223" Content="PIO212_I1.7 - Z12a Push Button" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
-                                    <CheckBox Tag="O199" Content="PIO212_Q5.7 - Z12a Push Button Indicator" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Tag="I223" Content="PIO212_I1.7 - Z12a Push Button" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
+                                    <CheckBox Tag="O199" Content="PIO212_Q5.7 - Z12a Push Button Indicator" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </StackPanel>
                             </Border>
 
-                            <Ellipse Canvas.Left="605" Canvas.Top="120"/>
-                            <Line X1="610" X2="555" Y1="125" Y2="90"/>
+                            <Ellipse Canvas.Left="605" Canvas.Top="120" />
+                            <Line X1="610" X2="555" Y1="125" Y2="90" />
                             <Border Canvas.Left="255" Canvas.Top="45" BorderBrush="LawnGreen" BorderThickness="1">
                                 <StackPanel>
-                                    <CheckBox Tag="I240" Content="PIO212_I4.0 - Z12a Locating Stopper Extend Sens" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
-                                    <CheckBox Tag="O198" Content="PIO212_Q5.6 - Z12a Locating Stopper Extend" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Tag="I240" Content="PIO212_I4.0 - Z12a Locating Stopper Extend Sens" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
+                                    <CheckBox Tag="O198" Content="PIO212_Q5.6 - Z12a Locating Stopper Extend" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </StackPanel>
                             </Border>
 
-                            <Ellipse Canvas.Left="695" Canvas.Top="45"/>
-                            <Line X1="715" X2="800" Y1="60" Y2="80"/>
+                            <Ellipse Canvas.Left="695" Canvas.Top="45" />
+                            <Line X1="715" X2="800" Y1="60" Y2="80" />
                             <Border Canvas.Left="800" Canvas.Top="80" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Tag="I216" Content="PIO212_I1.0 - Z12a Upper Conveyor Present Sensor IN" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Tag="I216" Content="PIO212_I1.0 - Z12a Upper Conveyor Present Sensor IN" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="835" Canvas.Top="125"/>
-                            <Line X1="857" X2="890" Y1="135" Y2="150"/>
+                            <Ellipse Canvas.Left="835" Canvas.Top="125" />
+                            <Line X1="857" X2="890" Y1="135" Y2="150" />
                             <Border Canvas.Left="890" Canvas.Top="150" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Tag="I217" Content="PIO212_I1.1 - Z12a Upper Conveyor Present Sensor OUT" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Tag="I217" Content="PIO212_I1.1 - Z12a Upper Conveyor Present Sensor OUT" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="835" Canvas.Top="225"/>
-                            <Line X1="857" X2="890" Y1="235" Y2="250"/>
+                            <Ellipse Canvas.Left="835" Canvas.Top="225" />
+                            <Line X1="857" X2="890" Y1="235" Y2="250" />
                             <Border Canvas.Left="890" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Tag="I221" Content="PIO212_I1.5 - Z12a Bottom Conveyor Present Sensor OUT" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Tag="I221" Content="PIO212_I1.5 - Z12a Bottom Conveyor Present Sensor OUT" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="679" Canvas.Top="172"/>
-                            <Line X1="700" X2="890" Y1="185" Y2="300"/>
+                            <Ellipse Canvas.Left="679" Canvas.Top="172" />
+                            <Line X1="700" X2="890" Y1="185" Y2="300" />
                             <Border Canvas.Left="890" Canvas.Top="290" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Tag="I218" Content="PIO212_I1.2 - Z12a Upper Conveyor Tray Present Sensor" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Tag="I218" Content="PIO212_I1.2 - Z12a Upper Conveyor Tray Present Sensor" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Line X1="680" X2="890" Y1="145" Y2="225"/>
+                            <Line X1="680" X2="890" Y1="145" Y2="225" />
                             <Border Canvas.Left="890" Canvas.Top="215" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Tag="I220" Content="PIO212_I1.4 - Z12a Bottom Conveyor Present Sensor IN" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Tag="I220" Content="PIO212_I1.4 - Z12a Bottom Conveyor Present Sensor IN" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="D2" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -638,16 +630,15 @@
                             </Grid>
                             <Image Tag="D0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/D0.ico" />
 
-                            <Polygon Name="PolyD2" Tag="D0" Style="{StaticResource Area7Sub}" Canvas.Top="141" Canvas.Left="159"/>
+                            <Polygon Name="PolyD2" Tag="D0" Style="{StaticResource Area7Sub}" Canvas.Top="141" Canvas.Left="159" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="620" Canvas.Top="410"/>
-                            <Line X1="620" X2="515" Y1="425" Y2="451"/>
+                            <Ellipse Canvas.Left="620" Canvas.Top="410" />
+                            <Line X1="620" X2="515" Y1="425" Y2="451" />
                             <Border Canvas.Left="210" Canvas.Top="450" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="D3" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -655,40 +646,39 @@
                             </Grid>
                             <Image Tag="D0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/D0.ico" />
 
-                            <Polygon Name="PolyD3Sub1" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="67" Canvas.Left="38"/>
+                            <Polygon Name="PolyD3Sub1" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="67" Canvas.Left="38" />
 
-                            <Polygon Name="PolyD3Sub2" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="89" Canvas.Left="75"/>
+                            <Polygon Name="PolyD3Sub2" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="89" Canvas.Left="75" />
 
-                            <Polygon Name="PolyD3Sub3" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="110" Canvas.Left="111"/>
+                            <Polygon Name="PolyD3Sub3" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="110" Canvas.Left="111" />
 
-                            <Polygon Name="PolyD3Sub4" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="131" Canvas.Left="147"/>
+                            <Polygon Name="PolyD3Sub4" Tag="D0" Style="{StaticResource Area3Sub}" Canvas.Top="131" Canvas.Left="147" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="680" Canvas.Top="145"/>
-                            <Line X1="680" X2="565" Y1="158" Y2="125"/>
+                            <Ellipse Canvas.Left="680" Canvas.Top="145" />
+                            <Line X1="680" X2="565" Y1="158" Y2="125" />
                             <Border Canvas.Left="260" Canvas.Top="100" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="680" Canvas.Top="55"/>
-                            <Line X1="702" X2="800" Y1="65" Y2="86"/>
+                            <Ellipse Canvas.Left="680" Canvas.Top="55" />
+                            <Line X1="702" X2="800" Y1="65" Y2="86" />
                             <Border Canvas.Left="800" Canvas.Top="85" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="812" Canvas.Top="135"/>
-                            <Line X1="835" X2="900" Y1="145" Y2="165"/>
+                            <Ellipse Canvas.Left="812" Canvas.Top="135" />
+                            <Line X1="835" X2="900" Y1="145" Y2="165" />
                             <Border Canvas.Left="900" Canvas.Top="165" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="812" Canvas.Top="222"/>
-                            <Line X1="835" X2="900" Y1="235" Y2="245"/>
+                            <Ellipse Canvas.Left="812" Canvas.Top="222" />
+                            <Line X1="835" X2="900" Y1="235" Y2="245" />
                             <Border Canvas.Left="900" Canvas.Top="245" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                     </Grid>
                 </TabItem>
@@ -698,9 +688,9 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/E0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area6}" Tag="E2" Canvas.Left="605" Canvas.Top="71"/>
-                            <Polygon Style="{StaticResource Area5}" Tag="E1" Canvas.Left="480" Canvas.Top="222"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area6}" Tag="E2" Canvas.Left="605" Canvas.Top="71" />
+                            <Polygon Style="{StaticResource Area5}" Tag="E1" Canvas.Left="480" Canvas.Top="222" />
                         </Canvas>
 
                         <Canvas Name="E1" Style="{StaticResource SubPage}">
@@ -709,58 +699,57 @@
                             </Grid>
                             <Image Tag="E0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/E0.ico" />
 
-                            <Polygon Name="PolyE1" Tag="E0" Style="{StaticResource Area5Sub}" Canvas.Top="102" Canvas.Left="66"/>
+                            <Polygon Name="PolyE1" Tag="E0" Style="{StaticResource Area5Sub}" Canvas.Top="102" Canvas.Left="66" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="700" Canvas.Top="260"/>
-                            <Line X1="705" X2="365" Y1="270" Y2="300"/>
+                            <Ellipse Canvas.Left="700" Canvas.Top="260" />
+                            <Line X1="705" X2="365" Y1="270" Y2="300" />
                             <Border Canvas.Left="60" Canvas.Top="291" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="600" Canvas.Top="220"/>
-                            <Line X1="605" X2="565" Y1="225" Y2="110"/>
+                            <Ellipse Canvas.Left="600" Canvas.Top="220" />
+                            <Line X1="605" X2="565" Y1="225" Y2="110" />
                             <Border Canvas.Left="260" Canvas.Top="91" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="775" Canvas.Top="120"/>
-                            <Line X1="775" X2="700" Y1="125" Y2="40"/>
+                            <Ellipse Canvas.Left="775" Canvas.Top="120" />
+                            <Line X1="775" X2="700" Y1="125" Y2="40" />
                             <Border Canvas.Left="400" Canvas.Top="15" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="565" Canvas.Top="340"/>
-                            <Line X1="565" X2="365" Y1="350" Y2="380"/>
+                            <Ellipse Canvas.Left="565" Canvas.Top="340" />
+                            <Line X1="565" X2="365" Y1="350" Y2="380" />
                             <Border Canvas.Left="60" Canvas.Top="370" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="570" Canvas.Top="420"/>
-                            <Line X1="570" X2="365" Y1="430" Y2="470"/>
+                            <Ellipse Canvas.Left="570" Canvas.Top="420" />
+                            <Line X1="570" X2="365" Y1="430" Y2="470" />
                             <Border Canvas.Left="60" Canvas.Top="460" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="745" Canvas.Top="320"/>
-                            <Line X1="762" X2="800" Y1="340" Y2="486"/>
+                            <Ellipse Canvas.Left="745" Canvas.Top="320" />
+                            <Line X1="762" X2="800" Y1="340" Y2="486" />
                             <Border Canvas.Left="800" Canvas.Top="480" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="738" Canvas.Top="237"/>
-                            <Line X1="835" X2="1000" Y1="140" Y2="235" Canvas.Left="-79" Canvas.Top="117"/>
+                            <Ellipse Canvas.Left="738" Canvas.Top="237" />
+                            <Line X1="835" X2="1000" Y1="140" Y2="235" Canvas.Left="-79" Canvas.Top="117" />
                             <Border Canvas.Left="920" Canvas.Top="350" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="877" Canvas.Top="159"/>
-                            <Line X1="890" X2="900" Y1="180" Y2="245"/>
+                            <Ellipse Canvas.Left="877" Canvas.Top="159" />
+                            <Line X1="890" X2="900" Y1="180" Y2="245" />
                             <Border Canvas.Left="900" Canvas.Top="245" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="E2" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -768,16 +757,15 @@
                             </Grid>
                             <Image Tag="E0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/E0.ico" />
 
-                            <Polygon Name="PolyE2" Tag="E0" Style="{StaticResource Area6Sub}" Canvas.Top="36" Canvas.Left="107"/>
+                            <Polygon Name="PolyE2" Tag="E0" Style="{StaticResource Area6Sub}" Canvas.Top="36" Canvas.Left="107" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="605" Canvas.Top="415"/>
-                            <Line X1="605" X2="500" Y1="425" Y2="451"/>
+                            <Ellipse Canvas.Left="605" Canvas.Top="415" />
+                            <Line X1="605" X2="500" Y1="425" Y2="451" />
                             <Border Canvas.Left="195" Canvas.Top="450" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                     </Grid>
                 </TabItem>
@@ -787,9 +775,9 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/F0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area4}" Tag="F1" Canvas.Left="388" Canvas.Top="308"/>
-                            <Polygon Style="{StaticResource Area5}" Tag="F2" Canvas.Left="570" Canvas.Top="218"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area4}" Tag="F1" Canvas.Left="388" Canvas.Top="308" />
+                            <Polygon Style="{StaticResource Area5}" Tag="F2" Canvas.Left="570" Canvas.Top="218" />
                         </Canvas>
                         <Canvas Visibility="Visible" Name="F1" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -797,16 +785,15 @@
                             </Grid>
                             <Image Tag="F0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/F0.ico" />
 
-                            <Polygon Name="PolyF1" Tag="F0" Style="{StaticResource Area4Sub}" Canvas.Top="131" Canvas.Left="26"/>
+                            <Polygon Name="PolyF1" Tag="F0" Style="{StaticResource Area4Sub}" Canvas.Top="131" Canvas.Left="26" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="576" Canvas.Top="282"/>
-                            <Line X1="577" X2="390" Y1="295" Y2="321"/>
+                            <Ellipse Canvas.Left="576" Canvas.Top="282" />
+                            <Line X1="577" X2="390" Y1="295" Y2="321" />
                             <Border Canvas.Left="85" Canvas.Top="310" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="F2" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -814,55 +801,55 @@
                             </Grid>
                             <Image Tag="F0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/F0.ico" />
 
-                            <Polygon Name="PolyF2" Tag="F0" Style="{StaticResource Area5Sub}" Canvas.Top="94" Canvas.Left="92"/>
+                            <Polygon Name="PolyF2" Tag="F0" Style="{StaticResource Area5Sub}" Canvas.Top="94" Canvas.Left="92" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="556" Canvas.Top="356"/>
-                            <Line X1="558" X2="390" Y1="370" Y2="491"/>
+                            <Ellipse Canvas.Left="556" Canvas.Top="356" />
+                            <Line X1="558" X2="390" Y1="370" Y2="491" />
                             <Border Canvas.Left="85" Canvas.Top="490" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="566" Canvas.Top="433"/>
-                            <Line X1="568" X2="400" Y1="450" Y2="571"/>
+                            <Ellipse Canvas.Left="566" Canvas.Top="433" />
+                            <Line X1="568" X2="400" Y1="450" Y2="571" />
                             <Border Canvas.Left="95" Canvas.Top="570" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="695" Canvas.Top="274"/>
-                            <Line X1="708" X2="708" Y1="295" Y2="571"/>
+                            <Ellipse Canvas.Left="695" Canvas.Top="274" />
+                            <Line X1="708" X2="708" Y1="295" Y2="571" />
                             <Border Canvas.Left="705" Canvas.Top="570" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="726" Canvas.Top="257"/>
-                            <Line X1="738" X2="738" Y1="280" Y2="536"/>
+                            <Ellipse Canvas.Left="726" Canvas.Top="257" />
+                            <Line X1="738" X2="738" Y1="280" Y2="536" />
                             <Border Canvas.Left="735" Canvas.Top="535" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="737" Canvas.Top="334"/>
-                            <Line X1="748" X2="748" Y1="355" Y2="501"/>
+                            <Ellipse Canvas.Left="737" Canvas.Top="334" />
+                            <Line X1="748" X2="748" Y1="355" Y2="501" />
                             <Border Canvas.Left="745" Canvas.Top="500" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="865" Canvas.Top="176"/>
-                            <Line X1="876" X2="948" Y1="198" Y2="251"/>
+                            <Ellipse Canvas.Left="865" Canvas.Top="176" />
+                            <Line X1="876" X2="948" Y1="198" Y2="251" />
                             <Border Canvas.Left="945" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="595" Canvas.Top="240"/>
-                            <Line X1="786" X2="945" Y1="158" Y2="111"/>
+                            <Ellipse Canvas.Left="595" Canvas.Top="240" />
+                            <Line X1="786" X2="945" Y1="158" Y2="111" />
                             <Border Canvas.Left="945" Canvas.Top="100" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="765" Canvas.Top="146"/>
-                            <Line X1="600" X2="525" Y1="244" Y2="141"/>
+                            <Ellipse Canvas.Left="765" Canvas.Top="146" />
+                            <Line X1="600" X2="525" Y1="244" Y2="141" />
                             <Border Canvas.Left="245" Canvas.Top="115" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
                             <!--IO-->
@@ -875,9 +862,9 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/G0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area4}" Tag="G1" Canvas.Left="447" Canvas.Top="354"/>
-                            <Polygon Style="{StaticResource Area5}" Tag="G2" Canvas.Left="543" Canvas.Top="211"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area4}" Tag="G1" Canvas.Left="447" Canvas.Top="354" />
+                            <Polygon Style="{StaticResource Area5}" Tag="G2" Canvas.Left="543" Canvas.Top="211" />
                         </Canvas>
                         <Canvas Name="G1" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -885,8 +872,7 @@
                             </Grid>
                             <Image Tag="G0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/G0.ico" />
 
-                            <Polygon Name="PolyG1" Tag="G0" Style="{StaticResource Area4Sub}" Canvas.Top="152" Canvas.Left="43"/>
-
+                            <Polygon Name="PolyG1" Tag="G0" Style="{StaticResource Area4Sub}" Canvas.Top="152" Canvas.Left="43" />
                         </Canvas>
                         <Canvas Name="G2" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -894,59 +880,58 @@
                             </Grid>
                             <Image Tag="G0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/G0.ico" />
 
-                            <Polygon Name="PolyG2" Tag="G0" Style="{StaticResource Area5Sub}" Canvas.Top="92" Canvas.Left="79"/>
+                            <Polygon Name="PolyG2" Tag="G0" Style="{StaticResource Area5Sub}" Canvas.Top="92" Canvas.Left="79" />
 
                             <!--IO-->
-                            <Ellipse Canvas.Left="550" Canvas.Top="344"/>
-                            <Line X1="558" X2="390" Y1="360" Y2="481"/>
+                            <Ellipse Canvas.Left="550" Canvas.Top="344" />
+                            <Line X1="558" X2="390" Y1="360" Y2="481" />
                             <Border Canvas.Left="85" Canvas.Top="480" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="562" Canvas.Top="427"/>
-                            <Line X1="568" X2="400" Y1="440" Y2="561"/>
+                            <Ellipse Canvas.Left="562" Canvas.Top="427" />
+                            <Line X1="568" X2="400" Y1="440" Y2="561" />
                             <Border Canvas.Left="95" Canvas.Top="560" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="699" Canvas.Top="259"/>
-                            <Line X1="710" X2="710" Y1="280" Y2="571"/>
+                            <Ellipse Canvas.Left="699" Canvas.Top="259" />
+                            <Line X1="710" X2="710" Y1="280" Y2="571" />
                             <Border Canvas.Left="705" Canvas.Top="570" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="732" Canvas.Top="240"/>
-                            <Line X1="743" X2="743" Y1="262" Y2="536"/>
+                            <Ellipse Canvas.Left="732" Canvas.Top="240" />
+                            <Line X1="743" X2="743" Y1="262" Y2="536" />
                             <Border Canvas.Left="740" Canvas.Top="535" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="743" Canvas.Top="322"/>
-                            <Line X1="755" X2="755" Y1="345" Y2="501"/>
+                            <Ellipse Canvas.Left="743" Canvas.Top="322" />
+                            <Line X1="755" X2="755" Y1="345" Y2="501" />
                             <Border Canvas.Left="750" Canvas.Top="500" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="880" Canvas.Top="155"/>
-                            <Line X1="896" X2="948" Y1="178" Y2="251"/>
+                            <Ellipse Canvas.Left="880" Canvas.Top="155" />
+                            <Line X1="896" X2="948" Y1="178" Y2="251" />
                             <Border Canvas.Left="945" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="775" Canvas.Top="116"/>
-                            <Line X1="796" X2="945" Y1="128" Y2="81"/>
+                            <Ellipse Canvas.Left="775" Canvas.Top="116" />
+                            <Line X1="796" X2="945" Y1="128" Y2="81" />
                             <Border Canvas.Left="945" Canvas.Top="70" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="590" Canvas.Top="220"/>
-                            <Line X1="595" X2="525" Y1="225" Y2="121"/>
+                            <Ellipse Canvas.Left="590" Canvas.Top="220" />
+                            <Line X1="595" X2="525" Y1="225" Y2="121" />
                             <Border Canvas.Left="245" Canvas.Top="95" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
                             <!--IO-->
-
                         </Canvas>
                     </Grid>
                 </TabItem>
@@ -956,14 +941,14 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/H0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub1" Canvas.Left="348" Canvas.Top="98"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H1Sub1" Canvas.Left="420" Canvas.Top="139"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub2" Canvas.Left="500" Canvas.Top="185"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H1Sub2" Canvas.Left="574" Canvas.Top="228"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub3" Canvas.Left="649" Canvas.Top="271"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H1Sub3" Canvas.Left="725" Canvas.Top="314"/>
-                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub4" Canvas.Left="805" Canvas.Top="361"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub1" Canvas.Left="348" Canvas.Top="98" />
+                            <Polygon Style="{StaticResource Area3}" Tag="H1Sub1" Canvas.Left="420" Canvas.Top="139" />
+                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub2" Canvas.Left="500" Canvas.Top="185" />
+                            <Polygon Style="{StaticResource Area3}" Tag="H1Sub2" Canvas.Left="574" Canvas.Top="228" />
+                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub3" Canvas.Left="649" Canvas.Top="271" />
+                            <Polygon Style="{StaticResource Area3}" Tag="H1Sub3" Canvas.Left="725" Canvas.Top="314" />
+                            <Polygon Style="{StaticResource Area3}" Tag="H2Sub4" Canvas.Left="805" Canvas.Top="361" />
                         </Canvas>
                         <Canvas Name="H1" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -971,48 +956,47 @@
                             </Grid>
                             <Image Tag="H0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/H0.ico" />
 
-                            <Polygon Name="PolyH1Sub1" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="70" Canvas.Left="44"/>
+                            <Polygon Name="PolyH1Sub1" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="70" Canvas.Left="44" />
 
-                            <Polygon Name="PolyH1Sub2" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="100" Canvas.Left="96"/>
+                            <Polygon Name="PolyH1Sub2" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="100" Canvas.Left="96" />
 
-                            <Polygon Name="PolyH1Sub3" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="129" Canvas.Left="147"/>
+                            <Polygon Name="PolyH1Sub3" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="129" Canvas.Left="147" />
 
                             <!--IO-->
 
-                            <Ellipse Canvas.Left="615" Canvas.Top="280"/>
-                            <Ellipse Canvas.Left="445" Canvas.Top="181"/>
-                            <Line X1="615" X2="465" Y1="285" Y2="196"/>
-                            <Line X1="555" X2="525" Y1="250" Y2="121"/>
+                            <Ellipse Canvas.Left="615" Canvas.Top="280" />
+                            <Ellipse Canvas.Left="445" Canvas.Top="181" />
+                            <Line X1="615" X2="465" Y1="285" Y2="196" />
+                            <Line X1="555" X2="525" Y1="250" Y2="121" />
                             <Border Canvas.Left="245" Canvas.Top="95" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="607" Canvas.Top="119"/>
-                            <Line X1="615" X2="550" Y1="122" Y2="71"/>
+                            <Ellipse Canvas.Left="607" Canvas.Top="119" />
+                            <Line X1="615" X2="550" Y1="122" Y2="71" />
                             <Border Canvas.Left="245" Canvas.Top="55" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="695" Canvas.Top="46"/>
-                            <Line X1="696" X2="550" Y1="55" Y2="31"/>
+                            <Ellipse Canvas.Left="695" Canvas.Top="46" />
+                            <Line X1="696" X2="550" Y1="55" Y2="31" />
                             <Border Canvas.Left="245" Canvas.Top="20" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="835" Canvas.Top="128"/>
-                            <Line X1="850" X2="890" Y1="130" Y2="71"/>
+                            <Ellipse Canvas.Left="835" Canvas.Top="128" />
+                            <Line X1="850" X2="890" Y1="130" Y2="71" />
                             <Border Canvas.Left="880" Canvas.Top="45" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="835" Canvas.Top="220"/>
-                            <Line X1="850" X2="890" Y1="223" Y2="163"/>
+                            <Ellipse Canvas.Left="835" Canvas.Top="220" />
+                            <Line X1="850" X2="890" Y1="223" Y2="163" />
                             <Border Canvas.Left="880" Canvas.Top="137" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
                             <!--IO-->
-
                         </Canvas>
                         <Canvas Name="H2" Style="{StaticResource SubPage}">
                             <Grid Style="{StaticResource Grid}">
@@ -1020,42 +1004,41 @@
                             </Grid>
                             <Image Tag="H0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/H0.ico" />
 
-                            <Polygon Name="PolyH2Sub1" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="56" Canvas.Left="19"/>
+                            <Polygon Name="PolyH2Sub1" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="56" Canvas.Left="19" />
 
-                            <Polygon Name="PolyH2Sub2" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="85" Canvas.Left="68"/>
+                            <Polygon Name="PolyH2Sub2" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="85" Canvas.Left="68" />
 
-                            <Polygon Name="PolyH2Sub3" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="115" Canvas.Left="120"/>
+                            <Polygon Name="PolyH2Sub3" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="115" Canvas.Left="120" />
 
-                            <Polygon Name="PolyH2Sub4" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="145" Canvas.Left="172"/>
+                            <Polygon Name="PolyH2Sub4" Tag="G0" Style="{StaticResource Area3Sub}" Canvas.Top="145" Canvas.Left="172" />
 
                             <!--IO-->
 
-                            <Ellipse Canvas.Left="679" Canvas.Top="42"/>
-                            <Line X1="678" X2="570" Y1="55" Y2="31"/>
+                            <Ellipse Canvas.Left="679" Canvas.Top="42" />
+                            <Line X1="678" X2="570" Y1="55" Y2="31" />
                             <Border Canvas.Left="265" Canvas.Top="20" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="679" Canvas.Top="137"/>
-                            <Line X1="680" X2="570" Y1="145" Y2="121"/>
+                            <Ellipse Canvas.Left="679" Canvas.Top="137" />
+                            <Line X1="680" X2="570" Y1="145" Y2="121" />
                             <Border Canvas.Left="265" Canvas.Top="105" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="818" Canvas.Top="124"/>
-                            <Line X1="840" X2="880" Y1="130" Y2="71"/>
+                            <Ellipse Canvas.Left="818" Canvas.Top="124" />
+                            <Line X1="840" X2="880" Y1="130" Y2="71" />
                             <Border Canvas.Left="870" Canvas.Top="45" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
-                            <Ellipse Canvas.Left="818" Canvas.Top="220"/>
-                            <Line X1="840" X2="880" Y1="228" Y2="168"/>
+                            <Ellipse Canvas.Left="818" Canvas.Top="220" />
+                            <Line X1="840" X2="880" Y1="228" Y2="168" />
                             <Border Canvas.Left="880" Canvas.Top="147" BorderBrush="LawnGreen" BorderThickness="1">
-                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                             </Border>
 
                             <!--IO-->
-
                         </Canvas>
                     </Grid>
                 </TabItem>
@@ -1065,15 +1048,15 @@
                             <Grid Style="{StaticResource Grid}">
                                 <Image Style="{StaticResource Background}" Source="/HMI;component/Images/IOLocation/Main/IMG/I0.png" />
                             </Grid>
-                            <Button/>
-                            <Polygon Style="{StaticResource Area}" Tag="I4Sub1" Canvas.Left="384" Canvas.Top="3"/>
-                            <Polygon Style="{StaticResource Area}" Tag="I4Sub2" Canvas.Left="457" Canvas.Top="45"/>
-                            <Polygon Style="{StaticResource Area}" Tag="I3" Canvas.Left="532" Canvas.Top="86"/>
-                            <Polygon Style="{StaticResource Area2}" Tag="I5" Canvas.Left="636" Canvas.Top="114"/>
-                            <Polygon Style="{StaticResource Area}" Tag="I1Sub1" Canvas.Left="423" Canvas.Top="149"/>
-                            <Polygon Style="{StaticResource Area}" Tag="I1Sub2" Canvas.Left="505" Canvas.Top="197"/>
-                            <Polygon Style="{StaticResource Area}" Tag="I1Sub3" Canvas.Left="596" Canvas.Top="251"/>
-                            <Polygon Style="{StaticResource Area}" Tag="I2" Canvas.Left="705" Canvas.Top="310"/>
+                            <Button />
+                            <Polygon Style="{StaticResource Area}" Tag="I4Sub1" Canvas.Left="384" Canvas.Top="3" />
+                            <Polygon Style="{StaticResource Area}" Tag="I4Sub2" Canvas.Left="457" Canvas.Top="45" />
+                            <Polygon Style="{StaticResource Area}" Tag="I3" Canvas.Left="532" Canvas.Top="86" />
+                            <Polygon Style="{StaticResource Area2}" Tag="I5" Canvas.Left="636" Canvas.Top="114" />
+                            <Polygon Style="{StaticResource Area}" Tag="I1Sub1" Canvas.Left="423" Canvas.Top="149" />
+                            <Polygon Style="{StaticResource Area}" Tag="I1Sub2" Canvas.Left="505" Canvas.Top="197" />
+                            <Polygon Style="{StaticResource Area}" Tag="I1Sub3" Canvas.Left="596" Canvas.Top="251" />
+                            <Polygon Style="{StaticResource Area}" Tag="I2" Canvas.Left="705" Canvas.Top="310" />
 
                             <Canvas Name="I1" Style="{StaticResource SubPage}">
                                 <Grid Style="{StaticResource Grid}">
@@ -1081,28 +1064,27 @@
                                 </Grid>
                                 <Image Tag="I0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/I0.ico" />
 
-                                <Polygon Name="PolyI1Sub1" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="70" Canvas.Left="36"/>
+                                <Polygon Name="PolyI1Sub1" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="70" Canvas.Left="36" />
 
-                                <Polygon Name="PolyI1Sub2" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="87" Canvas.Left="71"/>
+                                <Polygon Name="PolyI1Sub2" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="87" Canvas.Left="71" />
 
-                                <Polygon Name="PolyI1Sub3" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="110" Canvas.Left="113"/>
+                                <Polygon Name="PolyI1Sub3" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="110" Canvas.Left="113" />
 
                                 <!--IO-->
 
-                                <Ellipse Canvas.Left="713" Canvas.Top="57"/>
-                                <Line X1="715" X2="600" Y1="65" Y2="31"/>
+                                <Ellipse Canvas.Left="713" Canvas.Top="57" />
+                                <Line X1="715" X2="600" Y1="65" Y2="31" />
                                 <Border Canvas.Left="295" Canvas.Top="20" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="799" Canvas.Top="108"/>
-                                <Line X1="815" X2="880" Y1="110" Y2="71"/>
+                                <Ellipse Canvas.Left="799" Canvas.Top="108" />
+                                <Line X1="815" X2="880" Y1="110" Y2="71" />
                                 <Border Canvas.Left="870" Canvas.Top="45" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
                                 <!--IO-->
-
                             </Canvas>
 
                             <Canvas Name="I2" Style="{StaticResource SubPage}">
@@ -1111,36 +1093,35 @@
                                 </Grid>
                                 <Image Tag="I0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/I0.ico" />
 
-                                <Polygon Name="PolyI2" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="140" Canvas.Left="148"/>
+                                <Polygon Name="PolyI2" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="140" Canvas.Left="148" />
 
                                 <!--IO-->
 
-                                <Ellipse Canvas.Left="653" Canvas.Top="68"/>
-                                <Line X1="655" X2="550" Y1="75" Y2="51"/>
+                                <Ellipse Canvas.Left="653" Canvas.Top="68" />
+                                <Line X1="655" X2="550" Y1="75" Y2="51" />
                                 <Border Canvas.Left="245" Canvas.Top="40" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="538" Canvas.Top="80"/>
-                                <Line X1="540" X2="350" Y1="90" Y2="281"/>
+                                <Ellipse Canvas.Left="538" Canvas.Top="80" />
+                                <Line X1="540" X2="350" Y1="90" Y2="281" />
                                 <Border Canvas.Left="105" Canvas.Top="280" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="478" Canvas.Top="205"/>
-                                <Line X1="490" X2="350" Y1="227" Y2="371"/>
+                                <Ellipse Canvas.Left="478" Canvas.Top="205" />
+                                <Line X1="490" X2="350" Y1="227" Y2="371" />
                                 <Border Canvas.Left="105" Canvas.Top="370" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="741" Canvas.Top="117"/>
-                                <Line X1="763" X2="880" Y1="130" Y2="91"/>
+                                <Ellipse Canvas.Left="741" Canvas.Top="117" />
+                                <Line X1="763" X2="880" Y1="130" Y2="91" />
                                 <Border Canvas.Left="870" Canvas.Top="65" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
                                 <!--IO-->
-
                             </Canvas>
 
                             <Canvas Name="I3" Style="{StaticResource SubPage}">
@@ -1149,35 +1130,34 @@
                                 </Grid>
                                 <Image Tag="I0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/I0.ico" />
 
-                                <Polygon Name="PolyI3" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="40" Canvas.Left="81"/>
+                                <Polygon Name="PolyI3" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="40" Canvas.Left="81" />
 
                                 <!--IO-->
 
-                                <Ellipse Canvas.Left="480" Canvas.Top="218"/>
-                                <Line X1="480" X2="315" Y1="230" Y2="251"/>
+                                <Ellipse Canvas.Left="480" Canvas.Top="218" />
+                                <Line X1="480" X2="315" Y1="230" Y2="251" />
                                 <Border Canvas.Left="10" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="600" Canvas.Top="290"/>
-                                <Line X1="600" X2="315" Y1="300" Y2="331"/>
+                                <Ellipse Canvas.Left="600" Canvas.Top="290" />
+                                <Line X1="600" X2="315" Y1="300" Y2="331" />
                                 <Border Canvas.Left="10" Canvas.Top="330" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="600" Canvas.Top="370"/>
-                                <Line X1="600" X2="315" Y1="380" Y2="411"/>
+                                <Ellipse Canvas.Left="600" Canvas.Top="370" />
+                                <Line X1="600" X2="315" Y1="380" Y2="411" />
                                 <Border Canvas.Left="10" Canvas.Top="410" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="680" Canvas.Top="260"/>
-                                <Line X1="702" X2="840" Y1="270" Y2="300"/>
+                                <Ellipse Canvas.Left="680" Canvas.Top="260" />
+                                <Line X1="702" X2="840" Y1="270" Y2="300" />
                                 <Border Canvas.Left="840" Canvas.Top="300" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
                                 <!--IO-->
-
                             </Canvas>
                             <Canvas Name="I4" Style="{StaticResource SubPage}">
                                 <Grid Style="{StaticResource Grid}">
@@ -1185,42 +1165,41 @@
                                 </Grid>
                                 <Image Tag="I0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/I0.ico" />
 
-                                <Polygon Name="PolyI4Sub1" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="7" Canvas.Left="14"/>
+                                <Polygon Name="PolyI4Sub1" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="7" Canvas.Left="14" />
 
-                                <Polygon Name="PolyI4Sub2" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="26" Canvas.Left="47"/>
+                                <Polygon Name="PolyI4Sub2" Tag="I0" Style="{StaticResource AreaSub}" Canvas.Top="26" Canvas.Left="47" />
 
                                 <!--IO-->
-                                <Ellipse Canvas.Left="678" Canvas.Top="120"/>
-                                <Line X1="680" X2="565" Y1="135" Y2="55"/>
+                                <Ellipse Canvas.Left="678" Canvas.Top="120" />
+                                <Line X1="680" X2="565" Y1="135" Y2="55" />
                                 <Border Canvas.Left="260" Canvas.Top="40" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="585" Canvas.Top="95"/>
-                                <Line X1="590" X2="565" Y1="100" Y2="85"/>
+                                <Ellipse Canvas.Left="585" Canvas.Top="95" />
+                                <Line X1="590" X2="565" Y1="100" Y2="85" />
                                 <Border Canvas.Left="260" Canvas.Top="70" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="678" Canvas.Top="20"/>
-                                <Line X1="699" X2="800" Y1="35" Y2="56"/>
+                                <Ellipse Canvas.Left="678" Canvas.Top="20" />
+                                <Line X1="699" X2="800" Y1="35" Y2="56" />
                                 <Border Canvas.Left="800" Canvas.Top="45" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="826" Canvas.Top="105"/>
-                                <Line X1="847" X2="900" Y1="120" Y2="145"/>
+                                <Ellipse Canvas.Left="826" Canvas.Top="105" />
+                                <Line X1="847" X2="900" Y1="120" Y2="145" />
                                 <Border Canvas.Left="900" Canvas.Top="135" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="827" Canvas.Top="207"/>
-                                <Line X1="845" X2="900" Y1="225" Y2="255"/>
+                                <Ellipse Canvas.Left="827" Canvas.Top="207" />
+                                <Line X1="845" X2="900" Y1="225" Y2="255" />
                                 <Border Canvas.Left="900" Canvas.Top="245" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
                                 <!--IO-->
-
                             </Canvas>
                             <Canvas Name="I5" Style="{StaticResource SubPage}">
                                 <Grid Style="{StaticResource Grid}">
@@ -1228,22 +1207,21 @@
                                 </Grid>
                                 <Image Tag="I0" Style="{StaticResource Icon}" Source="/HMI;component/Images/IOLocation/Main/ICO/I0.ico" />
 
-                                <Polygon Name="PolyI5" Tag="I0" Style="{StaticResource Area2Sub}" Canvas.Top="50" Canvas.Left="125"/>
+                                <Polygon Name="PolyI5" Tag="I0" Style="{StaticResource Area2Sub}" Canvas.Top="50" Canvas.Left="125" />
 
                                 <!--IO-->
-                                <Ellipse Canvas.Left="445" Canvas.Top="170"/>
-                                <Line X1="447" X2="325" Y1="185" Y2="251"/>
+                                <Ellipse Canvas.Left="445" Canvas.Top="170" />
+                                <Line X1="447" X2="325" Y1="185" Y2="251" />
                                 <Border Canvas.Left="20" Canvas.Top="250" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
 
-                                <Ellipse Canvas.Left="660" Canvas.Top="295"/>
-                                <Line X1="660" X2="325" Y1="305" Y2="381"/>
+                                <Ellipse Canvas.Left="660" Canvas.Top="295" />
+                                <Line X1="660" X2="325" Y1="305" Y2="381" />
                                 <Border Canvas.Left="20" Canvas.Top="380" BorderBrush="LawnGreen" BorderThickness="1">
-                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}"/>
+                                    <CheckBox Content="SampleIONameThisIsTheIONameTemptToBeLong" IsHitTestVisible="False" Style="{StaticResource IndicatorCheckBox}" />
                                 </Border>
                                 <!--IO-->
-
                             </Canvas>
                         </Canvas>
                     </Grid>

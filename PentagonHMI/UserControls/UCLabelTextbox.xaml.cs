@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
 
 namespace PentagonHMI.UserControls
 {
@@ -21,14 +9,18 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelTextbox : UserControl
     {
         #region Constructor
+
         public UCLabelTextbox()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleContentProperty =
@@ -43,11 +35,11 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleContentProperty); }
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
-      
-        #endregion
 
-       
-        bool _isNumeric = false;
+        #endregion ucLabelTitle Properties
+
+        private bool _isNumeric = false;
+
         public bool isNumeric
         {
             get { return this._isNumeric; }
@@ -59,15 +51,11 @@ namespace PentagonHMI.UserControls
         {
             get
             {
-
                 return this.ucTextBox.Content.ToString();
-
             }
             set
             {
-
                 this.ucTextBox.Content = value;
-
             }
         }
 
@@ -75,17 +63,14 @@ namespace PentagonHMI.UserControls
         {
             get
             {
-
                 return this.ucLabelTitle.HorizontalAlignment;
-
             }
             set
             {
-
                 this.ucLabelTitle.HorizontalAlignment = value;
-
             }
         }
-        #endregion
+
+        #endregion Properties
     }
 }

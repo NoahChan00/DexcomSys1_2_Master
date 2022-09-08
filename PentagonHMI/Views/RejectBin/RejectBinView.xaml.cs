@@ -12,10 +12,13 @@ namespace PentagonHMI.Views
     public partial class RejectBinView : UserControl
     {
         #region PrivateFields
+
         private List<RejectBinModel> rejectBinList = new List<RejectBinModel>();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public RejectBinView()
         {
             try
@@ -23,14 +26,16 @@ namespace PentagonHMI.Views
                 InitializeComponent();
                 initializeRejectBinList();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeRejectBinList()
         {
             try
@@ -39,23 +44,27 @@ namespace PentagonHMI.Views
 
                 string rejectBinName = string.Empty;
 
-                for (int i = 0; i < 4; i++)
+                for(int i = 0; i < 4; i++)
                 {
                     try
                     {
-                        switch (i)
+                        switch(i)
                         {
                             default:
                                 break;
+
                             case 0:
                                 rejectBinName = "REEL";
                                 break;
+
                             case 1:
                                 rejectBinName = "AUDIT";
                                 break;
+
                             case 2:
                                 rejectBinName = "REJECT A";
                                 break;
+
                             case 3:
                                 rejectBinName = "REJECT B";
                                 break;
@@ -63,32 +72,32 @@ namespace PentagonHMI.Views
 
                         List<RejectBinPartModel> rejectBinPartList = new List<RejectBinPartModel>();
 
-                        for (int j = 0; j < 10; j++)
+                        for(int j = 0; j < 10; j++)
                         {
                             try
                             {
                                 rejectBinPartList.Add(new RejectBinPartModel());
                             }
-                            catch (Exception ex)
+                            catch(Exception ex)
                             {
                                 FileLogger.logError(ex.Message, ex.ToString());
                             }
                         }
-                        
+
                         rejectBinList.Add(new RejectBinModel
                         {
                             RejectBinName = rejectBinName,
                             RejectBinPartList = rejectBinPartList
                         });
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
                 }
 
                 int n = 0;
-                foreach (var item in rejectBinList[0].RejectBinPartList)
+                foreach(var item in rejectBinList[0].RejectBinPartList)
                 {
                     item.PartQuantity = ++n;
                     item.PartFull = 0;
@@ -105,11 +114,12 @@ namespace PentagonHMI.Views
 
                 RejectBinListItemsControl.ItemsSource = rejectBinList;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
     }
 }

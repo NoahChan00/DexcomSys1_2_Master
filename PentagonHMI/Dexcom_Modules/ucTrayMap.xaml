@@ -214,7 +214,7 @@
                                     </Style>
                                 </UniformGrid.Resources>
                                 <UniformGrid.Background>
-                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1PCBA.png"/>
+                                    <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1PCBA.png" />
                                 </UniformGrid.Background>
                             </UniformGrid>
                         </Grid>

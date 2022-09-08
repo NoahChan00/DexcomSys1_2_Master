@@ -8,27 +8,30 @@ namespace PentagonHMI
     public class ZoneModel : ViewModelBase
     {
         #region PublicProperties
+
         private string zoneName = string.Empty;
+
         public string ZoneName
         {
             get { return zoneName; }
             set
             {
-                if (zoneName != value)
+                if(zoneName != value)
                 {
                     zoneName = value;
                     RaisePropertyChanged(nameof(ZoneName));
                 }
             }
         }
-        
+
         private List<ZoneStatusModel> zoneStatusList = new List<ZoneStatusModel>();
+
         public List<ZoneStatusModel> ZoneStatusList
         {
             get { return zoneStatusList; }
             set
             {
-                if (zoneStatusList != value)
+                if(zoneStatusList != value)
                 {
                     zoneStatusList = value;
                     RaisePropertyChanged(nameof(ZoneStatusList));
@@ -36,8 +39,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView zoneStatusListView = null;
+
         public ICollectionView ZoneStatusListView
         {
             get
@@ -47,14 +51,15 @@ namespace PentagonHMI
                 return zoneStatusListView;
             }
         }
-        
+
         private List<ZoneActionModel> zoneActionList = new List<ZoneActionModel>();
+
         public List<ZoneActionModel> ZoneActionList
         {
             get { return zoneActionList; }
             set
             {
-                if (zoneActionList != value)
+                if(zoneActionList != value)
                 {
                     zoneActionList = value;
                     RaisePropertyChanged(nameof(ZoneActionList));
@@ -62,8 +67,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView zoneActionListView = null;
+
         public ICollectionView ZoneActionListView
         {
             get
@@ -73,6 +79,7 @@ namespace PentagonHMI
                 return zoneActionListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

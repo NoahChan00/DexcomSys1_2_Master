@@ -8,12 +8,12 @@
         SizeToContent="WidthAndHeight" TextElement.FontSize="16" TextElement.FontWeight="Regular"
         TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="Auto" Topmost="True"
         WindowStartupLocation="CenterScreen" Loaded="popUpWindow_Loaded" Closing="popUpWindow_Closing">
-    
+
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <ItemsControl x:Name="PopUpItemsControl">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>
+                    <VirtualizingStackPanel />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -23,13 +23,13 @@
                             <TextBlock FontSize="28" FontWeight="Bold" Foreground="White"
                                        HorizontalAlignment="Center" Padding="4 2"
                                        Text="{Binding PopUpMessage}" TextAlignment="Center"
-                                       TextWrapping="Wrap" VerticalAlignment="Center" Width="700"/>
+                                       TextWrapping="Wrap" VerticalAlignment="Center" Width="700" />
                         </GroupBox.Header>
 
                         <ItemsControl ItemsSource="{Binding PopUpActionListView}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <UniformGrid Rows="1"/>
+                                    <UniformGrid Rows="1" />
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
@@ -37,7 +37,7 @@
                                     <Button x:Name="PopUpActionButton" FontSize="20" Height="60"
                                             Style="{StaticResource ButtonStyle}"
                                             Content="{Binding PopUpActionName}" Tag="{Binding}"
-                                            Click="popUpActionButton_Click"/>
+                                            Click="popUpActionButton_Click" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
@@ -46,5 +46,4 @@
             </ItemsControl.ItemTemplate>
         </ItemsControl>
     </ScrollViewer>
-
 </Window>

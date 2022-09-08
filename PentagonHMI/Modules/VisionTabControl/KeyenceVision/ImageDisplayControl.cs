@@ -27,12 +27,12 @@ namespace Keyence.IV.Sdk.Sample_CSharp.Parts
         public void RefreshState()
         {
             var image = new Bitmap(ImageSize.Width, ImageSize.Height, PixelFormat.Format24bppRgb);
-            using (Graphics graphics = Graphics.FromImage(image))
+            using(Graphics graphics = Graphics.FromImage(image))
             {
                 graphics.FillRectangle(new SolidBrush(Color.FromArgb(192, 192, 192)),
                                        new Rectangle(Point.Empty, image.Size));
             }
-            if (pictureBox.Image != null)
+            if(pictureBox.Image != null)
             {
                 pictureBox.Image.Dispose();
             }
@@ -41,7 +41,7 @@ namespace Keyence.IV.Sdk.Sample_CSharp.Parts
 
         public void CleanUp()
         {
-            if (sensor != null)
+            if(sensor != null)
             {
                 sensor.ImageAcquired -= SensorImageAcquired;
             }
@@ -61,12 +61,12 @@ namespace Keyence.IV.Sdk.Sample_CSharp.Parts
                                                  PixelFormat.Format24bppRgb);
             Marshal.Copy(e.LiveImage.ByteData, 0, lockData.Scan0, e.LiveImage.ByteData.Length);
             image.UnlockBits(lockData);
-            using (Graphics graphics = Graphics.FromImage(image))
+            using(Graphics graphics = Graphics.FromImage(image))
             {
                 graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 sensor.DrawWindow(graphics, Color.Green, Color.Red, activeToolNo);
             }
-            if (pictureBox.Image != null)
+            if(pictureBox.Image != null)
             {
                 pictureBox.Image.Dispose();
             }

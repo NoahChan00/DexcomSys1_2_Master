@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,14 +9,18 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelComboboxErrorMessage : UserControl
     {
         #region Constructor
+
         public UCLabelComboboxErrorMessage()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleComboboxContentProperty =
@@ -42,7 +35,8 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleComboboxContentProperty); }
             set { SetValue(ucLabelTitleComboboxContentProperty, value); }
         }
-        #endregion
+
+        #endregion ucLabelTitle Properties
 
         //Retrieve the text from the control
         public string Text
@@ -102,14 +96,12 @@ namespace PentagonHMI.UserControls
             get
             {
                 return this.ucComboBox.Items;
-            }           
+            }
         }
 
         public void AddItem(object newItem)
         {
-
             this.ucComboBox.Items.Add(newItem);
-
         }
 
         //Set the error label content and focus the control
@@ -119,7 +111,7 @@ namespace PentagonHMI.UserControls
             set
             {
                 this.ucLabelError.Content = value;
-                if (!string.IsNullOrEmpty(value))
+                if(!string.IsNullOrEmpty(value))
                 {
                     this.ucComboBox.Focus();
                 }
@@ -213,7 +205,6 @@ namespace PentagonHMI.UserControls
             this.ucComboBox.SelectionChanged += handler;
         }
 
-        #endregion
-
+        #endregion Properties
     }
 }

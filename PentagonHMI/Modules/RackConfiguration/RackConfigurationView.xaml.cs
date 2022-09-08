@@ -13,12 +13,15 @@ namespace PentagonHMI
     public partial class RackConfigurationView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private RackConfigurationModel rackConfigurationModel = new RackConfigurationModel();
         private LogicClasses.Main main = null;
         private readonly Tag bypassLMTag = new Tag { Name = "HMI_BypassLM", DataType = Logix.Tag.ATOMIC.BOOL };
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public RackConfigurationView(ref LogicClasses.Main _main)
         {
             try
@@ -28,21 +31,23 @@ namespace PentagonHMI
                 initializeOpc(_main);
                 readRackConfigurationUpdate();
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region PrivateInitializeMethods
+
         private void initializeRackConfiguration()
         {
             try
             {
                 rackConfigurationModel = new RackConfigurationModel();
 
-                for (int i = 1; i <= 4; i++)
+                for(int i = 1; i <= 4; i++)
                 {
                     try
                     {
@@ -80,15 +85,15 @@ namespace PentagonHMI
                             }
                         });
                     }
-                    catch (Exception exception)
+                    catch(Exception exception)
                     {
                         FileLogger.logError(exception.Message, exception.ToString());
                     }
                 }
-                
+
                 RackConfigurationGroupBox.DataContext = rackConfigurationModel;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -101,40 +106,42 @@ namespace PentagonHMI
                 main = _main;
                 main.OnRackConfigurationUpdate += main_OnRackConfigurationUpdate;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void updateRackTextButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 Button button = sender as Button;
                 RackTextModel rackTextModel = button.Tag as RackTextModel;
-                
-                if (rackConfigurationModel.RackList.Exists(
+
+                if(rackConfigurationModel.RackList.Exists(
                     x => x.RackTextList.Exists(y => y == rackTextModel)))
                 {
                     RackModel rackModel = rackConfigurationModel.RackList.Find(
                         x => x.RackTextList.Exists(y => y == rackTextModel));
-                    
-                    if (MessageBox.Show($"Are you sure you want to update" +
+
+                    if(MessageBox.Show($"Are you sure you want to update" +
                         $" {rackModel.RackName}'s {rackTextModel.RackTextName}?",
                         nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                         MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                     {
                         rackTextModel.RackTextTag.Value = rackTextModel.RackText.ToUpper(); //rackTextModel.RackText;
                         main.MyPLC.WriteTag(rackTextModel.RackTextTag);
-                        
+
                         readRackConfigurationUpdate();
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -147,13 +154,13 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 RackTextModel rackTextModel = button.Tag as RackTextModel;
 
-                if (rackConfigurationModel.RackList.Exists(
+                if(rackConfigurationModel.RackList.Exists(
                     x => x.RackTextList.Exists(y => y == rackTextModel)))
                 {
                     RackModel rackModel = rackConfigurationModel.RackList.Find(
                         x => x.RackTextList.Exists(y => y == rackTextModel));
 
-                    if (MessageBox.Show($"Are you sure you want to clear" +
+                    if(MessageBox.Show($"Are you sure you want to clear" +
                         $" {rackModel.RackName}'s {rackTextModel.RackTextName}?",
                         nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                         MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -162,7 +169,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -175,13 +182,13 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 RackToggleModel rackToggleModel = button.Tag as RackToggleModel;
 
-                if (rackConfigurationModel.RackList.Exists(
+                if(rackConfigurationModel.RackList.Exists(
                     x => x.RackToggleList.Exists(y => y == rackToggleModel)))
                 {
                     RackModel rackModel = rackConfigurationModel.RackList.Find(
                         x => x.RackToggleList.Exists(y => y == rackToggleModel));
-                    
-                    if (MessageBox.Show($"Are you sure you want to off" +
+
+                    if(MessageBox.Show($"Are you sure you want to off" +
                         $" {rackModel.RackName}'s {rackToggleModel.RackToggleName}?",
                         nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                         MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -191,7 +198,7 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
@@ -204,13 +211,13 @@ namespace PentagonHMI
                 Button button = sender as Button;
                 RackToggleModel rackToggleModel = button.Tag as RackToggleModel;
 
-                if (rackConfigurationModel.RackList.Exists(
+                if(rackConfigurationModel.RackList.Exists(
                     x => x.RackToggleList.Exists(y => y == rackToggleModel)))
                 {
                     RackModel rackModel = rackConfigurationModel.RackList.Find(
                         x => x.RackToggleList.Exists(y => y == rackToggleModel));
 
-                    if (MessageBox.Show($"Are you sure you want to on" +
+                    if(MessageBox.Show($"Are you sure you want to on" +
                         $" {rackModel.RackName}'s {rackToggleModel.RackToggleName}?",
                         nameof(MessageBoxImage.Question), MessageBoxButton.YesNo, MessageBoxImage.Question,
                         MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
@@ -220,12 +227,12 @@ namespace PentagonHMI
                     }
                 }
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        
+
         private void main_OnRackConfigurationUpdate()
         {
             Dispatcher.Invoke(new Action(() =>
@@ -233,11 +240,11 @@ namespace PentagonHMI
                 try
                 {
                     main.MyPLC.ReadTag(bypassLMTag);
-                    if (bypassLMTag.Value != null)
+                    if(bypassLMTag.Value != null)
                     {
                         bool value = Convert.ToBoolean(bypassLMTag.Value);
 
-                        if (RackConfigurationScrollViewer.IsEnabled != value)
+                        if(RackConfigurationScrollViewer.IsEnabled != value)
                         {
                             RackConfigurationScrollViewer.IsEnabled = value;
                         }
@@ -251,23 +258,23 @@ namespace PentagonHMI
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.RackTextEnableTag.Name))
+                                    if(!string.IsNullOrEmpty(y.RackTextEnableTag.Name))
                                     {
                                         main.MyPLC.ReadTag(y.RackTextEnableTag);
 
-                                        if (y.RackTextEnableTag.Value != null)
+                                        if(y.RackTextEnableTag.Value != null)
                                         {
                                             bool value = Convert.ToBoolean(
                                                 y.RackTextEnableTag.Value);
 
-                                            if (y.RackTextEnable != value)
+                                            if(y.RackTextEnable != value)
                                             {
                                                 y.RackTextEnable = value;
                                             }
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     FileLogger.logError(exception.Message, exception.ToString());
                                 }
@@ -277,43 +284,45 @@ namespace PentagonHMI
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.RackToggleTag.Name))
+                                    if(!string.IsNullOrEmpty(y.RackToggleTag.Name))
                                     {
                                         main.MyPLC.ReadTag(y.RackToggleTag);
 
-                                        if (y.RackToggleTag.Value != null)
+                                        if(y.RackToggleTag.Value != null)
                                         {
                                             bool value = Convert.ToBoolean(
                                                 y.RackToggleTag.Value);
 
-                                            if (y.RackToggleStatus != value)
+                                            if(y.RackToggleStatus != value)
                                             {
                                                 y.RackToggleStatus = value;
                                             }
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     FileLogger.logError(exception.Message, exception.ToString());
                                 }
                             });
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             FileLogger.logError(exception.Message, exception.ToString());
                         }
                     });
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PrivateMethods
+
         private void readRackConfigurationUpdate()
         {
             Dispatcher.Invoke(new Action(() =>
@@ -328,53 +337,56 @@ namespace PentagonHMI
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.RackTextTag.Name))
+                                    if(!string.IsNullOrEmpty(y.RackTextTag.Name))
                                     {
                                         main.MyPLC.ReadTag(y.RackTextTag);
 
-                                        if (y.RackTextTag.Value != null)
+                                        if(y.RackTextTag.Value != null)
                                         {
                                             string value = y.RackTextTag.Value.ToString();
 
-                                            if (y.RackText != value)
+                                            if(y.RackText != value)
                                             {
                                                 y.RackText = value;
                                             }
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     FileLogger.logError(exception.Message, exception.ToString());
                                 }
                             });
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             FileLogger.logError(exception.Message, exception.ToString());
                         }
                     });
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
             }));
         }
-        #endregion
+
+        #endregion PrivateMethods
 
         #region PublicInterfaceMethods
+
         public void Dispose()
         {
             try
             {
                 main.RackConfigurationPageOn = false;
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }
         }
-        #endregion
+
+        #endregion PublicInterfaceMethods
     }
 }

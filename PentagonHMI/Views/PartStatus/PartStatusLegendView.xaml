@@ -4,32 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:PentagonHMI.Views">
-    
+
     <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Legend">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Rectangle Grid.Row="0" Grid.Column="0" Fill="Lime" Stroke="Black" StrokeThickness="1"/>
-            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Present &amp; Pass"/>
+            <Rectangle Grid.Row="0" Grid.Column="0" Fill="Lime" Stroke="Black" StrokeThickness="1" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Present &amp; Pass" />
 
-            <Rectangle Grid.Row="1" Grid.Column="0" Fill="White" Stroke="Black" StrokeThickness="1"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Present &amp; No Pass Fail"/>
+            <Rectangle Grid.Row="1" Grid.Column="0" Fill="White" Stroke="Black" StrokeThickness="1" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Present &amp; No Pass Fail" />
 
-            <Rectangle Grid.Row="2" Grid.Column="0" Fill="Red" Stroke="Black" StrokeThickness="1"/>
-            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Present &amp; Fail"/>
+            <Rectangle Grid.Row="2" Grid.Column="0" Fill="Red" Stroke="Black" StrokeThickness="1" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Present &amp; Fail" />
 
-            <Rectangle Grid.Row="3" Grid.Column="0" Fill="Black" Stroke="Black" StrokeThickness="1"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Absence &amp; No Pass Fail"/>
+            <Rectangle Grid.Row="3" Grid.Column="0" Fill="Black" Stroke="Black" StrokeThickness="1" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource KeyTextBlockStyle}" Text="Part Absence &amp; No Pass Fail" />
         </Grid>
     </GroupBox>
-
 </UserControl>

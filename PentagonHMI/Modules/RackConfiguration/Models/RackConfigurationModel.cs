@@ -8,13 +8,15 @@ namespace PentagonHMI
     public class RackConfigurationModel : ViewModelBase
     {
         #region PublicProperties
+
         private List<RackModel> rackList = new List<RackModel>();
+
         public List<RackModel> RackList
         {
             get { return rackList; }
             set
             {
-                if (rackList != value)
+                if(rackList != value)
                 {
                     rackList = value;
                     RaisePropertyChanged(nameof(RackList));
@@ -22,8 +24,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView rackListView = null;
+
         public ICollectionView RackListView
         {
             get
@@ -33,6 +36,7 @@ namespace PentagonHMI
                 return rackListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

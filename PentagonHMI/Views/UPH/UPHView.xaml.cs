@@ -14,8 +14,10 @@ namespace PentagonHMI.Views
     /// </summary>
     public partial class UPHView : UserControl
     {
-        ChartValues<ObservableValue> observableValues;
+        private ChartValues<ObservableValue> observableValues;
+
         #region Constructor
+
         public UPHView()
         {
             try
@@ -23,22 +25,25 @@ namespace PentagonHMI.Views
                 InitializeComponent();
                 initialize();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         public void Update(string[] UPH)
         {
-            if (UPH == null) return;
+            if(UPH == null)
+                return;
             int n = 0;
-            foreach (string str in UPH)
+            foreach(string str in UPH)
                 observableValues[n++].Value = Convert.ToDouble(str);
         }
 
         #region PrivateInitializeMethods
+
         private void initialize()
         {
             try
@@ -46,13 +51,13 @@ namespace PentagonHMI.Views
                 UPHYAxis.LabelFormatter = x => x.ToString("N0");
 
                 observableValues = new ChartValues<ObservableValue>();
-                for (int i = 0; i < 24; i++)
+                for(int i = 0; i < 24; i++)
                 {
                     try
                     {
                         observableValues.Add(new ObservableValue());
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
@@ -60,14 +65,16 @@ namespace PentagonHMI.Views
 
                 UPHColumnSeries.Values = observableValues;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void uPHCartesianChart_MouseMove(object sender, MouseEventArgs e)
         {
             try
@@ -79,11 +86,12 @@ namespace PentagonHMI.Views
                 var closestPoint = series.ClosestPointTo(point.X, AxisOrientation.X);
                 UPHXAxisSection.Value = closestPoint.X;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateEventMethods
     }
 }

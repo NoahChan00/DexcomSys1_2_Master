@@ -266,12 +266,10 @@ namespace PentagonHMI
                             selectedTray = SelectedTray.S2OUTPUT;
                         }
 
-
                         _Main.TrayMapPageOn = true;
                         if(!pickFailPromptDict.ContainsKey(selectedTray))
                         {
                             pickFailPromptDict[selectedTray] = new PickFailPrompt(_Main, selectedTray);
-
                         }
                         pickFailPrompt = pickFailPromptDict[selectedTray];
                         MainGrid.IsEnabled = false;

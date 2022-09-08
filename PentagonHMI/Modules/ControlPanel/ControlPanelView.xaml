@@ -11,7 +11,7 @@
         <ItemsControl ItemsSource="{Binding ControlPanelActionListView}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding ufg_clm}"/>
+                    <UniformGrid Columns="{Binding ufg_clm}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -24,11 +24,11 @@
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding ControlPanelActionStatus}" Value="False">
                                         <Setter Property="Background"
-                                                Value="{Binding ControlPanelActionStatusOffColor}"/>
+                                                Value="{Binding ControlPanelActionStatusOffColor}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ControlPanelActionStatus}" Value="True">
                                         <Setter Property="Background"
-                                                Value="{Binding ControlPanelActionStatusOnColor}"/>
+                                                Value="{Binding ControlPanelActionStatusOnColor}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
@@ -50,7 +50,7 @@
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
-                                            <Label Background="Red" Content="Engineering Mode (OFF)" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold"/>
+                                            <Label Background="Red" Content="Engineering Mode (OFF)" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="18" FontWeight="Bold" />
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -60,18 +60,18 @@
                                             <Setter.Value>
                                                 <DataTemplate>
                                                     <Label Background="LimeGreen" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Stretch" Content="Engineering Mode (ON)" FontSize="18"
-                                                               FontWeight="Bold"/>                                       
+                                                               FontWeight="Bold" />
                                                 </DataTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger>
                                     <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="False">
                                         <Setter Property="Background"
-                                                Value="{Binding ControlPanelToggleStatusOffColor}"/>
+                                                Value="{Binding ControlPanelToggleStatusOffColor}" />
                                     </DataTrigger>
                                     <DataTrigger Binding="{Binding ControlPanelToggleStatus}" Value="True">
                                         <Setter Property="Background"
-                                                Value="{Binding ControlPanelToggleStatusOnColor}"/>
+                                                Value="{Binding ControlPanelToggleStatusOnColor}" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>

@@ -9,17 +9,21 @@ namespace PentagonHMI
     public class MachineInformationTextModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag MachineInformationTextTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string machineInformationTextName = string.Empty;
+
         public string MachineInformationTextName
         {
             get { return machineInformationTextName; }
             set
             {
-                if (machineInformationTextName != value)
+                if(machineInformationTextName != value)
                 {
                     machineInformationTextName = value;
                     RaisePropertyChanged(nameof(MachineInformationTextName));
@@ -28,12 +32,13 @@ namespace PentagonHMI
         }
 
         private string machineInformationTextValue = string.Empty;
+
         public string MachineInformationTextValue
         {
             get { return machineInformationTextValue; }
             set
             {
-                if (machineInformationTextValue != value)
+                if(machineInformationTextValue != value)
                 {
                     machineInformationTextValue = value;
                     RaisePropertyChanged(nameof(MachineInformationTextValue));
@@ -42,12 +47,13 @@ namespace PentagonHMI
         }
 
         private List<MachineInformationTextDescriptionModel> machineInformationTextDescriptionList = new List<MachineInformationTextDescriptionModel>();
+
         public List<MachineInformationTextDescriptionModel> MachineInformationTextDescriptionList
         {
             get { return machineInformationTextDescriptionList; }
             set
             {
-                if (machineInformationTextDescriptionList != value)
+                if(machineInformationTextDescriptionList != value)
                 {
                     machineInformationTextDescriptionList = value;
                     RaisePropertyChanged(nameof(MachineInformationTextDescriptionList));
@@ -55,8 +61,9 @@ namespace PentagonHMI
                 }
             }
         }
-        
+
         private ICollectionView machineInformationTextDescriptionListView = null;
+
         public ICollectionView MachineInformationTextDescriptionListView
         {
             get
@@ -66,6 +73,7 @@ namespace PentagonHMI
                 return machineInformationTextDescriptionListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

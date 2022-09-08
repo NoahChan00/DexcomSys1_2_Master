@@ -1,9 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Shapes;
-using System;
-using System.Collections.Generic;
 
 namespace PentagonHMI.UserControls
 {
@@ -14,8 +14,9 @@ namespace PentagonHMI.UserControls
             InitializeComponent();
         }
 
-        Canvas Cvs = null;
-        Polygon Poly = null;
+        private Canvas Cvs = null;
+        private Polygon Poly = null;
+
         private void Paging_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
@@ -24,19 +25,19 @@ namespace PentagonHMI.UserControls
                 ((Polygon)sender).Tag.ToString() : ((Image)sender).Tag.ToString();
                 Canvas CvsNow = (Canvas)FindName(Tag.Contains("Sub") ? Tag.Substring(0, Tag.IndexOf("Sub")) : Tag);
                 Polygon PolyNow = (Polygon)FindName("Poly" + Tag);
-                if (Poly != null)
+                if(Poly != null)
                     Poly.Visibility = Visibility.Collapsed;
-                if (PolyNow != null)
+                if(PolyNow != null)
                     PolyNow.Visibility = Visibility.Visible;
                 Poly = PolyNow;
-                if (CvsNow == null)
+                if(CvsNow == null)
                     return;
                 CvsNow.Visibility = Visibility.Visible;
-                if (Cvs != null && !(Cvs.Name.Contains("0") && Cvs.Name.Length == 2))
+                if(Cvs != null && !(Cvs.Name.Contains("0") && Cvs.Name.Length == 2))
                     Cvs.Visibility = Visibility.Collapsed;
                 Cvs = CvsNow;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -44,7 +45,6 @@ namespace PentagonHMI.UserControls
 
         public void Update(List<bool> _IValue, List<bool> _OValue)
         {
-            
         }
 
         private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

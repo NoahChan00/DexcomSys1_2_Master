@@ -13,34 +13,33 @@
     <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="Sign In">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                        Style="{StaticResource ValueTextBlockStyle}"
-                       Text="Please enter your credentials to proceed."/>
-            
+                       Text="Please enter your credentials to proceed." />
+
             <userControls:UCLabelTextboxErrorMessage Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                                                      x:Name="Username" ucLabelErrorContent=""
-                                                     ucLabelTitleContent="Username"/>
+                                                     ucLabelTitleContent="Username" />
 
             <userControls:UCLabelTextboxErrorMessage Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
                                                      x:Name="Password" isPassword="True" ucLabelErrorContent=""
-                                                     ucLabelTitleContent="Password" VerticalAlignment="Top"/>
-            
+                                                     ucLabelTitleContent="Password" VerticalAlignment="Top" />
+
             <Button Grid.Row="3" Grid.Column="0" Style="{StaticResource ButtonStyle}" x:Name="SignInButton"
-                    Content="Sign In" HorizontalAlignment="Right" Click="signInButton_Click"/>
-            
+                    Content="Sign In" HorizontalAlignment="Right" Click="signInButton_Click" />
+
             <Button Grid.Row="3" Grid.Column="1" Style="{StaticResource ButtonStyle}"
-                    x:Name="CancelButton" Content="Cancel" Click="cancelButton_Click"/>
+                    x:Name="CancelButton" Content="Cancel" Click="cancelButton_Click" />
         </Grid>
     </GroupBox>
-
 </Window>

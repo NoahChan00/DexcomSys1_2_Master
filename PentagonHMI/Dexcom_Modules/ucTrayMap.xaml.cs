@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using Utilities;
 
@@ -37,7 +36,9 @@ namespace PentagonHMI.ChildControls
 
         // Dexcom 1 Tag ?
         private const string Tag_L_Shuttle_Slot = "Tray_Shuttle_Left_Slot_Tracking[1]";//Length 16
+
         private const string Tag_R_Shuttle_Slot = "Tray_Shuttle_Right_Slot_Tracking[1]";//Length 16
+
         //private const string Tag_Btry_Slot = "Tray_Battery_Slot_Tracking[1]";//Length (Panasonic: 40, Maxell: 100, Murata: 50)
         private const string Tag_PCBA_Slot = "Tray_PCBA_Slot_Tracking[1]"; //Length 90
 
@@ -45,6 +46,7 @@ namespace PentagonHMI.ChildControls
         // New tag from 1.3
         // PLC tag need index operator, they start from, ignore 0 for this project
         private const string Tag_L_Input_Slot = "LShuttle_Slot_Tracking[1]";//Length 16
+
         private const string Tag_R_Input_Slot = "RShuttle_Slot_Tracking[1]";//Length 16
         private const string Tag_Output_Slot = "UnloadTray_Slot_Tracking[1]";//Length 60
 
@@ -52,9 +54,11 @@ namespace PentagonHMI.ChildControls
         private int Col = 0;
         private int PRow = 0;
         private int PCol = 0;
+
         //private int BRow = 0;
         //private int BCol = 0;
         private int ORow = 0;
+
         private int OCol = 0;
         //private int BatType = 0;
 
@@ -275,7 +279,6 @@ namespace PentagonHMI.ChildControls
                         LAry = OPCore.Read<short[]>(Tag_L_Shuttle_Slot, typeof(short), Row * Col);
                         RAry = OPCore.Read<short[]>(Tag_R_Shuttle_Slot, typeof(short), Row * Col);
                         PCBASlotButton.IsEnabled /*= BatterySlotButton.IsEnabled*/ = isAdminOrPenta;
-
 
                         if(LAry != null)
                             foreach(var item in ugrd_LeftTray.Children)

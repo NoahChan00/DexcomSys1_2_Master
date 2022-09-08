@@ -8,27 +8,30 @@ namespace PentagonHMI.Models
     public class CassetteStatusPositionModel : ViewModelBase
     {
         #region PublicProperties
+
         private int position = 0;
+
         public int Position
         {
             get { return position; }
             set
             {
-                if (position != value)
+                if(position != value)
                 {
                     position = value;
                     RaisePropertyChanged(nameof(Position));
                 }
             }
         }
-        
+
         private List<CassetteStatusSubStatusModel> cassetteSubStatusList = new List<CassetteStatusSubStatusModel>();
+
         public List<CassetteStatusSubStatusModel> CassetteSubStatusList
         {
             get { return cassetteSubStatusList; }
             set
             {
-                if (cassetteSubStatusList != value)
+                if(cassetteSubStatusList != value)
                 {
                     cassetteSubStatusList = value;
                     RaisePropertyChanged(nameof(CassetteSubStatusList));
@@ -36,8 +39,9 @@ namespace PentagonHMI.Models
                 }
             }
         }
-        
+
         private ICollectionView cassetteSubStatusListView = null;
+
         public ICollectionView CassetteSubStatusListView
         {
             get
@@ -47,6 +51,7 @@ namespace PentagonHMI.Models
                 return cassetteSubStatusListView;
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

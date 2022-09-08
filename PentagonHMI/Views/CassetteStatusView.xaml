@@ -10,7 +10,7 @@
     <ItemsControl x:Name="CassetteListItemsControl" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-                <UniformGrid Columns="1"/>
+                <UniformGrid Columns="1" />
             </ItemsPanelTemplate>
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
@@ -18,18 +18,18 @@
                 <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}" Header="{Binding CassetteName}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="17"/>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="17" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="17"/>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="17" />
                         </Grid.ColumnDefinitions>
 
                         <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
-                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="Position"/>
+                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="Position" />
                         </Border>
 
                         <ScrollViewer Grid.Row="0" Grid.Column="1" x:Name="ScrollViewer1" IsHitTestVisible="False"
@@ -38,13 +38,13 @@
                                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <UniformGrid Rows="1"/>
+                                        <UniformGrid Rows="1" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border BorderBrush="Black" BorderThickness="1">
-                                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SubStatusName}" Width="100"/>
+                                            <TextBlock Style="{StaticResource CenterKeyTextBlockStyle}" Text="{Binding SubStatusName}" Width="100" />
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -57,13 +57,13 @@
                                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <Border BorderBrush="Black" BorderThickness="1">
-                                            <TextBlock Style="{StaticResource CenterValueTextBlockStyle}" Text="{Binding Position}"/>
+                                            <TextBlock Style="{StaticResource CenterValueTextBlockStyle}" Text="{Binding Position}" />
                                         </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -79,19 +79,19 @@
 >
                                         <cmd:EventToCommand.EventArgsConverterParameter>
                                             <MultiBinding Converter="{StaticResource ScrollViewerListConverter}">
-                                                <Binding ElementName="ScrollViewer1"/>
-                                                <Binding ElementName="ScrollViewer2"/>
+                                                <Binding ElementName="ScrollViewer1" />
+                                                <Binding ElementName="ScrollViewer2" />
                                             </MultiBinding>
                                         </cmd:EventToCommand.EventArgsConverterParameter>
                                     </cmd:EventToCommand>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
-                            
+
                             <ItemsControl ItemsSource="{Binding PositionListView}"
                                           VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling"/>
+                                        <VirtualizingStackPanel VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
@@ -100,13 +100,13 @@
                                                       VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                                             <ItemsControl.ItemsPanel>
                                                 <ItemsPanelTemplate>
-                                                    <UniformGrid Rows="1"/>
+                                                    <UniformGrid Rows="1" />
                                                 </ItemsPanelTemplate>
                                             </ItemsControl.ItemsPanel>
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <Border BorderBrush="Black" BorderThickness="1">
-                                                        <TextBlock Style="{StaticResource ValueTextBlockStyle}" Text="{Binding SubStatus}" Width="100"/>
+                                                        <TextBlock Style="{StaticResource ValueTextBlockStyle}" Text="{Binding SubStatus}" Width="100" />
                                                     </Border>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
@@ -120,5 +120,4 @@
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
-
 </UserControl>

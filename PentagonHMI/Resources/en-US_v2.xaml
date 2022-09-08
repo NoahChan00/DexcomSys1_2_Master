@@ -1,18 +1,16 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!-- 
+    <!--
         This file contains only IO differenct in newer belly band machine (2013 sept)
         Config file value "IsVersion2BB" must set to "True" to show this.
     -->
-    
-    
+
     <!-- ############################# -->
     <!-- ###### IO Input Module ###### -->
     <!-- ############################# -->
     <!-- Labels -->
-    
+
     <system:String x:Key="IO_INPUT_IX1_00">1.00 Motion Stop Signal</system:String>
     <system:String x:Key="IO_INPUT_IX1_01">1.01 Reject Conveyor PE3</system:String>
     <system:String x:Key="IO_INPUT_IX1_02">1.02 Toggle Clamp Proximity Sensor 1</system:String>
@@ -45,7 +43,7 @@
     <system:String x:Key="IO_INPUT_IX2_13">2.13 Spare</system:String>
     <system:String x:Key="IO_INPUT_IX2_14">2.14 Spare</system:String>
     <system:String x:Key="IO_INPUT_IX2_15">2.15 Spare</system:String>
-    
+
     <!-- ##############################-->
     <!-- ###### IO Output Module ###### -->
     <!-- ##############################-->
@@ -98,11 +96,11 @@
     <system:String x:Key="IO_OUTPUT_QX7_13">7.13 Spare</system:String>
     <system:String x:Key="IO_OUTPUT_QX7_14">7.14 Spare</system:String>
     <system:String x:Key="IO_OUTPUT_QX7_15">7.15 Spare</system:String>
-    
+
     <!-- #####################################-->
     <!-- ###### Robot IO Input Module ###### -->
     <!-- #####################################-->
-    
+
     <system:String x:Key="ROBOT_IO_INPUT_RI_00">In 0 Robot Start</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_01">In 1 Robot Stop</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_02">In 2 Robot Reset</system:String>
@@ -127,7 +125,7 @@
     <system:String x:Key="ROBOT_IO_INPUT_RI_21">In 21 Spare</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_22">In 22 Spare</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_23">In 23 Spare</system:String>
-    
+
     <!-- #####################################-->
     <!-- ###### Robot IO Output Module ###### -->
     <!-- #####################################-->
@@ -148,7 +146,6 @@
     <system:String x:Key="ROBOT_IO_OUTPUT_RO_14">Out 14 Applicator 1 Motor Rotate</system:String>
     <system:String x:Key="ROBOT_IO_OUTPUT_RO_15">Out 15 Applicator 2 Motor Rotate</system:String>
 
-
     <!-- ############################# -->
     <!-- ###### IO Input Module ###### -->
     <!-- ############################# -->
@@ -168,5 +165,4 @@
     <system:String x:Key="ROBOT_IO_OUTPUT_RO_13">Out 13 Robot Standby Position</system:String>
     <system:String x:Key="ROBOT_IO_OUTPUT_RO_14">Out 14 Applicator 1 Motor Rotate</system:String>
     <system:String x:Key="ROBOT_IO_OUTPUT_RO_15">Out 15 Applicator 2 Motor Rotate</system:String>
-
 </ResourceDictionary>

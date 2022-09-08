@@ -5,13 +5,15 @@ namespace PentagonHMI.Models
     public class LabelSetupParameterModel : ViewModelBase
     {
         #region PublicProperties
+
         private string labelSetupParameterName = string.Empty;
+
         public string LabelSetupParameterName
         {
             get { return labelSetupParameterName; }
             set
             {
-                if (labelSetupParameterName != value)
+                if(labelSetupParameterName != value)
                 {
                     labelSetupParameterName = value;
                     RaisePropertyChanged(nameof(LabelSetupParameterName));
@@ -20,12 +22,13 @@ namespace PentagonHMI.Models
         }
 
         private string labelSetupParameter = string.Empty;
+
         public string LabelSetupParameter
         {
             get { return labelSetupParameter; }
             set
             {
-                if (labelSetupParameter != value)
+                if(labelSetupParameter != value)
                 {
                     labelSetupParameter = value;
                     RaisePropertyChanged(nameof(LabelSetupParameter));
@@ -34,18 +37,20 @@ namespace PentagonHMI.Models
         }
 
         private string labelSetupParameterDescription = string.Empty;
+
         public string LabelSetupParameterDescription
         {
             get { return labelSetupParameterDescription; }
             set
             {
-                if (labelSetupParameterDescription != value)
+                if(labelSetupParameterDescription != value)
                 {
                     labelSetupParameterDescription = value;
                     RaisePropertyChanged(nameof(LabelSetupParameterDescription));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

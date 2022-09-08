@@ -13,10 +13,13 @@ namespace PentagonHMI.Views
     public partial class PartStatusView : UserControl
     {
         #region PrivateFields
+
         private List<PartStatusZoneModel> zoneList = new List<PartStatusZoneModel>();
-        #endregion
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public PartStatusView()
         {
             try
@@ -24,12 +27,13 @@ namespace PentagonHMI.Views
                 InitializeComponent();
                 initializeZoneList();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         public void Update(int[] PogoReject)
         {
@@ -60,8 +64,8 @@ namespace PentagonHMI.Views
             });
         }
 
-
         #region PrivateInitializeMethods
+
         private void initializeZoneList()
         {
             try
@@ -71,22 +75,25 @@ namespace PentagonHMI.Views
                 string zoneName = string.Empty;
                 bool enableManualAudit = false;
 
-                for (int i = 0; i < 3; i++)
+                for(int i = 0; i < 3; i++)
                 {
                     try
                     {
-                        switch (i)
+                        switch(i)
                         {
                             default:
                                 break;
+
                             case 0:
                                 zoneName = "Vision";
                                 enableManualAudit = false;
                                 break;
+
                             case 1:
                                 zoneName = "Program Station";
                                 enableManualAudit = false;
                                 break;
+
                             case 2:
                                 zoneName = "Audit & Reject";
                                 enableManualAudit = true;
@@ -95,7 +102,7 @@ namespace PentagonHMI.Views
 
                         List<PartStatusPartModel> partList = new List<PartStatusPartModel>();
 
-                        for (int j = 1; j <= 40; j++)
+                        for(int j = 1; j <= 40; j++)
                         {
                             try
                             {
@@ -111,12 +118,12 @@ namespace PentagonHMI.Views
                                     }
                                 });
                             }
-                            catch (Exception ex)
+                            catch(Exception ex)
                             {
                                 FileLogger.logError(ex.Message, ex.ToString());
                             }
                         }
-                        
+
                         zoneList.Add(new PartStatusZoneModel
                         {
                             ZoneName = zoneName,
@@ -124,7 +131,7 @@ namespace PentagonHMI.Views
                             PartList = partList
                         });
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
@@ -137,11 +144,12 @@ namespace PentagonHMI.Views
 
                 ZoneListItemsControl.ItemsSource = zoneList;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
     }
 }

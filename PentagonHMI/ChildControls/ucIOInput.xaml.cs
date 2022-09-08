@@ -15,18 +15,20 @@ namespace PentagonHMI.ChildControls
     public partial class ucIOInput : UserControl, IDisposable
     {
         #region Constructor
-        LogicClasses.Main _Main;
-        string ErrMsg;
-        string strIO = "IOPage";
+
+        private LogicClasses.Main _Main;
+        private string ErrMsg;
+        private string strIO = "IOPage";
         private Database DB = new Database(Properties.Settings.Default.DatabaseConnectionString.ToString());
-        DataSet ds = new DataSet();
-        Tag ModeTag = new Tag
+        private DataSet ds = new DataSet();
+
+        private Tag ModeTag = new Tag
         {
             Name = "MC_System_Tags.MachineRunning",
             DataType = Logix.Tag.ATOMIC.BOOL
         };
 
-        Tag EMTag = new Tag
+        private Tag EMTag = new Tag
         {
             //Name = "MC_System_Tags.EngineeringMode",
             Name = Tags.MainPage.EngineeringMode.Name,
@@ -34,8 +36,9 @@ namespace PentagonHMI.ChildControls
             DataType = Logix.Tag.ATOMIC.BOOL
         };
 
-        Dictionary<string, List<UCCheckboxLabelType2>> IOButtonList = new Dictionary<string, List<UCCheckboxLabelType2>>();
-        Dictionary<int, Tag> OutputTagList = new Dictionary<int, Logix.Tag>();
+        private Dictionary<string, List<UCCheckboxLabelType2>> IOButtonList = new Dictionary<string, List<UCCheckboxLabelType2>>();
+        private Dictionary<int, Tag> OutputTagList = new Dictionary<int, Logix.Tag>();
+
         private IOInput IOInput
         {
             get; set;
@@ -52,30 +55,31 @@ namespace PentagonHMI.ChildControls
                 T1.IsChecked = IOInput.WorkTag(ref EMTag) && ((bool?)EMTag.Value) == true;
                 IOInput.OnUpdate += new IOInput.onUpdateHandler(IOInput_OnUpdate);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Initialize IO List Front");
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region FormEvents
+
         private void EM_MouseClick(object sender, RoutedEventArgs e)
         {
             try
             {
                 Utilities.FileLogger.logButton(strIO, "Engineering Mode", MethodBase.GetCurrentMethod().ToString());
                 ToggleButton TB = sender as ToggleButton;
-                if (IOInput.WorkTag(ref EMTag, (Boolean)(TB.IsChecked)))
+                if(IOInput.WorkTag(ref EMTag, (Boolean)(TB.IsChecked)))
                     TB.Dispatcher.Invoke(() => TB.IsChecked = EMTag.Value.ToString() == "True" ? true : false);
                 else
                     TB.Dispatcher.Invoke(() => TB.IsChecked = (Boolean)TB.IsChecked ? false : true);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Trigger Engineering Mode Failed IO Page");
             }
-
         }
 
         private void IO_ucMouseClick(object sender, EventArgs e)
@@ -86,7 +90,7 @@ namespace PentagonHMI.ChildControls
                 string TempTag = OutputTagList[Convert.ToInt32(cb.Tag)].Name;
                 bool NextValue = cb.ucIsCheck;
 
-                if (_Main.OPC.Read<bool>(EMTag.Name))
+                if(_Main.OPC.Read<bool>(EMTag.Name))
                 {
                     _Main.OPC.Read<bool>(TempTag);
                     _Main.OPC.Write(TempTag, NextValue);
@@ -104,7 +108,7 @@ namespace PentagonHMI.ChildControls
                 //else
                 //    Utilities.FileLogger.logError("Trigger:" + EMTag.Name, "Write IO Failed");
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Write IO Failed");
             }
@@ -115,24 +119,24 @@ namespace PentagonHMI.ChildControls
             try
             {
                 TabControl TC = (TabControl)sender;
-                GOdeeper:
+GOdeeper:
                 TabItem TI = TC.SelectedItem as TabItem;
-                if (TI == null)
+                if(TI == null)
                     return;
-                if (TI.Header.ToString() != "Input" && TI.Header.ToString() != "Output")
+                if(TI.Header.ToString() != "Input" && TI.Header.ToString() != "Output")
                 {
                     TC = TI.Content as TabControl;
                     goto GOdeeper;
                 }
                 IOInput.Locnow = TI.Tag.ToString();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "SelectionChangedMethod");
             }
         }
 
-        ScrollViewer AddUIIO(string IO, string Loc, string Module)
+        private ScrollViewer AddUIIO(string IO, string Loc, string Module)
         {
             ScrollViewer SclV = new ScrollViewer { VerticalScrollBarVisibility = ScrollBarVisibility.Disabled, HorizontalScrollBarVisibility = ScrollBarVisibility.Auto };
             WrapPanel WP = new WrapPanel { Orientation = Orientation.Vertical };
@@ -142,15 +146,15 @@ namespace PentagonHMI.ChildControls
             try
             {
                 WP.SetValue(DockPanel.DockProperty, Dock.Top);
-                //"SELECT * FROM IOList Where Status = 'A' 
+                //"SELECT * FROM IOList Where Status = 'A'
                 //    and IO = '{IO}' and LEFT(DisplayName,3) = '{Loc}' ORDER BY 1 , 2"
                 DataTable DT = DB.ExecuteQueryDT_Select($"SELECT * FROM [IO] Where [Status] = 'A' " +
                     $"and [IO] = '{(IO.Equals("IN") ? "I" : "O")}' and [IOIndex] = '{Loc}' and [StationID] = {_Main.StationID} and [IOType] = '{Module}' ORDER BY CAST([TAGINDEX] AS INT)", ref ErrMsg);
-                foreach (DataRow dr in DT.Rows)
+                foreach(DataRow dr in DT.Rows)
                 {
                     UCCheckboxLabelType2 IOnew = new UCCheckboxLabelType2();
 
-                    if (!string.IsNullOrWhiteSpace(dr["OutputTagName"].ToString()))
+                    if(!string.IsNullOrWhiteSpace(dr["OutputTagName"].ToString()))
                         OutputTagList.Add(Convert.ToInt16(dr["TagIndex"]), new Tag { Name = dr["OutputTagName"].ToString(), DataType = Logix.Tag.ATOMIC.BOOL });
 
                     IOnew.ucMouseClick += new EventHandler(IO_ucMouseClick);
@@ -166,7 +170,7 @@ namespace PentagonHMI.ChildControls
                 IOButtonList.Add(IO + Loc + Module, TempCBList);
                 return SclV;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Set Up IO Wrap Panel Failed");
                 return SclV;
@@ -178,14 +182,13 @@ namespace PentagonHMI.ChildControls
                 TNlist = null;
                 SclV = null;
             }
-
         }
 
-        void ReadIO()
+        private void ReadIO()
         {
             try
             {
-                //"SELECT [Module], LEFT(DisplayName,3) as Loc FROM 
+                //"SELECT [Module], LEFT(DisplayName,3) as Loc FROM
                 //    IOList Where Status = 'A' Group by LEFT(DisplayName,3), [Module] order by 1,2"
                 DataTable DT = DB.ExecuteQueryDT_Select($"SELECT IOType as 'Module', IOIndex as 'Loc' FROM IO " +
                     $"Where Status = 'A' and StationID = {_Main.StationID} Group by IOIndex, IOType order by 1, 2", ref ErrMsg);
@@ -196,7 +199,7 @@ namespace PentagonHMI.ChildControls
                 TabItem TI;
                 int count = 0;
                 string Name = string.Empty;
-                foreach (DataRow dr in DT.Rows)
+                foreach(DataRow dr in DT.Rows)
                 {
                     TC = new TabControl { TabStripPlacement = Dock.Bottom };
                     RegisterName(dr["Module"].ToString() + dr["Loc"].ToString(), TC);
@@ -224,7 +227,7 @@ namespace PentagonHMI.ChildControls
                     TIM = new TabItem { Header = dr["Loc"].ToString(), Content = TC, Visibility = Visibility.Visible };
                     TCM.Items.Add(TIM);
 
-                    if (DT.Rows.Count == count + 1 || (DT.Rows.Count > count && DT.Rows[count + 1]["Module"].ToString() != dr["Module"].ToString()))
+                    if(DT.Rows.Count == count + 1 || (DT.Rows.Count > count && DT.Rows[count + 1]["Module"].ToString() != dr["Module"].ToString()))
                     {
                         TIKing = new TabItem { Header = new TextBlock { Text = dr["Module"].ToString() }, Content = TCM, Visibility = Visibility.Visible };
                         TCM = new TabControl { TabStripPlacement = Dock.Left };
@@ -233,33 +236,37 @@ namespace PentagonHMI.ChildControls
                     count++;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Add IO Fail");
             }
         }
-        #endregion
+
+        #endregion FormEvents
 
         #region Events
-        void IOInput_OnUpdate()
+
+        private void IOInput_OnUpdate()
         {
             try
             {
-                if (!_Main.IOLocPageON)
+                if(!_Main.IOLocPageON)
                 {
                     ModeCheck();
                     IO_UPDATE();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Not able to Read Status from IO Status List");
             }
         }
-        #endregion
+
+        #endregion Events
 
         #region Methods
-        void ModeCheck()
+
+        private void ModeCheck()
         {
             try
             {
@@ -269,30 +276,30 @@ namespace PentagonHMI.ChildControls
                 this.Dispatcher.Invoke(new Action(() => T1.IsChecked =
                 IOInput.WorkTag(ref EMTag) && EMTag.Value?.ToString().ToUpper() == "TRUE"));
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "ModeCheck()");
             }
         }
 
+        private int ns = 0; public static string Exactnow;
 
-        int ns = 0; public static string Exactnow;
         private void IO_UPDATE()
         {
             try
             {
                 ns = 0;
                 Exactnow = IOInput.Locnow;
-                foreach (UCCheckboxLabelType2 uc in IOButtonList[Exactnow])
+                foreach(UCCheckboxLabelType2 uc in IOButtonList[Exactnow])
                 {
                     this.Dispatcher.Invoke(new Action(() => ns = Convert.ToInt16(uc.Tag)));
-                    if (Exactnow.Contains("IN") && _Main.IValue.Count != 0)
+                    if(Exactnow.Contains("IN") && _Main.IValue.Count != 0)
                         IO_Update(uc, _Main.IValue[ns]);
-                    else if (Exactnow.Contains("OUT") && _Main.OValue.Count != 0)
+                    else if(Exactnow.Contains("OUT") && _Main.OValue.Count != 0)
                         IO_Update(uc, _Main.OValue[ns]);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError("IO_UPDATE", ex.ToString());
             }
@@ -300,7 +307,7 @@ namespace PentagonHMI.ChildControls
 
         private void IO_Update(UCCheckboxLabelType2 cbl, bool io)
         {
-            if (!cbl.Dispatcher.CheckAccess())
+            if(!cbl.Dispatcher.CheckAccess())
                 cbl.Dispatcher.Invoke(new Action(() => cbl.ucIsCheck = io));
             else
                 cbl.ucIsCheck = io;
@@ -310,13 +317,16 @@ namespace PentagonHMI.ChildControls
         {
             _Main.IOPageON = false;
         }
-        #endregion
+
+        #endregion Methods
 
         #region Destructor
+
         ~ucIOInput()
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Destructor
     }
 }

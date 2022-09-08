@@ -1,6 +1,4 @@
 ﻿using GalaSoft.MvvmLight;
-using LiveCharts;
-using LiveCharts.Wpf;
 using PentagonHMI.Classes;
 using SimpleDatabase;
 using System;
@@ -131,7 +129,6 @@ namespace PentagonHMI.ChildControls
             [8] = "Idle",
         };
 
-
         public ucHome(LogicClasses.Main main)
         {
             InitializeComponent();
@@ -161,7 +158,6 @@ namespace PentagonHMI.ChildControls
                 System1_Stuff.Visibility = Visibility.Visible;
                 System2_Stuff.Visibility = Visibility.Collapsed;
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S1TurnTable.jpeg", UriKind.Relative));
-
 
                 Station1Tb.Text = "Station 5\r\nVISION CHECK";
                 Station1DutStatus.Tag = ("Station_5.DUT_Status", "Station_5.Nest_Code");
@@ -247,7 +243,6 @@ namespace PentagonHMI.ChildControls
                         LabelLotID.Content = _Main.OPC.Read<string>(Tags.MainPage.LotID.Name, typeof(string)) ?? "Nan";
                     }
 
-
                     #region Station Status Read
 
                     var stats = new List<int>();
@@ -305,6 +300,7 @@ namespace PentagonHMI.ChildControls
                             case 2:
                                 stationsStatus[i].Background = Brushes.Magenta;
                                 break;
+
                             case 10:
                                 stationsStatus[i].Background = Brushes.Green;
                                 break;
@@ -316,7 +312,6 @@ namespace PentagonHMI.ChildControls
                             default:
                                 // not sure what to do
                                 break;
-
                         }
                         stationsStatus[i].Content = innertTxt[i];
                         MuteToogleButton.IsChecked = OPCore.Read<bool>(Tags.MainPage.Mute.Name, typeof(bool));
@@ -331,17 +326,18 @@ namespace PentagonHMI.ChildControls
                 }
             });
         }
-        void UpdateLotInfo()
+
+        private void UpdateLotInfo()
         {
             Dispatcher.Invoke(() =>
             {
                 if(GlobalFunctions.IsSystem1)
                 {
-                    LotIDLabel.Content= OPCore.Read<string>(Tags.MainPage.LotIDLotID1.Name);
-                    OperatorIDLabel.Content= OPCore.Read<string>(Tags.MainPage.LotIDOperatorID1.Name);
-                    LotQuatityLabel.Content= OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity1.Name).ToString();
+                    LotIDLabel.Content = OPCore.Read<string>(Tags.MainPage.LotIDLotID1.Name);
+                    OperatorIDLabel.Content = OPCore.Read<string>(Tags.MainPage.LotIDOperatorID1.Name);
+                    LotQuatityLabel.Content = OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity1.Name).ToString();
                     int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
-                    BatteryTypeLabel.Content= batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : "Murata";
+                    BatteryTypeLabel.Content = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : "Murata";
                 }
                 else
                 {

@@ -15,7 +15,7 @@ namespace PentagonHMI
         private IVisionSensor sensor;
         private VisionSensorStore store = new VisionSensorStore();
         private Keyence.IV.Sdk.Sample_CSharp.Parts.ImageDisplayControl imageDisplayControl = new Keyence.IV.Sdk.Sample_CSharp.Parts.ImageDisplayControl();
-        Timer timer = new Timer();
+        private Timer timer = new Timer();
 
         public ucKeyenceVision(LogicClasses.Main _main)
         {
@@ -23,7 +23,7 @@ namespace PentagonHMI
             timer.Interval = 20;
             timer.Elapsed += TimerTick;
             _Main = _main;
-            initializeVision();   
+            initializeVision();
         }
 
         public void initializeVision()
@@ -40,9 +40,9 @@ namespace PentagonHMI
             //sensor.Trigger();
 
             imageDisplayControl.Initialize(sensor);
-            
+
             WindowsFormsHost Host = new WindowsFormsHost
-            {               
+            {
                 Child = imageDisplayControl
             };
             VisionContent.Children.Add(Host);
@@ -50,7 +50,7 @@ namespace PentagonHMI
 
         private void TimerTick(object sender, EventArgs e)
         {
-            if (sensor == null)
+            if(sensor == null)
             {
                 return;
             }
@@ -58,7 +58,7 @@ namespace PentagonHMI
             {
                 sensor.TickTack();
             }
-            catch (ConnectionLostException)
+            catch(ConnectionLostException)
             {
                 sensor.Dispose();
                 sensor = null;

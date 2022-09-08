@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PentagonHMI.Enum
+﻿namespace PentagonHMI.Enum
 {
     public class Enumeration
     {
@@ -29,28 +24,29 @@ namespace PentagonHMI.Enum
 
         public enum IOSignal
         {
-            gl_True =1,
-            gl_False =2
+            gl_True = 1,
+            gl_False = 2
         }
 
         public enum Active
         {
             Yes = 1,
-            No = 0 
+            No = 0
         }
 
         public enum ModuleType
         {
-            Singulator,FNB,UPC,Sorting
+            Singulator, FNB, UPC, Sorting
         }
 
         public enum RobotType
         {
-            Pick,PickBackup,Vision,Standby,Reject
+            Pick, PickBackup, Vision, Standby, Reject
         }
+
         public enum StepperType
         {
-            TicMark,OQC,Barcode,Reject1,Reject2,Conveyor
+            TicMark, OQC, Barcode, Reject1, Reject2, Conveyor
         }
 
         public enum ServoType
@@ -60,7 +56,7 @@ namespace PentagonHMI.Enum
 
         public enum CameraType
         {
-            Barcode,TicMark,OQC
+            Barcode, TicMark, OQC
         }
 
         public enum EngineeringTabs
@@ -75,8 +71,6 @@ namespace PentagonHMI.Enum
             OutputRobot,
             InputRack,
             OutputRack
-
         }
-     
     }
 }

@@ -15,7 +15,7 @@
                           VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
+                        <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -28,37 +28,37 @@
                                               VirtualizingPanel.VirtualizationMode="Recycling">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel/>
+                                            <VirtualizingStackPanel />
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                                                    <ColumnDefinition Width="Auto" MinWidth="300"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto" MinWidth="100" />
+                                                    <ColumnDefinition Width="Auto" MinWidth="300" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock Grid.Column="0" Text="{Binding RackTextName}"
-                                                           Style="{StaticResource KeyTextBlockStyle}"/>
+                                                           Style="{StaticResource KeyTextBlockStyle}" />
 
                                                 <TextBox Grid.Column="1" Text="{Binding RackText}"
                                                          IsEnabled="{Binding RackTextEnable}"
-                                                         VerticalContentAlignment="Center"/>
+                                                         VerticalContentAlignment="Center" />
 
                                                 <Button Grid.Column="2" x:Name="UpdateRackTextButton"
                                                         Style="{StaticResource ButtonStyle}"
                                                         Content="Update" Tag="{Binding}"
                                                         IsEnabled="{Binding RackTextEnable}"
-                                                        Click="updateRackTextButton_Click"/>
+                                                        Click="updateRackTextButton_Click" />
 
                                                 <Button Grid.Column="3" x:Name="ClearRackTextButton"
                                                         Style="{StaticResource ButtonStyle}"
                                                         Content="Clear" Tag="{Binding}"
                                                         IsEnabled="{Binding RackTextEnable}"
-                                                        Click="clearRackTextButton_Click"/>
+                                                        Click="clearRackTextButton_Click" />
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -69,32 +69,32 @@
                                               VirtualizingPanel.VirtualizationMode="Recycling">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <VirtualizingStackPanel/>
+                                            <VirtualizingStackPanel />
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" MinWidth="100"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="Auto" MinWidth="100" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock Grid.Column="0" Text="{Binding RackToggleName}"
-                                                           Style="{StaticResource KeyTextBlockStyle}"/>
+                                                           Style="{StaticResource KeyTextBlockStyle}" />
 
                                                 <Button Grid.Column="1" x:Name="RackToggleOffButton"
                                                         Style="{StaticResource ButtonStyle}" Background="Red"
                                                         Content="Off" Tag="{Binding}"
                                                         IsEnabled="{Binding RackToggleStatus}"
-                                                        Click="rackToggleOffButton_Click"/>
+                                                        Click="rackToggleOffButton_Click" />
 
                                                 <Button Grid.Column="2" x:Name="RackToggleOnButton"
                                                         Style="{StaticResource ButtonStyle}" Background="Green"
                                                         Content="On" Tag="{Binding}"
                                                         IsEnabled="{Binding RackToggleStatus, Converter={StaticResource InverseBooleanConverter}}"
-                                                        Click="rackToggleOnButton_Click"/>
+                                                        Click="rackToggleOnButton_Click" />
                                             </Grid>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
@@ -106,5 +106,4 @@
             </ItemsControl>
         </ScrollViewer>
     </GroupBox>
-
 </UserControl>

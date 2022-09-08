@@ -1,32 +1,33 @@
 ﻿using GalaSoft.MvvmLight.CommandWpf;
 using PentagonHMI.Models;
+using PentagonHMI.ViewModel.Recipe;
+using SimpleDatabase;
+using SimpleOPC;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using Utilities;
-using PentagonHMI.ViewModel.Recipe;
-using System.Data;
-using System.Windows.Input;
-using SimpleDatabase;
-using SimpleOPC;
-
 
 namespace PentagonHMI.Views
 {
-
     public partial class RecipeView : UserControl, IDisposable
     {
         #region PrivateFields
+
         private List<RecipeModel> recipeList = new List<RecipeModel>();
         private List<string> lst_ReelType;
-        SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
-        INGEAR_Opc OPC = new INGEAR_Opc(Info.OPC.IP);
-        #endregion
+        private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName);
+        private INGEAR_Opc OPC = new INGEAR_Opc(Info.OPC.IP);
+
+        #endregion PrivateFields
 
         #region Constructor
+
         public RecipeView()
         {
             try
@@ -37,7 +38,7 @@ namespace PentagonHMI.Views
                 initializeRecipeList();
                 InitializeData();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -49,25 +50,28 @@ namespace PentagonHMI.Views
             {
                 lst_ReelType = SQLer.Exec_Scalar<string>("Select [Info] From [Petty] Where [Item] = 'ReelType'").Split(';').ToList();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region DatabaseRelated
-        DataTable DT_Family_OutputNumber;// = new DataTable();
-        DataTable DT_InputNumber_Family;
-        Dictionary<string, List<string>> Dic_Family_OutputPartNumber = new Dictionary<string, List<string>>();
-        Dictionary<string, List<string>> Dic_InputPartNumber_Family = new Dictionary<string, List<string>>();
-        List<string> Lst_Family = new List<string>();
+
+        private DataTable DT_Family_OutputNumber;// = new DataTable();
+        private DataTable DT_InputNumber_Family;
+        private Dictionary<string, List<string>> Dic_Family_OutputPartNumber = new Dictionary<string, List<string>>();
+        private Dictionary<string, List<string>> Dic_InputPartNumber_Family = new Dictionary<string, List<string>>();
+        private List<string> Lst_Family = new List<string>();
+
         private void InitializeData()
         {
             try
             {
                 DT_Family_OutputNumber = Recipe_ViewModel.GetFamily_OutputPartNumber();
-                foreach (DataRow dr in DT_Family_OutputNumber.Rows)
+                foreach(DataRow dr in DT_Family_OutputNumber.Rows)
                 {
                     string strFamily = dr["Family"].ToString();
                     Dic_Family_OutputPartNumber.Add(strFamily, dr["OutputPartNumber"].ToString().Split(';').ToList<string>());
@@ -75,18 +79,19 @@ namespace PentagonHMI.Views
                 }
 
                 DT_InputNumber_Family = Recipe_ViewModel.GetInputPartNumber_Family();
-                foreach (DataRow dr in DT_InputNumber_Family.Rows)
+                foreach(DataRow dr in DT_InputNumber_Family.Rows)
                 {
                     string strInputPartNumber = dr["InputPartNumber"].ToString();
                     Dic_InputPartNumber_Family.Add(strInputPartNumber, dr["Family"].ToString().Split(';').ToList<string>());
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion DatabaseRelated
 
         private void UpdateOutputPartNumber(object Obj)
         {
@@ -96,7 +101,7 @@ namespace PentagonHMI.Views
                 var raw = cbx.SelectedValue;
                 string[] indexes = cbx.Tag as string[];
                 List<string> Lst_PartNumber;
-                if (Dic_Family_OutputPartNumber.TryGetValue(Convert.ToString(raw), out Lst_PartNumber))
+                if(Dic_Family_OutputPartNumber.TryGetValue(Convert.ToString(raw), out Lst_PartNumber))
                 {
                     var Result = recipeList[Convert.ToInt32(indexes[0]) - 1].SelectionList.Select(x => x)
                         .Where(y => y.SelectionName.Contains(indexes[1]))
@@ -105,11 +110,11 @@ namespace PentagonHMI.Views
                         .Select(z => z)
                         .Where(v => v.SelectionParameterName == "Output Part Number").First();
 
-                    if (Result != null)
+                    if(Result != null)
                         Result.ComboSource = Lst_PartNumber;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -120,15 +125,15 @@ namespace PentagonHMI.Views
             try
             {
                 TextBox Tbx = Obj as TextBox;
-                if (Tbx.IsReadOnly)
+                if(Tbx.IsReadOnly)
                     return false;
                 var raw = Tbx.Text;
                 int index = (int)Tbx.Tag;
                 List<string> Lst_Family;
-                if (Dic_InputPartNumber_Family.TryGetValue(Convert.ToString(raw), out Lst_Family))
+                if(Dic_InputPartNumber_Family.TryGetValue(Convert.ToString(raw), out Lst_Family))
                 {
                     var Results = recipeList[index - 1].SelectionList.Select(x => x);
-                    foreach (RecipeSelectionModel Mdl in Results)
+                    foreach(RecipeSelectionModel Mdl in Results)
                         Mdl.SelectionParameterList[0].ComboSource = Lst_Family;
                     return true;
                 }
@@ -138,7 +143,7 @@ namespace PentagonHMI.Views
                     Tbx.Text = string.Empty;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -147,20 +152,21 @@ namespace PentagonHMI.Views
         }
 
         #region PrivateInitializeMethods
+
         private void initializeRecipeList()
         {
             try
             {
                 recipeList = new List<RecipeModel>();
 
-                for (int i = 1; i <= 10; i++)
+                for(int i = 1; i <= 10; i++)
                 {
                     try
                     {
                         List<RecipeSelectionModel> selectionList = new List<RecipeSelectionModel>();
                         string selectionName = string.Empty;
 
-                        for (int j = 0; j < 2; j++)
+                        for(int j = 0; j < 2; j++)
                         {
                             try
                             {
@@ -184,7 +190,7 @@ namespace PentagonHMI.Views
                                     }
                                 });
                             }
-                            catch (Exception ex)
+                            catch(Exception ex)
                             {
                                 FileLogger.logError(ex.Message, ex.ToString());
                             }
@@ -204,7 +210,6 @@ namespace PentagonHMI.Views
                                         }
                                     }
                         });
-
 
                         recipeList.Add(new RecipeModel
                         {
@@ -237,7 +242,7 @@ namespace PentagonHMI.Views
                             ComboList = comboList
                         });
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
@@ -250,32 +255,33 @@ namespace PentagonHMI.Views
                 FieldListItemsControl2.ItemsSource = recipeList;
                 ictrl_ReelType.ItemsSource = recipeList;
 
-
                 RecipeListItemsControl2.ItemsSource = recipeList;
 
                 //SelectionParameterListView
 
                 recipeSelection();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateInitializeMethods
 
         #region PrivateEventMethods
+
         private void newRecipeButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (MessageBox.Show($"Are you sure you want to new recipe?", nameof(MessageBoxImage.Question),
+                if(MessageBox.Show($"Are you sure you want to new recipe?", nameof(MessageBoxImage.Question),
                     MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     recipeSelection(false, false);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -285,13 +291,13 @@ namespace PentagonHMI.Views
         {
             try
             {
-                if (MessageBox.Show($"Are you sure you want to proceed to first recipe selection?", nameof(MessageBoxImage.Question),
+                if(MessageBox.Show($"Are you sure you want to proceed to first recipe selection?", nameof(MessageBoxImage.Question),
                     MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     recipeSelection(true, false);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -301,13 +307,13 @@ namespace PentagonHMI.Views
         {
             try
             {
-                if (MessageBox.Show($"Are you sure you want to proceed to second recipe selection?", nameof(MessageBoxImage.Question),
+                if(MessageBox.Show($"Are you sure you want to proceed to second recipe selection?", nameof(MessageBoxImage.Question),
                     MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     recipeSelection(false, true);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -317,13 +323,13 @@ namespace PentagonHMI.Views
         {
             try
             {
-                if (MessageBox.Show($"Are you sure you want to proceed to final recipe confirmation?", nameof(MessageBoxImage.Question),
+                if(MessageBox.Show($"Are you sure you want to proceed to final recipe confirmation?", nameof(MessageBoxImage.Question),
                     MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                 {
                     recipeSelection(true, true);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -333,13 +339,13 @@ namespace PentagonHMI.Views
         {
             try
             {
-                if (OPC.Read<bool>("MC_System_Tags.MachineRunning"))
+                if(OPC.Read<bool>("MC_System_Tags.MachineRunning"))
                 {
                     MessageBox.Show("Please Stop the Machine before loading a recipe.");
                 }
                 else
                 {
-                    if (MessageBox.Show("Are you sure you want to load recipe?", nameof(MessageBoxImage.Question),
+                    if(MessageBox.Show("Are you sure you want to load recipe?", nameof(MessageBoxImage.Question),
                         MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
                         recipeSelection();
@@ -347,28 +353,31 @@ namespace PentagonHMI.Views
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
 
         //All start from 1
-        List<string> lst_Tag_PQSZ = new List<string>
+        private List<string> lst_Tag_PQSZ = new List<string>
         {
             "Input_Pcode[{0}]",
             "Input_Qcode[{0}]",
             "Input_Scode[{0}]",
             "Input_Zcode[{0}]"
          };
-        string Tag_OutputPartNumber = "Input_OutputPartNumber[{0}]";
-        string Tag_Family = "Input_Family[{0}]";
+
+        private string Tag_OutputPartNumber = "Input_OutputPartNumber[{0}]";
+        private string Tag_Family = "Input_Family[{0}]";
+
         private void loadRecipeToPLC()
         {
             int n = 0;
             recipeList.ForEach((x) =>
             {
-                n++; int n2 = 0;
+                n++;
+                int n2 = 0;
                 //if (!string.IsNullOrWhiteSpace(x.FieldList[0].Field))
                 //{
                 x.FieldList.ForEach((y) => { OPC.Write(string.Format(lst_Tag_PQSZ[n2++], n), y.Field, typeof(string)); });
@@ -378,19 +387,21 @@ namespace PentagonHMI.Views
                 //}
             });
 
-            OPC.Write("HMI_Recipe_Select_Ok",true);
+            OPC.Write("HMI_Recipe_Select_Ok", true);
         }
-        #endregion
+
+        #endregion PrivateEventMethods
 
         #region PrivateCommandMethods
+
         private void fieldTextChangedCommand()
         {
             try
             {
-                if (Keyboard.IsKeyDown(Key.Return))
+                if(Keyboard.IsKeyDown(Key.Return))
                     focusRecipeField();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -400,65 +411,67 @@ namespace PentagonHMI.Views
         {
             try
             {
-                if (Keyboard.IsKeyDown(Key.Return))
+                if(Keyboard.IsKeyDown(Key.Return))
                 {
-                    if (UpdateFamily(Obj))
+                    if(UpdateFamily(Obj))
                         focusRecipeField();
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateCommandMethods
 
         #region PrivateMethods
+
         private void focusRecipeField()
         {
             try
             {
                 bool focus = false;
 
-                for (int i = 0; i < FieldListItemsControl2.Items.Count; i++)
+                for(int i = 0; i < FieldListItemsControl2.Items.Count; i++)
                 {
                     try
                     {
                         ContentPresenter positionContentPresenter = FieldListItemsControl2.ItemContainerGenerator.ContainerFromIndex(i) as ContentPresenter;
                         ItemsControl fieldListItemsControl = FindVisualChild<ItemsControl>(positionContentPresenter);
 
-                        for (int j = 0; j < fieldListItemsControl.Items.Count; j++)
+                        for(int j = 0; j < fieldListItemsControl.Items.Count; j++)
                         {
                             try
                             {
                                 ContentPresenter fieldContentPresenter = fieldListItemsControl.ItemContainerGenerator.ContainerFromIndex(j) as ContentPresenter;
                                 TextBox textBox = FindVisualChild<TextBox>(fieldContentPresenter);
 
-                                if (string.IsNullOrEmpty(textBox.Text))
+                                if(string.IsNullOrEmpty(textBox.Text))
                                 {
                                     textBox.Focus();
                                     focus = true;
                                     break;
                                 }
                             }
-                            catch (Exception ex)
+                            catch(Exception ex)
                             {
                                 FileLogger.logError(ex.Message, ex.ToString());
                             }
                         }
 
-                        if (focus)
+                        if(focus)
                         {
                             break;
                         }
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -475,7 +488,7 @@ namespace PentagonHMI.Views
                 Visibility loadRecipe = Visibility.Collapsed;
                 string message = string.Empty;
 
-                if (firstSelection == null && secondSelection == null)
+                if(firstSelection == null && secondSelection == null)
                 {
                     recipeList.ForEach(x =>
                     {
@@ -487,7 +500,7 @@ namespace PentagonHMI.Views
                                 {
                                     y.FieldIsReadOnly = true;
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
@@ -501,7 +514,7 @@ namespace PentagonHMI.Views
                                     {
                                         z.SelectionParameterIsReadOnly = true;
                                     }
-                                    catch (Exception ex)
+                                    catch(Exception ex)
                                     {
                                         FileLogger.logError(ex.Message, ex.ToString());
                                     }
@@ -518,19 +531,19 @@ namespace PentagonHMI.Views
                                         {
                                             z.SelectionParameterIsReadOnly = true;
                                         }
-                                        catch (Exception ex)
+                                        catch(Exception ex)
                                         {
                                             FileLogger.logError(ex.Message, ex.ToString());
                                         }
                                     });
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
                             });
                         }
-                        catch (Exception ex)
+                        catch(Exception ex)
                         {
                             FileLogger.logError(ex.Message, ex.ToString());
                         }
@@ -538,7 +551,7 @@ namespace PentagonHMI.Views
 
                     newRecipe = Visibility.Visible;
                 }
-                else if (firstSelection == false && secondSelection == false)
+                else if(firstSelection == false && secondSelection == false)
                 {
                     recipeList.ForEach(x =>
                     {
@@ -551,7 +564,7 @@ namespace PentagonHMI.Views
                                     y.Field = string.Empty;
                                     y.FieldIsReadOnly = false;
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
@@ -566,13 +579,12 @@ namespace PentagonHMI.Views
                                         z.SelectionParameter = string.Empty;
                                         z.SelectionParameterIsReadOnly = false;
                                     }
-                                    catch (Exception ex)
+                                    catch(Exception ex)
                                     {
                                         FileLogger.logError(ex.Message, ex.ToString());
                                     }
                                 });
                             });
-
 
                             x.SelectionList.ForEach(y =>
                             {
@@ -585,19 +597,19 @@ namespace PentagonHMI.Views
                                             z.SelectionParameter = string.Empty;
                                             z.SelectionParameterIsReadOnly = false;
                                         }
-                                        catch (Exception ex)
+                                        catch(Exception ex)
                                         {
                                             FileLogger.logError(ex.Message, ex.ToString());
                                         }
                                     });
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
                             });
                         }
-                        catch (Exception ex)
+                        catch(Exception ex)
                         {
                             FileLogger.logError(ex.Message, ex.ToString());
                         }
@@ -607,9 +619,9 @@ namespace PentagonHMI.Views
 
                     proceedToFirstRecipeSelection = Visibility.Visible;
                 }
-                else if (firstSelection == true && secondSelection == false)
+                else if(firstSelection == true && secondSelection == false)
                 {
-                    if (recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Any(x => x.SelectionParameterMismatch == true))
+                    if(recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Any(x => x.SelectionParameterMismatch == true))
                     {
                         recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Where(
                             x => x.SelectionParameterMismatch == true).ToList().ForEach(x =>
@@ -618,7 +630,7 @@ namespace PentagonHMI.Views
                                 {
                                     x.SelectionParameterIsReadOnly = false;
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
@@ -638,7 +650,7 @@ namespace PentagonHMI.Views
                                     {
                                         y.FieldIsReadOnly = true;
                                     }
-                                    catch (Exception ex)
+                                    catch(Exception ex)
                                     {
                                         FileLogger.logError(ex.Message, ex.ToString());
                                     }
@@ -652,14 +664,14 @@ namespace PentagonHMI.Views
                                         {
                                             z.SelectionParameterIsReadOnly = true;
                                         }
-                                        catch (Exception ex)
+                                        catch(Exception ex)
                                         {
                                             FileLogger.logError(ex.Message, ex.ToString());
                                         }
                                     });
                                 });
                             }
-                            catch (Exception ex)
+                            catch(Exception ex)
                             {
                                 FileLogger.logError(ex.Message, ex.ToString());
                             }
@@ -668,9 +680,9 @@ namespace PentagonHMI.Views
                         proceedToSecondRecipeSelection = Visibility.Visible;
                     }
                 }
-                else if (firstSelection == false && secondSelection == true)
+                else if(firstSelection == false && secondSelection == true)
                 {
-                    if (recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Any(x => x.SelectionParameterMismatch == true))
+                    if(recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Any(x => x.SelectionParameterMismatch == true))
                     {
                         recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Where(
                             x => x.SelectionParameterMismatch == true).ToList().ForEach(x =>
@@ -679,7 +691,7 @@ namespace PentagonHMI.Views
                                 {
                                     x.SelectionParameterIsReadOnly = false;
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
@@ -690,20 +702,20 @@ namespace PentagonHMI.Views
 
                     proceedToFinalRecipeConfirmation = Visibility.Visible;
                 }
-                else if (firstSelection == true && secondSelection == true)
+                else if(firstSelection == true && secondSelection == true)
                 {
                     recipeList.ForEach(x =>
                     {
                         try
                         {
-                            for (int i = 0; i < recipeList.SelectMany(y => y.SelectionList).Select(y => y.SelectionParameterList.Count).Max(); i++)
+                            for(int i = 0; i < recipeList.SelectMany(y => y.SelectionList).Select(y => y.SelectionParameterList.Count).Max(); i++)
                             {
                                 try
                                 {
                                     x.SelectionList[0].SelectionParameterList[i].SelectionParameterIsReadOnly = true;
                                     x.SelectionList[1].SelectionParameterList[i].SelectionParameterIsReadOnly = true;
 
-                                    if (x.SelectionList[0].SelectionParameterList[i].SelectionParameter ==
+                                    if(x.SelectionList[0].SelectionParameterList[i].SelectionParameter ==
                                     x.SelectionList[1].SelectionParameterList[i].SelectionParameter)
                                     {
                                         x.SelectionList[0].SelectionParameterList[i].SelectionParameterMismatch = false;
@@ -715,19 +727,19 @@ namespace PentagonHMI.Views
                                         x.SelectionList[1].SelectionParameterList[i].SelectionParameterMismatch = true;
                                     }
                                 }
-                                catch (Exception ex)
+                                catch(Exception ex)
                                 {
                                     FileLogger.logError(ex.Message, ex.ToString());
                                 }
                             }
                         }
-                        catch (Exception ex)
+                        catch(Exception ex)
                         {
                             FileLogger.logError(ex.Message, ex.ToString());
                         }
                     });
 
-                    if (recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Any(x => x.SelectionParameterMismatch == true))
+                    if(recipeList.SelectMany(x => x.SelectionList).SelectMany(x => x.SelectionParameterList).Any(x => x.SelectionParameterMismatch == true))
                     {
                         proceedToFirstRecipeSelection = Visibility.Visible;
                         proceedToSecondRecipeSelection = Visibility.Visible;
@@ -748,7 +760,7 @@ namespace PentagonHMI.Views
 
                         x.RaisePropertyChanged(nameof(RecipeModel.SelectionListView));
                     }
-                    catch (Exception ex)
+                    catch(Exception ex)
                     {
                         FileLogger.logError(ex.Message, ex.ToString());
                     }
@@ -762,44 +774,46 @@ namespace PentagonHMI.Views
                 ResetButton.Visibility = loadRecipe;
                 MessageTextBlock.Text = message;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion PrivateMethods
 
         #region PublicMethods
+
         public static T FindVisualChild<T>(DependencyObject dependencyObject) where T : DependencyObject
         {
             try
             {
-                if (dependencyObject != null)
+                if(dependencyObject != null)
                 {
-                    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
+                    for(int i = 0; i < VisualTreeHelper.GetChildrenCount(dependencyObject); i++)
                     {
                         try
                         {
                             DependencyObject child = VisualTreeHelper.GetChild(dependencyObject, i);
-                            if (child != null && child is T)
+                            if(child != null && child is T)
                             {
                                 return (T)child;
                             }
 
                             T childItem = FindVisualChild<T>(child);
-                            if (childItem != null)
+                            if(childItem != null)
                             {
                                 return childItem;
                             }
                         }
-                        catch (Exception ex)
+                        catch(Exception ex)
                         {
                             FileLogger.logError(ex.Message, ex.ToString());
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 FileLogger.logError(ex.Message, ex.ToString());
             }
@@ -810,7 +824,8 @@ namespace PentagonHMI.Views
         public void Dispose()
         {
         }
-        #endregion
+
+        #endregion PublicMethods
 
         private void ResetButton_Click(object sender, RoutedEventArgs e)
         {

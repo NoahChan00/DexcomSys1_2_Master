@@ -1,9 +1,8 @@
-﻿using System.Windows.Controls;
-using System.ComponentModel;
+﻿using Library;
 using System.Collections.ObjectModel;
-using Library;
+using System.ComponentModel;
 using System.Data;
-
+using System.Windows.Controls;
 
 namespace PentagonHMI.UserControls
 {
@@ -17,7 +16,7 @@ namespace PentagonHMI.UserControls
 
         private void NotifyChange(PropertyChangedEventArgs e)
         {
-            if (PropertyChanged != null)
+            if(PropertyChanged != null)
                 PropertyChanged(this, e);
         }
 
@@ -25,11 +24,11 @@ namespace PentagonHMI.UserControls
 
         public void Update(DataTable DT)
         {
-            if (DT == null)
+            if(DT == null)
                 return;
 
             ObservableCollection<Bar> Alert = new ObservableCollection<Bar>();
-            foreach (DataRow dr in DT.Rows)
+            foreach(DataRow dr in DT.Rows)
             {
                 Bar bar = new Bar();
                 bar.ErrorCode = dr["msgErrorCode"].ToString();
@@ -59,6 +58,7 @@ namespace PentagonHMI.UserControls
         }
 
         private ObservableCollection<Bar> _AlarmCollection = new ObservableCollection<Bar>();
+
         public ObservableCollection<Bar> AlarmCollection
         {
             get { return _AlarmCollection; }

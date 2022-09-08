@@ -9,9 +9,10 @@ using System.Windows;
 
 namespace PentagonHMI.Classes
 {
-    class GlobalFunctions
+    internal class GlobalFunctions
     {
         #region Variables
+
         public const string EnglishFileSuffix = "_en";
         public const string ChineseFileSuffix = "_cn";
 
@@ -20,8 +21,10 @@ namespace PentagonHMI.Classes
         public static bool StartLot = false;
         public static string LotID = "";
         public static VanillaDB.DataDBCall DBCall = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString.ToString());
+
         //public static OleDbConnection gl_conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory() + @"\Database.mdb");
         public static string StationName = Properties.Settings.Default.Station.ToString();
+
         public static string SubStationName = Properties.Settings.Default.SubStation.ToString();
         public static string Lifter1Station = Properties.Settings.Default.Lifter1Station.ToString();
         public static string Lifter2Station = Properties.Settings.Default.Lifter2Station.ToString();
@@ -51,19 +54,20 @@ namespace PentagonHMI.Classes
         //public static string PalletRejectInt = "ON";// PentagonHMI.Properties.Settings.Default.PalletRejectInt.ToString();
 
         public static SQLCarrier aSQL = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
-        public static MachineNameType MachineName = (aSQL.Exec_Scalar<string>("SELECT Info FROM dbo.Config WHERE Item = 'MachineName'")== MachineNameType.System_02.ToString()) ? MachineNameType.System_02 : MachineNameType.System_01;
+        public static MachineNameType MachineName = (aSQL.Exec_Scalar<string>("SELECT Info FROM dbo.Config WHERE Item = 'MachineName'") == MachineNameType.System_02.ToString()) ? MachineNameType.System_02 : MachineNameType.System_01;
 
- // Global variable to determine system 1 or system 2
-        #endregion
+        // Global variable to determine system 1 or system 2
 
-
+        #endregion Variables
 
         // bool as only System 1 and 2
         public static bool IsSystem1 => MachineName == MachineNameType.System_01;
+
         public enum MachineNameType
         {
             System_01, System_02
         }
+
         //public static void LoadMachineName()
         //{
         //    var machineName = aSQL.Exec_Scalar<string>("SELECT Info FROM dbo.Config WHERE Item = 'MachineName'");
@@ -74,9 +78,8 @@ namespace PentagonHMI.Classes
         public static void LoadErrorList()
         {
             //string ErrMsg = "";
-            lock (ErrorListDict)
+            lock(ErrorListDict)
             {
-
                 DataSet ds = new DataSet();
                 ds.Clear();
                 ErrorListDict.Clear();
@@ -84,44 +87,43 @@ namespace PentagonHMI.Classes
 
                 dtalarm = aSQL.Exec_DTSelect($"SELECT [AlmCode],[AlmType],[ModuleCode],[AlmDesc],[AlmAction] FROM [Alarms_List] WHERE [StationID] = {StationName}");
 
-                if (dtalarm != null)
-                    foreach (DataRow row in dtalarm.Rows)
+                if(dtalarm != null)
+                    foreach(DataRow row in dtalarm.Rows)
                     {
                         ErrorListDict.Add(Convert.ToInt32(row["AlmCode"]), row["ModuleCode"] + ";" + row["AlmDesc"] + ";" + row["AlmAction"]);
                     }
 
                 ds.Clear();
-
             }
         }
 
         public static string getValidLocalIP()
         {
             NetworkInterface[] ifaceList = NetworkInterface.GetAllNetworkInterfaces();
-            foreach (NetworkInterface iface in ifaceList)
+            foreach(NetworkInterface iface in ifaceList)
             {
-                if (iface.OperationalStatus == OperationalStatus.Up && iface.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
+                if(iface.OperationalStatus == OperationalStatus.Up && iface.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
                 {
                     UnicastIPAddressInformationCollection unicastIPC = iface.GetIPProperties().UnicastAddresses;
-                    foreach (UnicastIPAddressInformation unicast in unicastIPC)
+                    foreach(UnicastIPAddressInformation unicast in unicastIPC)
                     {
-                        if (unicast.Address.ToString() == "191.168.3.3")
+                        if(unicast.Address.ToString() == "191.168.3.3")
                         {
                             return "191.168.3.3";
                         }
-                        else if (unicast.Address.ToString() == "191.168.3.2")
+                        else if(unicast.Address.ToString() == "191.168.3.2")
                         {
                             return "191.168.3.2";
                         }
-                        else if (unicast.Address.ToString() == "192.168.3.1")
+                        else if(unicast.Address.ToString() == "192.168.3.1")
                         {
                             return "192.168.3.1";
                         }
-                        else if (unicast.Address.ToString() == "191.168.3.44")
+                        else if(unicast.Address.ToString() == "191.168.3.44")
                         {
                             return "191.168.3.44";
                         }
-                        else if (unicast.Address.ToString().Length > 10 && unicast.Address.ToString().Substring(0, 10) == "191.168.3.")
+                        else if(unicast.Address.ToString().Length > 10 && unicast.Address.ToString().Substring(0, 10) == "191.168.3.")
                         {
                             return unicast.Address.ToString();
                         }
@@ -135,38 +137,39 @@ namespace PentagonHMI.Classes
         public static string getUsePLCIP(string LocalIP)
         {
             //Load PLC IP address
-            switch (LocalIP)
+            switch(LocalIP)
             {
                 case "191.168.3.44":
                     return "191.168.3.114";
+
                 case "191.168.3.45":
                     return "191.168.3.114";
+
                 case "191.168.3.1":
                     return "191.168.3.141";
+
                 case "191.168.3.2":
                     return "191.168.3.142";
+
                 case "191.168.3.3":
                     return "191.168.3.143";
+
                 case "192.168.3.1":
                     return "192.168.3.100";
 
                 default:
+                {
+                    if(LocalIP.Length >= 10 && LocalIP.Substring(0, 10) == "191.168.3.")
                     {
-                        if (LocalIP.Length >= 10 && LocalIP.Substring(0, 10) == "191.168.3.")
-                        {
-                            return "191.168.3.144";
-                        }
-                        else
-                        {
-                            return "127.0.0.1";
-                        }
+                        return "191.168.3.144";
                     }
+                    else
+                    {
+                        return "127.0.0.1";
+                    }
+                }
             }
-
         }
-
-
-
 
         #region "SetLanguageDictionary() - Set the current program's language"
 
@@ -176,7 +179,7 @@ namespace PentagonHMI.Classes
             //   bool IsVer2BellyBand = IsVersion2BB();
 
             //App.Current.Resources.MergedDictionaries.Clear();
-            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            switch(Thread.CurrentThread.CurrentCulture.ToString())
             {
                 case "zh-CN":
                     dictResource.Source = new Uri("..\\Resources\\zh-CN.xaml", UriKind.Relative);
@@ -190,6 +193,7 @@ namespace PentagonHMI.Classes
                     //    App.Current.Resources.MergedDictionaries.Add(dict);
                     //}
                     break;
+
                 default:
                     dictResource.Source = new Uri("..\\Resources\\en-US.xaml", UriKind.Relative);
                     App.Current.Resources.MergedDictionaries.Add(dictResource);
@@ -204,18 +208,12 @@ namespace PentagonHMI.Classes
                     break;
             }
 
-
-
-
-            if (dictResource != null)
+            if(dictResource != null)
             {
                 dictResource = null;
             }
         }
-        #endregion
 
-
-
-
+        #endregion "SetLanguageDictionary() - Set the current program's language"
     }
 }

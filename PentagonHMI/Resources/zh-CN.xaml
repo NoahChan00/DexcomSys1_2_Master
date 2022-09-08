@@ -1,6 +1,5 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- ################################ -->
     <!-- ###### Main Window Module ###### -->
     <!-- ################################ -->
@@ -36,7 +35,7 @@
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_MENU_NAVIGATION">菜单导航</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_EVENT_LOG">事件日志</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_HEADER_CONNECTION_STATUS">连接状态</system:String>
-    
+
     <!-- Sub Menu Header Title -->
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_MACHINE">机器</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_PRODUCT">产品</system:String>
@@ -45,7 +44,7 @@
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_DEVICE_STATUS">设备状态</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_VISION">目检</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_HEADER_ALERT_WARNING">警报/警告</system:String>
-    
+
     <!-- Sub Menu Title -->
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_NAME">名称</system:String>
     <system:String x:Key="MAIN_WINDOW_SUB_MENU_TITLE_STATUS">状态</system:String>
@@ -91,7 +90,6 @@
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_MESSAGES">信息</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_DEVICE">设备</system:String>
     <system:String x:Key="MAIN_WINDOW_MENU_TITLE_HELP">帮助页面</system:String>
-    
 
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_HOME_LOG">选择"首页"</system:String>
     <system:String x:Key="MAIN_WINDOW_TREE_ITEM_EVENT_LOG">选择"事件日志"</system:String>
@@ -148,7 +146,6 @@
     <system:String x:Key="MAIN_WINDOW_BUTTON_ROBOT_HOME">机械手复位</system:String>
     <system:String x:Key="MAIN_WINDOW_BUTTON_ROBOT_HOME_CLICKED">机械手主页按妞</system:String>
 
-
     <system:String x:Key="MAIN_WINDOW_MSG_CHANGE_LANGUAGE">语言改为中文</system:String>
     <system:String x:Key="MAIN_WINDOW_MSG_START_CLICK">按开始</system:String>
 
@@ -204,8 +201,6 @@
     <system:String x:Key="28">门已被打开 (粘合器二):请小心的关上门</system:String>
     <system:String x:Key="29">门已被打开 (机械手):请小心的关上门</system:String>
     <system:String x:Key="30">机械手无法提取物品:检查气压开关镶嵌</system:String>
-
-
 
     <!--PLC Warnings-->
     <system:String x:Key="101">粘合器(一)的腹带已耗尽:即刻更换新的腹带</system:String>
@@ -286,7 +281,6 @@
     <system:String x:Key="8019">传感器错误于(十五):暂停机器并检查磁簧开关的输入十五</system:String>
     <system:String x:Key="4001">西塔数值超过限额:如机器无法启动，手动的旋转机械手到0度</system:String>
 
-
     <!-- ########################## -->
     <!-- ###### Login Module ###### -->
     <!-- ########################## -->
@@ -366,7 +360,7 @@
     <system:String x:Key="IO_INPUT_IX0_01">0.01 停止按钮</system:String>
     <system:String x:Key="IO_INPUT_IX0_02">0.02 重启按钮</system:String>
     <system:String x:Key="IO_INPUT_IX0_03">0.03 产品输送带PE(一)</system:String>
-    <system:String x:Key="IO_INPUT_IX0_04">0.04 产品输送带PE(二) </system:String>
+    <system:String x:Key="IO_INPUT_IX0_04">0.04 产品输送带PE(二)</system:String>
     <system:String x:Key="IO_INPUT_IX0_05">0.05 产品输送带PE(三)</system:String>
     <system:String x:Key="IO_INPUT_IX0_06">0.06 产品输送带PE(四)</system:String>
     <system:String x:Key="IO_INPUT_IX0_07">0.07 报废品输送带PE(二)</system:String>
@@ -487,13 +481,13 @@
     <system:String x:Key="IO_OUTPUT_QX5_15">5.15 省略条形码扫描器的成绩显示</system:String>
     <system:String x:Key="IO_OUTPUT_QX6_00">6.00 主输送操作信号给机械手</system:String>
     <system:String x:Key="IO_OUTPUT_QX6_01">6.01 保留</system:String>
-    <system:String x:Key="IO_OUTPUT_QX6_02">6.02 折叠气缸二(一) </system:String>
-    <system:String x:Key="IO_OUTPUT_QX6_03">6.03 折叠气缸三(一) </system:String>
-    <system:String x:Key="IO_OUTPUT_QX6_04">6.04 折叠气缸四(一) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_02">6.02 折叠气缸二(一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_03">6.03 折叠气缸三(一)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_04">6.04 折叠气缸四(一)</system:String>
     <system:String x:Key="IO_OUTPUT_QX6_05">6.05 保留</system:String>
-    <system:String x:Key="IO_OUTPUT_QX6_06">6.06 折叠气缸二(二) </system:String>
-    <system:String x:Key="IO_OUTPUT_QX6_07">6.07 折叠气缸三(二) </system:String>
-    <system:String x:Key="IO_OUTPUT_QX6_08">6.08 折叠气缸四(二) </system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_06">6.06 折叠气缸二(二)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_07">6.07 折叠气缸三(二)</system:String>
+    <system:String x:Key="IO_OUTPUT_QX6_08">6.08 折叠气缸四(二)</system:String>
     <system:String x:Key="IO_OUTPUT_QX6_09">6.09 机械手已启动</system:String>
     <system:String x:Key="IO_OUTPUT_QX6_10">6.10 机械手已停止</system:String>
     <system:String x:Key="IO_OUTPUT_QX6_11">6.11 机械手已重启</system:String>
@@ -548,7 +542,6 @@
     <system:String x:Key="ROBOT_IO_INPUT_RI_21">In 21 保留</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_22">In 22 保留</system:String>
     <system:String x:Key="ROBOT_IO_INPUT_RI_23">In 23 保留</system:String>
-
 
     <!-- #####################################-->
     <!-- ###### Robot IO Output Module ###### -->
@@ -637,8 +630,6 @@
     <system:String x:Key="OEE_INFO_LABEL_START_TIME">开始时间</system:String>
     <system:String x:Key="OEE_INFO_LABEL_OEE">OEE (%)</system:String>
     <system:String x:Key="OEE_INFO_LABEL_IDEAL_CYCLE_TIME">理想的周期时间</system:String>
-    
-
 
     <!-- ##################################### -->
     <!-- ###### OEE Info Details Module ###### -->
@@ -664,7 +655,7 @@
     <!--Buttons-->
     <system:String x:Key="OEE_BUTTON_SAVE_LOG">保存日志和重设</system:String>
     <system:String x:Key="OEE_MSG_SAVE_LOG">保存OEE</system:String>
-    
+
     <!-- ################################ -->
     <!-- ###### Maintenance Module ###### -->
     <!-- ################################ -->
@@ -798,7 +789,7 @@
     <system:String x:Key="ALERT_LABEL_MIDDLEWARE_QUERY_UPC_FROM_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Query UPC From SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
     <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_FAIL_UPC_QUERY_TO_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Send Fail UPC Query To SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
     <system:String x:Key="ALERT_LABEL_MIDDLEWARE_SEND_SEND_INSPECTION_RESULT_QUERY_TO_SFS_CRITICAL_ERROR_CONTINUOUS_BOX_FAILURE">Send Inspection Result Query To SFS (3/4/5/13 SFC ERROR) 连续失败</system:String>
-    
+
     <!-- ######################## -->
     <!-- ###### UserAccess ###### -->
     <!-- ######################## -->
@@ -810,7 +801,7 @@
     <system:String x:Key="USER_ACCESS_LABEL_MACHINE_SETTING">机器设置</system:String>
     <system:String x:Key="USER_ACCESS_LABEL_RECIPE_SETTING">食谱设置</system:String>
     <system:String x:Key="USER_ACCESS_LABEL_STATISTIC">统计</system:String>
-    
+
     <!-- ################### -->
     <!-- ###### Yield ###### -->
     <!-- ################### -->
@@ -920,7 +911,7 @@
     <system:String x:Key="SHIFT_LABEL_SHIFT2">轮班 2</system:String>
     <system:String x:Key="SHIFT_LABEL_SHIFT3">轮班 3</system:String>
     <system:String x:Key="SHIFT_TITLE">轮班</system:String>
-    <system:String x:Key="SHIFT_TREE_VIEW_ITEM"> 轮班</system:String>
+    <system:String x:Key="SHIFT_TREE_VIEW_ITEM">轮班</system:String>
     <system:String x:Key="SHIFT_OUTPUT_LOG">选择"轮班"</system:String>
 
     <!-- Applicator Status -->
@@ -931,6 +922,4 @@
     <!-- End of Applicator Status -->
 
     <system:String x:Key="HELP_ERR_MSG_FILE_NOT_FOUND">图像文件未找到。\n请确保文件被放置在 \Images\PickArm_Help\“</system:String>
-
-
 </ResourceDictionary>

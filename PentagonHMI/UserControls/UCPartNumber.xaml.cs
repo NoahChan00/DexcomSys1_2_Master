@@ -1,5 +1,5 @@
-﻿using System.Windows.Controls;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace PentagonHMI.UserControls
@@ -14,13 +14,13 @@ namespace PentagonHMI.UserControls
         public string Part1
         {
             get { return string.Empty; }
-            set { Lbl_Part1.Content = value;}
+            set { Lbl_Part1.Content = value; }
         }
 
         public int Part1_font
         {
             get { return 0; }
-            set { Lbl_Part1.FontSize = value;}
+            set { Lbl_Part1.FontSize = value; }
         }
 
         public string Part2
@@ -62,7 +62,8 @@ namespace PentagonHMI.UserControls
         public int PartNum
         {
             get { return PartNum; }
-            set {
+            set
+            {
                 switch(value)
                 {
                     case 4:
@@ -76,12 +77,13 @@ namespace PentagonHMI.UserControls
                         goto case 1;
                     case 1:
                         SP1.Visibility = Visibility.Visible;
-                        break;                        
+                        break;
                 }
             }
         }
 
-        int? low1 = null, low2 = null, low3 = null, low4 = null;
+        private int? low1 = null, low2 = null, low3 = null, low4 = null;
+
         public void SetLowStockQty(int? Low1 = null, int? Low2 = null, int? Low3 = null, int? Low4 = null)
         {
             low1 = Low1;
@@ -90,70 +92,69 @@ namespace PentagonHMI.UserControls
             low4 = Low4;
         }
 
-        int pn1 = -1, pn2 = -1, pn3 = -1, pn4 = -1;
+        private int pn1 = -1, pn2 = -1, pn3 = -1, pn4 = -1;
+
         public void SetPartNumber(int p1, int p2 = -1, int p3 = -1, int p4 = -1)
-                                                                                                                                                                                                                                                                                                                                                                                                                                  {
+        {
             if(p1 != pn1)
             {
                 Lbl_N1.Content = p1;
                 if(low1 != null)
                 {
-                    if (p1 >= low1)
+                    if(p1 >= low1)
                         Lbl_N1.Background = Brushes.Blue;
-                    else if (p1 <= 0)
+                    else if(p1 <= 0)
                         Lbl_N1.Background = Brushes.Black;
-                    else if (p1 < low1)
+                    else if(p1 < low1)
                         Lbl_N1.Background = Brushes.Orange;
                 }
                 pn1 = p1;
             }
 
-            if (p2 != pn2)
+            if(p2 != pn2)
             {
                 Lbl_N2.Content = p2;
-                if (low2 != null)
+                if(low2 != null)
                 {
-                    if (p2 >= low2)
+                    if(p2 >= low2)
                         Lbl_N2.Background = Brushes.Blue;
-                    else if (p2 <= 0)
+                    else if(p2 <= 0)
                         Lbl_N2.Background = Brushes.Black;
-                    else if (p2 < low2)
+                    else if(p2 < low2)
                         Lbl_N2.Background = Brushes.Orange;
                 }
                 pn2 = p2;
             }
 
-            if (p3 != pn3)
+            if(p3 != pn3)
             {
                 Lbl_N3.Content = p3;
-                if (low3 != null)
+                if(low3 != null)
                 {
-                    if (p3 >= low3)
+                    if(p3 >= low3)
                         Lbl_N3.Background = Brushes.Blue;
-                    else if (p3 <= 0)
+                    else if(p3 <= 0)
                         Lbl_N3.Background = Brushes.Black;
-                    else if (p3 < low3)
+                    else if(p3 < low3)
                         Lbl_N3.Background = Brushes.Orange;
                 }
                 pn3 = p3;
             }
 
-            if (p4 != pn4)
+            if(p4 != pn4)
             {
                 Lbl_N4.Content = p4;
-                if (low4 != null)
+                if(low4 != null)
                 {
-                    if (p4 >= low4)
+                    if(p4 >= low4)
                         Lbl_N4.Background = Brushes.Blue;
-                    else if (p4 <= 0)
+                    else if(p4 <= 0)
                         Lbl_N4.Background = Brushes.Black;
-                    else if (p4 < low4)
+                    else if(p4 < low4)
                         Lbl_N4.Background = Brushes.Orange;
                 }
                 pn4 = p4;
             }
-
         }
-
     }
 }

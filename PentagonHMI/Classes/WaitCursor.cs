@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace PentagonHMI.Classes
@@ -24,6 +21,6 @@ namespace PentagonHMI.Classes
             Mouse.OverrideCursor = _previousCursor;
         }
 
-        #endregion
+        #endregion IDisposable Members
     }
 }

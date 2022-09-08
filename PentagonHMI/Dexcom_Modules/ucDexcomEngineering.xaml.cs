@@ -38,7 +38,8 @@ namespace PentagonHMI
             _Main = main;
 
 #if !DEBUG
-            if (!OPCore.Connect(Info.OPC.IP)) return;
+            if(!OPCore.Connect(Info.OPC.IP))
+                return;
 #endif
             Initialize();
             main.OnEngineeringUpdate += Update;
@@ -74,19 +75,19 @@ namespace PentagonHMI
             {
                 try
                 {
-                    foreach (var item in dic_EngMajor)
+                    foreach(var item in dic_EngMajor)
                     {
                         var control = item.Value;
                         var UI = item.Key;
 
-                        if (control.Module != ModuleNow)
+                        if(control.Module != ModuleNow)
                             continue;
 
                         bool disable = false;
 
 #if !DEBUG
-                        foreach (var condition in control.Conditions)
-                            if (!OPCore.Read<bool>(condition))
+                        foreach(var condition in control.Conditions)
+                            if(!OPCore.Read<bool>(condition))
                                 disable = true;
 #endif
 
@@ -94,15 +95,15 @@ namespace PentagonHMI
 
                         control.DisplayPanel.IsEnabled = !disable;
 
-                        if (UI is ToggleButton)
+                        if(UI is ToggleButton)
                         {
                             var tbtn = UI as ToggleButton;
                             tbtn.IsChecked = OPCore.Read<bool>(control.PLCAddress);
                         }
                     }
 
-                    // Read require plc tag 
-                    if (GlobalFunctions.IsSystem1)
+                    // Read require plc tag
+                    if(GlobalFunctions.IsSystem1)
                     {
                         System.Windows.Controls.Control[] controls = new System.Windows.Controls.Control[]
                         {
@@ -115,7 +116,7 @@ namespace PentagonHMI
                             UnloadRobot_tg_StationCycleMode, UnloadRobot_tg_StationInitDone, UnloadRobot_tg_StationJogMode
                         };
 
-                        foreach (var c in controls)
+                        foreach(var c in controls)
                         {
                             ReadPlcToControl(c);
                         }
@@ -132,15 +133,13 @@ namespace PentagonHMI
                             S2_RotaryTable_btn_TurretIndex
                         };
 
-                        foreach (var c in controls)
+                        foreach(var c in controls)
                         {
                             ReadPlcToControl(c);
                         }
                     }
-
-
                 }
-                catch (Exception exception)
+                catch(Exception exception)
                 {
                     FileLogger.logError(exception.Message, exception.ToString());
                 }
@@ -159,7 +158,7 @@ namespace PentagonHMI
 
         private void ModuleSelection()
         {
-            if (GlobalFunctions.IsSystem1)
+            if(GlobalFunctions.IsSystem1)
             {
                 tbc_System1.Visibility = Visibility.Visible;
                 tbc_System2.Visibility = Visibility.Collapsed;
@@ -175,12 +174,12 @@ namespace PentagonHMI
         {
             try
             {
-                if (sender is NumUpDown numUpDown && numUpDown.Tag is string tagName)
+                if(sender is NumUpDown numUpDown && numUpDown.Tag is string tagName)
                 {
                     OPCore.Write(tagName, numUpDown.Value, typeof(short));
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw;
             }
@@ -190,12 +189,12 @@ namespace PentagonHMI
         {
             try
             {
-                if (sender is ToggleButton toggleButton && toggleButton.Tag is string tagName)
+                if(sender is ToggleButton toggleButton && toggleButton.Tag is string tagName)
                 {
                     OPCore.Write(tagName, toggleButton.IsChecked, typeof(bool));
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw;
             }
@@ -205,12 +204,12 @@ namespace PentagonHMI
         {
             try
             {
-                if (sender is Button button && button.Tag is string tagName)
+                if(sender is Button button && button.Tag is string tagName)
                 {
                     OPCore.Write(tagName, true, typeof(bool));
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw;
             }
@@ -244,12 +243,12 @@ namespace PentagonHMI
         {
             try
             {
-                if (sender is ComboBox comboBox && comboBox.Tag is string tagName && comboBox.SelectedItem is BatteryType batteryType)
+                if(sender is ComboBox comboBox && comboBox.Tag is string tagName && comboBox.SelectedItem is BatteryType batteryType)
                 {
                     OPCore.Write(tagName, batteryType.Value, typeof(int));
                 }
             }
-            catch (Exception)
+            catch(Exception)
             {
                 throw;
             }
@@ -259,17 +258,17 @@ namespace PentagonHMI
         {
             try
             {
-                if (control.Tag is string tag)
+                if(control.Tag is string tag)
                 {
-                    if (control is ToggleButton tb)
+                    if(control is ToggleButton tb)
                     {
                         tb.IsChecked = OPCore.Read<bool>(tag);
                     }
-                    else if (control is NumUpDown nud)
+                    else if(control is NumUpDown nud)
                     {
                         nud.TextBoxValue.Text = OPCore.Read<short>(tag).ToString();
                     }
-                    else if (control is Button b)
+                    else if(control is Button b)
                     {
                         b.IsEnabled = !OPCore.Read<bool>(tag);
                         b.Opacity = b.IsEnabled ? 1 : 0.5;

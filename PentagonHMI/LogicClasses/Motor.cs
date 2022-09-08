@@ -2,14 +2,18 @@
 
 namespace PentagonHMI.LogicClasses
 {
-    class Motor : IDisposable
+    internal class Motor : IDisposable
     {
-
         #region Variables
-        LogicClasses.Main _MainConnection;
+
+        private LogicClasses.Main _MainConnection;
+
         public delegate void onUpdateHandler();
+
         public event onUpdateHandler OnUpdate;
-        #endregion
+
+        #endregion Variables
+
         #region Constructor
 
         public Motor(ref LogicClasses.Main MainConnection)
@@ -18,27 +22,34 @@ namespace PentagonHMI.LogicClasses
             _MainConnection.OnMotorUpdate += new LogicClasses.Main.onMotorHandler(TcpMotor_OnUpdate);
         }
 
-        #endregion
+        #endregion Constructor
+
         #region Methods
 
         public void Dispose()
         {
             _MainConnection.MotorPageON = false;
         }
-        #endregion
+
+        #endregion Methods
+
         #region Events
+
         public void TcpMotor_OnUpdate()
         {
-            if (OnUpdate != null)
+            if(OnUpdate != null)
                 OnUpdate();
         }
-        #endregion
+
+        #endregion Events
 
         #region Destructor
+
         ~Motor()
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Destructor
     }
 }

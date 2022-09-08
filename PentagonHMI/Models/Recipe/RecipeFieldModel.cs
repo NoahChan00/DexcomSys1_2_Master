@@ -6,17 +6,21 @@ namespace PentagonHMI.Models
     public class RecipeFieldModel : ViewModelBase
     {
         #region PublicCommandProperties
+
         public ICommand FieldTextChangedCommand { get; set; }
-        #endregion
-        
+
+        #endregion PublicCommandProperties
+
         #region PublicProperties
+
         private string fieldName = string.Empty;
+
         public string FieldName
         {
             get { return fieldName; }
             set
             {
-                if (fieldName != value)
+                if(fieldName != value)
                 {
                     fieldName = value;
                     RaisePropertyChanged(nameof(FieldName));
@@ -25,12 +29,13 @@ namespace PentagonHMI.Models
         }
 
         private string field = string.Empty;
+
         public string Field
         {
             get { return field; }
             set
             {
-                if (field != value)
+                if(field != value)
                 {
                     field = value;
                     RaisePropertyChanged(nameof(Field));
@@ -39,12 +44,13 @@ namespace PentagonHMI.Models
         }
 
         private bool fieldIsReadOnly = false;
+
         public bool FieldIsReadOnly
         {
             get { return fieldIsReadOnly; }
             set
             {
-                if (fieldIsReadOnly != value)
+                if(fieldIsReadOnly != value)
                 {
                     fieldIsReadOnly = value;
                     RaisePropertyChanged(nameof(FieldIsReadOnly));
@@ -53,6 +59,7 @@ namespace PentagonHMI.Models
         }
 
         public int Index { get; set; }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

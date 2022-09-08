@@ -1,40 +1,40 @@
-﻿using System;
+﻿using Logix;
+using PentagonHMI.UserControls;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Data;
 using System.Windows.Media;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Reflection;
-using Logix;
-using PentagonHMI.UserControls;
-using System.Linq;
-using System.Windows.Controls.Primitives;
-using System.IO;
 
 namespace PentagonHMI.ChildControls
 {
-
     public partial class ucSetting : UserControl, IDisposable//, INotifyPropertyChanged
     {
         #region Variables
-        string StrSetting = "Setting Page";
+
+        private string StrSetting = "Setting Page";
         private List<string> checkValues = new List<string> { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-        LogicClasses.Main _Main;
-        bool valid = false;
-        string ErrMsg;
-        DateTime date;
-        int chk;
-        DateTime Shift1st;
-        DateTime Shift2nd;
-        DateTime Shift3rd;
+        private LogicClasses.Main _Main;
+        private bool valid = false;
+        private string ErrMsg;
+        private DateTime date;
+        private int chk;
+        private DateTime Shift1st;
+        private DateTime Shift2nd;
+        private DateTime Shift3rd;
         private VanillaDB.DataDBCall DBCall;
         private bool FirstRun = true;
-        DataTable dt_BreakTime;
-        DataTable dt_OffDay;
-        #endregion
+        private DataTable dt_BreakTime;
+        private DataTable dt_OffDay;
+
+        #endregion Variables
 
         #region Constructor
+
         public ucSetting(ref LogicClasses.Main MainConnection)
         {
             InitializeComponent();
@@ -44,9 +44,9 @@ namespace PentagonHMI.ChildControls
                 _Main = MainConnection;
                 DBCall = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString.ToString());
 
-                if (ProjectType.ARCADIA == Classes.GlobalFunctions.ProjectType)
+                if(ProjectType.ARCADIA == Classes.GlobalFunctions.ProjectType)
                 {
-                    if (StationType.ARCADIA_Main == Classes.GlobalFunctions.StationType)
+                    if(StationType.ARCADIA_Main == Classes.GlobalFunctions.StationType)
                     {
                         SP_OEEBlock.Visibility = Visibility.Visible;
                     }
@@ -63,7 +63,7 @@ namespace PentagonHMI.ChildControls
                 SetupControl();
                 _Main.OnSettingUpdate += new LogicClasses.Main.onSettingUpdateHandler(Setting_OnUpdate);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Failed to Load Setting Page");
             }
@@ -76,24 +76,24 @@ namespace PentagonHMI.ChildControls
                 ucGeneral._Main = _Main;
                 string Pretitle = string.Empty;
                 DataTable DT = _Main.SQLer.Exec_DTSelect("SELECT * FROM [SETTING] ORDER BY [LAYOUTINDEX]");
-                foreach (DataRow dr in DT.Rows)
+                foreach(DataRow dr in DT.Rows)
                 {
                     string Tagname = dr["TAGNAME"].ToString().TrimEnd();
                     Tag.ATOMIC MIC = Logix.Tag.ATOMIC.BOOL;
                     string ty = dr["TYPE"].ToString().ToUpper();
-                    if (ty == "STRING")
+                    if(ty == "STRING")
                         MIC = Logix.Tag.ATOMIC.STRING;
-                    else if (ty == "DINT")
+                    else if(ty == "DINT")
                         MIC = Logix.Tag.ATOMIC.DINT;
-                    else if (ty == "INT")
+                    else if(ty == "INT")
                         MIC = Logix.Tag.ATOMIC.INT;
-                    else if (ty == "REAL")
+                    else if(ty == "REAL")
                         MIC = Logix.Tag.ATOMIC.REAL;
-                    
+
                     //Info.OPC.TagGroups.Setting.AddTag(new Tag { Name = Tagname, DataType = MIC, MyObject = dr });
 
                     string Maintitle = dr["MAINTITLE"].ToString();
-                    if (Maintitle != Pretitle)
+                    if(Maintitle != Pretitle)
                     {
                         Pretitle = Maintitle;
                         ucGeneral.SettingList.Add(new ucSettingBlock.SettingModel
@@ -108,22 +108,26 @@ namespace PentagonHMI.ChildControls
                     int Min = dr["MIN"] == DBNull.Value ? 0 : Convert.ToInt32(dr["MIN"]);
                     Type type;
                     bool action = false;
-                    switch (dr["TYPE"].ToString().ToUpper())
+                    switch(dr["TYPE"].ToString().ToUpper())
                     {
                         case "STRING":
                             type = typeof(string);
                             break;
+
                         case "BOOL":
                         default:
                             type = typeof(bool);
                             break;
+
                         case "INT":
                         case "DINT":
                             type = typeof(int);
                             break;
+
                         case "REAL":
                             type = typeof(double);
                             break;
+
                         case "BOOL;ACTION":
                             type = typeof(bool);
                             action = true;
@@ -150,45 +154,47 @@ namespace PentagonHMI.ChildControls
                 //Info.OPC.Add_TagGroup(ref Info.OPC.TagGroups.Setting);
                 ucGeneral.SetControl();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
 
-
         #region Events
-        string PreAccessLevel = "NA";
-        bool AccessLevelChanged = false;
-        void Setting_OnUpdate()
+
+        private string PreAccessLevel = "NA";
+        private bool AccessLevelChanged = false;
+
+        private void Setting_OnUpdate()
         {
             try
             {
-                if (_Main.UserAccessLevel != PreAccessLevel)
+                if(_Main.UserAccessLevel != PreAccessLevel)
                 {
                     PreAccessLevel = _Main.UserAccessLevel;
                     AccessLevelChanged = true;
                 }
 
-                if (_Main.HasTorqueDriver)
+                if(_Main.HasTorqueDriver)
                 {
                     Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                     {
-                        if (lblStatusDesc.Content.ToString() != _Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus)
+                        if(lblStatusDesc.Content.ToString() != _Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus)
                         {
                             lblStatusDesc.Content = _Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus;
                         }
                     }));
                 }
 
-                if (true/*ucGeneral.PendingUpdate || FirstRun || AccessLevelChanged*/)
+                if(true/*ucGeneral.PendingUpdate || FirstRun || AccessLevelChanged*/)
                 {
                     System.Threading.Thread.Sleep(2000);
-                    FirstRun = false; ucGeneral.PendingUpdate = false;
+                    FirstRun = false;
+                    ucGeneral.PendingUpdate = false;
 
-                    if (_Main.HasTorqueDriver)
+                    if(_Main.HasTorqueDriver)
                     {
-                        if (PreAccessLevel.ToUpper() == "PENTA")
+                        if(PreAccessLevel.ToUpper() == "PENTA")
                         {
                             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Background, new Action(() =>
                             {
@@ -212,26 +218,26 @@ namespace PentagonHMI.ChildControls
                             {
                                 try
                                 {
-                                    if (!string.IsNullOrEmpty(y.Tag.Name))
+                                    if(!string.IsNullOrEmpty(y.Tag.Name))
                                     {
                                         _Main.MyPLC.ReadTag(y.Tag);
 
-                                        if (y.Tag.Value != null)
+                                        if(y.Tag.Value != null)
                                         {
-                                            if (y.Vis_isNum == Visibility.Visible)
+                                            if(y.Vis_isNum == Visibility.Visible)
                                             {
                                                 int value = Convert.ToInt32(y.Tag.Value);
-                                                
-                                                if (y.Num_Value != value)
+
+                                                if(y.Num_Value != value)
                                                 {
                                                     y.Num_Value = value;
                                                 }
                                             }
-                                            else if (y.Vis_isToggle == Visibility.Visible)
+                                            else if(y.Vis_isToggle == Visibility.Visible)
                                             {
                                                 bool value = Convert.ToBoolean(y.Tag.Value);
 
-                                                if (y.Tg_Stat != value)
+                                                if(y.Tg_Stat != value)
                                                 {
                                                     y.Tg_Stat = value;
                                                 }
@@ -239,18 +245,18 @@ namespace PentagonHMI.ChildControls
                                         }
                                     }
                                 }
-                                catch (Exception exception)
+                                catch(Exception exception)
                                 {
                                     Utilities.FileLogger.logError(exception.Message, exception.ToString());
                                 }
                             });
                         }
-                        catch (Exception exception)
+                        catch(Exception exception)
                         {
                             Utilities.FileLogger.logError(exception.Message, exception.ToString());
                         }
                     });
-                    
+
                     //foreach (Tag T in Info.OPC.TagGroups.Setting.Tags)
                     //{
                     //    DataRow dr = T.MyObject as DataRow;
@@ -269,13 +275,13 @@ namespace PentagonHMI.ChildControls
                     AccessLevelChanged = false;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
-
         }
-        #endregion
+
+        #endregion Events
 
         private void ShiftSelect()
         {
@@ -283,25 +289,26 @@ namespace PentagonHMI.ChildControls
             {
                 DataTable DT = DBCall.Shift_Select(" ", _Main.StationID, ref ErrMsg);
 
-                foreach (DataRow DR in DT.Rows)
+                foreach(DataRow DR in DT.Rows)
                 {
-                    switch (DR["ShiftID"].ToString())
+                    switch(DR["ShiftID"].ToString())
                     {
                         case "1":
                             hr.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
                             min.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
                             cb1.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
-                            if (min.Text.Length == 1)
+                            if(min.Text.Length == 1)
                                 min.Text = "0" + min.Text;
                             Act.IsChecked = DR["Active"].ToString() == "True" ? true : false;
                             hr.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
                             min.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
                             cb1.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
                             break;
+
                         case "2":
                             hr2.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
                             min2.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
-                            if (min2.Text.Length == 1)
+                            if(min2.Text.Length == 1)
                                 min2.Text = "0" + min2.Text;
                             cb2.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
                             Act2.IsChecked = DR["Active"].ToString() == "True" ? true : false;
@@ -309,10 +316,11 @@ namespace PentagonHMI.ChildControls
                             min2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
                             cb2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
                             break;
+
                         case "3":
                             hr3.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
                             min3.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
-                            if (min3.Text.Length == 1)
+                            if(min3.Text.Length == 1)
                                 min3.Text = "0" + min3.Text;
                             cb3.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
                             Act3.IsChecked = DR["Active"].ToString() == "True" ? true : false;
@@ -323,14 +331,16 @@ namespace PentagonHMI.ChildControls
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Methods
+
         public void Dispose()
         {
             try
@@ -339,38 +349,39 @@ namespace PentagonHMI.ChildControls
                 Info.OPC.TagGroups.Setting.Active = false;
                 FirstRun = true;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-        #endregion
+
+        #endregion Methods
+
         private void rb_check(object sender, RoutedEventArgs e)
         {
             try
             {
                 RadioButton RB = (RadioButton)sender;
-                if (RB.Tag == null)
+                if(RB.Tag == null)
                     RB.Tag = "True";
 
-                if (RB.Tag.ToString() == "False")
+                if(RB.Tag.ToString() == "False")
                 {
                     RB.Tag = "True";
                 }
 
-                if (RB.Name == Act3.Name)
+                if(RB.Name == Act3.Name)
                 {
-                    if (Act2.IsChecked == false)
+                    if(Act2.IsChecked == false)
                     {
                         RB.Tag = "False";
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
-
         }
 
         private void act_click(object sender, RoutedEventArgs e)
@@ -381,9 +392,9 @@ namespace PentagonHMI.ChildControls
                 RadioButton RB = (RadioButton)sender;
                 Utilities.FileLogger.logButton(StrSetting, "Act Click - " + RB.Name, MethodBase.GetCurrentMethod().ToString());
 
-                if (RB.Tag != null)
+                if(RB.Tag != null)
                 {
-                    if (RB.Tag.ToString() == "True" && RB.IsChecked == true)
+                    if(RB.Tag.ToString() == "True" && RB.IsChecked == true)
                     {
                         RB.Tag = "False";
                     }
@@ -391,62 +402,72 @@ namespace PentagonHMI.ChildControls
                     {
                         RB.IsChecked = false;
 
-                        if (Act2.IsChecked == false)
+                        if(Act2.IsChecked == false)
                         {
                             Act3.IsChecked = false;
-                            hr3.IsEnabled = false; min3.IsEnabled = false; cb3.IsEnabled = false;
+                            hr3.IsEnabled = false;
+                            min3.IsEnabled = false;
+                            cb3.IsEnabled = false;
                         }
 
-                        if (RB.Name == "Act")
+                        if(RB.Name == "Act")
                         {
                             RB.IsChecked = true;
                         }
                     }
                 }
 
-
-                if (RB.Name.ToString().Contains("Act"))
+                if(RB.Name.ToString().Contains("Act"))
                 {
-                    if (!(Boolean)RB.IsChecked)
+                    if(!(Boolean)RB.IsChecked)
                     {
-
-                        if (RB.Name == "Act2")
+                        if(RB.Name == "Act2")
                         {
-                            hr2.IsEnabled = false; min2.IsEnabled = false; cb2.IsEnabled = false;
+                            hr2.IsEnabled = false;
+                            min2.IsEnabled = false;
+                            cb2.IsEnabled = false;
                         }
 
-                        if (RB.Name == "Act3")
+                        if(RB.Name == "Act3")
                         {
-                            hr3.IsEnabled = false; min3.IsEnabled = false; cb3.IsEnabled = false;
+                            hr3.IsEnabled = false;
+                            min3.IsEnabled = false;
+                            cb3.IsEnabled = false;
                         }
                     }
                     else
                     {
-                        if (RB.Name == "Act2")
+                        if(RB.Name == "Act2")
                         {
-                            hr2.IsEnabled = true; min2.IsEnabled = true; cb2.IsEnabled = true;
+                            hr2.IsEnabled = true;
+                            min2.IsEnabled = true;
+                            cb2.IsEnabled = true;
                         }
 
-                        if (RB.Name == "Act3")
+                        if(RB.Name == "Act3")
                         {
-                            hr3.IsEnabled = true; min3.IsEnabled = true; cb3.IsEnabled = true;
+                            hr3.IsEnabled = true;
+                            min3.IsEnabled = true;
+                            cb3.IsEnabled = true;
                         }
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "Fail to update Machine Status (Setting)");
             }
         }
 
-
         #region Destructor
+
         ~ucSetting()
         {
             Dispose();
         }
-        #endregion
+
+        #endregion Destructor
+
         private void sl_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -455,16 +476,17 @@ namespace PentagonHMI.ChildControls
 
                 TB.Background = Brushes.Transparent;
 
-                if (!(int.TryParse(TB.Text.ToString(), out chk)))
+                if(!(int.TryParse(TB.Text.ToString(), out chk)))
                 {
                     TB.Text = "";
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
+
         private void hr_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
@@ -472,24 +494,24 @@ namespace PentagonHMI.ChildControls
                 valid = true;
                 TextBox TB = (TextBox)sender;
 
-                if (TB.Text.Length > 2)
+                if(TB.Text.Length > 2)
                 {
                     TB.Text = TB.Text.Substring(TB.Text.Length - 2, 2);
                 }
 
-                if (int.TryParse(TB.Text.ToString(), out chk))
+                if(int.TryParse(TB.Text.ToString(), out chk))
                 {
-                    if (TB.Tag.ToString() == "hr")
+                    if(TB.Tag.ToString() == "hr")
                     {
-                        if (!(checkValues.Contains(TB.Text.ToString())))
+                        if(!(checkValues.Contains(TB.Text.ToString())))
                         {
                             valid = false;
                         }
                     }
 
-                    if (TB.Tag.ToString() == "min")
+                    if(TB.Tag.ToString() == "min")
                     {
-                        if (Convert.ToInt32(TB.Text) > 59)
+                        if(Convert.ToInt32(TB.Text) > 59)
                         {
                             valid = false;
                         }
@@ -500,14 +522,13 @@ namespace PentagonHMI.ChildControls
                     valid = false;
                 }
 
-                if (!(valid))
+                if(!(valid))
                     TB.Text = "";
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
-
         }
 
         private void oeeset_Click(object sender, RoutedEventArgs e)
@@ -516,13 +537,13 @@ namespace PentagonHMI.ChildControls
             {
                 Utilities.FileLogger.logButton(StrSetting, "Set OEE Shift", MethodBase.GetCurrentMethod().ToString());
 
-                if (min.Text.ToString().Length == 1)
+                if(min.Text.ToString().Length == 1)
                     min.Text = "0" + min.Text;
 
-                if (min2.Text.ToString().Length == 1)
+                if(min2.Text.ToString().Length == 1)
                     min2.Text = "0" + min2.Text;
 
-                if (min3.Text.ToString().Length == 1)
+                if(min3.Text.ToString().Length == 1)
                     min3.Text = "0" + min3.Text;
 
                 valid = true;
@@ -531,27 +552,27 @@ namespace PentagonHMI.ChildControls
                 string Shift2 = DatenTime.ToShortDateString() + " " + hr2.Text.ToString() + ":" + min2.Text.ToString() + " " + cb2.Text.ToString();
                 string Shift3 = DatenTime.ToShortDateString() + " " + hr3.Text.ToString() + ":" + min3.Text.ToString() + " " + cb3.Text.ToString();
 
-                if (DateTime.TryParse(Shift1, out date))
+                if(DateTime.TryParse(Shift1, out date))
                     Shift1st = Convert.ToDateTime(Shift1);
                 else
                     valid = false;
 
-                if (DateTime.TryParse(Shift2, out date))
+                if(DateTime.TryParse(Shift2, out date))
                     Shift2nd = Convert.ToDateTime(Shift2);
                 else
                     valid = false;
 
-                if (DateTime.TryParse(Shift3, out date))
+                if(DateTime.TryParse(Shift3, out date))
                     Shift3rd = Convert.ToDateTime(Shift3);
                 else
                     valid = false;
 
-                if (valid == true)
+                if(valid == true)
                 {
                     valid = false;
-                    if (Shift3rd > Shift2nd || Act3.IsChecked == false)
+                    if(Shift3rd > Shift2nd || Act3.IsChecked == false)
                     {
-                        if (Shift2nd > Shift1st || Act2.IsChecked == false)
+                        if(Shift2nd > Shift1st || Act2.IsChecked == false)
                             valid = true;
                         else
                             MessageBox.Show("Schedule 1 timing should come before Schedule 2");
@@ -560,22 +581,22 @@ namespace PentagonHMI.ChildControls
                         MessageBox.Show("Schedule 2 timing should come before Schedule 3");
                 }
 
-                if (valid == true)
+                if(valid == true)
                 {
                     DataTable dt = DBCall.Shift_Select("1", _Main.StationID, ref ErrMsg);
-                    if (string.IsNullOrEmpty(ErrMsg))
+                    if(string.IsNullOrEmpty(ErrMsg))
                         DBCall.Shift_Update("1", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift1, Act.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
                     else
                         DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, Act.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
 
                     dt = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [Shift] WHERE StationID = {_Main.StationID} AND ShiftID = 2;");
-                    if (dt.Rows.Count == 1)
+                    if(dt.Rows.Count == 1)
                         DBCall.Shift_Update("2", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift2, Act2.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
                     else
                         DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, Act2.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
 
                     dt = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [Shift] WHERE StationID = {_Main.StationID} AND ShiftID = 3;");
-                    if (dt.Rows.Count == 1)
+                    if(dt.Rows.Count == 1)
                         DBCall.Shift_Update("3", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift3, Act3.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
                     else
                         DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, Act3.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
@@ -598,7 +619,6 @@ namespace PentagonHMI.ChildControls
                     //    DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, "0", "User", ref ErrMsg);
                     //}
 
-
                     //if (Act3.IsChecked == true)
                     //{
                     //    DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, "1", "User", ref ErrMsg);
@@ -608,46 +628,43 @@ namespace PentagonHMI.ChildControls
                     //    DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, "0", "User", ref ErrMsg);
                     //}
 
-                    if (ErrMsg == "")
+                    if(ErrMsg == "")
                     {
                         ShiftSelect();
                         MessageBox.Show("Shift Updated");
                     }
                     else
                         Utilities.FileLogger.logError("OEE Shift Update Failed", ErrMsg);
-
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "OEE Shift Update Failed");
             }
         }
-
 
         private void hr_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             try
             {
                 TextBox TB = (TextBox)sender;
-                if (TB.Text.Length == 1)
+                if(TB.Text.Length == 1)
                 {
-                    if (e.Key == System.Windows.Input.Key.Back)
+                    if(e.Key == System.Windows.Input.Key.Back)
                     {
                         e.Handled = true;
                     }
 
-                    if (e.Key == System.Windows.Input.Key.Delete)
+                    if(e.Key == System.Windows.Input.Key.Delete)
                     {
                         e.Handled = true;
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
-
         }
 
         //private void OEEReset_Click(object sender, RoutedEventArgs e)
@@ -695,24 +712,24 @@ namespace PentagonHMI.ChildControls
             {
                 Utilities.FileLogger.logButton(StrSetting, "Reset OEE", MethodBase.GetCurrentMethod().ToString());
 
-                if (Classes.GlobalFunctions.StationType == StationType.ARCADIA_Main &&
+                if(Classes.GlobalFunctions.StationType == StationType.ARCADIA_Main &&
                     Classes.GlobalFunctions.ProjectType == ProjectType.ARCADIA)
                 {
-                    if (System.Windows.Forms.MessageBox.Show("Are You Sure to Reset Line OEE?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    if(System.Windows.Forms.MessageBox.Show("Are You Sure to Reset Line OEE?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                     {
                         DataTable OEEShift = _Main.MainSQLer.Exec_DTSelect(@"Select * from Shift where ShiftID != '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1");
 
-                        if (ErrMsg == "")
+                        if(ErrMsg == "")
                         {
                             DateTime currentShift = DateTime.Now;
 
                             // All rows, get the current active shift
                             int rowIndex = 0;
-                            foreach (DataRow DR in OEEShift.Rows)
+                            foreach(DataRow DR in OEEShift.Rows)
                             {
-                                if (rowIndex == 0)
+                                if(rowIndex == 0)
                                     currentShift = Convert.ToDateTime(DR["NextShiftDT"]);
-                                else if (Convert.ToDateTime(DR["NextShiftDT"]) < currentShift)
+                                else if(Convert.ToDateTime(DR["NextShiftDT"]) < currentShift)
                                 {
                                     currentShift = Convert.ToDateTime(DR["NextShiftDT"]);
                                     rowIndex = OEEShift.Rows.IndexOf(DR);
@@ -722,10 +739,10 @@ namespace PentagonHMI.ChildControls
                             string ShiftID = OEEShift.Rows[rowIndex]["ShiftID"].ToString();
                             DateTime ShiftDateTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " " + Convert.ToDateTime(OEEShift.Rows[rowIndex]["ShiftTime"]).ToShortTimeString());
 
-                            if (DateTime.Now > ShiftDateTime)
+                            if(DateTime.Now > ShiftDateTime)
                                 ShiftDateTime = ShiftDateTime.AddDays(1);
 
-                            if (ShiftDateTime != null)
+                            if(ShiftDateTime != null)
                             {
                                 DBCall.Shift_Reset(ShiftID, Classes.GlobalFunctions.StationName.ToString(), ShiftDateTime.ToString("yyyy/MM/dd HH:mm:ss"), "User", ref ErrMsg);
                                 DBCall.Shift_Reset("99", Classes.GlobalFunctions.StationName.ToString(), DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss"), "User", ref ErrMsg);
@@ -736,21 +753,21 @@ namespace PentagonHMI.ChildControls
                 }
                 else
                 {
-                    if (System.Windows.Forms.MessageBox.Show("Are You Sure to Reset Machine OEE?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                    if(System.Windows.Forms.MessageBox.Show("Are You Sure to Reset Machine OEE?", "Warning", System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
                     {
                         DataTable OEEShift = _Main.SQLer.Exec_DTSelect(@"Select * from Shift where ShiftID != '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1");
 
-                        if (ErrMsg == "")
+                        if(ErrMsg == "")
                         {
                             DateTime currentShift = DateTime.Now;
 
                             // All rows, get the current active shift
                             int rowIndex = 0;
-                            foreach (DataRow DR in OEEShift.Rows)
+                            foreach(DataRow DR in OEEShift.Rows)
                             {
-                                if (rowIndex == 0)
+                                if(rowIndex == 0)
                                     currentShift = Convert.ToDateTime(DR["NextShiftDT"]);
-                                else if (Convert.ToDateTime(DR["NextShiftDT"]) < currentShift)
+                                else if(Convert.ToDateTime(DR["NextShiftDT"]) < currentShift)
                                 {
                                     currentShift = Convert.ToDateTime(DR["NextShiftDT"]);
                                     rowIndex = OEEShift.Rows.IndexOf(DR);
@@ -760,10 +777,10 @@ namespace PentagonHMI.ChildControls
                             string ShiftID = OEEShift.Rows[rowIndex]["ShiftID"].ToString();
                             DateTime ShiftDateTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " " + Convert.ToDateTime(OEEShift.Rows[rowIndex]["ShiftTime"]).ToShortTimeString());
 
-                            if (ShiftDateTime > DateTime.Now)
+                            if(ShiftDateTime > DateTime.Now)
                                 ShiftDateTime = ShiftDateTime.AddDays(-1);
 
-                            if (ShiftDateTime != null)
+                            if(ShiftDateTime != null)
                             {
                                 DBCall.Shift_Reset(ShiftID, Classes.GlobalFunctions.StationName.ToString(), ShiftDateTime.ToString("yyyy/MM/dd HH:mm:ss"), "User", ref ErrMsg);
                             }
@@ -772,13 +789,11 @@ namespace PentagonHMI.ChildControls
                     }
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             }
         }
-
-
 
         private void RemoveBreakTime_Click(object sender, RoutedEventArgs e)
         {
@@ -786,9 +801,10 @@ namespace PentagonHMI.ChildControls
             DataTable dt = _Main.SQLer.Exec_DTSelect($"DELETE FROM [NONSCHEDULEDDOWNTIME] WHERE [ID]= {item.Row["ID"]} AND [TYPE] = 'TIME'; SELECT [ID] FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME' ORDER BY [ID] ASC;");
             string SQLUpdateID = string.Empty;
             int nID = 1;
-            foreach (DataRow data in dt.Rows)
+            foreach(DataRow data in dt.Rows)
                 SQLUpdateID += $"UPDATE [NONSCHEDULEDDOWNTIME] SET [ID] = {nID++} WHERE [ID] = {data[0]} AND [TYPE] = 'TIME';";
-            if (!string.IsNullOrWhiteSpace(SQLUpdateID)) _Main.SQLer.Exec_NonQuery(SQLUpdateID);
+            if(!string.IsNullOrWhiteSpace(SQLUpdateID))
+                _Main.SQLer.Exec_NonQuery(SQLUpdateID);
             UpdateBreakTimeTable();
         }
 
@@ -798,9 +814,10 @@ namespace PentagonHMI.ChildControls
             DataTable dt = _Main.SQLer.Exec_DTSelect($"DELETE FROM [NONSCHEDULEDDOWNTIME] WHERE [ID]= {item.Row["ID"]} AND [TYPE] = 'DAY'; SELECT [ID] FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'DAY' ORDER BY [ID] ASC;");
             string SQLUpdateID = string.Empty;
             int nID = 1;
-            foreach (DataRow data in dt.Rows)
+            foreach(DataRow data in dt.Rows)
                 SQLUpdateID += $"UPDATE [NONSCHEDULEDDOWNTIME] SET [ID] = {nID++} WHERE [ID] = {data[0]} AND [TYPE] = 'DAY';";
-            if (!string.IsNullOrWhiteSpace(SQLUpdateID)) _Main.SQLer.Exec_NonQuery(SQLUpdateID);
+            if(!string.IsNullOrWhiteSpace(SQLUpdateID))
+                _Main.SQLer.Exec_NonQuery(SQLUpdateID);
             UpdateOffDayTable();
         }
 
@@ -808,7 +825,7 @@ namespace PentagonHMI.ChildControls
         {
             TimeSpan End = new TimeSpan(GetTime(hr_breakend.Text, meridiem_breakend.Text), Convert.ToInt32(min_breakend.Text), 0);
             TimeSpan Start = new TimeSpan(GetTime(hr_breakstart.Text, meridiem_breakstart.Text), Convert.ToInt32(min_breakstart.Text), 0);
-            if (Start >= End)
+            if(Start >= End)
                 MessageBox.Show("Start Time should happen before End Time");
             else
                 _Main.SQLer.Exec_NonQuery("INSERT INTO [dbo].[NonScheduledDowntime] ([ID],[StartTime],[EndTime],[Type]) VALUES " +
@@ -818,12 +835,12 @@ namespace PentagonHMI.ChildControls
 
         private void AddOffDay_Click(object sender, RoutedEventArgs e)
         {
-            if (cld_offDay.SelectedDates.Count > 0)
+            if(cld_offDay.SelectedDates.Count > 0)
             {
                 DateTime Start = cld_offDay.SelectedDates.Min();
                 DateTime End = cld_offDay.SelectedDates.Max();
 
-                _Main.SQLer.Exec_NonQuery($@"INSERT INTO [dbo].[NonScheduledDownTime] 
+                _Main.SQLer.Exec_NonQuery($@"INSERT INTO [dbo].[NonScheduledDownTime]
                 ([ID],[StartDay],[EndDay],[Type]) VALUES
                 ((ISNULL((SELECT MAX(ID) FROM [NONSCHEDULEDDOWNTIME]),0)) + 1,'{Start.ToString()}', '{End.ToString()}', 'DAY')");
 
@@ -834,9 +851,9 @@ namespace PentagonHMI.ChildControls
         private int GetTime(string hr, string meridiem)
         {
             int hrs = Convert.ToInt32(hr);
-            if (meridiem.Contains("A"))
+            if(meridiem.Contains("A"))
                 hrs = hrs == 12 ? 0 : hrs;
-            else if (meridiem.Contains("P"))
+            else if(meridiem.Contains("P"))
                 hrs = hrs == 12 ? hrs : hrs + 12;
 
             return hrs;
@@ -847,7 +864,7 @@ namespace PentagonHMI.ChildControls
             dt_BreakTime = _Main.SQLer.Exec_DTSelect(
                 "SELECT [ID], SUBSTRING( CONVERT(VARCHAR, [STARTTIME],108),1,5) AS 'Start Time'," +
                 $"SUBSTRING( CONVERT(VARCHAR,[ENDTIME],108),1,5) AS 'End Time' FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME' ORDER BY [ID] ASC");
-            if (dt_BreakTime != null)
+            if(dt_BreakTime != null)
                 dgd_BreakTime.ItemsSource = dt_BreakTime.AsDataView();
         }
 
@@ -856,12 +873,12 @@ namespace PentagonHMI.ChildControls
             dt_OffDay = _Main.SQLer.Exec_DTSelect($@"SELECT [ID], CONVERT(VARCHAR(10), [StartDay], 111) as 'Start',
             CONVERT(VARCHAR(10), [EndDay], 111) as 'End'
             FROM [{Info.SQL.DatabaseName}].[dbo].[NonScheduledDownTime] Where [Type] = 'Day' ORDER BY [ID]");
-            if (dt_OffDay != null)
+            if(dt_OffDay != null)
             {
                 dgd_OffDay.ItemsSource = dt_OffDay.AsDataView();
                 cld_offDay.BlackoutDates.Clear();
                 cld_offDay.SelectedDates.Clear();
-                foreach (DataRow dr in dt_OffDay.Rows)
+                foreach(DataRow dr in dt_OffDay.Rows)
                 {
                     var dates = new CalendarDateRange(Convert.ToDateTime(dr["Start"]), Convert.ToDateTime(dr["End"]));
                     cld_offDay.BlackoutDates.Add(dates);
@@ -895,14 +912,13 @@ namespace PentagonHMI.ChildControls
         //    }
         //}
 
-
         private void Connect_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (_Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus != "Connected")
+                if(_Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus != "Connected")
                 {
-                    if (_Main.Tcpip_ArcadiaTorqueDriver.Connect())
+                    if(_Main.Tcpip_ArcadiaTorqueDriver.Connect())
                         MessageBox.Show("Connection establish.");
                 }
                 else
@@ -910,7 +926,7 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Connection is already connected.");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Error : " + ex.Message);
             }
@@ -920,17 +936,17 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                if (_Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus == "Connected")
+                if(_Main.Tcpip_ArcadiaTorqueDriver.ConnectionStatus == "Connected")
                 {
-                    if (_Main.Tcpip_ArcadiaTorqueDriver.Disconnect())
-                    MessageBox.Show("Connection disconncted.");
+                    if(_Main.Tcpip_ArcadiaTorqueDriver.Disconnect())
+                        MessageBox.Show("Connection disconncted.");
                 }
                 else
                 {
                     MessageBox.Show("Connection is not connected.");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Error : " + ex.Message);
             }
@@ -940,7 +956,7 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                if (_Main.Tcpip_ArcadiaTorqueDriver.Reconnect())
+                if(_Main.Tcpip_ArcadiaTorqueDriver.Reconnect())
                 {
                     MessageBox.Show("Reconnect Success.");
                 }
@@ -949,7 +965,7 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Fail to reconnect. Please check logs.");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Error : " + ex.Message);
             }
@@ -959,7 +975,7 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                if (_Main.Tcpip_ArcadiaTorqueDriver.SendMessage("00200001006         $00"))
+                if(_Main.Tcpip_ArcadiaTorqueDriver.SendMessage("00200001006         $00"))
                 {
                     MessageBox.Show("Send success.");
                 }
@@ -968,7 +984,7 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Fail to send message. Please check logs.");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Error : " + ex.Message);
             }
@@ -978,7 +994,7 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                if (_Main.Tcpip_ArcadiaTorqueDriver.SendMessage("006000080010        1201001310000000000000000000000000000001   "))
+                if(_Main.Tcpip_ArcadiaTorqueDriver.SendMessage("006000080010        1201001310000000000000000000000000000001   "))
                 {
                     MessageBox.Show("Send success.");
                 }
@@ -987,11 +1003,10 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Fail to send message. Please check logs.");
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 MessageBox.Show("Error : " + ex.Message);
             }
         }
-
     }
 }

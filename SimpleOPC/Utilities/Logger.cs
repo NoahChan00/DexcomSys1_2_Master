@@ -21,7 +21,7 @@ namespace SimpleOPC.Utilities
         {
             LogPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\Logs_" + DateTime.Now.ToString("yyyy-MMM") + @"\OPC\";
             //LogPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\Logs\OPC\";
-            if (!Directory.Exists(LogPath))
+            if(!Directory.Exists(LogPath))
                 Directory.CreateDirectory(LogPath);
         }
 
@@ -29,14 +29,14 @@ namespace SimpleOPC.Utilities
         {
             try
             {
-                lock (_Lock)
+                lock(_Lock)
                 {
                     SetPath();
                     string LogPath_FileName = LogPath + $"OPCInfo_{DateTime.Now.ToString("yMMdd")}.txt";
-                    using (FileStream stream = new FileStream(LogPath_FileName,
+                    using(FileStream stream = new FileStream(LogPath_FileName,
                         File.Exists(LogPath_FileName) ? FileMode.Append : FileMode.CreateNew,
                         FileAccess.Write, FileShare.ReadWrite))
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    using(StreamWriter writer = new StreamWriter(stream))
                     {
                         writer.WriteLine($"{DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff")},{Message}");
                         writer.Flush();
@@ -45,22 +45,21 @@ namespace SimpleOPC.Utilities
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch(Exception ex) { throw ex; }
         }
-
 
         public static void Warn(string Message)
         {
             try
             {
-                lock (_Lock)
+                lock(_Lock)
                 {
                     SetPath();
                     string LogPath_FileName = LogPath + $"OPCWarn_{DateTime.Now.ToString("yMMdd")}.txt";
-                    using (FileStream stream = new FileStream(LogPath_FileName ,
-                        File.Exists(LogPath_FileName) ? FileMode.Append : FileMode.CreateNew, 
+                    using(FileStream stream = new FileStream(LogPath_FileName,
+                        File.Exists(LogPath_FileName) ? FileMode.Append : FileMode.CreateNew,
                         FileAccess.Write, FileShare.ReadWrite))
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    using(StreamWriter writer = new StreamWriter(stream))
                     {
                         writer.WriteLine($"{DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff")},{Message}");
                         writer.Flush();
@@ -69,7 +68,7 @@ namespace SimpleOPC.Utilities
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch(Exception ex) { throw ex; }
         }
     }
 }

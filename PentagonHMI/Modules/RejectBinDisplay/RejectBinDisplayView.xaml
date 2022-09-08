@@ -14,7 +14,7 @@
                           VirtualizingPanel.VirtualizationMode="Recycling">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <VirtualizingStackPanel/>
+                        <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -22,16 +22,16 @@
                         <GroupBox Style="{StaticResource TopHeaderGroupBoxStyle}">
                             <Grid Margin="10">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Column="0" Style="{StaticResource KeyTextBlockStyle}"
-                                           Text="{Binding RejectBinDisplayStatusName}"/>
+                                           Text="{Binding RejectBinDisplayStatusName}" />
 
                                 <TextBox Grid.Column="1" IsReadOnly="True"
                                          Text="{Binding RejectBinDisplayStatus}"
-                                         VerticalAlignment="Center"/>
+                                         VerticalAlignment="Center" />
                             </Grid>
                         </GroupBox>
                     </DataTemplate>
@@ -39,5 +39,4 @@
             </ItemsControl>
         </ScrollViewer>
     </GroupBox>
-
 </UserControl>

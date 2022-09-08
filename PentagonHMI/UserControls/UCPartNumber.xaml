@@ -1,26 +1,26 @@
 ﻿<UserControl x:Class="PentagonHMI.UserControls.UCPartNumber"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" >
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
     <Grid>
         <StackPanel Canvas.Left="456" Canvas.Top="71">
             <StackPanel Visibility="Collapsed" Name="SP1" Orientation="Horizontal">
-                <Label Name="Lbl_Part1" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part1" Foreground="White"/>
-                <Label Name="Lbl_N1" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White"/>
+                <Label Name="Lbl_Part1" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part1" Foreground="White" />
+                <Label Name="Lbl_N1" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White" />
             </StackPanel>
             <StackPanel Visibility="Collapsed" Name="SP2" Margin="0 1 0 0" Orientation="Horizontal">
-                <Label Name="Lbl_Part2" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part2" Foreground="White"/>
-                <Label Name="Lbl_N2" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White"/>
+                <Label Name="Lbl_Part2" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part2" Foreground="White" />
+                <Label Name="Lbl_N2" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White" />
             </StackPanel>
             <StackPanel Visibility="Collapsed" Name="SP3" Margin="0 1 0 0" Orientation="Horizontal">
-                <Label Name="Lbl_Part3" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part3" Foreground="White"/>
-                <Label Name="Lbl_N3" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White"/>
+                <Label Name="Lbl_Part3" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part3" Foreground="White" />
+                <Label Name="Lbl_N3" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White" />
             </StackPanel>
             <StackPanel Visibility="Collapsed" Name="SP4" Margin="0 1 0 0" Orientation="Horizontal">
-                <Label Name="Lbl_Part4" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part4" Foreground="White"/>
-                <Label Name="Lbl_N4" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White"/>
+                <Label Name="Lbl_Part4" Height="20" Padding="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Width="76" Background="Gray" Content="Part4" Foreground="White" />
+                <Label Name="Lbl_N4" Height="20" Padding="1" FontSize="12" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="75" Margin="1 0 0 0" Background="Blue" Content="NA" Foreground="White" />
             </StackPanel>
         </StackPanel>
     </Grid>

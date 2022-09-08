@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Collections;
 using System.Data.SqlClient;
 
 namespace VanillaDB
 {
     public class Database
     {
-        string Connstr;
+        private string Connstr;
         public Dictionary<string, string> ErrDict;
 
         public Database(string _Connstr)
@@ -36,7 +36,7 @@ namespace VanillaDB
 
                 myTrans.Commit();
 
-                if (result != null)
+                if(result != null)
                 {
                     return result.ToString();
                 }
@@ -45,19 +45,18 @@ namespace VanillaDB
                     return null;
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-
                 try
                 {
-                    if (myTrans != null)
+                    if(myTrans != null)
                     {
                         myTrans.Rollback();
                     }
                 }
-                catch (SqlException exsqlDB)
+                catch(SqlException exsqlDB)
                 {
-                    if (myTrans.Connection != null)
+                    if(myTrans.Connection != null)
                     {
                         ErrMsg = "* An exception of type " + exsqlDB.GetType().ToString() + " was encountered while attempting to roll back the transaction.";
                     }
@@ -67,11 +66,11 @@ namespace VanillaDB
             }
             finally
             {
-                if (myTrans != null)
+                if(myTrans != null)
                     myTrans = null;
-                if (cmd != null)
+                if(cmd != null)
                     cmd = null;
-                if (conn.State == ConnectionState.Open)
+                if(conn.State == ConnectionState.Open)
                     conn.Close();
             }
         }
@@ -94,7 +93,7 @@ namespace VanillaDB
 
                 myCommand.Transaction = myTrans;
                 myCommand.CommandTimeout = 4;
-                for (i = 0; i <= (SQLStatementList.Count - 1); i++)
+                for(i = 0; i <= (SQLStatementList.Count - 1); i++)
                 {
                     myCommand.CommandText = SQLStatementList[i] as string;
                     myCommand.ExecuteNonQuery();
@@ -103,18 +102,18 @@ namespace VanillaDB
                 myTrans.Commit();
                 return true;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 try
                 {
-                    if (myTrans != null)
+                    if(myTrans != null)
                     {
                         myTrans.Rollback();
                     }
                 }
-                catch (SqlException exsqlDB)
+                catch(SqlException exsqlDB)
                 {
-                    if (myTrans.Connection != null)
+                    if(myTrans.Connection != null)
                     {
                         ErrMsg = "* An exception of type " + exsqlDB.GetType().ToString() + " was encountered while attempting to roll back the transaction.";
                     }
@@ -127,18 +126,17 @@ namespace VanillaDB
             }
             finally
             {
-                if (myCommand != null)
+                if(myCommand != null)
                     myCommand = null;
-                if (myTrans != null)
+                if(myTrans != null)
                     myTrans = null;
-                if (conn.State == ConnectionState.Open)
+                if(conn.State == ConnectionState.Open)
                     conn.Close();
             }
         }
 
         public int ExecuteNonQuery(string SQL_cmd, ref String ErrMsg)
         {
-
             SqlTransaction myTrans = null;
             SqlCommand cmd = new SqlCommand();
             SqlConnection conn = new SqlConnection(Connstr);
@@ -152,7 +150,7 @@ namespace VanillaDB
                 cmd.Transaction = myTrans;
                 cmd.CommandTimeout = 4;
 
-                if (SQL_cmd != "")
+                if(SQL_cmd != "")
                 {
                     cmd.CommandText = SQL_cmd;
                     cmd.ExecuteNonQuery();
@@ -161,18 +159,18 @@ namespace VanillaDB
                 myTrans.Commit();
                 return 1;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 try
                 {
-                    if (myTrans != null)
+                    if(myTrans != null)
                     {
                         myTrans.Rollback();
                     }
                 }
-                catch (SqlException exSql)
+                catch(SqlException exSql)
                 {
-                    if (myTrans.Connection != null)
+                    if(myTrans.Connection != null)
                     {
                         ErrMsg = "* An exception of type " + exSql.GetType().ToString() + " was encountered while attempting to roll back the transaction.";
                     }
@@ -182,20 +180,17 @@ namespace VanillaDB
             }
             finally
             {
-
-                if (myTrans != null)
+                if(myTrans != null)
                     myTrans = null;
-                if (cmd != null)
+                if(cmd != null)
                     cmd = null;
-                if (conn.State == ConnectionState.Open)
+                if(conn.State == ConnectionState.Open)
                     conn.Close();
             }
-
         }
 
         public DataTable ExecuteQueryDT_Select(string SQL_cmd, ref string ErrMsg)
         {
-
             DataTable dt = new DataTable();
             SqlCommand cmd = new SqlCommand();
             SqlConnection conn = new SqlConnection(Connstr);
@@ -209,33 +204,28 @@ namespace VanillaDB
                 cmd.CommandTimeout = 4;
                 cmd.CommandText = SQL_cmd;
 
-
                 dt.Load(cmd.ExecuteReader());
-
 
                 return dt;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 ErrMsg = "* An exception of type " + ex.GetType().ToString() + " was encountered while running the query." + "ErrorMsg=(" + ex.Message + ")";
                 return null;
             }
             finally
             {
-
-                if (dt != null)
+                if(dt != null)
                     dt = null;
-                if (cmd != null)
+                if(cmd != null)
                     cmd = null;
-                if (conn.State == ConnectionState.Open)
+                if(conn.State == ConnectionState.Open)
                     conn.Close();
             }
-
         }
 
         public DataTable ExecuteQueryDT(string SQL_cmd, ref string ErrMsg)
         {
-
             DataTable dt = new DataTable();
             SqlTransaction myTrans = null;
             SqlCommand cmd = new SqlCommand();
@@ -258,18 +248,18 @@ namespace VanillaDB
 
                 return dt;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 try
                 {
-                    if (myTrans != null)
+                    if(myTrans != null)
                     {
                         myTrans.Rollback();
                     }
                 }
-                catch (SqlException exSql)
+                catch(SqlException exSql)
                 {
-                    if (myTrans.Connection != null)
+                    if(myTrans.Connection != null)
                     {
                         ErrMsg = "* An exception of type " + exSql.GetType().ToString() + " was encountered while attempting to roll back the transaction.";
                     }
@@ -279,16 +269,15 @@ namespace VanillaDB
             }
             finally
             {
-                if (myTrans != null)
+                if(myTrans != null)
                     myTrans = null;
-                if (dt != null)
+                if(dt != null)
                     dt = null;
-                if (cmd != null)
+                if(cmd != null)
                     cmd = null;
-                if (conn.State == ConnectionState.Open)
+                if(conn.State == ConnectionState.Open)
                     conn.Close();
             }
-
         }
     }
 }

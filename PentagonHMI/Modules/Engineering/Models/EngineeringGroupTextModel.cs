@@ -6,17 +6,21 @@ namespace PentagonHMI
     public class EngineeringGroupTextModel : ViewModelBase
     {
         #region PublicFields
+
         public Tag EngineeringGroupTextTag = new Tag();
-        #endregion
+
+        #endregion PublicFields
 
         #region PublicProperties
+
         private string engineeringTextName = string.Empty;
+
         public string EngineeringTextName
         {
             get { return engineeringTextName; }
             set
             {
-                if(engineeringTextName!=value)
+                if(engineeringTextName != value)
                 {
                     engineeringTextName = value;
                     RaisePropertyChanged(nameof(EngineeringTextName));
@@ -25,18 +29,20 @@ namespace PentagonHMI
         }
 
         private string engineeringTextValue = string.Empty;
+
         public string EngineeringTextValue
         {
             get { return engineeringTextValue; }
-            set 
+            set
             {
-                if(engineeringTextValue!=value)
+                if(engineeringTextValue != value)
                 {
                     engineeringTextValue = value;
                     RaisePropertyChanged(nameof(EngineeringTextValue));
                 }
             }
         }
-        #endregion
+
+        #endregion PublicProperties
     }
 }

@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace PentagonHMI.UserControls
 {
@@ -20,14 +11,18 @@ namespace PentagonHMI.UserControls
     public partial class UCLabelTitleLabelDisplay1 : UserControl
     {
         #region Constructor
+
         public UCLabelTitleLabelDisplay1()
         {
             InitializeComponent();
         }
-        #endregion
+
+        #endregion Constructor
 
         #region Properties
+
         #region ucLabelTitle Properties
+
         //This DependencyProperty is needed in order for the labels in the program to be changed to the target language that the
         //user has selected in the Main Template window (MainWindow.xaml)
         public static readonly DependencyProperty ucLabelTitleContentProperty =
@@ -42,7 +37,8 @@ namespace PentagonHMI.UserControls
             get { return (string)GetValue(ucLabelTitleContentProperty); }
             set { SetValue(ucLabelTitleContentProperty, value); }
         }
-        #endregion
+
+        #endregion ucLabelTitle Properties
 
         public double ucLabelTitleWidth
         {
@@ -66,7 +62,7 @@ namespace PentagonHMI.UserControls
             }
             set
             {
-                 ucrectangle.Fill = value;
+                ucrectangle.Fill = value;
             }
         }
 
@@ -81,6 +77,7 @@ namespace PentagonHMI.UserControls
                 ucLabelDisplay.MinWidth = value;
             }
         }
+
         public double ucFontSize
         {
             get
@@ -93,6 +90,7 @@ namespace PentagonHMI.UserControls
                 this.ucLabelDisplay.FontSize = value;
             }
         }
+
         public FontWeight ucFontWeight
         {
             get
@@ -105,6 +103,7 @@ namespace PentagonHMI.UserControls
                 this.ucLabelDisplay.FontWeight = value;
             }
         }
+
         public string ucText
         {
             get
@@ -144,6 +143,6 @@ namespace PentagonHMI.UserControls
             }
         }
 
-        #endregion
+        #endregion Properties
     }
 }

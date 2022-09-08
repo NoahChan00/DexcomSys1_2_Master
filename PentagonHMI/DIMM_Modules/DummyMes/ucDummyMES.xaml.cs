@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using SimpleOPC;
+using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using SimpleOPC;
-using System;
 
 namespace PentagonHMI.DIMM_Modules.DummyMes
 {
     public partial class ucDummyMES : UserControl, IDisposable
     {
-        INGEAR_Opc OPC;
-        Dictionary<string, KeyValuePair<TextBox, string>> Dic_Tag_TextboxTagName;
+        private INGEAR_Opc OPC;
+        private Dictionary<string, KeyValuePair<TextBox, string>> Dic_Tag_TextboxTagName;
         private const string MPNRack1 = "Dummy_MPN1_string";
         private const string MPNRack2 = "Dummy_MPN2_string";
         private const string MPNRack3 = "Dummy_MPN1_Response_string";
@@ -25,7 +25,7 @@ namespace PentagonHMI.DIMM_Modules.DummyMes
         private void Initialize()
         {
             SetupInfo();
-            ReadCurrentMPN(); 
+            ReadCurrentMPN();
         }
 
         private void SetupInfo()
@@ -55,7 +55,7 @@ namespace PentagonHMI.DIMM_Modules.DummyMes
             if(Tags == "3" || Tags == "4")
             {
                 TextBox tbx = Tags == "3" ? Tbx_Rack3MPN : Tbx_Rack4MPN;
-                if (tbx.Text.Length < 2 || !tbx.Text.Contains(","))
+                if(tbx.Text.Length < 2 || !tbx.Text.Contains(","))
                 {
                     MessageBox.Show("Invalid MPN Slot Data Format");
                     return;

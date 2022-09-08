@@ -9,6 +9,7 @@ namespace SimpleDatabase
     public class SQLCarrier
     {
         private string Str_ConnectionString;
+
         private enum SQLMode
         {
             NonQuery,
@@ -31,10 +32,10 @@ namespace SimpleDatabase
         {
             try
             {
-                using (SqlConnection Conn = new SqlConnection(Str_ConnectionString))
+                using(SqlConnection Conn = new SqlConnection(Str_ConnectionString))
                 {
                     Conn.Open();
-                    if (Conn.State == ConnectionState.Open)
+                    if(Conn.State == ConnectionState.Open)
                         return true;
                 }
             }
@@ -62,21 +63,21 @@ namespace SimpleDatabase
             int RowAffected = 0;
             try
             {
-                using (SqlConnection Conn = new SqlConnection(Str_ConnectionString))
+                using(SqlConnection Conn = new SqlConnection(Str_ConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand(StoreProcName)
                     {
                         CommandType = CommandType.StoredProcedure,
                         Connection = Conn
                     };
-                    foreach (var item in Dic_Parameters_Value)
+                    foreach(var item in Dic_Parameters_Value)
                         cmd.Parameters.Add(new SqlParameter(item.Key, item.Value));
                     cmd.Connection.Open();
                     RowAffected = cmd.ExecuteNonQuery();
                     cmd.Connection.Close();
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
             return RowAffected > 0 ? true : false;
         }
 
@@ -85,14 +86,14 @@ namespace SimpleDatabase
             string OutputName = "@Message";
             try
             {
-                using (SqlConnection Conn = new SqlConnection(Str_ConnectionString))
+                using(SqlConnection Conn = new SqlConnection(Str_ConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand(StoreProcName)
                     {
                         CommandType = CommandType.StoredProcedure,
                         Connection = Conn
                     };
-                    foreach (var item in Dic_Parameters_Value)
+                    foreach(var item in Dic_Parameters_Value)
                         cmd.Parameters.Add(new SqlParameter(item.Key, item.Value));
 
                     cmd.Parameters.Add(OutputName, SqlDbType.VarChar, 255);
@@ -103,7 +104,7 @@ namespace SimpleDatabase
                     return cmd.Parameters[OutputName].Value.ToString();
                 }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
             return "Stored Procedure Execution Failed";
         }
 
@@ -113,22 +114,22 @@ namespace SimpleDatabase
             object obj_Result = default;
             try
             {
-                using (SqlConnection Conn = new SqlConnection(Str_ConnectionString))
+                using(SqlConnection Conn = new SqlConnection(Str_ConnectionString))
                 {
                     SqlCommand cmd = new SqlCommand(strCmd, Conn);
                     cmd.Connection.Open();
 
-                    if (SQLMode.Scalar == mode)
+                    if(SQLMode.Scalar == mode)
                     {
                         obj_Result = cmd.ExecuteScalar();
                     }
-                    else if (SQLMode.DT_Select == mode)
+                    else if(SQLMode.DT_Select == mode)
                     {
                         DataTable DT = new DataTable();
                         DT.Load(cmd.ExecuteReader());
                         obj_Result = DT;
                     }
-                    else if (SQLMode.NonQuery == mode)
+                    else if(SQLMode.NonQuery == mode)
                     {
                         Tran = Conn.BeginTransaction(IsolationLevel.ReadCommitted);
                         cmd.Transaction = Tran;
@@ -138,7 +139,7 @@ namespace SimpleDatabase
                     cmd.Connection.Close();
                 }
             }
-            catch (Exception ex) { /*if (Tran != null) Tran.Rollback(); */ MessageBox.Show(ex.Message); }
+            catch(Exception ex) { /*if (Tran != null) Tran.Rollback(); */ MessageBox.Show(ex.Message); }
             return (T)Convert.ChangeType(obj_Result, typeof(T));
         }
     }

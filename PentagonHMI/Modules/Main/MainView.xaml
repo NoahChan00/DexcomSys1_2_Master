@@ -8,21 +8,21 @@
 
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <TabControl Grid.Row="0" Grid.RowSpan="2" Grid.Column="2" x:Name="MainTabControl" BorderThickness="2" Margin="2">
             <TabControl.BorderBrush>
                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                     <LinearGradientBrush.GradientStops>
-                        <GradientStop Color="#FF627793" Offset="0"/>
-                        <GradientStop Color="#FF234372" Offset="1"/>
+                        <GradientStop Color="#FF627793" Offset="0" />
+                        <GradientStop Color="#FF234372" Offset="1" />
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </TabControl.BorderBrush>
@@ -36,33 +36,33 @@
                                     <Border.BorderBrush>
                                         <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                             <LinearGradientBrush.GradientStops>
-                                                <GradientStop Color="#FF627793" Offset="0"/>
-                                                <GradientStop Color="#FF234372" Offset="1"/>
+                                                <GradientStop Color="#FF627793" Offset="0" />
+                                                <GradientStop Color="#FF234372" Offset="1" />
                                             </LinearGradientBrush.GradientStops>
                                         </LinearGradientBrush>
                                     </Border.BorderBrush>
 
                                     <TextBlock x:Name="HeaderTextBlock" FontSize="18" Margin="10 2" MinWidth="100" Padding="10 2"
-                                               Text="{TemplateBinding Header}" TextAlignment="Center" VerticalAlignment="Center"/>
+                                               Text="{TemplateBinding Header}" TextAlignment="Center" VerticalAlignment="Center" />
                                 </Border>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsSelected" Value="False">
-                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite"/>
-                                        <Setter TargetName="HeaderTextBlock" Property="Foreground" Value="Black"/>
+                                        <Setter TargetName="Border" Property="Background" Value="GhostWhite" />
+                                        <Setter TargetName="HeaderTextBlock" Property="Foreground" Value="Black" />
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter TargetName="Border" Property="Background">
                                             <Setter.Value>
                                                 <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
                                                     <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="#FF627793" Offset="0"/>
-                                                        <GradientStop Color="#FF234372" Offset="1"/>
+                                                        <GradientStop Color="#FF627793" Offset="0" />
+                                                        <GradientStop Color="#FF234372" Offset="1" />
                                                     </LinearGradientBrush.GradientStops>
                                                 </LinearGradientBrush>
                                             </Setter.Value>
                                         </Setter>
-                                        <Setter TargetName="HeaderTextBlock" Property="Foreground" Value="White"/>
+                                        <Setter TargetName="HeaderTextBlock" Property="Foreground" Value="White" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -72,5 +72,4 @@
             </TabControl.Resources>
         </TabControl>
     </Grid>
-
 </UserControl>

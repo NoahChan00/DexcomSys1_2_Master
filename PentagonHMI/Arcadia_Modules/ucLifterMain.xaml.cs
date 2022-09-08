@@ -1,45 +1,44 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using Logix;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using Logix;
-using System.IO;
-using GalaSoft.MvvmLight;
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PentagonHMI.Arcadia_Modules
 {
     public partial class ucLifterMain : UserControl
     {
-        LogicClasses.Main _Main;
-        Tag Tag_MaterialName;
-        Tag Tag_RackIndexNo;
-        Tag Tag_RackRFIDTag;
-        Tag Tag_MaxIndex;
-        Tag Tag_RackStatus;
-        Tag Tag_SkipRemainingSlot;
-        Tag Tag_SkipSlot;
-        Tag Tag_SkipRack;
+        private LogicClasses.Main _Main;
+        private Tag Tag_MaterialName;
+        private Tag Tag_RackIndexNo;
+        private Tag Tag_RackRFIDTag;
+        private Tag Tag_MaxIndex;
+        private Tag Tag_RackStatus;
+        private Tag Tag_SkipRemainingSlot;
+        private Tag Tag_SkipSlot;
+        private Tag Tag_SkipRack;
 
-        string Tag_WriteRFID;
-        string Tag_UpdateIndex_bool;
-        string Path = string.Empty;
-        string str_EditRackID = "Edit RFID Tag";
-        string str_UpdateRackID = "Update RFID Tag";
-        string str_Edit = "Edit";
-        string str_Update = "Update";
-        int LastMaxSlot = 0;
+        private string Tag_WriteRFID;
+        private string Tag_UpdateIndex_bool;
+        private string Path = string.Empty;
+        private string str_EditRackID = "Edit RFID Tag";
+        private string str_UpdateRackID = "Update RFID Tag";
+        private string str_Edit = "Edit";
+        private string str_Update = "Update";
+        private int LastMaxSlot = 0;
 
-        int LastCurrent = -1;
-        List<RackSlotModel> lst_RSM = new List<RackSlotModel>();
-        Dictionary<string, BitmapImage> Dic_MaterialName_Image = new Dictionary<string, BitmapImage>();
-        Brush Clr_Clicked => Brushes.LightSkyBlue;
-        Brush Clr_UnClick => Brushes.Silver;
-
+        private int LastCurrent = -1;
+        private List<RackSlotModel> lst_RSM = new List<RackSlotModel>();
+        private Dictionary<string, BitmapImage> Dic_MaterialName_Image = new Dictionary<string, BitmapImage>();
+        private Brush Clr_Clicked => Brushes.LightSkyBlue;
+        private Brush Clr_UnClick => Brushes.Silver;
 
         public ucLifterMain()
         {
@@ -75,7 +74,7 @@ namespace PentagonHMI.Arcadia_Modules
 
                 cbx_CurrentSlotIndex.Visibility = Visibility.Collapsed;
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             };
@@ -85,7 +84,7 @@ namespace PentagonHMI.Arcadia_Modules
         {
             try
             {
-                for (int n = 0; n < Info.OPC.TagGroups.Lifter.Count; n++)
+                for(int n = 0; n < Info.OPC.TagGroups.Lifter.Count; n++)
                 {
                     Tag Temp = Info.OPC.TagGroups.Lifter.Tags[n] as Tag;
                     _Main.OPC.ReadTag(ref Temp, Temp.DataType);
@@ -93,18 +92,19 @@ namespace PentagonHMI.Arcadia_Modules
                 //Ctrl.GroupRead(Info.OPC.TagGroups.Lifter);
                 Dispatcher.Invoke(() => UpdateUI());
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
             };
         }
 
-        string CurrentRack;
+        private string CurrentRack;
+
         private void UpdateUI()
         {
             bool IsOperator = _Main.UserAccessLevel.ToUpper() == "OPERATOR";
 
-            if (IsOperator)
+            if(IsOperator)
             {
                 btn_UpdateRFIDtag.IsEnabled = false;
             }
@@ -113,24 +113,27 @@ namespace PentagonHMI.Arcadia_Modules
                 btn_UpdateRFIDtag.IsEnabled = true;
             }
 
-            foreach (Tag _tag in Info.OPC.TagGroups.Lifter.Tags)
+            foreach(Tag _tag in Info.OPC.TagGroups.Lifter.Tags)
             {
-                if (_tag.Name == Tag_MaterialName.Name)
+                if(_tag.Name == Tag_MaterialName.Name)
                 {
-                    if (CurrentRack != _tag.ToTagString())
+                    if(CurrentRack != _tag.ToTagString())
                     {
                         CurrentRack = _tag.ToTagString();
 
-                        if (CurrentRack.ToUpper().Equals("BIOS")) ShowBIOSMsg(true); else ShowBIOSMsg(null);
+                        if(CurrentRack.ToUpper().Equals("BIOS"))
+                            ShowBIOSMsg(true);
+                        else
+                            ShowBIOSMsg(null);
 
                         BitmapImage img;
                         Img_CurrentRackInLifter.Source = null;
-                        if (Dic_MaterialName_Image.TryGetValue(CurrentRack.ToUpper(), out img))
+                        if(Dic_MaterialName_Image.TryGetValue(CurrentRack.ToUpper(), out img))
                             Img_CurrentRackInLifter.Source = img;
                         else
                         {
                             string Imgpath = Path + CurrentRack;
-                            if (File.Exists(Imgpath + ".png"))
+                            if(File.Exists(Imgpath + ".png"))
                             {
                                 Dic_MaterialName_Image.Add(CurrentRack.ToUpper(), new BitmapImage(new Uri(Imgpath + ".png")));
                                 Img_CurrentRackInLifter.Source = Dic_MaterialName_Image[CurrentRack.ToUpper()];
@@ -139,25 +142,25 @@ namespace PentagonHMI.Arcadia_Modules
                         tbx_CurrentRackInLifter.Text = _tag.ToTagString();
                     }
                 }
-                else if (_tag.Name == Tag_MaxIndex.Name)
+                else if(_tag.Name == Tag_MaxIndex.Name)
                 {
                     int NewMaxSlot = Convert.ToInt32(_tag.Value?.ToString() ?? "0");
-                    if (NewMaxSlot != LastMaxSlot)
+                    if(NewMaxSlot != LastMaxSlot)
                     {
                         lst_RSM = new List<RackSlotModel>();
                         LastMaxSlot = NewMaxSlot;
                         //for (int n = 1; n <= NewMaxSlot; n++)
-                        for (int n = NewMaxSlot; n > 0; n--)
+                        for(int n = NewMaxSlot; n > 0; n--)
                             lst_RSM.Add(new RackSlotModel { RackIndex = n.ToString(), Status = RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Clean] });
                         itmctrl_RackLayout.ItemsSource = lst_RSM;
                         cbx_CurrentSlotIndex.ItemsSource = lst_RSM.Select(x => x.RackIndex).OrderBy(x => Convert.ToInt32(x));
                     }
                 }
-                else if (_tag.Name == Tag_RackIndexNo.Name)
+                else if(_tag.Name == Tag_RackIndexNo.Name)
                 {
                     tbx_CurrentRackIndexNumber.Text = _tag.ToTagString();
                     int n;
-                    if (int.TryParse(_tag.ToTagString(), out n) && lst_RSM.Count >= n && lst_RSM.Count > 0)
+                    if(int.TryParse(_tag.ToTagString(), out n) && lst_RSM.Count >= n && lst_RSM.Count > 0)
                     {
                         --n;
                         LastCurrent = n;
@@ -165,45 +168,46 @@ namespace PentagonHMI.Arcadia_Modules
                         lst_RSM[n].Status = lst_RSM[n].Status == lst_RSM[n].bk_clr ? RackSlotModel.Dic_Sts_Clr[RackSlotModel.StsClr.Current] : lst_RSM[n].bk_clr;
                     }
                 }
-                else if (_tag.Name == Tag_RackStatus.Name)
+                else if(_tag.Name == Tag_RackStatus.Name)
                 {
                     int n;
-                    if (int.TryParse(_tag.ToTagString(), out n) && lst_RSM.Count > 0)
+                    if(int.TryParse(_tag.ToTagString(), out n) && lst_RSM.Count > 0)
                     {
                         char[] Binary = Convert.ToString(n, 2).PadRight(LastMaxSlot, '0').ToCharArray().Reverse().ToArray();
                         //char[] Binary = Convert.ToString(n, 2).PadRight(16, '0').ToCharArray();
-                        for (int i = 0; i < lst_RSM.Count; i++)
+                        for(int i = 0; i < lst_RSM.Count; i++)
                         {
                             Brush clr = RackSlotModel.Dic_Sts_Clr[Binary[i] == '1' ? RackSlotModel.StsClr.Loaded : RackSlotModel.StsClr.Clean];
-                            if (i != (LastMaxSlot - 1 - LastCurrent)) lst_RSM[i].Status = clr;
+                            if(i != (LastMaxSlot - 1 - LastCurrent))
+                                lst_RSM[i].Status = clr;
                             lst_RSM[i].bk_clr = clr;
                         }
                     }
                 }
-                else if (_tag.Name == Tag_RackRFIDTag.Name && IsOperator)
+                else if(_tag.Name == Tag_RackRFIDTag.Name && IsOperator)
                     tbx_CurrentRackID.Text = _tag.ToTagString();
-                else if (_tag.Name == Tag_SkipRack.Name)
+                else if(_tag.Name == Tag_SkipRack.Name)
                     btn_SkipRack.Background = _tag.ToTagBool() ? Clr_Clicked : Clr_UnClick;
-                else if (_tag.Name == Tag_SkipRemainingSlot.Name)
+                else if(_tag.Name == Tag_SkipRemainingSlot.Name)
                     btn_SkipRemaining.Background = _tag.ToTagBool() ? Clr_Clicked : Clr_UnClick;
-                else if (_tag.Name == Tag_SkipSlot.Name)
+                else if(_tag.Name == Tag_SkipSlot.Name)
                     btn_SkipSlot.Background = _tag.ToTagBool() ? Clr_Clicked : Clr_UnClick;
             }
         }
 
         private void ShowBIOSMsg(bool? Yes)
         {
-            if (Yes == null)
+            if(Yes == null)
             {
                 brd_BiosMsg.Visibility = Visibility.Collapsed;
                 brd_ShowBiosMsg.Visibility = Visibility.Collapsed;
             }
-            else if (Yes == true)
+            else if(Yes == true)
             {
                 brd_BiosMsg.Visibility = Visibility.Visible;
                 brd_ShowBiosMsg.Visibility = Visibility.Collapsed;
             }
-            else if (Yes == false)
+            else if(Yes == false)
             {
                 brd_BiosMsg.Visibility = Visibility.Collapsed;
                 brd_ShowBiosMsg.Visibility = Visibility.Visible;
@@ -217,7 +221,7 @@ namespace PentagonHMI.Arcadia_Modules
             bool value = btn.Background == Clr_Clicked ? false : true;
             btn.Dispatcher.Invoke(() => { btn.Background = btn.Background == Clr_Clicked ? Clr_UnClick : Clr_Clicked; });
             bool ResetSkipSlot = true, ResetSkipRSlot = true, ResetSkipRack = true;
-            switch (Key)
+            switch(Key)
             {
                 case "SKIPSLOT":
                     lst_RSM[LastCurrent].isSkip = value;
@@ -234,28 +238,31 @@ namespace PentagonHMI.Arcadia_Modules
                     goto default;
                 default:
                     value = false;
-                    if (ResetSkipRSlot) goto case "SKIPRSLOT";
-                    if (ResetSkipSlot) goto case "SKIPSLOT";
-                    if (ResetSkipRack) goto case "SKIPRACK";
+                    if(ResetSkipRSlot)
+                        goto case "SKIPRSLOT";
+                    if(ResetSkipSlot)
+                        goto case "SKIPSLOT";
+                    if(ResetSkipRack)
+                        goto case "SKIPRACK";
                     break;
             }
         }
 
         private void UpdateRFIDtag_Click(object sender, RoutedEventArgs e)
         {
-            if (btn_UpdateRFIDtag.Content.ToString() == str_EditRackID)
+            if(btn_UpdateRFIDtag.Content.ToString() == str_EditRackID)
             {
                 tbx_CurrentRackID.IsEnabled = true;
                 btn_UpdateRFIDtag.Content = str_UpdateRackID;
             }
-            else if (btn_UpdateRFIDtag.Content.ToString() == str_UpdateRackID)
+            else if(btn_UpdateRFIDtag.Content.ToString() == str_UpdateRackID)
             {
                 tbx_CurrentRackID.IsEnabled = false;
                 btn_UpdateRFIDtag.Content = str_EditRackID;
 
                 _Main.OPC.Read<string>(Tag_RackRFIDTag.Name);
-                if (_Main.OPC.Write(Tag_RackRFIDTag.Name, tbx_CurrentRackID.Text, typeof(string)))
-                    if (!_Main.OPC.Write(Tag_WriteRFID, true))
+                if(_Main.OPC.Write(Tag_RackRFIDTag.Name, tbx_CurrentRackID.Text, typeof(string)))
+                    if(!_Main.OPC.Write(Tag_WriteRFID, true))
                         Dispatcher.Invoke(() => tbx_CurrentRackID.Text = _Main.OPC.Read<string>(Tag_RackRFIDTag.Name));
             }
         }
@@ -263,18 +270,18 @@ namespace PentagonHMI.Arcadia_Modules
         private void Rack_Index_Update_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            if (btn.Content.ToString() == str_Edit)
+            if(btn.Content.ToString() == str_Edit)
             {
                 btn.Content = str_Update;
                 cbx_CurrentSlotIndex.Visibility = Visibility.Visible;
                 cbx_CurrentSlotIndex.SelectedIndex = LastCurrent > 0 ? LastCurrent : 0;
             }
-            else if (btn.Content.ToString() == str_Update)
+            else if(btn.Content.ToString() == str_Update)
             {
                 btn.Content = str_Edit;
                 cbx_CurrentSlotIndex.Visibility = Visibility.Collapsed;
                 int n;
-                if (int.TryParse(cbx_CurrentSlotIndex.SelectedValue?.ToString(), out n))
+                if(int.TryParse(cbx_CurrentSlotIndex.SelectedValue?.ToString(), out n))
                 {
                     _Main.OPC.Write(Tag_RackIndexNo.Name, n, typeof(Int16));
                     _Main.OPC.Write(Tag_UpdateIndex_bool, true);
@@ -286,18 +293,17 @@ namespace PentagonHMI.Arcadia_Modules
         {
             Button btn = sender as Button;
             string TagName = string.Empty;
-            if (btn.Content.ToString().ToUpper() == "START")
+            if(btn.Content.ToString().ToUpper() == "START")
                 TagName = "HMI_Start_RackConv";
-            else if (btn.Content.ToString().ToUpper() == "STOP")
+            else if(btn.Content.ToString().ToUpper() == "STOP")
                 TagName = "HMI_Stop_RackConv";
-            else if (btn.Content.ToString().ToUpper() == "RESET")
+            else if(btn.Content.ToString().ToUpper() == "RESET")
                 TagName = "HMI_Reset_RackConv";
             else
                 return;
 
             _Main.OPC.Write(TagName, true);
             MessageBox.Show($"Rack Conveyor {btn.Content} Triggered");
-
         }
 
         private void btn_BiosMsgNoted_Click(object sender, RoutedEventArgs e)
@@ -317,6 +323,7 @@ namespace PentagonHMI.Arcadia_Modules
         {
             return _tag?.Value?.ToString() ?? string.Empty;
         }
+
         public static bool ToTagBool(this Tag _tag)
         {
             return Convert.ToBoolean(_tag?.Value ?? "False");
@@ -327,12 +334,13 @@ namespace PentagonHMI.Arcadia_Modules
     {
         //Status
         private string rackIndex = string.Empty;
+
         public string RackIndex
         {
             get { return rackIndex; }
             set
             {
-                if (rackIndex != value)
+                if(rackIndex != value)
                 {
                     rackIndex = value;
                     RaisePropertyChanged(nameof(RackIndex));
@@ -354,25 +362,25 @@ namespace PentagonHMI.Arcadia_Modules
             [StsClr.Disabled] = Brushes.Gray,
             [StsClr.Current] = Brushes.Yellow,
             [StsClr.Loaded] = Brushes.SpringGreen,
-
         };
 
         private Brush status = Brushes.White;
+
         public Brush Status
         {
             get { return status; }
             set
             {
-                if (status != value)
+                if(status != value)
                 {
                     status = value;
                     RaisePropertyChanged(nameof(Status));
                 }
             }
         }
+
         public Brush bk_clr { get; set; } = Brushes.White;
 
         public bool isSkip = false;
     }
-
 }

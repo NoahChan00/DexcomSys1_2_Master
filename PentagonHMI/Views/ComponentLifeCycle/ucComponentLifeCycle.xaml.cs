@@ -9,7 +9,8 @@ namespace PentagonHMI.Views.ComponentLifeCycle
     /// </summary>
     public partial class ucComponentLifeCycle : UserControl, IDisposable
     {
-        LogicClasses.Main _Main;
+        private LogicClasses.Main _Main;
+
         public ucComponentLifeCycle(ref LogicClasses.Main _main)
         {
             InitializeComponent();
@@ -20,7 +21,7 @@ namespace PentagonHMI.Views.ComponentLifeCycle
         private const string Tag_PogoPinMax = "TCA_PinCycleCountMax";
         private const string Tag_PogoPinCurrent = "TCA_PinCycleCurrentCount";
 
-        enum State
+        private enum State
         {
             PogoPinAdjust,
             PogoPinReset,
@@ -35,7 +36,8 @@ namespace PentagonHMI.Views.ComponentLifeCycle
             Dispatcher.Invoke(() => PogoCurrentCount.Text = _Main.OPC.Read<string>(Tag_PogoPinCurrent));
         }
 
-        State CurState = new State();
+        private State CurState = new State();
+
         private void PogoMaxCount_TextChanged(object sender, TextChangedEventArgs e)
         {
             int Cur = Convert.ToInt32(PogoCurrentCount.Text);
@@ -48,7 +50,6 @@ namespace PentagonHMI.Views.ComponentLifeCycle
             NewPogoMaxCount.Text = PogoMaxCount.Text;
         }
 
-
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             loginScreen.Visibility = Visibility.Collapsed;
@@ -60,24 +61,24 @@ namespace PentagonHMI.Views.ComponentLifeCycle
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
             ucPassword.ucLabelErrorContent = string.Empty;
-            if (_Main.SQLer.Exec_Scalar<int>($"SELECT COUNT(USERNAME) FROM USERS WHERE USERNAME = '{ucUsername.Text}' AND PASSWORD = '{ucPassword.Text}'") > 0)
+            if(_Main.SQLer.Exec_Scalar<int>($"SELECT COUNT(USERNAME) FROM USERS WHERE USERNAME = '{ucUsername.Text}' AND PASSWORD = '{ucPassword.Text}'") > 0)
             {
                 loginScreen.Visibility = Visibility.Collapsed;
-                if (CurState.Equals(State.PogoPinAdjust))
+                if(CurState.Equals(State.PogoPinAdjust))
                 {
                     int n;
                     if(int.TryParse(NewPogoMaxCount.Text, out n))
                     {
                         _Main.OPC.Write(Tag_PogoPinMax, n);
-                    }                      
+                    }
                 }
                 //else if (CurState.Equals(State.PogoBlockAdjust))
                 //{
                 //    PogoMaxCount2.Text = NewPogoMaxCount2.Text;
                 //}
-                else if (CurState.Equals(State.PogoPinReset))
+                else if(CurState.Equals(State.PogoPinReset))
                 {
-                    _Main.OPC.Write(Tag_PogoPinCurrent , 0);
+                    _Main.OPC.Write(Tag_PogoPinCurrent, 0);
                 }
                 //else if (CurState.Equals(State.PogoBlockReset))
                 //{

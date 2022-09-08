@@ -13,7 +13,9 @@ namespace SimpleOPC.Utilities
 
         public class CustomException : Exception
         {
-            public CustomException(string Message) : base(Message) { }
+            public CustomException(string Message) : base(Message)
+            {
+            }
         }
     }
 }
