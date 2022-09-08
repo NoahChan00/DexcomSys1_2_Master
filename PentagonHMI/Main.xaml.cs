@@ -222,6 +222,35 @@ namespace PentagonHMI
                 Dispatcher.Invoke(() => VersionUpdate());
 
                 //}
+                const string Tag_LockScreen_str = "Lot_Info.HMI_LockScreen_Info";
+                try
+                {
+                    //Lock Screen
+                    if(!string.IsNullOrEmpty(_Main.OPC.Read<string>(Tag_LockScreen_str)))
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            lblScreeLock.Content = _Main.OPC.Read<string>(Tag_LockScreen_str);
+                            ChildContainer.Visibility = Visibility.Collapsed;
+                            //ChildContainer.IsEnabled = false;
+                            vbScreenLock.Visibility = Visibility.Visible;
+                            vbScreenLock.BringIntoView();
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            ChildContainer.Visibility = Visibility.Visible;
+                            ChildContainer.IsEnabled = true;
+                            vbScreenLock.Visibility = Visibility.Collapsed;
+                        });
+                    }
+                }
+                catch(Exception e)
+                {
+                    FileLogger.logError(e.Message, e.StackTrace);
+                }
             }
             catch(Exception exception)
             {

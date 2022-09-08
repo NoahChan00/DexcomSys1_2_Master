@@ -112,9 +112,12 @@ namespace SimpleOPC
                     _tag = new Tag { Name = TagName, DataType = Dic_Type_IngearType[TagType ?? typeof(T)], Length = length };
                     Dic_TagName_Tag.Add(TagName, _tag);
                 }
-
+                if(Ctr_OPC.IsConnected == false)
+                {
+                    Ctr_OPC.Disconnect();
+                    Ctr_OPC.Connect();
+                }
                 Ctr_OPC.ReadTag(_tag); //== ResultCode.E_SUCCESS &&
-
                 if(_tag.QualityCode == ResultCode.QUAL_GOOD)
                     return (T)Convert.ChangeType(_tag.Value, typeof(T));
 
@@ -134,7 +137,11 @@ namespace SimpleOPC
                     _tag = new Tag { Name = TagName, DataType = Dic_Type_IngearType[TagType], Length = length };
                     Dic_TagName_Tag.Add(TagName, _tag);
                 }
-
+                if(Ctr_OPC.IsConnected == false)
+                {
+                    Ctr_OPC.Disconnect();
+                    Ctr_OPC.Connect();
+                }
                 Ctr_OPC.ReadTag(_tag); //== ResultCode.E_SUCCESS &&
                 if(_tag.QualityCode == ResultCode.QUAL_GOOD)
                     return _tag.Value;
@@ -151,6 +158,11 @@ namespace SimpleOPC
             {
                 Logger.Info(string.Format(Logger.Msg.Write, TagName, Value?.ToString() ?? "NULL"));
                 Tag _tag;
+                if(Ctr_OPC.IsConnected == false)
+                {
+                    Ctr_OPC.Disconnect();
+                    Ctr_OPC.Connect();
+                }
                 if(!Dic_TagName_Tag.TryGetValue(TagName, out _tag) || _tag.Length > 1)
                 {
                     _tag = new Tag { Name = TagName, DataType = TagType == null ? Tag.ATOMIC.BOOL : Dic_Type_IngearType[TagType] };

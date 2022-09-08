@@ -1,6 +1,7 @@
 ﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:uc="clr-namespace:PentagonHMI.UserControls" x:Class="PentagonHMI.Main" Title="HMI" Height="1080" Width="1920" Icon="/HMI;component/Pentamaster.ico"
-        WindowStyle="ThreeDBorderWindow" WindowState="Maximized" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        xmlns:uc="clr-namespace:PentagonHMI.UserControls" x:Class="PentagonHMI.Main" Title="HMI" Height="1080" Width="1920"
+        Icon="/HMI;component/Pentamaster.ico" WindowStyle="ThreeDBorderWindow" WindowState="Maximized" WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
     <Window.Resources>
         <Style x:Key="MAIN_WINDOW_DATATABLE_EVENT_HEADER_DATETIME_STYLE" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="Content" Value="{DynamicResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_DATETIME}" />
@@ -146,6 +147,12 @@
                             <ColumnDefinition Width="506*" />
                         </Grid.ColumnDefinitions>
                     </Grid>
+
+                    <Viewbox Name="vbScreenLock" Grid.Column="1" Grid.Row="0" Grid.RowSpan="5" Visibility="Collapsed" VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                        <Label Name="lblScreeLock" Foreground="Red" FontSize="1" Content="Lock Screen" />
+                    </Viewbox>
+
                     <Border Name="loginScreen" Height="230" Width="450" VerticalAlignment="Center" Grid.RowSpan="2" HorizontalAlignment="Center"
                             CornerRadius=" 12,12,12,12" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Grid.Row="0" Background="White"
                             Visibility="Collapsed">
