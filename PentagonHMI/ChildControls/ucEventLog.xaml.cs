@@ -375,7 +375,7 @@ namespace PentagonHMI.ChildControls
             try
             {
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerAlarm.Text).ToString("yyyy-MMM"), "Alarm");
-                string Filename = $"Alarm_{Convert.ToDateTime(datePickerAlarm.Text).ToString("yyyy-MMM-dd")}.txt";
+                string Filename = $"Alarm_{Convert.ToDateTime(datePickerAlarm.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                     currentPath = strFilePath;
                 if (File.Exists(strFilePath))
@@ -589,7 +589,7 @@ namespace PentagonHMI.ChildControls
             try
             {
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerOEE.Text).ToString("yyyy-MMM"), "OEE");
-                string Filename = $"OEE_{Convert.ToDateTime(datePickerOEE.Text).ToString("yyyy-MMM-dd")}.txt";
+                string Filename = $"OEE_{Convert.ToDateTime(datePickerOEE.Text).ToString("yyyy-MMM-dd")}.csv";
                 string strFilePath = Path.Combine(LogsPath, Filename);
                     currentPath = strFilePath;
                 if (File.Exists(strFilePath))

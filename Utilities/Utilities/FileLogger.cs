@@ -303,7 +303,7 @@ namespace Utilities
         public static void logAlarm(string ErrorMsg, string Action)
         {
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Alarm";
-            string Filename = "Alarm_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
+            string Filename = "Alarm_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".csv";
 
             //ErrorMsg = ErrorMsg.Replace(',', ' ');
             //Action = Action.Replace(',', ' ');

@@ -112,7 +112,7 @@
                             <Label Name="TotalUnitPassLabel" />
                             <Label Background="LightGray">Total Unit Fail</Label>
                             <Label Name="TotalUnitFailLabel" />
-                            <Label Background="LightGray">Total Production Unit</Label>
+                            <Label Background="LightGray">Total Productive Unit</Label>
                             <Label Name="TotalProductionUnitLabel" />
                             <Label Background="LightGray">Current Yield</Label>
                             <Label Name="CurrentYieldLabel" />

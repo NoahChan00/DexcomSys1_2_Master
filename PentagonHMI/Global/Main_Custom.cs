@@ -367,7 +367,7 @@ namespace PentagonHMI
             {
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"OEE";
                 if (!Directory.Exists(LogsPath)) { Directory.CreateDirectory(LogsPath); }
-                string _Path = Path.Combine(LogsPath, $"OEE_{DateTime.Now.ToString("yyyy-MMM-dd")}.txt");
+                string _Path = Path.Combine(LogsPath, $"OEE_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
                 bool HasFile = File.Exists(_Path);
                 using (FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
