@@ -1,5 +1,4 @@
 ﻿using CsvHelper;
-using Logix;
 using PentagonHMI.Classes;
 using SimpleDatabase;
 using SimpleOPC;
@@ -20,32 +19,9 @@ namespace PentagonHMI
         private string Connstr = Properties.Settings.Default.DatabaseConnectionString.ToString();
         private Dictionary<string, string> shuttleBarcodeDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> robotGripperDictionary = new Dictionary<string, string>();
-        private Dictionary<string, string> dic_BatteryType = new Dictionary<string, string>();
         private string[] OEEShift = new string[3];
         private string OEELineShift = "";
         public INGEAR_Opc OPC;
-
-        #region Test Station Tag
-
-        private Tag Lot_Info_HMI_LotID = new Tag { Name = "Lot_Info.HMI_LotID", DataType = Logix.Tag.ATOMIC.STRING };
-        //Tag PartNumber = new Tag { Name = "a", DataType = Logix.Tag.ATOMIC.STRING };
-        //Tag RecipeName;
-        //Tag TxCreateDate;
-        //Tag TXSN;
-        //Tag PalletSerialNumber;
-        //Tag TestPosition;
-        //Tag OverallResult;
-        //Tag PrRecCreateDate;
-        //Tag CompletedDate;
-        //Tag ValueName;
-        //Tag Value;
-        //Tag ValueString;
-        //Tag RejectCode;
-        //Tag RejectDesc;
-        //Tag ProcessID;
-        //Tag DummyTXSN;
-
-        #endregion Test Station Tag
 
         #region OEETags
 
@@ -170,7 +146,6 @@ namespace PentagonHMI
                             {
                                 string ShiftID = dr["ShiftID"].ToString();
 
-                                // If next shift date changes
                                 if(DateTime.Now > Convert.ToDateTime(dr["NextShiftDT"]))
                                 {
                                     DateTime ShiftDateTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " " + Convert.ToDateTime(dr["ShiftTime"]).ToShortTimeString());
@@ -193,11 +168,9 @@ namespace PentagonHMI
                     try
                     {
                         bool skip = false;
-                        // Manual line OEE reset
                         DataTable OEEShiftLine = _Main.MainSQLer.Exec_DTSelect(@"Select * from Shift where ShiftID = '99' AND StationID = '" + _Main.StationID + @"' AND Active = 1");
                         if(OEEShiftLine != null)
                         {
-                            // Should be only one row
                             if(OEEShiftLine.Rows.Count == 1)
                             {
                                 DataRow dr = OEEShiftLine.Rows[0];
@@ -241,10 +214,8 @@ namespace PentagonHMI
                                     }
                                     else
                                     {
-                                        // If next shift date changes
                                         if(OEEShift[Convert.ToInt32(ShiftID) - 1] != dr["NextShiftDT"].ToString())
                                         {
-                                            // If next shift date is bigger than previous date
                                             if(Convert.ToDateTime(dr["NextShiftDT"]) > Convert.ToDateTime(OEEShift[Convert.ToInt32(ShiftID) - 1]))
                                             {
                                                 LogOEE(ShiftID);
@@ -326,12 +297,10 @@ namespace PentagonHMI
                                 if(ErrMsg == "")
                                 {
                                     DateTime ShiftDateTime = DateTime.Now;
-                                    // Should be one row only
                                     foreach(DataRow DR in OEEShift.Rows)
                                     {
                                         ShiftDateTime = Convert.ToDateTime(DateTime.Now.ToShortDateString() + " " + Convert.ToDateTime(DR["ShiftTime"]).ToShortTimeString());
 
-                                        // if time is earlier than current time, set as tomorrow
                                         if(DateTime.Now > ShiftDateTime)
                                             ShiftDateTime = ShiftDateTime.AddDays(1);
                                     }
@@ -350,7 +319,6 @@ namespace PentagonHMI
             }
             catch(Exception ex)
             {
-                //Utilities.FileLogger.logError(ex.Message, "Read OEE Info Failed Major");
                 FileLogger.logError(ex.Message, ex.ToString());
             }
         }
@@ -393,7 +361,6 @@ namespace PentagonHMI
                                 csv.WriteField("MTBA (hh:mm:ss)");
                                 csv.WriteField("MTBF (hh:mm:ss)");
                                 csv.WriteField("IdealCycleTime (hh:mm:ss)");
-                                //csv.WriteField("HourlyUPH");
 
                                 csv.WriteField("EquipmentUptime (hh:mm:ss)");
                                 csv.WriteField("OperationTime (hh:mm:ss)");
@@ -413,9 +380,6 @@ namespace PentagonHMI
                             Availability, OEE, Loading, Teep, DeltaTime;
 
                             csv.WriteField(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff"));
-                            //string str_ShiftID = _Main.SQLer.Exec_Scalar<string>("Select TOP 1 [ShiftID] from [Shift] where " +
-                            //$"(select CONVERT(time,[NextShiftDT]) from[Shift] where[StationID] = {_Main.StationID} and [ShiftID] = 99) = CONVERT(time,[NextShiftDT])" +
-                            //$" and [ShiftID] != 99 and [StationID] = {_Main.StationID};");
                             string ShiftStartTime = FormatString(Grouping.stringtime, OPC.Read<string>(StartDateTimeTag));
                             csv.WriteField(ShiftStartTime);
 
@@ -430,24 +394,15 @@ namespace PentagonHMI
                             IdealCycleTime = _Main.IdealCycleTime;
 
                             TotalCount = TotalPass + TotalFail;
-                            //Productive Time +Standby Time + Engineering Time
                             EquipmentUpTime = Productive + Standby + Engineering;
-                            //Shift Time -Non Schedule Time
                             OperationTime = _Shift - NonSchedule;
-                            //Total Passed / (Total passed + Total Failed)
                             double Total = TotalPass + TotalFail;
                             Quality = Total <= 0 ? 0 : TotalPass / (Total);
-                            //(Ideal Cycle Time * Total Count) / Operation Time
                             Performance = OperationTime <= 0 ? 0 : (IdealCycleTime * TotalCount) / OperationTime;
-                            //Equipment Uptime / Operation Time
                             Availability = OperationTime <= 0 ? 0 : EquipmentUpTime / OperationTime;
-                            //Quality * Performance * Availability
                             OEE = Quality * Performance * Availability;
-                            //Equipment Uptime / Total Time
                             Loading = _Shift <= 0 ? 0 : EquipmentUpTime / _Shift;
-                            //OEE * Loading
                             Teep = OEE * Loading;
-                            //Total Time - (Production Time + Standby Time)
                             DeltaTime = _Shift - (Productive + Standby);
 
                             double QualityPercent = Quality * 100;
@@ -462,7 +417,6 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<double>(Z1_TotalIncomingPartFailTag));
                             csv.WriteField(OPC.Read<double>(Z2_TotalIncomingPartFailTag));
 
-                            //csv.WriteField(FormatString(Grouping.stringtime, StartDateTime));
                             csv.WriteField(FormatString(Grouping.sec, Productive));
                             csv.WriteField(FormatString(Grouping.sec, Standby));
                             csv.WriteField(FormatString(Grouping.sec, Engineering));
@@ -476,23 +430,15 @@ namespace PentagonHMI
                             csv.WriteField(FormatString(Grouping.sec, OPC.Read<int>(MTBFTag)));
                             csv.WriteField(FormatString(Grouping.sec, Convert.ToInt32(_Main.IdealCycleTime)));
 
-                            //string LineOfUPH = _Main.SQLer.Exec_Scalar<string>($@"DECLARE @RESULT VARCHAR(500)
-                            //SET @RESULT = ''
-                            //SELECT @RESULT = @RESULT + CAST([UPH] AS NVARCHAR) + ';'
-                            //FROM [UPH]
-                            //WHERE [UPDATED_ON] > '{ShiftStartTime}' ORDER BY  [DAY], [MONTH], [YEAR], [HRS]
-                            //SELECT @RESULT");
-                            //csv.WriteField(LineOfUPH);
-
-                            csv.WriteField(FormatString(Grouping.sec, EquipmentUpTime));// "Equipment Uptime (hh:mm:ss)");
-                            csv.WriteField(FormatString(Grouping.sec, OperationTime));// "Operation Time (hh:mm:ss)");
-                            csv.WriteField(FormatString(Grouping.percent, QualityPercent));// "Quality (%)");
-                            csv.WriteField(FormatString(Grouping.percent, PerformancePercent));// "Performance (%)");
-                            csv.WriteField(FormatString(Grouping.percent, AvailabilityPercent));// "Availability (%)");
-                            csv.WriteField(FormatString(Grouping.percent, OEEPercent));// "OEE (%)");
-                            csv.WriteField(FormatString(Grouping.percent, LoadingPercent));//"Loading (%)");
-                            csv.WriteField(FormatString(Grouping.percent, TeepPercent));//"TEEP (%)");
-                            csv.WriteField(FormatString(Grouping.sec, DeltaTime));// "DeltaTime (hh:mm:ss)");
+                            csv.WriteField(FormatString(Grouping.sec, EquipmentUpTime));
+                            csv.WriteField(FormatString(Grouping.sec, OperationTime));
+                            csv.WriteField(FormatString(Grouping.percent, QualityPercent));
+                            csv.WriteField(FormatString(Grouping.percent, PerformancePercent));
+                            csv.WriteField(FormatString(Grouping.percent, AvailabilityPercent));
+                            csv.WriteField(FormatString(Grouping.percent, OEEPercent));
+                            csv.WriteField(FormatString(Grouping.percent, LoadingPercent));
+                            csv.WriteField(FormatString(Grouping.percent, TeepPercent));
+                            csv.WriteField(FormatString(Grouping.sec, DeltaTime));
 
                             csv.NextRecord();
                         }
@@ -525,13 +471,6 @@ namespace PentagonHMI
         private string TotalQtyOut = "Lot_OEE_Tags.dint_TotalProductiveUnit";
         private string OverallTotalPassed = "Lot_OEE_Tags.dint_Total_Pass";
         private string OverallTotalFailed = "Lot_OEE_Tags.dint_Total_Fail";
-        private string TotalBarcodePass = "Lot_Summary.dint_Total_Barcode_Pass";
-        private string TotalBarcodeFail = "Lot_Summary.dint_Total_Barcode_Fail";
-        private string TotalMarked = "Lot_Summary.dint_Total_Laser_Pass";
-        private string TotalMarkedFail = "Lot_Summary.dint_Total_Laser_Fail";
-        private string TotalCorrectOrientation = "Lot_Summary.dint_Total_Correct_Orientation";
-        private string TotalWrongOrientation = "Lot_Summary.dint_Total_Wrong_Orientation";
-        private string TotalEmptyPocket = "Lot_Summary.dint_Total_Empty_Pocket";
         private string TotalInputRobotPickFail = "Lot_Summary.dint_Total_Pick_Fail";
         private string TotalInputRobotPickDrop = "Lot_Summary.dint_Total_Pick_Drop";
         private string ProductionUPH = Tags.MainPage.dint_ProductionUPH.Name;
@@ -551,39 +490,6 @@ namespace PentagonHMI
         private string BugBubbleFail = "BugBubble_Fail_Qty";
         private string BrownStrainBFail = "BrownStrainB_Fail_Qty";
         private string MouseBiteFail = "MouseBite_Fail_Qty";
-
-        private string TOPMEnabledLotStart = "Lot_Summary.dint_TOPM_Enabled_Star";
-        private string TOPMEnabledLotEnd = "Lot_Summary.dint_TOPM_Enabled_End";
-        private string TOPM1P = "Lot_Summary.dint_TOPM1_Pass";
-        private string TOPM2P = "Lot_Summary.dint_TOPM2_Pass";
-        private string TOPM3P = "Lot_Summary.dint_TOPM3_Pass";
-        private string TOPM4P = "Lot_Summary.dint_TOPM4_Pass";
-        private string TOPM5P = "Lot_Summary.dint_TOPM5_Pass";
-        private string TOPM6P = "Lot_Summary.dint_TOPM6_Pass";
-        private string TOPM1F = "Lot_Summary.dint_TOPM1_Fail";
-        private string TOPM2F = "Lot_Summary.dint_TOPM2_Fail";
-        private string TOPM3F = "Lot_Summary.dint_TOPM3_Fail";
-        private string TOPM4F = "Lot_Summary.dint_TOPM4_Fail";
-        private string TOPM5F = "Lot_Summary.dint_TOPM5_Fail";
-        private string TOPM6F = "Lot_Summary.dint_TOPM6_Fail";
-        private string TwoDBC1P = "Lot_Summary.dint_2DBC1_Pass";
-        private string TwoDBC2P = "Lot_Summary.dint_2DBC2_Pass";
-        private string TwoDBC3P = "Lot_Summary.dint_2DBC3_Pass";
-        private string TwoDBC4P = "Lot_Summary.dint_2DBC4_Pass";
-        private string TwoDBC5P = "Lot_Summary.dint_2DBC5_Pass";
-        private string TwoDBC6P = "Lot_Summary.dint_2DBC6_Pass";
-        private string TwoDBC1F = "Lot_Summary.dint_2DBC1_Fail";
-        private string TwoDBC2F = "Lot_Summary.dint_2DBC2_Fail";
-        private string TwoDBC3F = "Lot_Summary.dint_2DBC3_Fail";
-        private string TwoDBC4F = "Lot_Summary.dint_2DBC4_Fail";
-        private string TwoDBC5F = "Lot_Summary.dint_2DBC5_Fail";
-        private string TwoDBC6F = "Lot_Summary.dint_2DBC6_Fail";
-        private string TnR1OutputReelQty = "ISL0_TnR1_TotalOutputQty";
-        private string TnR1LeaderQty = "ISL0_TnR1_QtyInLeader";
-        private string TnR1TrailerQty = "ISL0_TnR1_QtyInTrailer";
-        private string TnR2OutputReelQty = "ISL0_TnR2_TotalOutputQty";
-        private string TnR2LeaderQty = "ISL0_TnR2_QtyInLeader";
-        private string TnR2TrailerQty = "ISL0_TnR2_QtyInTrailer";
 
         #endregion LotSummary
 
@@ -625,13 +531,6 @@ namespace PentagonHMI
                                 csv.WriteField("Total Quantity Out");
                                 csv.WriteField("Overall Total Passed");
                                 csv.WriteField("Overall Total Failed");
-                                //csv.WriteField("Total Barcode Pass");
-                                //csv.WriteField("Total Barcode Fail");
-                                //csv.WriteField("Total Marked");
-                                //csv.WriteField("Total Marked Fail");
-                                //csv.WriteField("Total Correct Orientation");
-                                //csv.WriteField("Total Wrong Orientation");
-                                //csv.WriteField("Total Empty Pocket");
                                 csv.WriteField("Total Input Robot Pick Fail");
                                 csv.WriteField("Total Input Robot Pick Drop ");
                                 csv.WriteField("Production PUH");
@@ -657,39 +556,6 @@ namespace PentagonHMI
                                     csv.WriteField("Brown Strain Back Fail");
                                     csv.WriteField("Mouse Bite Fail");
                                 }
-                                //csv.WriteField("TOPM Enabled (Lot Start)");
-                                //csv.WriteField("TOPM Enabled (Lot End)");
-                                //csv.WriteField("TOPM 1 Pass");
-                                //csv.WriteField("TOPM 2 Pass");
-                                //csv.WriteField("TOPM 3 Pass");
-                                //csv.WriteField("TOPM 4 Pass");
-                                //csv.WriteField("TOPM 5 Pass");
-                                //csv.WriteField("TOPM 6 Pass");
-                                //csv.WriteField("TOPM 1 Fail");
-                                //csv.WriteField("TOPM 2 Fail");
-                                //csv.WriteField("TOPM 3 Fail");
-                                //csv.WriteField("TOPM 4 Fail");
-                                //csv.WriteField("TOPM 5 Fail");
-                                //csv.WriteField("TOPM 6 Fail");
-                                //csv.WriteField("2DBC 1 Pass");
-                                //csv.WriteField("2DBC 2 Pass");
-                                //csv.WriteField("2DBC 3 Pass");
-                                //csv.WriteField("2DBC 4 Pass");
-                                //csv.WriteField("2DBC 5 Pass");
-                                //csv.WriteField("2DBC 6 Pass");
-                                //csv.WriteField("2DBC 1 Fail");
-                                //csv.WriteField("2DBC 2 Fail");
-                                //csv.WriteField("2DBC 3 Fail");
-                                //csv.WriteField("2DBC 4 Fail");
-                                //csv.WriteField("2DBC 5 Fail");
-                                //csv.WriteField("2DBC 6 Fail");
-                                //csv.WriteField("Output Reel Qty 1");
-                                //csv.WriteField("Leader Oty 1");
-                                //csv.WriteField("Trailer Qty 1");
-                                //csv.WriteField("Output Reel Qty 2");
-                                //csv.WriteField("Leader Oty 2");
-                                //csv.WriteField("Trailer Qty 2");
-
                                 csv.NextRecord();
                             }
 
@@ -700,7 +566,7 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<string>(ManufactureDate));
                             csv.WriteField(OPC.Read<string>(ExpirationDate));
                             csv.WriteField(OPC.Read<string>(OperatorID));
-                            csv.WriteField(OPC.Read<string>(StartDateTime)); // start date time
+                            csv.WriteField(OPC.Read<string>(StartDateTime));
                             csv.WriteField(OPC.Read<int>(SystemUpTime));
                             csv.WriteField(OPC.Read<int>(OperationTime));
                             csv.WriteField(OPC.Read<int>(DownTime));
@@ -711,13 +577,6 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<int>(TotalQtyOut));
                             csv.WriteField(OPC.Read<int>(OverallTotalPassed));
                             csv.WriteField(OPC.Read<int>(OverallTotalFailed));
-                            //csv.WriteField(OPC.Read<int>(TotalBarcodePass));
-                            //csv.WriteField(OPC.Read<int>(TotalBarcodeFail));
-                            //csv.WriteField(OPC.Read<int>(TotalMarked));
-                            //csv.WriteField(OPC.Read<int>(TotalMarkedFail));
-                            //csv.WriteField(OPC.Read<int>(TotalCorrectOrientation));
-                            //csv.WriteField(OPC.Read<int>(TotalWrongOrientation));
-                            //csv.WriteField(OPC.Read<int>(TotalEmptyPocket));
                             csv.WriteField(OPC.Read<int>(TotalInputRobotPickFail));
                             csv.WriteField(OPC.Read<int>(TotalInputRobotPickDrop));
                             csv.WriteField(OPC.Read<int>(ProductionUPH));
@@ -727,38 +586,6 @@ namespace PentagonHMI
                             csv.WriteField(OPC.Read<int>(MTBA));
                             csv.WriteField(OPC.Read<int>(MTBF));
                             csv.WriteField(FormatString(Grouping.percent, OPC.Read<double>(OverallTotalYield)));
-                            //csv.WriteField(OPC.Read<int>(TOPMEnabledLotStart));
-                            //csv.WriteField(OPC.Read<int>(TOPMEnabledLotEnd));
-                            //csv.WriteField(OPC.Read<int>(TOPM1P));
-                            //csv.WriteField(OPC.Read<int>(TOPM2P));
-                            //csv.WriteField(OPC.Read<int>(TOPM3P));
-                            //csv.WriteField(OPC.Read<int>(TOPM4P));
-                            //csv.WriteField(OPC.Read<int>(TOPM5P));
-                            //csv.WriteField(OPC.Read<int>(TOPM6P));
-                            //csv.WriteField(OPC.Read<int>(TOPM1F));
-                            //csv.WriteField(OPC.Read<int>(TOPM2F));
-                            //csv.WriteField(OPC.Read<int>(TOPM3F));
-                            //csv.WriteField(OPC.Read<int>(TOPM4F));
-                            //csv.WriteField(OPC.Read<int>(TOPM5F));
-                            //csv.WriteField(OPC.Read<int>(TOPM6F));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC1P));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC2P));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC3P));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC4P));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC5P));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC6P));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC1F));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC2F));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC3F));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC4F));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC5F));
-                            //csv.WriteField(OPC.Read<int>(TwoDBC6F));
-                            //csv.WriteField(OPC.Read<int>(TnR1OutputReelQty));
-                            //csv.WriteField(OPC.Read<int>(TnR1LeaderQty));
-                            //csv.WriteField(OPC.Read<int>(TnR1TrailerQty));
-                            //csv.WriteField(OPC.Read<int>(TnR2OutputReelQty));
-                            //csv.WriteField(OPC.Read<int>(TnR2LeaderQty));
-                            //csv.WriteField(OPC.Read<int>(TnR2TrailerQty));
                             if(GlobalFunctions.IsSystem1)
                             {
                                 csv.WriteField(OPC.Read<int>(TotalPartFail));
@@ -1045,7 +872,6 @@ namespace PentagonHMI
                             var rejectCode = OPC.Read<int[]>(RejectCode, typeof(int), 6);
                             var rejectDesc = OPC.Read<string[]>(RejectDesc, typeof(string), 6);
                             var timestampsTFT = OPC.Read<string[]>(TimestampsTFT, typeof(string), 6);
-                            //var timestampsTrayPick = OPC.Read<string[]>(TimestampsTraypick, typeof(string), 6);
                             var tftPos = OPC.Read<int[]>(TFTPos, typeof(int), 6);
                             var tftBatteryType = OPC.Read<int[]>(TFTBatteryType, typeof(int), 6);
                             var testBatteryViDynamic = OPC.Read<int[]>(TestBatteryViDynamic, typeof(int), 6);
@@ -1113,7 +939,7 @@ namespace PentagonHMI
                                 }
                                 else
                                 {
-                                    csv.WriteField(dummyTXSNTester[i]); //record dummy
+                                    csv.WriteField(dummyTXSNTester[i]);
                                 }
                                 csv.WriteField(result[i] ? "1" : "0");
                                 csv.WriteField(dateTime); //
@@ -1148,7 +974,6 @@ namespace PentagonHMI
                                 csv.WriteField(testRadioiRSSIHL[i]);
                                 csv.WriteField(testRadioiRSSILL[i]);
                                 csv.WriteField(testRadioiRXRSSI[i]);
-                                //csv.WriteField(iRxRSSI[i] == 32767 ? "1" : "0", rxRSSI[i]);
                                 if(iRxRSSI[i] == 32767)
                                 {
                                     csv.WriteField(rxRSSI[i] ? "1" : "0");
@@ -1279,11 +1104,6 @@ namespace PentagonHMI
                                 csv.WriteField(overallResultTester[i]);
                                 csv.WriteField("NULL");
                                 csv.WriteField(dateTime);
-
-                                //valuename - model
-                                //value
-                                //valuestring
-
                                 csv.WriteField(OPC.Read<string>(RejectCodeTester));
                                 csv.WriteField(OPC.Read<string>(RejectDescTester));
                                 csv.WriteField(OPC.Read<string>(ProcessIDTester));
@@ -1401,11 +1221,6 @@ namespace PentagonHMI
                                 csv.WriteField(overallResultUld[i]);
                                 csv.WriteField(prRecValCreatedDateUld[i]);
                                 csv.WriteField(dateTime);
-
-                                //valuename - model
-                                //value
-                                //valuestring
-
                                 csv.WriteField(rejectCodeUld[i]);
                                 csv.WriteField(rejectDescUld[i]);
                                 csv.WriteField(processIDUld[i]);
@@ -1524,11 +1339,6 @@ namespace PentagonHMI
                                 csv.WriteField(overallResultTnR[i]);
                                 csv.WriteField(prRecValCreatedDateTnR[i]);
                                 csv.WriteField(dateTime);
-
-                                //valuename - model
-                                //value
-                                //valuestring
-
                                 csv.WriteField(rejectCodeTnR[i]);
                                 csv.WriteField(rejectDescTnR[i]);
                                 csv.WriteField(processIDTnR[i]);
@@ -2185,10 +1995,6 @@ namespace PentagonHMI
                                     for(int nb = 0; nb < 8; nb++)
                                     {
                                         csv.WriteField(_Main.OPC.Read<string>($"DIMM_Data_Tracking_Barcd_Z{Zone}_G{ng}[{nb}]"));
-                                        //foreach (string result in _Main.OPC.Read<string[]>($"DIMM_Data_Tracking_Barcd_Z{Zone}_G{ng}[0]", typeof(string), 8))
-                                        //{
-                                        //    csv.WriteField(result);
-                                        //}
                                     }
                                 csv.NextRecord();
                             }
@@ -2203,7 +2009,6 @@ namespace PentagonHMI
             }
         }
 
-        private string Last_OprLoadTime = string.Empty;
 
         public void HDD_CheckAndLogOperatorLoadTimeTaken()
         {
@@ -2217,9 +2022,6 @@ namespace PentagonHMI
 
                 string Tag_OprLoadTime = "CycleTime01.LastCycleTime";
                 string OprLoadTime = _Main.OPC.Read<string>(Tag_OprLoadTime, typeof(double));
-                //if (!string.IsNullOrWhiteSpace(OprLoadTime) && OprLoadTime != Last_OprLoadTime)
-                //{
-                //Last_OprLoadTime = OprLoadTime;
                 string LogsPath = Path.Combine(FileLogger.DefaultLocation_Time, "OperatorLoadTimeTaken");
                 if(!Directory.Exists(LogsPath))
                 { Directory.CreateDirectory(LogsPath); }
@@ -2236,19 +2038,16 @@ namespace PentagonHMI
                             {
                                 csv.WriteField("DateTime");
                                 csv.WriteField("Z1 Asset Tag");
-                                //csv.WriteField("Z2 Asset Tag");
                                 csv.WriteField("Operator Load Time (s)");
                                 csv.NextRecord();
                             }
                             csv.WriteField(DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss.fff"));
                             csv.WriteField(_Main.OPC.Read<string>("Zone_HDDTagZ1"));
-                            //csv.WriteField(_Main.OPC.Read<string>("Zone_HDDTagZ2"));
                             csv.WriteField(OprLoadTime);
                             csv.NextRecord();
                         }
                     }
                 }
-                //}
             }
             catch(Exception ex)
             {

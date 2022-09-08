@@ -23,17 +23,8 @@ namespace PentagonHMI.ChildControls
         private const string Tag_LotID_str = "Lot_Info.HMI_LotID";
         private const string Tag_LotQty_dint = "Lot_Info.HMI_Lot_Quantity";
         private const string Tag_OprID_str20 = "Lot_Info.HMI_OperatorID";
-        private const string Tag_DUTID_str20 = "Lot_Info.New_Lot_Created";
         private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
         private const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
-        //const string Tag_DUTID_str20 = "RecipeParams.DUTid";
-        //const string Tag_FirmwareVersion_str20 = "RecipeParams.FirmwareVersion";
-        //const string Tag_DayToExp_int = "Lot_Info.HMI_DaysToExpired";
-        //const string Tag_ManufactureDate_str20 = "Lot_Info.HMI_ManufactureDate";
-        //const string Tag_Exp_str20 = "Lot_Info.HMI_Expiration_Date";
-        //const string Tag_LotCreated_bool = "Lot_Info.New_Lot_Created";
-        //const string Tag_Mode_Commercial_bool = "Lot_Info.HMI_Commercial_Mode";
-        //const string Tag_Mode_NonCommercial_bool = "Lot_Info.HMI_NonCommercial_Mode";
 
         public ucLotEntry(LogicClasses.Main main)
         {
@@ -42,7 +33,6 @@ namespace PentagonHMI.ChildControls
 #if !DEBUG
             if(!OPCore.Connect(Info.OPC.IP))
                 return;
-            //btn_ServerTest.Visibility = Visibility.Collapsed;
 #endif
             Initialize();
             main.OnLotUpdate += Update;
@@ -67,19 +57,11 @@ namespace PentagonHMI.ChildControls
                     for(int n = 0; n < values.Length; n++)
                         lst_DUTID.Add(values[n]);
                 }
-                //else if (dr["Name"].ToString() == "FirmwareVersion")
-                //{
-                //    for (int n = 0; n < values.Length; n++)
-                //        lst_FirmwareVersion.Add(values[n]);
-                //}
             }
 
             cbx_offlineBtrytype.DisplayMemberPath = "Key";
             cbx_offlineBtrytype.SelectedValuePath = "Value";
             cbx_offlineBtrytype.ItemsSource = dic_BatteryType;
-
-            //cbx_offlineDUT.ItemsSource = lst_DUTID;
-            //cbx_offlineFirmwareVersion.ItemsSource = lst_FirmwareVersion;
         }
 
         private void Update()
@@ -89,28 +71,17 @@ namespace PentagonHMI.ChildControls
                 try
                 {
                     ucLotEntryUserControl.IsEnabled = !_Main.OPC.Read<bool>("Lot_Info.New_Lot_Created");
-                    //grd_Main.IsEnabled = !OPCore.Read<bool>(Tag_LotCreated_bool);
 
                     if(GetServerInfo())
                     {
-                        //cbx_offlineDUT.Visibility = Visibility.Hidden;
-                        //cbx_offlineFirmwareVersion.Visibility = Visibility.Hidden;
-                        //cbx_offlineBtrytype.Visibility = Visibility.Hidden;
-                        //tbx_day2Exp.IsEnabled = false;
                     }
                     else
                     {
-                        //cbx_offlineDUT.Visibility = Visibility.Visible;
-                        //cbx_offlineFirmwareVersion.Visibility = Visibility.Visible;
                         cbx_offlineBtrytype.Visibility = Visibility.Visible;
-                        //tbx_day2Exp.IsEnabled = true;
                     }
 
-                    // Update Radio Button
                     ActualPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Actual");
                     DummyPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Dummy");
-
-                    //tbx_mdate.Text = DateTime.Now.ToShortDateString();
                 }
                 catch(Exception exception)
                 {
@@ -129,39 +100,14 @@ namespace PentagonHMI.ChildControls
             _Main.LotPageOn = false;
         }
 
-        //Get From Server
         private bool GetServerInfo()
         {
             if(test_ServerOn)
             {
-                //tbx_onlineDUT.Text = "DUT1214";
                 tbx_onlineBtrytype.Text = "Murata";
-                //tbx_onlineFirmwareVersion.Text = "V1.0.12";
-                //tbx_day2Exp.Text = "31";
             }
             return test_ServerOn;
         }
-
-        //private void LotMode_Selected(object sender, RoutedEventArgs e)
-        //{
-        //    RadioButton rb = sender as RadioButton;
-        //    if (rb.Content == null)
-        //        return;
-
-        //    if (rb.Content.ToString().ToUpper() == "COMMERCIAL")
-        //    {
-        //        //OPCore.Write(Tag_Mode_Commercial_bool, true);
-        //        tbx_LotID.Text = "";
-        //        tbx_LotID.IsEnabled = true;
-        //    }
-        //    else if (rb.Content.ToString().ToUpper() == "NON-COMMERCIAL")
-        //    {
-        //        //OPCore.Write(Tag_Mode_NonCommercial_bool, true);
-        //        tbx_LotID.Text = rb.Content.ToString();
-        //        tbx_LotID.IsEnabled = false;
-
-        //    }
-        //}
 
         private static readonly Regex _regex = new Regex("[^0-9]+");
 
@@ -184,7 +130,7 @@ namespace PentagonHMI.ChildControls
                 MessageBox.Show("Lot ID Not Defined");
                 return;
             }
-            else if /*string.IsNullOrWhiteSpace*/(LR_num_LotSize.Value == null)
+            else if(LR_num_LotSize.Value == null)
             {
                 MessageBox.Show("Lot Size Not Defined");
                 return;
@@ -194,67 +140,34 @@ namespace PentagonHMI.ChildControls
                 MessageBox.Show("Operator ID Not Defined");
                 return;
             }
-            //else if (string.IsNullOrWhiteSpace(tbx_day2Exp.Text))
-            //{
-            //    MessageBox.Show("Days To Expire Not Defined");
-            //    return;
-            //}
             else if(ServerOn)
             {
-                //if (string.IsNullOrWhiteSpace(tbx_onlineDUT.Text))
-                //{
-                //    MessageBox.Show("DUT ID Not Defined");
-                //    return;
-                //}
-                //else
                 if(!dic_BatteryType.TryGetValue(tbx_onlineBtrytype.Text, out string btyEnum))
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
                 }
-                //else if (string.IsNullOrWhiteSpace(tbx_onlineFirmwareVersion.Text))
-                //{
-                //    MessageBox.Show("Firmware Version Not Defined");
-                //    return;
-                //}
             }
             else if(!ServerOn)
             {
-                //if (string.IsNullOrWhiteSpace(cbx_offlineDUT.SelectedValue.ToString()))
-                //{
-                //    MessageBox.Show("DUT ID Not Defined");
-                //    return;
-                //}
-                //else
                 if(string.IsNullOrWhiteSpace(cbx_offlineBtrytype.SelectedValue.ToString()))
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
                 }
-                //else if (string.IsNullOrWhiteSpace(cbx_offlineFirmwareVersion.SelectedValue.ToString()))
-                //{
-                //    MessageBox.Show("Firmware Version Not Defined");
-                //    return;
-                //}
             }
 
             OPCore.Write(Tag_OprID_str20, tbx_OprID.Text, typeof(string));
             OPCore.Write(Tag_LotID_str, tbx_LotID.Text, typeof(string));
             OPCore.Write(Tag_LotQty_dint, LR_num_LotSize.Value, typeof(Int32));
-            //OPCore.Write(Tag_DayToExp_int, tbx_day2Exp.Text, typeof(int));
             if(ServerOn)
             {
-                //OPCore.Write(Tag_DUTID_str20, tbx_onlineDUT.Text, typeof(string));
                 OPCore.Write(Tag_Btry_dint, dic_BatteryType[tbx_onlineBtrytype.Text], typeof(Int32));
-                //OPCore.Write(Tag_FirmwareVersion_str20, tbx_onlineFirmwareVersion.Text, typeof(string));
             }
             else
             {
-                //OPCore.Write(Tag_DUTID_str20, cbx_offlineDUT.SelectedValue.ToString(), typeof(string));
                 OPCore.Write(Tag_Btry_dint, cbx_offlineBtrytype.SelectedValue.ToString(), typeof(Int32));
-                //OPCore.Write(Tag_FirmwareVersion_str20, cbx_offlineFirmwareVersion.SelectedValue.ToString(), typeof(string));
             }
-            //OPCore.Write(Tag_Exp_str20, DateTime.Now.AddDays(Convert.ToInt16(tbx_day2Exp.Text)).ToString("yyMMdd"), typeof(string));
             OPCore.Write(Tag_NewLot_bool, true);
         }
 
