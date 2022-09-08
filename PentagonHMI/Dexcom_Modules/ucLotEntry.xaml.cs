@@ -106,6 +106,10 @@ namespace PentagonHMI.ChildControls
                         //tbx_day2Exp.IsEnabled = true;
                     }
 
+                    // Update Radio Button
+                    ActualPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Actual");
+                    DummyPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Dummy");
+
                     //tbx_mdate.Text = DateTime.Now.ToShortDateString();
                 }
                 catch(Exception exception)
@@ -264,6 +268,16 @@ namespace PentagonHMI.ChildControls
         private void Server_Toggle(object sender, RoutedEventArgs e)
         {
             test_ServerOn = !test_ServerOn;
+        }
+
+        private void ActualPcbaRadioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write("HMI_PCBA_Actual", true);
+        }
+
+        private void DummyPcbaRaDioButtonChecked(object sender, RoutedEventArgs e)
+        {
+            OPCore.Write("HMI_PCBA_Dummy", true);
         }
     }
 }

@@ -541,6 +541,17 @@ namespace PentagonHMI
         private string MTBA = "Lot_OEE_Tags.dint_MTBASec";
         private string MTBF = "Lot_OEE_Tags.dint_MTBFSec";
         private string OverallTotalYield = "Lot_OEE_Tags.dint_Quality";
+        private string TotalPartFail = "Lot_OEE_Tags.dint_Total_PartFail";
+        private string ShortShotFail = "ShortShot_Fail_Qty";
+        private string OMFFFail = "OMFF_Fail_Qty";
+        private string BrownStrainFail = "BrownStrainF_Fail_Qty";
+        private string BatClipSurfaceFail = "BatClipSurface_Fail_Qty";
+        private string FlashingFail = "Flashing_Fail_Qty";
+        private string FodFail = "FOD_Fail_Qty";
+        private string BugBubbleFail = "BugBubble_Fail_Qty";
+        private string BrownStrainBFail = "BrownStrainB_Fail_Qty";
+        private string MouseBiteFail = "MouseBite_Fail_Qty";
+
         private string TOPMEnabledLotStart = "Lot_Summary.dint_TOPM_Enabled_Star";
         private string TOPMEnabledLotEnd = "Lot_Summary.dint_TOPM_Enabled_End";
         private string TOPM1P = "Lot_Summary.dint_TOPM1_Pass";
@@ -630,6 +641,22 @@ namespace PentagonHMI
                                 csv.WriteField("MTBA");
                                 csv.WriteField("MTBF");
                                 csv.WriteField("Overall Total Yield (%)");
+                                if(GlobalFunctions.IsSystem1)
+                                {
+                                    csv.WriteField("Total Part Fail");
+                                }
+                                else
+                                {
+                                    csv.WriteField("Short Shot Fail");
+                                    csv.WriteField("OMFF Fail");
+                                    csv.WriteField("Brown Strain Front Fail");
+                                    csv.WriteField("Battery Clip Surface Fail");
+                                    csv.WriteField("Flashing Fail");
+                                    csv.WriteField("FOD Fail");
+                                    csv.WriteField("Live Bug Bubble Fail");
+                                    csv.WriteField("Brown Strain Back Fail");
+                                    csv.WriteField("Mouse Bite Fail");
+                                }
                                 //csv.WriteField("TOPM Enabled (Lot Start)");
                                 //csv.WriteField("TOPM Enabled (Lot End)");
                                 //csv.WriteField("TOPM 1 Pass");
@@ -732,7 +759,22 @@ namespace PentagonHMI
                             //csv.WriteField(OPC.Read<int>(TnR2OutputReelQty));
                             //csv.WriteField(OPC.Read<int>(TnR2LeaderQty));
                             //csv.WriteField(OPC.Read<int>(TnR2TrailerQty));
-
+                            if(GlobalFunctions.IsSystem1)
+                            {
+                                csv.WriteField(OPC.Read<int>(TotalPartFail));
+                            }
+                            else
+                            {
+                                csv.WriteField(OPC.Read<int>(ShortShotFail));
+                                csv.WriteField(OPC.Read<int>(OMFFFail));
+                                csv.WriteField(OPC.Read<int>(BrownStrainFail));
+                                csv.WriteField(OPC.Read<int>(BatClipSurfaceFail));
+                                csv.WriteField(OPC.Read<int>(FlashingFail));
+                                csv.WriteField(OPC.Read<int>(FodFail));
+                                csv.WriteField(OPC.Read<int>(BugBubbleFail));
+                                csv.WriteField(OPC.Read<int>(BrownStrainBFail));
+                                csv.WriteField(OPC.Read<int>(MouseBiteFail));
+                            }
                             csv.NextRecord();
                         }
                     }
