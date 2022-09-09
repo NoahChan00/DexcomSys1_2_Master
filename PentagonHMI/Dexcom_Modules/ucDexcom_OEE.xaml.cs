@@ -2,6 +2,7 @@
 using LiveCharts;
 using LiveCharts.Wpf;
 using Logix;
+using PentagonHMI.Classes;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -54,6 +55,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Shift_OEE_DINT_Total_Pass = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Total_Fail = new Tag { Name = "Shift_OEE_Tags.DINT_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Total_TotalProductiveUnit = new Tag { Name = "Shift_OEE_Tags.dint_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_Total_PartFail = new Tag { Name = "Shift_OEE_Tags.dint_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
 
         private Tag Tag_Lot_OEE_str_HMI_OEEStartDateTime = new Tag { Name = "Lot_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
         private Tag Tag_Lot_OEE_dint_MachineUpTimeAccSec = new Tag { Name = "Lot_OEE_Tags.dint_MachineUpTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
@@ -74,7 +76,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Lot_OEE_dint_Total_Pass = new Tag { Name = "Lot_OEE_Tags.dint_Total_Pass", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_Total_Fail = new Tag { Name = "Lot_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_TotalProductiveUnit = new Tag { Name = "Lot_OEE_Tags.dint_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
-
+        private Tag Tag_Lot_OEE_dint_TotalPartFail = new Tag { Name = "Lot_OEE_Tags.dint_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
         public enum Grouping
         {
             stringtime,
@@ -248,18 +250,18 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Shift_OEE_DINT_IdealRunTime.Name,
                            Group =  Grouping.sec
                         },
-                        // new InfoBlockModel
-                        //{
-                        //   Title = "Total Pass",
-                        //   Key =  Tag_Shift_OEE_DINT_Total_Pass.Name,
-                        //   Group =  Grouping.number
-                        //},
-                        // new InfoBlockModel
-                        //{
-                        //   Title = "Total Fail",
-                        //   Key = Tag_Shift_OEE_DINT_Total_Fail.Name,
-                        //   Group =  Grouping.number
-                        //},
+
+
+
+
+
+
+
+
+
+
+
+
                          new InfoBlockModel
                         {
                            Title = "Performance",
@@ -294,6 +296,12 @@ namespace PentagonHMI.ChildControls
                          {
                              Title= "Total Productive Unit",
                              Key=  Tag_Shift_OEE_DINT_Total_TotalProductiveUnit.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Total Part Fail",
+                             Key=  Tag_Shift_OEE_DINT_Total_PartFail.Name,
                              Group = Grouping.number
                          },
                     },
@@ -420,6 +428,12 @@ namespace PentagonHMI.ChildControls
                              Key=  Tag_Lot_OEE_dint_TotalProductiveUnit.Name,
                              Group = Grouping.number
                          },
+                         new InfoBlockModel
+                         {
+                             Title= "Total Part Fail",
+                             Key=  Tag_Lot_OEE_dint_TotalPartFail.Name,
+                             Group = Grouping.number
+                         },
                     }
                 };
             }
@@ -517,7 +531,7 @@ namespace PentagonHMI.ChildControls
                      },
                      new PieChartBlockModel
                      {
-                         // DeltaTime = Total - Prodution + Stanby
+
                          Chart = OEEChart.DeltaTime,
                           Formula = "Total Time - (Production Time + Standby Time)",
                           Title = "Delta Time",
@@ -586,42 +600,42 @@ namespace PentagonHMI.ChildControls
             }
 
             IdealCycleTime = _Main.IdealCycleTime;
-            //<<<<<
-            //OEEList.OEEInfo.First(x => x.Title == "Ideal Cycle Time").Value = FormatString(Grouping.sec, _Main.IdealCycleTime);
-            //=====
+
+
+
             InfoBlockModel model = OEEList.OEEInfo.FirstOrDefault(x => x.Title.Contains("Ideal Cycle Time"));
             if(model != null)
                 model.Value = FormatString(Grouping.sec, IdealCycleTime);
-            //>>>>>
+
 
             TotalCount = TotalPass + TotalFail;
 
-            //Productive Time +Standby Time + Engineering Time
+
             EquipmentUpTime = Productive + Standby + Engineering;
 
-            //Shift Time -Non Schedule Time
+
             OperationTime = Shift - NonSchedule;
 
-            //Total Passed / (Total passed + Total Failed)
+
             double Total = TotalPass + TotalFail;
             Quality = Total <= 0 ? 0 : TotalPass / (Total);
 
-            //(Ideal Cycle Time * Total Count) / Operation Time
+
             Performance = OperationTime <= 0 ? 0 : (IdealCycleTime * TotalCount) / OperationTime;
 
-            //Equipment Uptime / Operation Time
+
             Availability = OperationTime <= 0 ? 0 : EquipmentUpTime / OperationTime;
 
-            //Quality * Performance * Availability
+
             OEE = Quality * Performance * Availability;
 
-            //Equipment Uptime / Total Time
+
             Loading = Shift <= 0 ? 0 : EquipmentUpTime / Shift;
 
-            //OEE * Loading
+
             Teep = OEE * Loading;
 
-            //DeltaTime = Total Time - (Production Time + Standby Time)
+
             DeltaTime = Shift - (Productive + Standby);
 
             foreach(var item in OEEList.PieChartInfo)
@@ -721,7 +735,7 @@ namespace PentagonHMI.ChildControls
                         return string.IsNullOrWhiteSpace(strValue) ? "" : new DateTime(Convert.ToInt32(strValue.Substring(0, 4)),
                             Convert.ToInt32(strValue.Substring(4, 2)),
                             Convert.ToInt32(strValue.Substring(6, 2)),
-                            Convert.ToInt32(strValue.Substring(8, 2)), // beware for underscore
+                            Convert.ToInt32(strValue.Substring(8, 2)),
                             Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
                     }
                     catch(Exception)
@@ -759,53 +773,61 @@ namespace PentagonHMI.ChildControls
             ctrl.Connect();
             if(OEEGrp == OEEType.Shift)
             {
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_STR_HMI_OEEStartDateTime);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.str_HMI_OEEStartDateTime", DataType);// Logix.Tag.ATOMIC.STRING };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineUpTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.dint_MachineUpTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineStandbyTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MachineStandbyTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_NoMaterialTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_NoMaterialTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineProductiveTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MachineProductiveTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MachineEngineeringTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MachineScheduledDownTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MachineUnscheduledDownTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MachineNonScheduledTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_SoftJam);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_SoftJam", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_HardJam);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_HardJam", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MTBASec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MTBASec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MTBFSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_MTBFSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Throughput);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Throughput", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_SprintUPH);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_SprintUPH", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_PlannedProductiveTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_AvailabilityTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_AvailabilityTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_IdealCycleTime);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_IdealCycleTime", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_IdealRunTime);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_IdealRunTime", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Performance);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Performance", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Quality);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Quality", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_OEE);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_OEE", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Pass);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Total_Pass", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Fail);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Shift_OEE_Tags.DINT_Total_Fail", DataType);// Logix.Tag.ATOMIC.DINT };
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_STR_HMI_OEEStartDateTime);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineUpTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineStandbyTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_NoMaterialTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineProductiveTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_SoftJam);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_HardJam);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MTBASec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_MTBFSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Throughput);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_SprintUPH);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_AvailabilityTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_IdealCycleTime);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_IdealRunTime);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Performance);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Quality);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_OEE);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Pass);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Fail);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_TotalProductiveUnit);
+                if(GlobalFunctions.IsSystem1)
+                {
+                    Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_PartFail);
+                }
             }
             else if(OEEGrp == OEEType.Lot)
             {
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_str_HMI_OEEStartDateTime);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.str_HMI_OEEStartDateTime", DataType);// Logix.Tag.ATOMIC.STRING };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineUpTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineUpTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineStandbyTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineStandbyTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_NoMaterialTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_NoMaterialTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineProductiveTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineProductiveTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineEngineeringTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineEngineeringTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineScheduledDownTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MachineNonScheduledTimeAccSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_SoftJam);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_SoftJam", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_HardJam);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_HardJam", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MTBASec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MTBASec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MTBFSec);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_MTBFSec", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Throughput);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_Throughput", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_SprintUPH);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_SprintUPH", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Quality);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_Quality", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Total_Pass);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_Total_Pass", DataType);// Logix.Tag.ATOMIC.DINT };
-                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Total_Fail);// new Info.OPC.TagGroups.OEE.AddTag({ Name);// "Lot_OEE_Tags.dint_Total_Fail", DataType);// Logix.Tag.ATOMIC.DINT };
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_str_HMI_OEEStartDateTime);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineUpTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineStandbyTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_NoMaterialTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineProductiveTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineEngineeringTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_SoftJam);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_HardJam);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MTBASec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_MTBFSec);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Throughput);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_SprintUPH);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Quality);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Total_Pass);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Total_Fail);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_TotalProductiveUnit);
+                if(GlobalFunctions.IsSystem1)
+                {
+                    Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_TotalPartFail);
+                }
             }
         }
 
