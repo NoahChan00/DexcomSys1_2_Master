@@ -338,6 +338,7 @@ namespace PentagonHMI.ChildControls
                     LotQuatityLabel.Content = OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity1.Name).ToString();
                     int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
                     BatteryTypeLabel.Content = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : "Murata";
+                    PCBAModeLabel.Content = OPCore.Read<string>(Tags.MainPage.PCBAMode1.Name);
                 }
                 else
                 {

@@ -76,7 +76,7 @@
 
                 <StackPanel.Resources>
                     <Style TargetType="UniformGrid">
-                        <Setter Property="Height" Value="207.5 " />
+                        <Setter Property="Height" Value="203 " />
                     </Style>
                     <Style TargetType="Label">
                         <Setter Property="FontSize" Value="18" />
@@ -99,6 +99,8 @@
                             <Label Name="LotQuatityLabel" />
                             <Label Background="LightGray">Battery Type</Label>
                             <Label Name="BatteryTypeLabel" />
+                            <Label Background="LightGray">PCBA Mode</Label>
+                            <Label Name="PCBAModeLabel" />
                         </UniformGrid>
                     </StackPanel>
                 </Border>
