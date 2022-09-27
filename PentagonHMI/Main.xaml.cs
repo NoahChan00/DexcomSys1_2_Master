@@ -260,7 +260,7 @@ namespace PentagonHMI
 
         private PickFailPrompt pickFailPrompt;
         private SelectedTray selectedTray;
-        private Dictionary<SelectedTray, PickFailPrompt> pickFailPromptDict = new Dictionary<SelectedTray, PickFailPrompt>();
+        //private Dictionary<SelectedTray, PickFailPrompt> pickFailPromptDict = new Dictionary<SelectedTray, PickFailPrompt>();
 
         private void CheckPickFail()
         {
@@ -296,26 +296,36 @@ namespace PentagonHMI
                         }
 
                         _Main.TrayMapPageOn = true;
-                        if(!pickFailPromptDict.ContainsKey(selectedTray))
-                        {
-                            pickFailPromptDict[selectedTray] = new PickFailPrompt(_Main, selectedTray);
-                        }
-                        pickFailPrompt = pickFailPromptDict[selectedTray];
+                        //if(!pickFailPromptDict.ContainsKey(selectedTray))
+                        //{
+                        //    pickFailPromptDict[selectedTray] = new PickFailPrompt(_Main, selectedTray);
+                        //}
+                        //pickFailPrompt = pickFailPromptDict[selectedTray];
+                        pickFailPrompt = new PickFailPrompt(_Main, selectedTray,this);
+
+                        pickFailPrompt.Show();
                         MainGrid.IsEnabled = false;
-                        PickFailCanva.Visibility = Visibility.Visible;
-                        PickFailContentControl.Content = pickFailPrompt;
+                        //PickFailCanva.Visibility = Visibility.Visible;
+                        //PickFailContentControl.Content = pickFailPrompt;
                         break;
                     }
                 }
             }
             if(allFalse && pickFailPrompt != null)
             {
-                _Main.TrayMapPageOn = false;
-                pickFailPrompt = null;
-                MainGrid.IsEnabled = true;
-                PickFailCanva.Visibility = Visibility.Collapsed;
-                PickFailContentControl.Content = null;
+                pickFailPrompt.Close();
+                //ClosePickFailPrompt();
+                //PickFailCanva.Visibility = Visibility.Collapsed;
+                //PickFailContentControl.Content = null;
             }
+        }
+
+        public void ClosePickFailPrompt()
+        {
+            _Main.TrayMapPageOn = false;
+            //pickFailPrompt.Close();
+            pickFailPrompt = null;
+            MainGrid.IsEnabled = true;
         }
 
         //Temp!!!

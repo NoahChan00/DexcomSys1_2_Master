@@ -1,4 +1,5 @@
 ﻿using PentagonHMI.ChildControls;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,15 +12,17 @@ namespace PentagonHMI.Views.Main
     /// <summary>
     /// Interaction logic for pickFailPrompt.xaml
     /// </summary>
-    public partial class PickFailPrompt : UserControl
+    public partial class PickFailPrompt : Window
     {
         private string skipPickTag;
         private string retryPickTag;
 
-        public PickFailPrompt(LogicClasses.Main main, SelectedTray selectedTray)
+        public PickFailPrompt(LogicClasses.Main main, SelectedTray selectedTray, PentagonHMI.Main main1)
         {
             InitializeComponent();
+            // There is 2 kind of main
             this.main = main;
+            this.main1 = main1;
             string title = "";
             trayMap = new ucTrayMap(main);
             trayMap.RemoveParent();
@@ -61,6 +64,7 @@ namespace PentagonHMI.Views.Main
             TitleLabel.Content = title + " Tray Pick Fail";
             cts = new CancellationTokenSource();
             ct = cts.Token;
+            Closed += closeForMain;
             Task.Run(() =>
             {
                 while(!ct.IsCancellationRequested)
@@ -77,6 +81,11 @@ namespace PentagonHMI.Views.Main
             });
         }
 
+        private void closeForMain(object sender, EventArgs e)
+        {
+            main1.ClosePickFailPrompt();
+        }
+
         ~PickFailPrompt()
         {
             cts.Cancel();
@@ -85,6 +94,7 @@ namespace PentagonHMI.Views.Main
         private CancellationToken ct;
         private CancellationTokenSource cts;
         private LogicClasses.Main main;
+        private PentagonHMI.Main main1;
         private ucTrayMap trayMap;
 
         private void SkipChecked(object sender, RoutedEventArgs e)

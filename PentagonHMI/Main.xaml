@@ -701,8 +701,8 @@
                 </Grid>
             </Grid>
         </Grid>
-        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="PickFailCanva" Visibility="Collapsed">
+        <!--<Grid VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="PickFailCanva" Visibility="Collapsed">
             <ContentControl x:Name="PickFailContentControl" />
-        </Grid>
+        </Grid>-->
     </Grid>
 </Window>
