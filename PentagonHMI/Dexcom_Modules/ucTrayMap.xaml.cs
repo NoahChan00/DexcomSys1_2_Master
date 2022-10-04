@@ -106,8 +106,8 @@ namespace PentagonHMI.ChildControls
 
             Row = 4;
             Col = 4;
-            PRow = 9;
-            PCol = 10;
+            PRow = 10;
+            PCol = 9;
             ORow = 10;
             OCol = 6;
             //#if !DEBUG

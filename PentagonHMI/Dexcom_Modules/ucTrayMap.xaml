@@ -213,7 +213,7 @@
                                         <Setter Property="Width" Value="25" />
                                     </Style>
                                 </UniformGrid.Resources>
-                                <UniformGrid.Background>
+                                <UniformGrid.Background >
                                     <ImageBrush ImageSource="/HMI;component/Images/TrayMap/S1PCBA.png" />
                                 </UniformGrid.Background>
                             </UniformGrid>
