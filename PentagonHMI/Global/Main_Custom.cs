@@ -490,7 +490,14 @@ namespace PentagonHMI
         private string BugBubbleFail = "BugBubble_Fail_Qty";
         private string BrownStrainBFail = "BrownStrainB_Fail_Qty";
         private string MouseBiteFail = "MouseBite_Fail_Qty";
-
+        private string TurretNestA = "TurretNest_A.Socket_Yield";
+        private string TurretNestB = "TurretNest_B.Socket_Yield";
+        private string TurretNestC = "TurretNest_C.Socket_Yield";
+        private string TurretNestD = "TurretNest_D.Socket_Yield";
+        private string TurretNestE = "TurretNest_E.Socket_Yield";
+        private string TurretNestF = "TurretNest_F.Socket_Yield";
+        private string TurretNestG = "TurretNest_G.Socket_Yield";
+        private string TurretNestH = "TurretNest_H.Socket_Yield";
         #endregion LotSummary
 
         public void LotSummary()
@@ -602,7 +609,14 @@ namespace PentagonHMI
                                 csv.WriteField(OPC.Read<int>(BrownStrainBFail));
                                 csv.WriteField(OPC.Read<int>(MouseBiteFail));
                             }
-                            csv.NextRecord();
+                            csv.WriteField(OPC.Read<double>(TurretNestA));
+                            csv.WriteField(OPC.Read<double>(TurretNestB));
+                            csv.WriteField(OPC.Read<double>(TurretNestC));
+                            csv.WriteField(OPC.Read<double>(TurretNestD));
+                            csv.WriteField(OPC.Read<double>(TurretNestE));
+                            csv.WriteField(OPC.Read<double>(TurretNestF));
+                            csv.WriteField(OPC.Read<double>(TurretNestG));
+                            csv.WriteField(OPC.Read<double>(TurretNestH));
                         }
                     }
                 }
