@@ -77,6 +77,16 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Lot_OEE_dint_Total_Fail = new Tag { Name = "Lot_OEE_Tags.dint_Total_Fail", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_TotalProductiveUnit = new Tag { Name = "Lot_OEE_Tags.dint_TotalProductiveUnit", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Lot_OEE_dint_TotalPartFail = new Tag { Name = "Lot_OEE_Tags.dint_Total_PartFail", DataType = Logix.Tag.ATOMIC.DINT };
+
+
+        private Tag Tag_Lot_OEE_real_TurretNestA = new Tag { Name = "TurretNest_A.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestB = new Tag { Name = "TurretNest_B.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestC = new Tag { Name = "TurretNest_C.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestD = new Tag { Name = "TurretNest_D.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestE = new Tag { Name = "TurretNest_E.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestF = new Tag { Name = "TurretNest_F.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestG = new Tag { Name = "TurretNest_G.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
+        private Tag Tag_Lot_OEE_real_TurretNestH = new Tag { Name = "TurretNest_H.Socket_Yield", DataType = Logix.Tag.ATOMIC.REAL };
         public enum Grouping
         {
             stringtime,
@@ -432,6 +442,54 @@ namespace PentagonHMI.ChildControls
                          {
                              Title= "Total Part Fail",
                              Key=  Tag_Lot_OEE_dint_TotalPartFail.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest A",
+                             Key=  Tag_Lot_OEE_real_TurretNestA.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest B",
+                             Key=  Tag_Lot_OEE_real_TurretNestB.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest C",
+                             Key=  Tag_Lot_OEE_real_TurretNestC.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest D",
+                             Key=  Tag_Lot_OEE_real_TurretNestD.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest E",
+                             Key=  Tag_Lot_OEE_real_TurretNestE.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest F",
+                             Key=  Tag_Lot_OEE_real_TurretNestF.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest G",
+                             Key=  Tag_Lot_OEE_real_TurretNestG.Name,
+                             Group = Grouping.number
+                         },
+                         new InfoBlockModel
+                         {
+                             Title= "Turret Nest H",
+                             Key=  Tag_Lot_OEE_real_TurretNestH.Name,
                              Group = Grouping.number
                          },
                     }
@@ -828,6 +886,14 @@ namespace PentagonHMI.ChildControls
                 {
                     Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_TotalPartFail);
                 }
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestA);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestB);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestC);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestD);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestE);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestF);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestG);
+                Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestH);
             }
         }
 

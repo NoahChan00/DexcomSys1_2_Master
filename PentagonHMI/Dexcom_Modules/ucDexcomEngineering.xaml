@@ -629,6 +629,10 @@
                                     <Button x:Name="S1_RotaryTable_btn_TurretIndex" Click="ButtonHandler" Grid.Column="4" Padding="30 10" Grid.Row="0"
                                             Content="Turret Index" Tag="HMI_Turret_Index" />
                                 </StackPanel>
+                                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                    <TextBlock Text="StationCycleMode: " Width="200" />
+                                    <ToggleButton  Click="ToogleButtonHandler" Height="30" Tag="HMI_Turret_Index" />
+                                </StackPanel>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -1022,7 +1026,12 @@
                                     <Button x:Name="S2_RotaryTable_btn_TurretIndex" Click="ButtonHandler" Grid.Column="4" Padding="30 10" Grid.Row="0"
                                             Content="Turret Index" Tag="HMI_Turret_Index" />
                                 </StackPanel>
+                                <StackPanel Grid.Row="4" Orientation="Horizontal">
+                                    <TextBlock Text="StationCycleMode: " Width="200" />
+                                    <ToggleButton  Click="ToogleButtonHandler" Height="30" Tag="HMI_Turret_Index" />
+                                </StackPanel>
                             </Grid>
+
                         </TabItem>
                     </TabControl>
                 </StackPanel>
