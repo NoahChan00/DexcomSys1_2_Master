@@ -191,7 +191,7 @@
                                             <TextBlock TextWrapping="Wrap" MaxWidth="250" MinWidth="250" Margin="20" FontSize="18" Text="{Binding Title}" />
                                             <Grid>
                                                 <StackPanel Visibility="{Binding Vis_isNum}" Orientation="Horizontal" Margin="0 0 0 0">
-                                                    <xctk:IntegerUpDown Margin="0 5" FontSize="20" Value="{Binding Num_Value}" Maximum="{Binding Num_Max}" Minimum="{Binding Num_Min}" Increment="1" Width="75" MaxWidth="75" />
+                                                    <xctk:DoubleUpDown Margin="0 5" FontSize="20" Value="{Binding Num_Value}" Maximum="{Binding Num_Max}" Minimum="{Binding Num_Min}" Increment="1" Width="75" MaxWidth="75" />
                                                     <Button Margin="10 5 5 5" Padding="20 5" Tag="{Binding Key}" Click="Num_Button_Click"  FontSize="20" Content="SET" />
                                                 </StackPanel>
                                                 <Viewbox Visibility="{Binding Vis_isToggle}">
