@@ -28,6 +28,7 @@ namespace PentagonHMI.ChildControls
         private Brush Color1 = Brushes.MediumSeaGreen;
         private Brush Color2 = Brushes.DeepSkyBlue;
         private Brush Color3 = Brushes.Orange;
+        // Even the tagname got dint in it, it was real
         private string Tag_IdealCycletime = "Shift_OEE_Tags.dint_IdealCycleTime";
 
         private Tag Tag_Shift_OEE_STR_HMI_OEEStartDateTime = new Tag { Name = "Shift_OEE_Tags.str_HMI_OEEStartDateTime", DataType = Logix.Tag.ATOMIC.STRING };
@@ -47,7 +48,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Shift_OEE_DINT_SprintUPH = new Tag { Name = "Shift_OEE_Tags.DINT_SprintUPH", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_PlannedProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_AvailabilityTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_AvailabilityTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        private Tag Tag_Shift_OEE_DINT_IdealCycleTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealCycleTime", DataType = Logix.Tag.ATOMIC.DINT };
+        private Tag Tag_Shift_OEE_DINT_IdealCycleTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealCycleTime", DataType = Logix.Tag.ATOMIC.REAL};
         private Tag Tag_Shift_OEE_DINT_IdealRunTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealRunTime", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Performance = new Tag { Name = "Shift_OEE_Tags.DINT_Performance", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Quality = new Tag { Name = "Shift_OEE_Tags.DINT_Quality", DataType = Logix.Tag.ATOMIC.DINT };
@@ -137,7 +138,7 @@ namespace PentagonHMI.ChildControls
             AddTagstoGroup();
 
             PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-            _Main.IdealCycleTime = _Main.OPC.Read<Int32>(Tag_IdealCycletime);
+            _Main.IdealCycleTime = _Main.OPC.Read<double>(Tag_IdealCycletime);
 
             if(OEEGrp == OEEType.Shift)
             {
@@ -614,7 +615,7 @@ namespace PentagonHMI.ChildControls
             try
             {
                 ctrl.GroupRead(Info.OPC.TagGroups.OEE);
-                _Main.IdealCycleTime = _Main.OPC.Read<Int32>(Tag_IdealCycletime);
+                _Main.IdealCycleTime = _Main.OPC.Read<double>(Tag_IdealCycletime);
                 UpdateUI();
             }
             catch(Exception ex)
