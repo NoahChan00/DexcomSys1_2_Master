@@ -229,13 +229,13 @@ namespace PentagonHMI.ChildControls
                         {
                            Title = "Throughput",
                            Key = Tag_Shift_OEE_DINT_Throughput.Name,
-                           Group =  Grouping.sec
+                           Group =  Grouping.number
                         },
                         new InfoBlockModel
                         {
                            Title = "Sprint UPH",
                            Key = Tag_Shift_OEE_DINT_SprintUPH.Name,
-                           Group =  Grouping.sec
+                           Group =  Grouping.number
                         },
                          new InfoBlockModel
                         {
@@ -261,18 +261,6 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Shift_OEE_DINT_IdealRunTime.Name,
                            Group =  Grouping.sec
                         },
-
-
-
-
-
-
-
-
-
-
-
-
                          new InfoBlockModel
                         {
                            Title = "Performance",
@@ -407,13 +395,13 @@ namespace PentagonHMI.ChildControls
                         {
                            Title = "Throughput",
                            Key = Tag_Lot_OEE_dint_Throughput.Name,
-                           Group =  Grouping.sec
+                           Group =  Grouping.number
                         },
                         new InfoBlockModel
                         {
                            Title = "Sprint UPH",
                            Key = Tag_Lot_OEE_dint_SprintUPH.Name,
-                           Group =  Grouping.sec
+                           Group =  Grouping.number
                         },
                         new InfoBlockModel
                         {

@@ -25,7 +25,9 @@
             <Setter Property="Margin" Value="10 5" />
         </Style>
     </UserControl.Resources>
-    <Grid>
+    
+    
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="450" />
             <ColumnDefinition Width="*" />
@@ -100,6 +102,79 @@
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
-        <!--<TextBlock Grid.ColumnSpan="3" MaxWidth="1000" TextWrapping="Wrap" Text="Message" Name="tbk_msg" Background="White" VerticalAlignment="Top" FontSize="20" />-->
+        --><!--<TextBlock Grid.ColumnSpan="3" MaxWidth="1000" TextWrapping="Wrap" Text="Message" Name="tbk_msg" Background="White" VerticalAlignment="Top" FontSize="20" />--><!--
+    </Grid>-->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Border Grid.Column="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,5,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Label Name="lbl_Tittle" Grid.Row="0" Style="{DynamicResource styTopPenalBlue}" Content="Overall Equipment Effectiveness" FontSize="18" Height="30" Padding="30,2,2,0"/>
+
+                    <TextBlock Visibility="Collapsed" MouseLeftButtonDown="btn_HELP_Click" Padding="0 0 10 0" VerticalAlignment="Center" Foreground="Snow" FontWeight="Bold" Text="HELP" HorizontalAlignment="Right"/>
+
+                    <Grid Grid.Row="1">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <ItemsControl Name="itmctrl_OEEinfo" ItemsSource="{Binding OEEInfo}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <UniformGrid Rows="1">
+                                            <TextBlock Text="{Binding Title}" Padding="10 0 0 0" Margin="0 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="13" MaxHeight="20"/>
+                                            <TextBox Text="{Binding Value}" MinWidth="198" Margin="0 6.2 10 0" FontSize="11.5" MaxHeight="16"/>
+                                        </UniformGrid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+
+                </Grid>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <ItemsControl Name="itmctrl_PieChart" ItemsSource="{Binding PieChartInfo}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Rows="2"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Grid.Column="0" CornerRadius="16" BorderThickness="2" BorderBrush="{DynamicResource GridLineBrush}" Margin="0,0,5,5">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Style="{DynamicResource styTopPenalBlue}" Content="{Binding Title}" FontSize="18" Height="30" Padding="30,2,2,0"/>
+                                    <StackPanel Grid.Row="1" HorizontalAlignment="Left">
+                                        <TextBox HorizontalAlignment="Left" Text="{Binding Value}" Margin="5 5 0 0"/>
+                                        <TextBlock Margin="5 0 0 0" Text="{Binding Formula}" TextWrapping="Wrap" MaxWidth="250"/>
+                                    </StackPanel>
+                                    <lvc:PieChart Grid.Row="2" Margin="0 5 0 0" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieInfo}"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+        <!--<TextBlock Grid.ColumnSpan="3" MaxWidth="1000" TextWrapping="Wrap" Text="Message" Name="tbk_msg" Background="White" VerticalAlignment="Top" FontSize="20"/>-->
     </Grid>
 </UserControl>

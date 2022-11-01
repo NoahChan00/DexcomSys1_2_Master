@@ -69,7 +69,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.CVXLib">
-      <HintPath>..\..\Dexcom_Island_00_HMI\DLL\AxInterop.CVXLib.dll</HintPath>
+      <HintPath>..\..\..\Dexcom_Island_00_HMI\Dexcom_Island_00_HMI\DLL\AxInterop.CVXLib.dll</HintPath>
     </Reference>
     <Reference Include="AxInterop.VWORKSXGLib, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

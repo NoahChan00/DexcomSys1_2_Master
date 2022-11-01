@@ -563,6 +563,15 @@ namespace PentagonHMI
                                     csv.WriteField("Brown Strain Back Fail");
                                     csv.WriteField("Mouse Bite Fail");
                                 }
+                                csv.WriteField("Socket Yield A (%)");
+                                csv.WriteField("Socket Yield B (%)");
+                                csv.WriteField("Socket Yield C (%)");
+                                csv.WriteField("Socket Yield D (%)");
+                                csv.WriteField("Socket Yield E (%)");
+                                csv.WriteField("Socket Yield F (%)");
+                                csv.WriteField("Socket Yield G (%)");
+                                csv.WriteField("Socket Yield H (%)");
+
                                 csv.NextRecord();
                             }
 
