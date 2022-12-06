@@ -993,6 +993,9 @@
       <LastGenOutput>FactoryRestore1.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <None Include="License\nlx7rt5016306.lic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
