@@ -44,18 +44,18 @@ namespace PentagonHMI.ChildControls
                 _Main = MainConnection;
                 DBCall = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString.ToString());
 
-                if(ProjectType.ARCADIA == Classes.GlobalFunctions.ProjectType)
-                {
-                    if(StationType.ARCADIA_Main == Classes.GlobalFunctions.StationType)
-                    {
-                        SP_OEEBlock.Visibility = Visibility.Visible;
-                    }
-                    //SP_MainOEEReset.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    SP_OEEBlock.Visibility = Visibility.Visible;
-                }
+                //if(ProjectType.ARCADIA == Classes.GlobalFunctions.ProjectType)
+                //{
+                //    if(StationType.ARCADIA_Main == Classes.GlobalFunctions.StationType)
+                //    {
+                //        SP_OEEBlock.Visibility = Visibility.Visible;
+                //    }
+                //    //SP_MainOEEReset.Visibility = Visibility.Visible;
+                //}
+                //else
+                //{
+                //    SP_OEEBlock.Visibility = Visibility.Visible;
+                //}
 
                 UpdateBreakTimeTable();
                 UpdateOffDayTable();
@@ -285,56 +285,56 @@ namespace PentagonHMI.ChildControls
 
         private void ShiftSelect()
         {
-            try
-            {
-                DataTable DT = DBCall.Shift_Select(" ", _Main.StationID, ref ErrMsg);
+            //try
+            //{
+            //    DataTable DT = DBCall.Shift_Select(" ", _Main.StationID, ref ErrMsg);
 
-                foreach(DataRow DR in DT.Rows)
-                {
-                    switch(DR["ShiftID"].ToString())
-                    {
-                        case "1":
-                            hr.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
-                            min.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
-                            cb1.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
-                            if(min.Text.Length == 1)
-                                min.Text = "0" + min.Text;
-                            Act.IsChecked = DR["Active"].ToString() == "True" ? true : false;
-                            hr.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            min.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            cb1.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            break;
+            //    foreach(DataRow DR in DT.Rows)
+            //    {
+            //        switch(DR["ShiftID"].ToString())
+            //        {
+            //            case "1":
+            //                hr.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
+            //                min.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
+            //                cb1.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
+            //                if(min.Text.Length == 1)
+            //                    min.Text = "0" + min.Text;
+            //                Act.IsChecked = DR["Active"].ToString() == "True" ? true : false;
+            //                hr.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                min.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                cb1.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                break;
 
-                        case "2":
-                            hr2.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
-                            min2.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
-                            if(min2.Text.Length == 1)
-                                min2.Text = "0" + min2.Text;
-                            cb2.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
-                            Act2.IsChecked = DR["Active"].ToString() == "True" ? true : false;
-                            hr2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            min2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            cb2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            break;
+            //            case "2":
+            //                hr2.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
+            //                min2.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
+            //                if(min2.Text.Length == 1)
+            //                    min2.Text = "0" + min2.Text;
+            //                cb2.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
+            //                Act2.IsChecked = DR["Active"].ToString() == "True" ? true : false;
+            //                hr2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                min2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                cb2.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                break;
 
-                        case "3":
-                            hr3.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
-                            min3.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
-                            if(min3.Text.Length == 1)
-                                min3.Text = "0" + min3.Text;
-                            cb3.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
-                            Act3.IsChecked = DR["Active"].ToString() == "True" ? true : false;
-                            hr3.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            min3.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            cb3.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
-                            break;
-                    }
-                }
-            }
-            catch(Exception ex)
-            {
-                Utilities.FileLogger.logError(ex.Message, ex.ToString());
-            }
+            //            case "3":
+            //                hr3.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).ToString("%h");
+            //                min3.Text = (Convert.ToDateTime(DR["ShiftTime"].ToString())).Minute.ToString();
+            //                if(min3.Text.Length == 1)
+            //                    min3.Text = "0" + min3.Text;
+            //                cb3.SelectedIndex = Convert.ToDateTime(DR["ShiftTime"].ToString()).ToString("tt", CultureInfo.InvariantCulture).ToUpper() == "AM" ? 0 : 1;
+            //                Act3.IsChecked = DR["Active"].ToString() == "True" ? true : false;
+            //                hr3.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                min3.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                cb3.IsEnabled = DR["Active"].ToString() == "True" ? true : false;
+            //                break;
+            //        }
+            //    }
+            //}
+            //catch(Exception ex)
+            //{
+            //    Utilities.FileLogger.logError(ex.Message, ex.ToString());
+            //}
         }
 
         #endregion Constructor
@@ -370,13 +370,13 @@ namespace PentagonHMI.ChildControls
                     RB.Tag = "True";
                 }
 
-                if(RB.Name == Act3.Name)
-                {
-                    if(Act2.IsChecked == false)
-                    {
-                        RB.Tag = "False";
-                    }
-                }
+                //if(RB.Name == Act3.Name)
+                //{
+                //    if(Act2.IsChecked == false)
+                //    {
+                //        RB.Tag = "False";
+                //    }
+                //}
             }
             catch(Exception ex)
             {
@@ -402,13 +402,13 @@ namespace PentagonHMI.ChildControls
                     {
                         RB.IsChecked = false;
 
-                        if(Act2.IsChecked == false)
-                        {
-                            Act3.IsChecked = false;
-                            hr3.IsEnabled = false;
-                            min3.IsEnabled = false;
-                            cb3.IsEnabled = false;
-                        }
+                        //if(Act2.IsChecked == false)
+                        //{
+                        //    Act3.IsChecked = false;
+                        //    hr3.IsEnabled = false;
+                        //    min3.IsEnabled = false;
+                        //    cb3.IsEnabled = false;
+                        //}
 
                         if(RB.Name == "Act")
                         {
@@ -423,32 +423,32 @@ namespace PentagonHMI.ChildControls
                     {
                         if(RB.Name == "Act2")
                         {
-                            hr2.IsEnabled = false;
-                            min2.IsEnabled = false;
-                            cb2.IsEnabled = false;
+                            //hr2.IsEnabled = false;
+                            //min2.IsEnabled = false;
+                            //cb2.IsEnabled = false;
                         }
 
                         if(RB.Name == "Act3")
                         {
-                            hr3.IsEnabled = false;
-                            min3.IsEnabled = false;
-                            cb3.IsEnabled = false;
+                            //hr3.IsEnabled = false;
+                            //min3.IsEnabled = false;
+                            //cb3.IsEnabled = false;
                         }
                     }
                     else
                     {
                         if(RB.Name == "Act2")
                         {
-                            hr2.IsEnabled = true;
-                            min2.IsEnabled = true;
-                            cb2.IsEnabled = true;
+                            //hr2.IsEnabled = true;
+                            //min2.IsEnabled = true;
+                            //cb2.IsEnabled = true;
                         }
 
                         if(RB.Name == "Act3")
                         {
-                            hr3.IsEnabled = true;
-                            min3.IsEnabled = true;
-                            cb3.IsEnabled = true;
+                            //hr3.IsEnabled = true;
+                            //min3.IsEnabled = true;
+                            //cb3.IsEnabled = true;
                         }
                     }
                 }
@@ -535,107 +535,107 @@ namespace PentagonHMI.ChildControls
         {
             try
             {
-                Utilities.FileLogger.logButton(StrSetting, "Set OEE Shift", MethodBase.GetCurrentMethod().ToString());
+                //Utilities.FileLogger.logButton(StrSetting, "Set OEE Shift", MethodBase.GetCurrentMethod().ToString());
 
-                if(min.Text.ToString().Length == 1)
-                    min.Text = "0" + min.Text;
+                //if(min.Text.ToString().Length == 1)
+                //    min.Text = "0" + min.Text;
 
-                if(min2.Text.ToString().Length == 1)
-                    min2.Text = "0" + min2.Text;
+                //if(min2.Text.ToString().Length == 1)
+                //    min2.Text = "0" + min2.Text;
 
-                if(min3.Text.ToString().Length == 1)
-                    min3.Text = "0" + min3.Text;
+                //if(min3.Text.ToString().Length == 1)
+                //    min3.Text = "0" + min3.Text;
 
-                valid = true;
-                var DatenTime = DateTime.Now;
-                string Shift1 = DatenTime.ToShortDateString() + " " + hr.Text.ToString() + ":" + min.Text.ToString() + " " + cb1.Text.ToString();
-                string Shift2 = DatenTime.ToShortDateString() + " " + hr2.Text.ToString() + ":" + min2.Text.ToString() + " " + cb2.Text.ToString();
-                string Shift3 = DatenTime.ToShortDateString() + " " + hr3.Text.ToString() + ":" + min3.Text.ToString() + " " + cb3.Text.ToString();
+                //valid = true;
+                //var DatenTime = DateTime.Now;
+                //string Shift1 = DatenTime.ToShortDateString() + " " + hr.Text.ToString() + ":" + min.Text.ToString() + " " + cb1.Text.ToString();
+                //string Shift2 = DatenTime.ToShortDateString() + " " + hr2.Text.ToString() + ":" + min2.Text.ToString() + " " + cb2.Text.ToString();
+                //string Shift3 = DatenTime.ToShortDateString() + " " + hr3.Text.ToString() + ":" + min3.Text.ToString() + " " + cb3.Text.ToString();
 
-                if(DateTime.TryParse(Shift1, out date))
-                    Shift1st = Convert.ToDateTime(Shift1);
-                else
-                    valid = false;
+                //if(DateTime.TryParse(Shift1, out date))
+                //    Shift1st = Convert.ToDateTime(Shift1);
+                //else
+                //    valid = false;
 
-                if(DateTime.TryParse(Shift2, out date))
-                    Shift2nd = Convert.ToDateTime(Shift2);
-                else
-                    valid = false;
+                //if(DateTime.TryParse(Shift2, out date))
+                //    Shift2nd = Convert.ToDateTime(Shift2);
+                //else
+                //    valid = false;
 
-                if(DateTime.TryParse(Shift3, out date))
-                    Shift3rd = Convert.ToDateTime(Shift3);
-                else
-                    valid = false;
+                //if(DateTime.TryParse(Shift3, out date))
+                //    Shift3rd = Convert.ToDateTime(Shift3);
+                //else
+                //    valid = false;
 
-                if(valid == true)
-                {
-                    valid = false;
-                    if(Shift3rd > Shift2nd || Act3.IsChecked == false)
-                    {
-                        if(Shift2nd > Shift1st || Act2.IsChecked == false)
-                            valid = true;
-                        else
-                            MessageBox.Show("Schedule 1 timing should come before Schedule 2");
-                    }
-                    else
-                        MessageBox.Show("Schedule 2 timing should come before Schedule 3");
-                }
+                //if(valid == true)
+                //{
+                //    valid = false;
+                //    if(Shift3rd > Shift2nd || Act3.IsChecked == false)
+                //    {
+                //        if(Shift2nd > Shift1st || Act2.IsChecked == false)
+                //            valid = true;
+                //        else
+                //            MessageBox.Show("Schedule 1 timing should come before Schedule 2");
+                //    }
+                //    else
+                //        MessageBox.Show("Schedule 2 timing should come before Schedule 3");
+                //}
 
-                if(valid == true)
-                {
-                    DataTable dt = DBCall.Shift_Select("1", _Main.StationID, ref ErrMsg);
-                    if(string.IsNullOrEmpty(ErrMsg))
-                        DBCall.Shift_Update("1", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift1, Act.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
-                    else
-                        DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, Act.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
+                //if(valid == true)
+                //{
+                //    DataTable dt = DBCall.Shift_Select("1", _Main.StationID, ref ErrMsg);
+                //    if(string.IsNullOrEmpty(ErrMsg))
+                //        DBCall.Shift_Update("1", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift1, Act.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
+                //    else
+                //        DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, Act.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
 
-                    dt = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [Shift] WHERE StationID = {_Main.StationID} AND ShiftID = 2;");
-                    if(dt.Rows.Count == 1)
-                        DBCall.Shift_Update("2", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift2, Act2.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
-                    else
-                        DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, Act2.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
+                //    dt = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [Shift] WHERE StationID = {_Main.StationID} AND ShiftID = 2;");
+                //    if(dt.Rows.Count == 1)
+                //        DBCall.Shift_Update("2", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift2, Act2.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
+                //    else
+                //        DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, Act2.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
 
-                    dt = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [Shift] WHERE StationID = {_Main.StationID} AND ShiftID = 3;");
-                    if(dt.Rows.Count == 1)
-                        DBCall.Shift_Update("3", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift3, Act3.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
-                    else
-                        DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, Act3.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
+                //    dt = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [Shift] WHERE StationID = {_Main.StationID} AND ShiftID = 3;");
+                //    if(dt.Rows.Count == 1)
+                //        DBCall.Shift_Update("3", _Main.StationID, Convert.ToDateTime(dt.Rows[0]["NextShiftDT"]).ToString(), Shift3, Act3.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
+                //    else
+                //        DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, Act3.IsChecked == true ? "1" : "0", "User", ref ErrMsg);
 
-                    //if (Act.IsChecked == true)
-                    //{
-                    //    DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, "1", "User", ref ErrMsg);
-                    //}
-                    //else
-                    //{
-                    //    DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, "0", "User", ref ErrMsg);
-                    //}
+                //    //if (Act.IsChecked == true)
+                //    //{
+                //    //    DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, "1", "User", ref ErrMsg);
+                //    //}
+                //    //else
+                //    //{
+                //    //    DBCall.Shift_Update("1", _Main.StationID, Shift1, Shift1, "0", "User", ref ErrMsg);
+                //    //}
 
-                    //if (Act2.IsChecked == true)
-                    //{
-                    //    DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, "1", "User", ref ErrMsg);
-                    //}
-                    //else
-                    //{
-                    //    DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, "0", "User", ref ErrMsg);
-                    //}
+                //    //if (Act2.IsChecked == true)
+                //    //{
+                //    //    DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, "1", "User", ref ErrMsg);
+                //    //}
+                //    //else
+                //    //{
+                //    //    DBCall.Shift_Update("2", _Main.StationID, Shift2, Shift2, "0", "User", ref ErrMsg);
+                //    //}
 
-                    //if (Act3.IsChecked == true)
-                    //{
-                    //    DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, "1", "User", ref ErrMsg);
-                    //}
-                    //else
-                    //{
-                    //    DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, "0", "User", ref ErrMsg);
-                    //}
+                //    //if (Act3.IsChecked == true)
+                //    //{
+                //    //    DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, "1", "User", ref ErrMsg);
+                //    //}
+                //    //else
+                //    //{
+                //    //    DBCall.Shift_Update("3", _Main.StationID, Shift3, Shift3, "0", "User", ref ErrMsg);
+                //    //}
 
-                    if(ErrMsg == "")
-                    {
-                        ShiftSelect();
-                        MessageBox.Show("Shift Updated");
-                    }
-                    else
-                        Utilities.FileLogger.logError("OEE Shift Update Failed", ErrMsg);
-                }
+                //    if(ErrMsg == "")
+                //    {
+                //        ShiftSelect();
+                //        MessageBox.Show("Shift Updated");
+                //    }
+                //    else
+                //        Utilities.FileLogger.logError("OEE Shift Update Failed", ErrMsg);
+                //}
             }
             catch(Exception ex)
             {
@@ -797,55 +797,55 @@ namespace PentagonHMI.ChildControls
 
         private void RemoveBreakTime_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView item = dgd_BreakTime.SelectedItem as DataRowView;
-            DataTable dt = _Main.SQLer.Exec_DTSelect($"DELETE FROM [NONSCHEDULEDDOWNTIME] WHERE [ID]= {item.Row["ID"]} AND [TYPE] = 'TIME'; SELECT [ID] FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME' ORDER BY [ID] ASC;");
-            string SQLUpdateID = string.Empty;
-            int nID = 1;
-            foreach(DataRow data in dt.Rows)
-                SQLUpdateID += $"UPDATE [NONSCHEDULEDDOWNTIME] SET [ID] = {nID++} WHERE [ID] = {data[0]} AND [TYPE] = 'TIME';";
-            if(!string.IsNullOrWhiteSpace(SQLUpdateID))
-                _Main.SQLer.Exec_NonQuery(SQLUpdateID);
+            //DataRowView item = dgd_BreakTime.SelectedItem as DataRowView;
+            //DataTable dt = _Main.SQLer.Exec_DTSelect($"DELETE FROM [NONSCHEDULEDDOWNTIME] WHERE [ID]= {item.Row["ID"]} AND [TYPE] = 'TIME'; SELECT [ID] FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME' ORDER BY [ID] ASC;");
+            //string SQLUpdateID = string.Empty;
+            //int nID = 1;
+            //foreach(DataRow data in dt.Rows)
+            //    SQLUpdateID += $"UPDATE [NONSCHEDULEDDOWNTIME] SET [ID] = {nID++} WHERE [ID] = {data[0]} AND [TYPE] = 'TIME';";
+            //if(!string.IsNullOrWhiteSpace(SQLUpdateID))
+            //    _Main.SQLer.Exec_NonQuery(SQLUpdateID);
             UpdateBreakTimeTable();
         }
 
         private void RemoveOffDay_Click(object sender, RoutedEventArgs e)
         {
-            DataRowView item = dgd_OffDay.SelectedItem as DataRowView;
-            DataTable dt = _Main.SQLer.Exec_DTSelect($"DELETE FROM [NONSCHEDULEDDOWNTIME] WHERE [ID]= {item.Row["ID"]} AND [TYPE] = 'DAY'; SELECT [ID] FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'DAY' ORDER BY [ID] ASC;");
-            string SQLUpdateID = string.Empty;
-            int nID = 1;
-            foreach(DataRow data in dt.Rows)
-                SQLUpdateID += $"UPDATE [NONSCHEDULEDDOWNTIME] SET [ID] = {nID++} WHERE [ID] = {data[0]} AND [TYPE] = 'DAY';";
-            if(!string.IsNullOrWhiteSpace(SQLUpdateID))
-                _Main.SQLer.Exec_NonQuery(SQLUpdateID);
+            //DataRowView item = dgd_OffDay.SelectedItem as DataRowView;
+            //DataTable dt = _Main.SQLer.Exec_DTSelect($"DELETE FROM [NONSCHEDULEDDOWNTIME] WHERE [ID]= {item.Row["ID"]} AND [TYPE] = 'DAY'; SELECT [ID] FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'DAY' ORDER BY [ID] ASC;");
+            //string SQLUpdateID = string.Empty;
+            //int nID = 1;
+            //foreach(DataRow data in dt.Rows)
+            //    SQLUpdateID += $"UPDATE [NONSCHEDULEDDOWNTIME] SET [ID] = {nID++} WHERE [ID] = {data[0]} AND [TYPE] = 'DAY';";
+            //if(!string.IsNullOrWhiteSpace(SQLUpdateID))
+            //    _Main.SQLer.Exec_NonQuery(SQLUpdateID);
             UpdateOffDayTable();
         }
 
         private void AddBreakTime_Click(object sender, RoutedEventArgs e)
         {
-            TimeSpan End = new TimeSpan(GetTime(hr_breakend.Text, meridiem_breakend.Text), Convert.ToInt32(min_breakend.Text), 0);
-            TimeSpan Start = new TimeSpan(GetTime(hr_breakstart.Text, meridiem_breakstart.Text), Convert.ToInt32(min_breakstart.Text), 0);
-            if(Start >= End)
-                MessageBox.Show("Start Time should happen before End Time");
-            else
-                _Main.SQLer.Exec_NonQuery("INSERT INTO [dbo].[NonScheduledDowntime] ([ID],[StartTime],[EndTime],[Type]) VALUES " +
-                                          $"((ISNULL((SELECT MAX(ID) FROM [NonSCHEDULEDDOWNTIME]),0)) + 1, '{Start.ToString()}','{End.ToString()}','TIME')");
+            //TimeSpan End = new TimeSpan(GetTime(hr_breakend.Text, meridiem_breakend.Text), Convert.ToInt32(min_breakend.Text), 0);
+            //TimeSpan Start = new TimeSpan(GetTime(hr_breakstart.Text, meridiem_breakstart.Text), Convert.ToInt32(min_breakstart.Text), 0);
+            //if(Start >= End)
+            //    MessageBox.Show("Start Time should happen before End Time");
+            //else
+            //    _Main.SQLer.Exec_NonQuery("INSERT INTO [dbo].[NonScheduledDowntime] ([ID],[StartTime],[EndTime],[Type]) VALUES " +
+            //                              $"((ISNULL((SELECT MAX(ID) FROM [NonSCHEDULEDDOWNTIME]),0)) + 1, '{Start.ToString()}','{End.ToString()}','TIME')");
             UpdateBreakTimeTable();
         }
 
         private void AddOffDay_Click(object sender, RoutedEventArgs e)
         {
-            if(cld_offDay.SelectedDates.Count > 0)
-            {
-                DateTime Start = cld_offDay.SelectedDates.Min();
-                DateTime End = cld_offDay.SelectedDates.Max();
+            //if(cld_offDay.SelectedDates.Count > 0)
+            //{
+            //    DateTime Start = cld_offDay.SelectedDates.Min();
+            //    DateTime End = cld_offDay.SelectedDates.Max();
 
-                _Main.SQLer.Exec_NonQuery($@"INSERT INTO [dbo].[NonScheduledDownTime]
-                ([ID],[StartDay],[EndDay],[Type]) VALUES
-                ((ISNULL((SELECT MAX(ID) FROM [NONSCHEDULEDDOWNTIME]),0)) + 1,'{Start.ToString()}', '{End.ToString()}', 'DAY')");
+            //    _Main.SQLer.Exec_NonQuery($@"INSERT INTO [dbo].[NonScheduledDownTime]
+            //    ([ID],[StartDay],[EndDay],[Type]) VALUES
+            //    ((ISNULL((SELECT MAX(ID) FROM [NONSCHEDULEDDOWNTIME]),0)) + 1,'{Start.ToString()}', '{End.ToString()}', 'DAY')");
 
-                UpdateOffDayTable();
-            }
+            //    UpdateOffDayTable();
+            //}
         }
 
         private int GetTime(string hr, string meridiem)
@@ -864,8 +864,8 @@ namespace PentagonHMI.ChildControls
             dt_BreakTime = _Main.SQLer.Exec_DTSelect(
                 "SELECT [ID], SUBSTRING( CONVERT(VARCHAR, [STARTTIME],108),1,5) AS 'Start Time'," +
                 $"SUBSTRING( CONVERT(VARCHAR,[ENDTIME],108),1,5) AS 'End Time' FROM [NONSCHEDULEDDOWNTIME] WHERE [TYPE] = 'TIME' ORDER BY [ID] ASC");
-            if(dt_BreakTime != null)
-                dgd_BreakTime.ItemsSource = dt_BreakTime.AsDataView();
+            //if(dt_BreakTime != null)
+            //    dgd_BreakTime.ItemsSource = dt_BreakTime.AsDataView();
         }
 
         private void UpdateOffDayTable()
@@ -875,14 +875,14 @@ namespace PentagonHMI.ChildControls
             FROM [{Info.SQL.DatabaseName}].[dbo].[NonScheduledDownTime] Where [Type] = 'Day' ORDER BY [ID]");
             if(dt_OffDay != null)
             {
-                dgd_OffDay.ItemsSource = dt_OffDay.AsDataView();
-                cld_offDay.BlackoutDates.Clear();
-                cld_offDay.SelectedDates.Clear();
-                foreach(DataRow dr in dt_OffDay.Rows)
-                {
-                    var dates = new CalendarDateRange(Convert.ToDateTime(dr["Start"]), Convert.ToDateTime(dr["End"]));
-                    cld_offDay.BlackoutDates.Add(dates);
-                }
+                //dgd_OffDay.ItemsSource = dt_OffDay.AsDataView();
+                //cld_offDay.BlackoutDates.Clear();
+                //cld_offDay.SelectedDates.Clear();
+                //foreach(DataRow dr in dt_OffDay.Rows)
+                //{
+                //    var dates = new CalendarDateRange(Convert.ToDateTime(dr["Start"]), Convert.ToDateTime(dr["End"]));
+                //    cld_offDay.BlackoutDates.Add(dates);
+                //}
             }
         }
 

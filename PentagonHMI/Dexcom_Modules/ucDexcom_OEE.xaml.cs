@@ -28,6 +28,8 @@ namespace PentagonHMI.ChildControls
         private Brush Color1 = Brushes.MediumSeaGreen;
         private Brush Color2 = Brushes.DeepSkyBlue;
         private Brush Color3 = Brushes.Orange;
+        private Brush Color4 = Brushes.Red;
+        private Brush Color5 = Brushes.Violet;
         // Even the tagname got dint in it, it was real
         private string Tag_IdealCycletime = "Shift_OEE_Tags.dint_IdealCycleTime";
 
@@ -48,7 +50,7 @@ namespace PentagonHMI.ChildControls
         private Tag Tag_Shift_OEE_DINT_SprintUPH = new Tag { Name = "Shift_OEE_Tags.DINT_SprintUPH", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_PlannedProductiveTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_PlannedProductiveTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_AvailabilityTimeAccSec = new Tag { Name = "Shift_OEE_Tags.DINT_AvailabilityTimeAccSec", DataType = Logix.Tag.ATOMIC.DINT };
-        private Tag Tag_Shift_OEE_DINT_IdealCycleTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealCycleTime", DataType = Logix.Tag.ATOMIC.REAL};
+        private Tag Tag_Shift_OEE_DINT_IdealCycleTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealCycleTime", DataType = Logix.Tag.ATOMIC.REAL };
         private Tag Tag_Shift_OEE_DINT_IdealRunTime = new Tag { Name = "Shift_OEE_Tags.DINT_IdealRunTime", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Performance = new Tag { Name = "Shift_OEE_Tags.DINT_Performance", DataType = Logix.Tag.ATOMIC.DINT };
         private Tag Tag_Shift_OEE_DINT_Quality = new Tag { Name = "Shift_OEE_Tags.DINT_Quality", DataType = Logix.Tag.ATOMIC.DINT };
@@ -155,7 +157,7 @@ namespace PentagonHMI.ChildControls
                         },
                         new InfoBlockModel
                         {
-                           Title = "Up Time",
+                           Title = "Operation Time",
                            Key = Tag_Shift_OEE_DINT_MachineUpTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
@@ -183,24 +185,24 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
-                        new InfoBlockModel
-                        {
-                           Title = "Scheduled Downtime",
-                           Key = Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec.Name,
-                           Group =  Grouping.sec
-                        },
+                        //new InfoBlockModel
+                        //{
+                        //   Title = "Scheduled Downtime",
+                        //   Key = Tag_Shift_OEE_DINT_MachineScheduledDownTimeAccSec.Name,
+                        //   Group =  Grouping.sec
+                        //},
                         new InfoBlockModel
                         {
                            Title = "Unscheduled Downtime",
                            Key = Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
-                        new InfoBlockModel
-                        {
-                           Title = "Non Scheduled Time",
-                           Key = Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec.Name,
-                           Group =  Grouping.sec
-                        },
+                        //new InfoBlockModel
+                        //{
+                        //   Title = "Non Scheduled Time",
+                        //   Key = Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec.Name,
+                        //   Group =  Grouping.sec
+                        //},
                         new InfoBlockModel
                         {
                            Title = "Soft Jam",
@@ -321,7 +323,7 @@ namespace PentagonHMI.ChildControls
                         },
                         new InfoBlockModel
                         {
-                           Title = "Up Time",
+                           Title = "Operation Time",
                            Key = Tag_Lot_OEE_dint_MachineUpTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
@@ -349,24 +351,24 @@ namespace PentagonHMI.ChildControls
                            Key = Tag_Lot_OEE_dint_MachineEngineeringTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
-                        new InfoBlockModel
-                        {
-                           Title = "Scheduled Downtime",
-                           Key = Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec.Name,
-                           Group =  Grouping.sec
-                        },
+                        //new InfoBlockModel
+                        //{
+                        //   Title = "Scheduled Downtime",
+                        //   Key = Tag_Lot_OEE_dint_MachineScheduledDownTimeAccSec.Name,
+                        //   Group =  Grouping.sec
+                        //},
                         new InfoBlockModel
                         {
                            Title = "Unscheduled Downtime",
                            Key = Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec.Name,
                            Group =  Grouping.sec
                         },
-                        new InfoBlockModel
-                        {
-                           Title = "Non Schedule",
-                           Key = Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec.Name,
-                           Group =  Grouping.sec
-                        },
+                        //new InfoBlockModel
+                        //{
+                        //   Title = "Non Schedule",
+                        //   Key = Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec.Name,
+                        //   Group =  Grouping.sec
+                        //},
                         new InfoBlockModel
                         {
                            Title = "Soft Jam",
@@ -490,24 +492,28 @@ namespace PentagonHMI.ChildControls
                 new PieChartBlockModel
                      {
                          Chart = OEEChart.EquipmentUptime,
-                         Formula = "Productive Time + Standby Time + Engineering Time",
+                         Formula = "Productive Time + Standby Time + Engineering Time + No Material Time",
                          Title = "Equipment Uptime",
                          PieInfo = new SeriesCollection
                           {
                             new PieSeries { Title = "Production Time",Fill = Color1,  Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true, LabelPoint = PointLabel },
                             new PieSeries { Title = "Standby Time", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-                            new PieSeries { Title = "Engineering Time", Fill = Color3, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel }
+                            new PieSeries { Title = "Engineering Time", Fill = Color3, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                            new PieSeries {Title = "No Material Time", Fill = Color4, Values = new ChartValues<double>(new double[] {0 }), DataLabels=true, LabelPoint=PointLabel}
                           }
                      },
                      new PieChartBlockModel
                      {
                          Chart = OEEChart.OperationTime,
-                         Formula = "Shift Time - Non Schedule Time",
+                         Formula = "Productive Time + Standby Time + No Material Time + Engineering Time + Unscheduled Downtime",
                          Title = "Operation Time",
                           PieInfo = new SeriesCollection
                           {
-                            new PieSeries { Title = "Operation Time", Fill = Color1, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
-                            new PieSeries { Title = "Non Scheduled Time", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel }
+                            new PieSeries { Title = "Productive Time", Fill = Color1, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                            new PieSeries { Title = "Standby Time", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                            new PieSeries { Title = "No Material Time", Fill = Color3, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                            new PieSeries { Title = "Engineering Time", Fill = Color4, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                            new PieSeries { Title = "Unscheduled Downtime", Fill = Color5, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
                           }
                      },
                      new PieChartBlockModel
@@ -594,7 +600,7 @@ namespace PentagonHMI.ChildControls
             DataContext = OEEList;
         }
 
-        private double Productive, Standby, Engineering, Shift, NonSchedule, TotalPass, TotalFail,
+        private double Productive, Standby, Engineering, NoMaterialTime, Shift,Unschedule, NonSchedule, TotalPass, TotalFail,
         IdealCycleTime, TotalCount, EquipmentUpTime, OperationTime, Quality, Performance,
         Availability, OEE, Loading, Teep, DeltaTime;
 
@@ -626,9 +632,11 @@ namespace PentagonHMI.ChildControls
                 Productive = Tag_Shift_OEE_DINT_MachineProductiveTimeAccSec.ToDouble();
                 Standby = Tag_Shift_OEE_DINT_MachineStandbyTimeAccSec.ToDouble();
                 Engineering = Tag_Shift_OEE_DINT_MachineEngineeringTimeAccSec.ToDouble();
+                NoMaterialTime = Tag_Shift_OEE_DINT_NoMaterialTimeAccSec.ToDouble();
 
                 Shift = Tag_Shift_OEE_DINT_MachineUpTimeAccSec.ToDouble();
                 NonSchedule = Tag_Shift_OEE_DINT_MachineNonScheduledTimeAccSec.ToDouble();
+                Unschedule = Tag_Shift_OEE_DINT_MachineUnscheduledDownTimeAccSec.ToDouble();
 
                 TotalPass = Tag_Shift_OEE_DINT_Total_Pass.ToDouble();
                 TotalFail = Tag_Shift_OEE_DINT_Total_Fail.ToDouble();
@@ -638,9 +646,11 @@ namespace PentagonHMI.ChildControls
                 Productive = Tag_Lot_OEE_dint_MachineProductiveTimeAccSec.ToDouble();
                 Standby = Tag_Lot_OEE_dint_MachineStandbyTimeAccSec.ToDouble();
                 Engineering = Tag_Lot_OEE_dint_MachineEngineeringTimeAccSec.ToDouble();
+                NoMaterialTime = Tag_Lot_OEE_dint_NoMaterialTimeAccSec.ToDouble();
 
                 Shift = Tag_Lot_OEE_dint_MachineUpTimeAccSec.ToDouble();
                 NonSchedule = Tag_Lot_OEE_dint_MachineNonScheduledTimeAccSec.ToDouble();
+                Unschedule = Tag_Lot_OEE_dint_MachineUnscheduledDownTimeAccSec.ToDouble();
 
                 TotalPass = Tag_Lot_OEE_dint_Total_Pass.ToDouble();
                 TotalFail = Tag_Lot_OEE_dint_Total_Fail.ToDouble();
@@ -689,17 +699,49 @@ namespace PentagonHMI.ChildControls
             {
                 switch(item.Chart)
                 {
+                    //new PieChartBlockModel
+                    //     {
+                    //         Chart = OEEChart.EquipmentUptime,
+                    //         Formula = "Productive Time + Standby Time + Engineering Time + No Material Time",
+                    //         Title = "Equipment Uptime",
+                    //         PieInfo = new SeriesCollection
+                    //          {
+                    //            new PieSeries { Title = "Production Time",Fill = Color1,  Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true, LabelPoint = PointLabel },
+                    //            new PieSeries { Title = "Standby Time", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //            new PieSeries { Title = "Engineering Time", Fill = Color3, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //            new PieSeries {Title = "No Material Time", Fill = Color4, Values = new ChartValues<double>(new double[] {0 }), DataLabels=true, LabelPoint=PointLabel}
+                    //          }
+                    //     },
+                    //     new PieChartBlockModel
+                    //     {
+                    //         Chart = OEEChart.OperationTime,
+                    //         Formula = "Productive Time + Standby Time + No Material Time + Engineering Time + Unscheduled Downtime",
+                    //         Title = "Operation Time",
+                    //          PieInfo = new SeriesCollection
+                    //          {
+                    //            new PieSeries { Title = "Productive Time", Fill = Color1, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //            new PieSeries { Title = "Standby Time", Fill = Color2, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //            new PieSeries { Title = "No Material Time", Fill = Color3, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //            new PieSeries { Title = "Engineering Time", Fill = Color4, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //            new PieSeries { Title = "Unscheduled Downtime", Fill = Color5, Values = new ChartValues<double>(new double[] { 0 }), DataLabels = true,  LabelPoint = PointLabel },
+                    //          }
+                    //     },
                     case OEEChart.EquipmentUptime:
                         item.Value = FormatString(Grouping.sec, EquipmentUpTime);
                         item.PieInfo[0].Values[0] = Productive.To2Dcml();
                         item.PieInfo[1].Values[0] = Standby.To2Dcml();
                         item.PieInfo[2].Values[0] = Engineering.To2Dcml();
+                        item.PieInfo[3].Values[0] = NoMaterialTime.To2Dcml();
+                        ;
                         break;
 
                     case OEEChart.OperationTime:
                         item.Value = FormatString(Grouping.sec, OperationTime);
-                        item.PieInfo[0].Values[0] = (Shift - NonSchedule).To2Dcml();
-                        item.PieInfo[1].Values[0] = NonSchedule.To2Dcml();
+                        item.PieInfo[0].Values[0] = Productive.To2Dcml();
+                        item.PieInfo[1].Values[0] = Standby.To2Dcml();
+                        item.PieInfo[2].Values[0] = NoMaterialTime.To2Dcml();
+                        item.PieInfo[3].Values[0] = Engineering.To2Dcml();
+                        item.PieInfo[4].Values[0] = Unschedule.To2Dcml();
                         break;
 
                     case OEEChart.Quality:

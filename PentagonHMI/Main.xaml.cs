@@ -74,7 +74,7 @@ namespace PentagonHMI
         #region Pages
 
         internal LogicClasses.Main _Main;
-        private ChildControls.ucOEE_Gen2 OEEChild;
+        //private ChildControls.ucOEE_Gen2 OEEChild;
         private ChildControls.ucDexcom_OEE OEEShiftView;
         private ChildControls.ucDexcom_OEE OEELotView;
         private ChildControls.ucHome HomeView;
