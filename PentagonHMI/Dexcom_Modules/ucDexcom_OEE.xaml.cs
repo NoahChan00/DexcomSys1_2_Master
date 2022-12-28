@@ -668,7 +668,7 @@ namespace PentagonHMI.ChildControls
             TotalCount = TotalPass + TotalFail;
 
 
-            EquipmentUpTime = Productive + Standby + Engineering;
+            EquipmentUpTime = Productive + Standby + Engineering + NoMaterialTime;
 
 
             OperationTime = Shift - NonSchedule;
