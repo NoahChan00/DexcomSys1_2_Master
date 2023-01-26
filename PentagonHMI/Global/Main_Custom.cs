@@ -642,8 +642,9 @@ namespace PentagonHMI
             {
                 if(OPC.Read<bool>("HMI_Log_LotSummary") == true)
                 {
-                    OPC.Write("HMI_Log_LotSummary", false);
+                    //OPC.Write("HMI_Log_LotSummary", false);
                     LotSummary();
+                    OPC.Write("HMI_Log_LotSummary", false);
                 }
             }
             catch(Exception ex)
