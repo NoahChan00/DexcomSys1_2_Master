@@ -57,7 +57,7 @@ namespace PentagonHMI
                 initializeRobotGripperDictionary();
             }
 
-            if((GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.VISION) || GlobalFunctions.ProjectType == ProjectType.TLA)
+            if((GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.VISION) || GlobalFunctions.ProjectType == ProjectType.TLA || GlobalFunctions.ProjectType == ProjectType.DEXCOM)
             {
                 TagRename();
             }
@@ -126,6 +126,27 @@ namespace PentagonHMI
                 MTBFTag = "CenVis_OEE_Tags.dint_MTBFSec";
                 Z1_TotalIncomingPartFailTag = "CenVis_OEE_Tags.dint_Z1_Total_PartFail";
                 Z2_TotalIncomingPartFailTag = "CenVis_OEE_Tags.dint_Z2_Total_PartFail";
+            }
+            else if (GlobalFunctions.ProjectType == ProjectType.DEXCOM)
+            {
+                bool_HMIOEEReset = "Shift_OEE_Tags.bool_OEE_Reset";
+
+                StartDateTimeTag = "Shift_OEE_Tags.str_HMI_OEEStartDateTime";
+                TotalTimeTag = "Shift_OEE_Tags.dint_MachineTotalTimeAccSec";
+                StandbyTimeTag = "Shift_OEE_Tags.dint_MachineStandbyTimeAccSec";
+                //NoMaterialTimeTag = "Shift_OEE_Tags.dint_NoMaterialTimeAccSec";
+                ProductiveTimeTag = "Shift_OEE_Tags.dint_MachineProductiveTimeAccSec";
+                EngineeringTimeTag = "Shift_OEE_Tags.dint_MachineEngineeringTimeAccSec";
+                MachineScheduledDownTimeTag = "Shift_OEE_Tags.dint_MachineScheduledDownTimeAccSec";
+                MachineUncheduledDownTimeTag = "Shift_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec";
+                NonScheduledTimeTag = "Shift_OEE_Tags.dint_MachineNonScheduledTimeAccSec";
+                MeanDownTimeTag = "Shift_OEE_Tags.dint_MeanDownTimeSec";
+                SoftJamTag = "Shift_OEE_Tags.dint_SoftJam";
+                HardJamTag = "Shift_OEE_Tags.dint_HardJam";
+                MTBATag = "Shift_OEE_Tags.dint_MTBASec";
+                MTBFTag = "Shift_OEE_Tags.dint_MTBFSec";
+                TotalPassTag = "Shift_OEE_Tags.dint_Total_Pass";
+                TotalFailTag = "Shift_OEE_Tags.dint_Total_Fail";
             }
         }
 
@@ -380,6 +401,15 @@ namespace PentagonHMI
                             Availability, OEE, Loading, Teep, DeltaTime;
 
                             csv.WriteField(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff"));
+                            string str_ShiftID = _Main.SQLer.Exec_Scalar<string>("Select TOP 1 [ShiftID] from [Shift] where " +
+                            $"(select CONVERT(time,[NextShiftDT]) from[Shift] where[StationID] = {_Main.StationID} and [ShiftID] = 99) = CONVERT(time,[NextShiftDT])" +
+                            $" and [ShiftID] != 99 and [StationID] = {_Main.StationID};");
+                            if (str_ShiftID != null)
+                            {
+                                csv.WriteField(str_ShiftID);
+                            }
+                            else
+                            { csv.WriteField(""); }
                             string ShiftStartTime = FormatString(Grouping.stringtime, OPC.Read<string>(StartDateTimeTag));
                             csv.WriteField(ShiftStartTime);
 
@@ -414,8 +444,8 @@ namespace PentagonHMI
 
                             csv.WriteField(TotalPass);
                             csv.WriteField(TotalFail);
-                            csv.WriteField(OPC.Read<double>(Z1_TotalIncomingPartFailTag));
-                            csv.WriteField(OPC.Read<double>(Z2_TotalIncomingPartFailTag));
+                            //csv.WriteField(OPC.Read<double>(Z1_TotalIncomingPartFailTag));
+                            //csv.WriteField(OPC.Read<double>(Z2_TotalIncomingPartFailTag));
 
                             csv.WriteField(FormatString(Grouping.sec, Productive));
                             csv.WriteField(FormatString(Grouping.sec, Standby));
@@ -574,10 +604,13 @@ namespace PentagonHMI
 
                                 csv.NextRecord();
                             }
+                            int batteryTypeId = OPC.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
+                            string batteryType = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
 
                             csv.WriteField(OPC.Read<string>(LotID));
                             csv.WriteField(OPC.Read<string>(DutInfo));
-                            csv.WriteField(OPC.Read<string>(BatteryType));
+                            //csv.WriteField(OPC.Read<string>(BatteryType));
+                            csv.WriteField(batteryType);
                             csv.WriteField(OPC.Read<string>(FirmwareVer));
                             csv.WriteField(OPC.Read<string>(ManufactureDate));
                             csv.WriteField(OPC.Read<string>(ExpirationDate));

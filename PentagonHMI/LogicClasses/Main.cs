@@ -456,7 +456,9 @@ namespace PentagonHMI.LogicClasses
                 {
                     case ProjectType.DEXCOM:
                         HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck = HasUpdateOEEShift = HasPLCSetTime = true;
-                        HasTestCSV = HasTesterStnUnitTracker = HasLaserStnUnitTracker = HasUnldStnUnitTracker = HasTnRStnUnitTracker = HasLotSummary = true;
+                        // LEK 20230203 System 1_2 not have island0 function
+                        //HasTestCSV = HasTesterStnUnitTracker = HasLaserStnUnitTracker = HasUnldStnUnitTracker = HasTnRStnUnitTracker = 
+                        HasLotSummary = true;
                         break;
 
                     case ProjectType.ARCADIA:
