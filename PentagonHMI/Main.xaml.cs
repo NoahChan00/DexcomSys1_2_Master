@@ -156,12 +156,37 @@ namespace PentagonHMI
 
                 _Main = new LogicClasses.Main();
 
-                lbl_HMIVersion.Content = Assembly.GetExecutingAssembly().GetName().Version;
+                lbl_HMIVer.Content = "HMI " + Assembly.GetExecutingAssembly().GetName().Version;
                 //string PLCversion = _Main.OPC.Read<string>("HMI_PLCVersion");
-                string Visversion = _Main.OPC.Read<string>("HMI_VisionVersion");
+                //string Visversion = _Main.OPC.Read<string>("HMI_VisionVersion");
 
                 //lbl_PLCVersion.Content = string.IsNullOrWhiteSpace(PLCversion)? "V1.0.0.0": PLCversion;
                 //lbl_VisionVersion.Content = string.IsNullOrWhiteSpace(Visversion) ? "V1.0.0.0" : Visversion;
+
+                //string HMIVersion = _Main.OPC.Read<string>("HMI_str20_HMI_Version");
+
+                string PLCVersion = _Main.OPC.Read<string>("HMI_str20_PLC_Version");
+                string Robot1Version = _Main.OPC.Read<string>("HMI_str20_Robot1_Version");
+                string Robot2Version = _Main.OPC.Read<string>("HMI_str20_Robot2_Version");
+
+                lbl_PLCVer.Content = "PLC " + PLCVersion;
+          
+                if (GlobalFunctions.IsSystem1)
+                {
+                    string Robot3Version = _Main.OPC.Read<string>("HMI_str20_Robot3_Version");
+
+                    lbl_Robot1Ver.Content = "PCBA Rbt " + Robot1Version;
+                    lbl_Robot2Ver.Content = "Battery Rbt " + Robot2Version;
+                    lbl_Robot3Ver.Content = "Unload Rbt " + Robot3Version;
+                }
+                else
+                {
+                    string VisionVersion = _Main.OPC.Read<string>("HMI_str20_Vision_Version");
+
+                    lbl_Robot1Ver.Content = "Load Rbt " + Robot1Version;
+                    lbl_Robot2Ver.Content = "Unload Rbt " + Robot2Version;
+                    lbl_Robot3Ver.Content = "Vision " + VisionVersion;
+                }
 
                 LstImg_PageDisIcon = new List<Image>
                 {
