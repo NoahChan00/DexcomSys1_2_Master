@@ -528,6 +528,24 @@ namespace PentagonHMI
         private string TurretNestF = "TurretNest_F.Socket_Yield";
         private string TurretNestG = "TurretNest_G.Socket_Yield";
         private string TurretNestH = "TurretNest_H.Socket_Yield";
+        private string MFG_LotID = "Lot_Info.MFG_LotID";
+        private string Resin_ID = "Lot_Info.Resin_ID";
+        private string PCBA_MFG = "Lot_Info.PCBA_MFG";
+        private string PCBA_PartNo = "Lot_Info.PCBA_PartNo";
+        private string PCBA_LotID = "Lot_Info.PCBA_LotID";
+        private string Battery_LotID = "Lot_Info.Battery_LotID";
+        private string Battery_DateCode = "Lot_Info.Battery_DateCode";
+        private string VisionFailInsertionInfo = "VisionFail_Insertion.Fail_Info";
+        private string PCBAnotFound = "VisionFail_Insertion.PCBA_NotFound ";
+        private string BatteryNotFound = "VisionFail_Insertion.Battery_NotFound";
+        private string BatteryInsertFail = "VisionFail_Insertion.Battery_InsertFail";
+        private string VisionFailBatteryInfo = "VisionFail_BatteryTray.Fail_Info";
+        private string Total_Present_Qty = "VisionFail_BatteryTray.Total_Present_Qty";
+        private string Total_Empty_Qty = "VisionFail_BatteryTray.Total_Empty_Qty";
+        private string Total_Undetected_Qty = "VisionFail_BatteryTray.Total_Undetected_Qty";
+        private string BatteryTrayTotal_Yield = "VisionFail_BatteryTray.Total_Yield";
+        private string Battery_Qty = "VisionFail_BatteryTray.Battery_Qty";
+
         #endregion LotSummary
 
         public void LotSummary()
@@ -548,117 +566,408 @@ namespace PentagonHMI
                     {
                         using(var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
                         {
-                            if(!HasFile)
+                            #region Before v1.0.34.1
+                            //if(!HasFile)
+                            //{
+                            //    csv.WriteField("Lot ID");
+                            //    csv.WriteField("DUT Info");
+                            //    csv.WriteField("BatteryType");
+                            //    csv.WriteField("Firmware Version");
+                            //    csv.WriteField("Manufacture Date");
+                            //    csv.WriteField("Expiration Date");
+                            //    csv.WriteField("Operator ID");
+                            //    csv.WriteField("Start Date Time");
+                            //    csv.WriteField("System Up Time");
+                            //    csv.WriteField("Operation Time");
+                            //    csv.WriteField("Down Time");
+                            //    csv.WriteField("Idle Time ");
+                            //    csv.WriteField("Maintenance Time");
+                            //    csv.WriteField("Lot Size");
+                            //    csv.WriteField("Total Quantity In");
+                            //    csv.WriteField("Total Quantity Out");
+                            //    csv.WriteField("Overall Total Passed");
+                            //    csv.WriteField("Overall Total Failed");
+                            //    csv.WriteField("Total Input Robot Pick Fail");
+                            //    csv.WriteField("Total Input Robot Pick Drop ");
+                            //    csv.WriteField("Production PUH");
+                            //    csv.WriteField("Sprint UPH");
+                            //    csv.WriteField("Soft Jam");
+                            //    csv.WriteField("Hard Jam");
+                            //    csv.WriteField("MTBA");
+                            //    csv.WriteField("MTBF");
+                            //    csv.WriteField("Overall Total Yield (%)");
+                            //    if(GlobalFunctions.IsSystem1)
+                            //    {
+                            //        csv.WriteField("Total Part Fail");
+                            //    }
+                            //    else
+                            //    {
+                            //        csv.WriteField("Short Shot Fail");
+                            //        csv.WriteField("OMFF Fail");
+                            //        csv.WriteField("Brown Strain Front Fail");
+                            //        csv.WriteField("Battery Clip Surface Fail");
+                            //        csv.WriteField("Flashing Fail");
+                            //        csv.WriteField("FOD Fail");
+                            //        csv.WriteField("Live Bug Bubble Fail");
+                            //        csv.WriteField("Brown Strain Back Fail");
+                            //        csv.WriteField("Mouse Bite Fail");
+                            //    }
+                            //    csv.WriteField("Socket Yield A (%)");
+                            //    csv.WriteField("Socket Yield B (%)");
+                            //    csv.WriteField("Socket Yield C (%)");
+                            //    csv.WriteField("Socket Yield D (%)");
+                            //    csv.WriteField("Socket Yield E (%)");
+                            //    csv.WriteField("Socket Yield F (%)");
+                            //    csv.WriteField("Socket Yield G (%)");
+                            //    csv.WriteField("Socket Yield H (%)");
+
+                            //    csv.NextRecord();
+                            //}
+                            //int batteryTypeId = OPC.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
+                            //string batteryType = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+
+                            //csv.WriteField(OPC.Read<string>(LotID));
+                            //csv.WriteField(OPC.Read<string>(DutInfo));
+                            ////csv.WriteField(OPC.Read<string>(BatteryType));
+                            //csv.WriteField(batteryType);
+                            //csv.WriteField(OPC.Read<string>(FirmwareVer));
+                            //csv.WriteField(OPC.Read<string>(ManufactureDate));
+                            //csv.WriteField(OPC.Read<string>(ExpirationDate));
+                            //csv.WriteField(OPC.Read<string>(OperatorID));
+                            //csv.WriteField(OPC.Read<string>(StartDateTime));
+                            //csv.WriteField(OPC.Read<int>(SystemUpTime));
+                            //csv.WriteField(OPC.Read<int>(OperationTime));
+                            //csv.WriteField(OPC.Read<int>(DownTime));
+                            //csv.WriteField(OPC.Read<int>(IdleTime));
+                            //csv.WriteField(OPC.Read<int>(MaintenanceTime));
+                            //csv.WriteField(OPC.Read<int>(LotSize));
+                            //csv.WriteField(OPC.Read<int>(TotalQtyIn));
+                            //csv.WriteField(OPC.Read<int>(TotalQtyOut));
+                            //csv.WriteField(OPC.Read<int>(OverallTotalPassed));
+                            //csv.WriteField(OPC.Read<int>(OverallTotalFailed));
+                            //csv.WriteField(OPC.Read<int>(TotalInputRobotPickFail));
+                            //csv.WriteField(OPC.Read<int>(TotalInputRobotPickDrop));
+                            //csv.WriteField(OPC.Read<int>(ProductionUPH));
+                            //csv.WriteField(OPC.Read<int>(SprintUPH));
+                            //csv.WriteField(OPC.Read<int>(SoftJam));
+                            //csv.WriteField(OPC.Read<int>(HardJam));
+                            //csv.WriteField(OPC.Read<int>(MTBA));
+                            //csv.WriteField(OPC.Read<int>(MTBF));
+                            //csv.WriteField(FormatString(Grouping.percent, OPC.Read<double>(OverallTotalYield)));
+                            //if(GlobalFunctions.IsSystem1)
+                            //{
+                            //    csv.WriteField(OPC.Read<int>(TotalPartFail));
+                            //}
+                            //else
+                            //{
+                            //    csv.WriteField(OPC.Read<int>(ShortShotFail));
+                            //    csv.WriteField(OPC.Read<int>(OMFFFail));
+                            //    csv.WriteField(OPC.Read<int>(BrownStrainFail));
+                            //    csv.WriteField(OPC.Read<int>(BatClipSurfaceFail));
+                            //    csv.WriteField(OPC.Read<int>(FlashingFail));
+                            //    csv.WriteField(OPC.Read<int>(FodFail));
+                            //    csv.WriteField(OPC.Read<int>(BugBubbleFail));
+                            //    csv.WriteField(OPC.Read<int>(BrownStrainBFail));
+                            //    csv.WriteField(OPC.Read<int>(MouseBiteFail));
+                            //}
+                            //csv.WriteField(OPC.Read<double>(TurretNestA));
+                            //csv.WriteField(OPC.Read<double>(TurretNestB));
+                            //csv.WriteField(OPC.Read<double>(TurretNestC));
+                            //csv.WriteField(OPC.Read<double>(TurretNestD));
+                            //csv.WriteField(OPC.Read<double>(TurretNestE));
+                            //csv.WriteField(OPC.Read<double>(TurretNestF));
+                            //csv.WriteField(OPC.Read<double>(TurretNestG));
+                            //csv.WriteField(OPC.Read<double>(TurretNestH));
+                            #endregion
+
+                            #region v1.0.34.1
+                            
+                            if (!HasFile)
                             {
-                                csv.WriteField("Lot ID");
-                                csv.WriteField("DUT Info");
-                                csv.WriteField("BatteryType");
-                                csv.WriteField("Firmware Version");
-                                csv.WriteField("Manufacture Date");
-                                csv.WriteField("Expiration Date");
-                                csv.WriteField("Operator ID");
-                                csv.WriteField("Start Date Time");
-                                csv.WriteField("System Up Time");
-                                csv.WriteField("Operation Time");
-                                csv.WriteField("Down Time");
-                                csv.WriteField("Idle Time ");
-                                csv.WriteField("Maintenance Time");
-                                csv.WriteField("Lot Size");
-                                csv.WriteField("Total Quantity In");
-                                csv.WriteField("Total Quantity Out");
-                                csv.WriteField("Overall Total Passed");
-                                csv.WriteField("Overall Total Failed");
-                                csv.WriteField("Total Input Robot Pick Fail");
-                                csv.WriteField("Total Input Robot Pick Drop ");
-                                csv.WriteField("Production PUH");
-                                csv.WriteField("Sprint UPH");
-                                csv.WriteField("Soft Jam");
-                                csv.WriteField("Hard Jam");
-                                csv.WriteField("MTBA");
-                                csv.WriteField("MTBF");
-                                csv.WriteField("Overall Total Yield (%)");
-                                if(GlobalFunctions.IsSystem1)
+                                csv.WriteField("Lot ID:");
+                                csv.WriteField(OPC.Read<string>(LotID));
+                                csv.NextRecord();
+
+                                csv.WriteField("MFG Lot ID:");
+                                csv.WriteField(OPC.Read<string>(MFG_LotID));
+                                csv.NextRecord();
+
+                                csv.WriteField("Resin ID:");
+                                csv.WriteField(OPC.Read<string>(Resin_ID));
+                                csv.NextRecord();
+
+                                csv.WriteField("PCBA MFG:");
+                                csv.WriteField(OPC.Read<string>(PCBA_MFG));
+                                csv.NextRecord();
+
+                                csv.WriteField("PCBA Part No:");
+                                csv.WriteField(OPC.Read<string>(PCBA_PartNo));
+                                csv.NextRecord();
+
+                                csv.WriteField("PCBA Lot ID:");
+                                csv.WriteField(OPC.Read<string>(PCBA_LotID));
+                                csv.NextRecord();
+
+                                #region get batteryType
+                                int batteryTypeId = OPC.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
+                                string batteryType = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+                                #endregion
+
+                                csv.WriteField("Battery Type:");
+                                csv.WriteField(batteryType);
+                                csv.NextRecord();
+
+                                csv.WriteField("Battery Lot ID:");
+                                csv.WriteField(OPC.Read<string>(Battery_LotID));
+                                csv.NextRecord();
+
+                                csv.WriteField("Battery Date Code:");
+                                csv.WriteField(OPC.Read<string>(Battery_DateCode));
+                                csv.NextRecord();
+
+                                csv.WriteField("Operator ID:");
+                                csv.WriteField(OPC.Read<string>(OperatorID));
+                                csv.NextRecord();
+
+                                csv.WriteField("Start Date Time:");
+                                csv.WriteField(OPC.Read<string>(StartDateTime));
+                                csv.NextRecord();
+
+                                csv.WriteField("System Up Time(s):");
+                                csv.WriteField(OPC.Read<int>(SystemUpTime));
+                                csv.NextRecord();
+
+                                csv.WriteField("Operation Time(s):");
+                                csv.WriteField(OPC.Read<int>(OperationTime));
+                                csv.NextRecord();
+
+                                csv.WriteField("Down Time(s):");
+                                csv.WriteField(OPC.Read<int>(DownTime));
+                                csv.NextRecord();
+
+                                csv.WriteField("Idle Time (s):");
+                                csv.WriteField(OPC.Read<int>(IdleTime));
+                                csv.NextRecord();
+
+                                csv.WriteField("Maintenance Time(s):");
+                                csv.WriteField(OPC.Read<int>(MaintenanceTime));
+                                csv.NextRecord();
+
+                                csv.WriteField("Lot Size:");
+                                csv.WriteField(OPC.Read<int>(LotSize));
+                                csv.NextRecord();
+
+                                csv.WriteField("Total Quantity In:");
+                                csv.WriteField(OPC.Read<int>(TotalQtyIn));
+                                csv.NextRecord();
+
+                                csv.WriteField("Total Quantity Out:");
+                                csv.WriteField(OPC.Read<int>(TotalQtyOut));
+                                csv.NextRecord();
+
+                                csv.WriteField("Overall Total Passed:");
+                                csv.WriteField(OPC.Read<int>(OverallTotalPassed));
+                                csv.NextRecord();
+
+                                csv.WriteField("Overall Total Failed:");
+                                csv.WriteField(OPC.Read<int>(OverallTotalFailed));
+                                csv.NextRecord();
+
+                                csv.WriteField("Total Part Fail:");
+                                csv.WriteField(OPC.Read<int>(TotalPartFail));
+                                csv.NextRecord();
+
+                                csv.WriteField("Production UPH:");
+                                csv.WriteField(OPC.Read<int>(ProductionUPH));
+                                csv.NextRecord();
+
+                                csv.WriteField("Sprint UPH:");
+                                csv.WriteField(OPC.Read<int>(SprintUPH));
+                                csv.NextRecord();
+
+                                csv.WriteField("Soft Jam:");
+                                csv.WriteField(OPC.Read<int>(SoftJam));
+                                csv.NextRecord();
+
+                                csv.WriteField("Hard Jam:");
+                                csv.WriteField(OPC.Read<int>(HardJam));
+                                csv.NextRecord();
+
+                                csv.WriteField("MTBA:");
+                                csv.WriteField(OPC.Read<int>(MTBA));
+                                csv.NextRecord();
+
+                                csv.WriteField("MTBF:");
+                                csv.WriteField(OPC.Read<int>(MTBF));
+                                csv.NextRecord();
+
+                                csv.WriteField("Overall Total Yield (%):");
+                                csv.WriteField(FormatString(Grouping.percent, OPC.Read<double>(OverallTotalYield)));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield A (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestA));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield B (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestB));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield C (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestC));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield D (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestD));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield E (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestE));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield F (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestF));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield G (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestG));
+                                csv.NextRecord();
+
+                                csv.WriteField("Socket Yield H (%):");
+                                csv.WriteField(OPC.Read<double>(TurretNestH));
+                                csv.NextRecord();
+
+                                if (GlobalFunctions.IsSystem1)
                                 {
-                                    csv.WriteField("Total Part Fail");
+                                    csv.WriteField("Vision Fail Info");
+                                    csv.WriteField(OPC.Read<string>(VisionFailInsertionInfo));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total PCBA Not Found :");
+                                    csv.WriteField(OPC.Read<int>(PCBAnotFound));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Not Found:");
+                                    csv.WriteField(OPC.Read<int>(BatteryNotFound));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Insert Fail:");
+                                    csv.WriteField(OPC.Read<int>(BatteryInsertFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Vision Fail Info");
+                                    csv.WriteField(OPC.Read<string>(VisionFailBatteryInfo));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Present:");
+                                    csv.WriteField(OPC.Read<int>(Total_Present_Qty));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Empty:");
+                                    csv.WriteField(OPC.Read<int>(Total_Empty_Qty));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Undetected:");
+                                    csv.WriteField(OPC.Read<int>(Total_Undetected_Qty));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Yield (%):");
+                                    csv.WriteField(OPC.Read<double>(BatteryTrayTotal_Yield));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Battery Recipe Qty:");
+                                    csv.WriteField(OPC.Read<int>(Battery_Qty));
+                                    csv.NextRecord();
                                 }
                                 else
                                 {
-                                    csv.WriteField("Short Shot Fail");
-                                    csv.WriteField("OMFF Fail");
-                                    csv.WriteField("Brown Strain Front Fail");
-                                    csv.WriteField("Battery Clip Surface Fail");
-                                    csv.WriteField("Flashing Fail");
-                                    csv.WriteField("FOD Fail");
-                                    csv.WriteField("Live Bug Bubble Fail");
-                                    csv.WriteField("Brown Strain Back Fail");
-                                    csv.WriteField("Mouse Bite Fail");
+                                    csv.WriteField("Cosmetic Vision Fail Info");
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Short Shot Fail:");
+                                    csv.WriteField(OPC.Read<int>(ShortShotFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total OMFF Fail:");
+                                    csv.WriteField(OPC.Read<int>(OMFFFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Brown Strain Front Fail:");
+                                    csv.WriteField(OPC.Read<int>(BrownStrainFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Battery Clip Surface Fail:");
+                                    csv.WriteField(OPC.Read<int>(BatClipSurfaceFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Flashing Fail:");
+                                    csv.WriteField(OPC.Read<int>(FlashingFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total FOD Fail:");
+                                    csv.WriteField(OPC.Read<int>(FodFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Live Bug Bubble Fail:");
+                                    csv.WriteField(OPC.Read<int>(BugBubbleFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Brown Strain Back Fail:");
+                                    csv.WriteField(OPC.Read<int>(BrownStrainBFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Mouse Bite Fail:");
+                                    csv.WriteField(OPC.Read<int>(MouseBiteFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Mold Cavity Info");
+                                    csv.NextRecord();
+
+                                    for(int i = 1; i > 17; i++)
+                                    {
+                                        csv.WriteField($"Cavity {i} Short Shot Fail:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.ShortShot"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} OMFF:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.OMFF"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} FOD:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.FOD"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Brown Stain Front:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.BSTAIN"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Flashing:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.FLASHING"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Live Bug Bubble:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.LBBUBBLE"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Brown Stain Back:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.BSTAIN_BCK"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Mouse Bite:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.MOUSE_BITE"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Battery Clip Surface:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.BBTRYCLIP"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} POROUS:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.POROUS"));
+                                        csv.NextRecord();
+                                    }
                                 }
-                                csv.WriteField("Socket Yield A (%)");
-                                csv.WriteField("Socket Yield B (%)");
-                                csv.WriteField("Socket Yield C (%)");
-                                csv.WriteField("Socket Yield D (%)");
-                                csv.WriteField("Socket Yield E (%)");
-                                csv.WriteField("Socket Yield F (%)");
-                                csv.WriteField("Socket Yield G (%)");
-                                csv.WriteField("Socket Yield H (%)");
-
-                                csv.NextRecord();
                             }
-                            int batteryTypeId = OPC.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
-                            string batteryType = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
-
-                            csv.WriteField(OPC.Read<string>(LotID));
-                            csv.WriteField(OPC.Read<string>(DutInfo));
-                            //csv.WriteField(OPC.Read<string>(BatteryType));
-                            csv.WriteField(batteryType);
-                            csv.WriteField(OPC.Read<string>(FirmwareVer));
-                            csv.WriteField(OPC.Read<string>(ManufactureDate));
-                            csv.WriteField(OPC.Read<string>(ExpirationDate));
-                            csv.WriteField(OPC.Read<string>(OperatorID));
-                            csv.WriteField(OPC.Read<string>(StartDateTime));
-                            csv.WriteField(OPC.Read<int>(SystemUpTime));
-                            csv.WriteField(OPC.Read<int>(OperationTime));
-                            csv.WriteField(OPC.Read<int>(DownTime));
-                            csv.WriteField(OPC.Read<int>(IdleTime));
-                            csv.WriteField(OPC.Read<int>(MaintenanceTime));
-                            csv.WriteField(OPC.Read<int>(LotSize));
-                            csv.WriteField(OPC.Read<int>(TotalQtyIn));
-                            csv.WriteField(OPC.Read<int>(TotalQtyOut));
-                            csv.WriteField(OPC.Read<int>(OverallTotalPassed));
-                            csv.WriteField(OPC.Read<int>(OverallTotalFailed));
-                            csv.WriteField(OPC.Read<int>(TotalInputRobotPickFail));
-                            csv.WriteField(OPC.Read<int>(TotalInputRobotPickDrop));
-                            csv.WriteField(OPC.Read<int>(ProductionUPH));
-                            csv.WriteField(OPC.Read<int>(SprintUPH));
-                            csv.WriteField(OPC.Read<int>(SoftJam));
-                            csv.WriteField(OPC.Read<int>(HardJam));
-                            csv.WriteField(OPC.Read<int>(MTBA));
-                            csv.WriteField(OPC.Read<int>(MTBF));
-                            csv.WriteField(FormatString(Grouping.percent, OPC.Read<double>(OverallTotalYield)));
-                            if(GlobalFunctions.IsSystem1)
-                            {
-                                csv.WriteField(OPC.Read<int>(TotalPartFail));
-                            }
-                            else
-                            {
-                                csv.WriteField(OPC.Read<int>(ShortShotFail));
-                                csv.WriteField(OPC.Read<int>(OMFFFail));
-                                csv.WriteField(OPC.Read<int>(BrownStrainFail));
-                                csv.WriteField(OPC.Read<int>(BatClipSurfaceFail));
-                                csv.WriteField(OPC.Read<int>(FlashingFail));
-                                csv.WriteField(OPC.Read<int>(FodFail));
-                                csv.WriteField(OPC.Read<int>(BugBubbleFail));
-                                csv.WriteField(OPC.Read<int>(BrownStrainBFail));
-                                csv.WriteField(OPC.Read<int>(MouseBiteFail));
-                            }
-                            csv.WriteField(OPC.Read<double>(TurretNestA));
-                            csv.WriteField(OPC.Read<double>(TurretNestB));
-                            csv.WriteField(OPC.Read<double>(TurretNestC));
-                            csv.WriteField(OPC.Read<double>(TurretNestD));
-                            csv.WriteField(OPC.Read<double>(TurretNestE));
-                            csv.WriteField(OPC.Read<double>(TurretNestF));
-                            csv.WriteField(OPC.Read<double>(TurretNestG));
-                            csv.WriteField(OPC.Read<double>(TurretNestH));
+                            #endregion
                         }
                     }
                 }
