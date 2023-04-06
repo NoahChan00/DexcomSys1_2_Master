@@ -1,10 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
 using Logix;
+using NLog;
 using PentagonHMI.Classes;
 using PentagonHMI.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -130,6 +132,7 @@ namespace PentagonHMI
         private uint idleTime = 0;
         private static System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
         private LASTINPUTINFO lastInputInfo = new LASTINPUTINFO();
+        private int currentMonth = 0;
         //End of For Auto Logout
 
         #region Constructor
@@ -1130,6 +1133,61 @@ namespace PentagonHMI
                             }
                         }
                     }
+                }
+
+                if (currentMonth != Convert.ToInt32(DateTime.Now.Month))
+                {
+                    //clearing for opc info log - newly added due to too large in file size - 5 Apr 2023
+                    string opcInfo = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\";
+                    string[] path = Directory.GetDirectories(opcInfo);
+                    foreach (string folder in path.Where(x => x.Contains("Logs_")))
+                    {
+                        FileInfo info = new FileInfo(folder);
+                        if (Convert.ToDateTime(folder.Substring(folder.Length - 8)) < DateTime.Now.AddMonths(-1))
+                        {
+                            Directory.Delete(folder, true);
+                        }
+                    }
+
+                    //5 Apr 2023 Khaw Wan Yen - Vision Fail Image Folder Auto Deletion
+                    if (GlobalFunctions.IsSystem1)
+                    {
+                        string[] failImageInsertionPath = Directory.GetDirectories(GlobalFunctions.System1Insertion);
+                        string[] failImageBatteryPath = Directory.GetDirectories(GlobalFunctions.System1Battery);
+
+                        foreach (string folder in failImageInsertionPath.Where(x => x.Contains("Logs_")))
+                        {
+                            FileInfo info = new FileInfo(folder);
+                            if (Convert.ToDateTime(folder.Substring(folder.Length - 7).Replace("_", "-")) < DateTime.Now.AddMonths(-4))
+                            {
+                                Directory.Delete(folder, true);
+                            }
+                        }
+
+                        foreach (string folder in failImageBatteryPath.Where(x => x.Contains("Logs_")))
+                        {
+                            FileInfo info = new FileInfo(folder);
+                            if (Convert.ToDateTime(folder.Substring(folder.Length - 7).Replace("_", "-")) < DateTime.Now.AddMonths(-4))
+                            {
+                                Directory.Delete(folder, true);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string[] system2failImagePath = Directory.GetDirectories(GlobalFunctions.System2FailImage);
+                        //string[] system2failImagePath = Directory.GetDirectories("D:\\System2\\hist\\"); //testing purpose
+                        foreach (string folder in system2failImagePath.Where(x => x.Contains("0_")))
+                        {
+                            FileInfo info = new FileInfo(folder);
+                            var split = folder.Split('_');
+                            if (DateTime.ParseExact(split[1].Substring(0, 4), "yyMM", CultureInfo.InvariantCulture) < DateTime.Now.AddMonths(-4))
+                            {
+                                Directory.Delete(folder, true);
+                            }
+                        }
+                    }
+                    currentMonth = Convert.ToInt32(DateTime.Now.Month);
                 }
             }
             catch(Exception ex)

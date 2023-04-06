@@ -49,6 +49,9 @@ namespace PentagonHMI.Classes
         public static string PLC_Timeout = Properties.Settings.Default.PLC_Timeout.ToString();
         public static string OEEIdealCycleTimeSec = Properties.Settings.Default.OEEIdealCycleTimeSec.ToString();
         public static string RepenishIconFlag = Properties.Settings.Default.RepenishIconFlag.ToString();
+        public static string System1Insertion = Properties.Settings.Default.System1Insertion.ToString();
+        public static string System1Battery = Properties.Settings.Default.System1Battery.ToString();
+        public static string System2FailImage = Properties.Settings.Default.System2FailImage.ToString();
         //public static string CalibrationFlag = "ON";//PentagonHMI.Properties.Settings.Default.CalibrationFlag.ToString();
         //public static string PickRetryPrompt = "ON";// PentagonHMI.Properties.Settings.Default.PickRetryPrompt.ToString();
         //public static string PalletRejectInt = "ON";// PentagonHMI.Properties.Settings.Default.PalletRejectInt.ToString();

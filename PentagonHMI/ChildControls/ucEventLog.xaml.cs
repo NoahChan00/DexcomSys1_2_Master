@@ -1,4 +1,5 @@
 ﻿using Library;
+using PentagonHMI.Classes;
 using System;
 using System.Data;
 using System.Diagnostics;
@@ -103,6 +104,12 @@ namespace PentagonHMI.ChildControls
 
             datePickerTnRStn.DisplayDate = DateTime.Now;
             datePickerTnRStn.Text = datePickerTnRStn.DisplayDate.ToString();
+
+            if (!GlobalFunctions.IsSystem1)
+            {
+                txtFailImage.Text = "Fail Image Folder";
+                FailImageBatteryIcon.Visibility = Visibility.Collapsed;
+            }
         }
 
         #region old
@@ -1370,6 +1377,47 @@ namespace PentagonHMI.ChildControls
                             if(!Directory.Exists(currentPath))
                                 Directory.CreateDirectory(currentPath);
                             Process.Start(currentPath);
+                        }
+                    }
+                    break;
+                case "FAILIMAGEINSERTION":
+                    if (GlobalFunctions.IsSystem1)
+                    {
+                        string imageInsertion = GlobalFunctions.System1Insertion + "Logs_" + DateTime.Now.ToString("yyyy_MM");
+                        if (!string.IsNullOrEmpty(imageInsertion))
+                        {
+                            if (Directory.Exists(imageInsertion))
+                            {
+                                //FileInfo fi = new FileInfo(imageInsertion);
+                                //Process.Start(fi.Directory.FullName);
+                                DirectoryInfo fi = new DirectoryInfo(imageInsertion);
+                                Process.Start(fi.FullName);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        string system2FailImage = GlobalFunctions.System2FailImage;
+                        //string system2FailImage = "D:\\System2\\hist\\"; //testing purpose
+                        if (Directory.Exists(system2FailImage))
+                        {
+                            //FileInfo fi = new FileInfo(system2FailImage);
+                            //Process.Start(fi.Directory.FullName);
+                            DirectoryInfo fi = new DirectoryInfo(system2FailImage);
+                            Process.Start(fi.FullName);
+                        }
+                    }
+                    break;
+                case "FAILIMAGEBATTERY":
+                    string imageBattery = GlobalFunctions.System1Battery + "Logs_" + DateTime.Now.ToString("yyyy_MM");
+                    if (!string.IsNullOrEmpty(imageBattery))
+                    {
+                        if (Directory.Exists(imageBattery))
+                        {
+                            //FileInfo fi = new FileInfo(imageBattery);
+                            //Process.Start(fi.Directory.FullName);
+                            DirectoryInfo fi = new DirectoryInfo(imageBattery);
+                            Process.Start(fi.FullName);
                         }
                     }
                     break;

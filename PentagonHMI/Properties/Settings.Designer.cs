@@ -333,5 +333,50 @@ namespace PentagonHMI.Properties {
                 return ((string)(this["DatabaseConnectionString"]));
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\VisionFail\\InsertionCheck\\")]
+        public string System1Insertion
+        {
+            get
+            {
+                return ((string)(this["System1Insertion"]));
+            }
+            set
+            {
+                this["System1Insertion"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("D:\\VisionFail\\BatteryCheck\\")]
+        public string System1Battery
+        {
+            get
+            {
+                return ((string)(this["System1Battery"]));
+            }
+            set
+            {
+                this["System1Battery"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\user\\Documents\\KEYENCE\\XG-X VisionTerminal\\192.168.3.21\\SD2\\xg\\hist\\")]
+        public string System2FailImage
+        {
+            get
+            {
+                return ((string)(this["System2FailImage"]));
+            }
+            set
+            {
+                this["System2FailImage"] = value;
+            }
+        }
     }
 }
