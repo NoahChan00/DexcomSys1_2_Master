@@ -4,17 +4,44 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition x:Name="col1" Width="Auto" />
+            <ColumnDefinition x:Name="col2"  Width="*" />
         </Grid.ColumnDefinitions>
         <Grid x:Name="VisionGroupBox">
         </Grid>
 
-        <Border Grid.Column="1" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+        <Border x:Name="visionInfoBorder" Grid.Column="0" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
             <StackPanel>
-                <Label Content="Vision Fail Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                <Label x:Name="Contentlblcol1" Content="Vision Fail Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
                 <ScrollViewer HorizontalScrollBarVisibility="Auto">
                     <StackPanel x:Name="VisionFailInfoStackPanel">
+                        <StackPanel.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="Background" Value="#FF627793" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="VerticalContentAlignment" Value="Center" />
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <!-- Generate from xaml.cs -->
+                    </StackPanel>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="BatteryInfoPanel" Grid.Column="1" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
+            <StackPanel>
+                <Label x:Name="Contentlbl" Content="Vision Fail Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <StackPanel x:Name="System1BatteryStackPanel">
                         <StackPanel.Resources>
                             <Style TargetType="Label">
                                 <Setter Property="Background" Value="#FF627793" />

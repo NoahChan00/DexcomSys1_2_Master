@@ -157,6 +157,7 @@ namespace PentagonHMI.ChildControls
                 BlueButton.Content = "PCBA Present";
                 System1_Stuff.Visibility = Visibility.Visible;
                 System2_Stuff.Visibility = Visibility.Collapsed;
+                VisionControlTC.Items.Add(new TabItem() { Header = "Vision Info", Content = new VisionView(_Main) });
                 TurnStepImage.Source = new BitmapImage(new Uri("/HMI;component/Images/MainHMI/S1TurnTable.jpeg", UriKind.Relative));
 
                 Station1Tb.Text = "Station 5\r\nVISION CHECK";

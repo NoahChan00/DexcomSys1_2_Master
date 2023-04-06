@@ -51,6 +51,34 @@
                                     VerticalContentAlignment="Center" FontSize="20" Checked="DummyPcbaRaDioButtonChecked">Dummy</RadioButton>
                         </Grid>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="MFG Lot ID" />
+                        <TextBox x:Name="tbx_MFG_LotID" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="Battery Lot ID" />
+                        <TextBox x:Name="tbx_BatteryLotID" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="Battery Date Code" />
+                        <TextBox x:Name="tbx_BatteryDateCode" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="PCBA Part Number" />
+                        <TextBox x:Name="tbx_PcbaPartNo" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="PCBA MFG" />
+                        <TextBox x:Name="tbx_PcbaMFG" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="PCBA Lot ID" />
+                        <TextBox x:Name="tbx_PcbaLotID" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="Resin ID" />
+                        <TextBox x:Name="tbx_ResinID" Width="250" MaxLength="20" FontSize="20" />
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </Border>

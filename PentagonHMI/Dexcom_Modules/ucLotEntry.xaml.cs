@@ -26,6 +26,16 @@ namespace PentagonHMI.ChildControls
         private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
         private const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
 
+        #region v1.0.34.1
+        private const string Tag_MFG_LotID_str = "Lot_Info.MFG_LotID";
+        private const string Tag_BatteryLotID_str = "Lot_Info.Battery_LotID";
+        private const string Tag_BatteryDateCode_str = "Lot_Info.Battery_DateCode";
+        private const string Tag_PcbaPartNo_str = "Lot_Info.PCBA_PartNo";
+        private const string Tag_PcbaMFG_str = "Lot_Info.PCBA_MFG";
+        private const string Tag_PcbaLotID_str = "Lot_Info.PCBA_LotID";
+        private const string Tag_ResinID_str = "Lot_Info.Resin_ID";
+        #endregion
+
         public ucLotEntry(LogicClasses.Main main)
         {
             InitializeComponent();
@@ -140,7 +150,44 @@ namespace PentagonHMI.ChildControls
                 MessageBox.Show("Operator ID Not Defined");
                 return;
             }
-            else if(ServerOn)
+            #region v1.0.34.1 
+            else if (string.IsNullOrWhiteSpace(tbx_MFG_LotID.Text))
+            {
+                MessageBox.Show("MFG Lot ID Not Defined");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(tbx_BatteryLotID.Text))
+            {
+                MessageBox.Show("Battery Lot ID Not Defined");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(tbx_BatteryDateCode.Text))
+            {
+                MessageBox.Show("Battery Date Code Not Defined");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(tbx_PcbaPartNo.Text))
+            {
+                MessageBox.Show("PCBA Part Number Not Defined");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(tbx_PcbaMFG.Text))
+            {
+                MessageBox.Show("PCBA MFG Not Defined");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(tbx_PcbaLotID.Text))
+            {
+                MessageBox.Show("PCBA Lot ID Not Defined");
+                return;
+            }
+            else if (string.IsNullOrWhiteSpace(tbx_ResinID.Text))
+            {
+                MessageBox.Show("Resin ID Not Defined");
+                return;
+            }
+            #endregion
+            else if (ServerOn)
             {
                 if(!dic_BatteryType.TryGetValue(tbx_onlineBtrytype.Text, out string btyEnum))
                 {
@@ -160,7 +207,16 @@ namespace PentagonHMI.ChildControls
             OPCore.Write(Tag_OprID_str20, tbx_OprID.Text, typeof(string));
             OPCore.Write(Tag_LotID_str, tbx_LotID.Text, typeof(string));
             OPCore.Write(Tag_LotQty_dint, LR_num_LotSize.Value, typeof(Int32));
-            if(ServerOn)
+            #region v1.0.31.1
+            OPCore.Write(Tag_MFG_LotID_str, tbx_MFG_LotID.Text, typeof(string));
+            OPCore.Write(Tag_BatteryLotID_str, tbx_BatteryLotID.Text, typeof(string));
+            OPCore.Write(Tag_BatteryDateCode_str, tbx_BatteryDateCode.Text, typeof(string));
+            OPCore.Write(Tag_PcbaPartNo_str, tbx_PcbaPartNo.Text, typeof(string));
+            OPCore.Write(Tag_PcbaMFG_str, tbx_PcbaMFG.Text, typeof(string));
+            OPCore.Write(Tag_PcbaLotID_str, tbx_PcbaLotID.Text, typeof(string));
+            OPCore.Write(Tag_ResinID_str, tbx_ResinID.Text, typeof(string));
+            #endregion
+            if (ServerOn)
             {
                 OPCore.Write(Tag_Btry_dint, dic_BatteryType[tbx_onlineBtrytype.Text], typeof(Int32));
             }
