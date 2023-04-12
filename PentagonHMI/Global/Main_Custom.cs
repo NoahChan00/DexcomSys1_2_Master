@@ -494,10 +494,10 @@ namespace PentagonHMI
         private string SystemUpTime = "Lot_OEE_Tags.dint_MachineUpTimeAccSec";
         private string OperationTime = "Lot_OEE_Tags.dint_MachineProductiveTimeAccSec";
         private string DownTime = "Lot_OEE_Tags.dint_MachineUnscheduledDownTimeAccSec";
-        private string IdleTime = "Lot_OEE_Tags.dint_MachineStandbyTimeAccSe";
+        private string IdleTime = "Lot_OEE_Tags.dint_MachineStandbyTimeAccSec";
         private string MaintenanceTime = "Lot_OEE_Tags.dint_MachineScheduledDownTimeAccSec";
         private string LotSize = "Lot_Info.HMI_Lot_Quantity";
-        private string TotalQtyIn = "Lot_OEE_Tags.dint_TotalQuantityIn";
+        private string TotalQtyIn = "Lot_OEE_Tags.dint_TotalQty";
         private string TotalQtyOut = "Lot_OEE_Tags.dint_TotalProductiveUnit";
         private string OverallTotalPassed = "Lot_OEE_Tags.dint_Total_Pass";
         private string OverallTotalFailed = "Lot_OEE_Tags.dint_Total_Fail";
@@ -733,19 +733,19 @@ namespace PentagonHMI
                                 csv.WriteField(OPC.Read<string>(StartDateTime));
                                 csv.NextRecord();
 
-                                csv.WriteField("System Up Time(s):");
+                                csv.WriteField("Operation Time(s):");
                                 csv.WriteField(OPC.Read<int>(SystemUpTime));
                                 csv.NextRecord();
 
-                                csv.WriteField("Operation Time(s):");
+                                csv.WriteField("Productive Time(s):");
                                 csv.WriteField(OPC.Read<int>(OperationTime));
                                 csv.NextRecord();
 
-                                csv.WriteField("Down Time(s):");
+                                csv.WriteField("Unschedule Downtime(s):");
                                 csv.WriteField(OPC.Read<int>(DownTime));
                                 csv.NextRecord();
 
-                                csv.WriteField("Idle Time (s):");
+                                csv.WriteField("Standby Time (s):");
                                 csv.WriteField(OPC.Read<int>(IdleTime));
                                 csv.NextRecord();
 
@@ -923,7 +923,7 @@ namespace PentagonHMI
                                     csv.WriteField("Mold Cavity Info");
                                     csv.NextRecord();
 
-                                    for(int i = 1; i > 17; i++)
+                                    for(int i = 1; i < 17; i++)
                                     {
                                         csv.WriteField($"Cavity {i} Short Shot Fail:");
                                         csv.WriteField(OPC.Read<int>($"Cavity{i}.ShortShot"));
