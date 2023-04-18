@@ -1383,15 +1383,28 @@ namespace PentagonHMI.ChildControls
                 case "FAILIMAGEINSERTION":
                     if (GlobalFunctions.IsSystem1)
                     {
-                        string imageInsertion = GlobalFunctions.System1Insertion + "Logs_" + DateTime.Now.ToString("yyyy_MM");
+                        //string imageInsertion = GlobalFunctions.System1Insertion + "Logs_" + DateTime.Now.ToString("yyyy_MM");
+                        string imageInsertion = GlobalFunctions.System1Insertion;
+                        string folderLogs = "Logs_" + DateTime.Now.ToString("yyyy_MM"); //newly added 14/4/2023
+                        string combined = Path.Combine(imageInsertion, folderLogs); //newly added 14/4/2023
+                        //if (!string.IsNullOrEmpty(imageInsertion))
                         if (!string.IsNullOrEmpty(imageInsertion))
                         {
-                            if (Directory.Exists(imageInsertion))
+                            //if (Directory.Exists(imageInsertion))
+                            //{
+                            //    //FileInfo fi = new FileInfo(imageInsertion);
+                            //    //Process.Start(fi.Directory.FullName);
+                            //    DirectoryInfo fi = new DirectoryInfo(imageInsertion);
+                            //    Process.Start(fi.FullName);
+                            //}
+                            if (Directory.Exists(combined))
                             {
-                                //FileInfo fi = new FileInfo(imageInsertion);
-                                //Process.Start(fi.Directory.FullName);
-                                DirectoryInfo fi = new DirectoryInfo(imageInsertion);
+                                DirectoryInfo fi = new DirectoryInfo(combined);
                                 Process.Start(fi.FullName);
+                            }
+                            else
+                            {
+                                Process.Start(imageInsertion);
                             }
                         }
                     }
@@ -1409,15 +1422,28 @@ namespace PentagonHMI.ChildControls
                     }
                     break;
                 case "FAILIMAGEBATTERY":
-                    string imageBattery = GlobalFunctions.System1Battery + "Logs_" + DateTime.Now.ToString("yyyy_MM");
-                    if (!string.IsNullOrEmpty(imageBattery))
+                    //string imageBattery = GlobalFunctions.System1Battery + "Logs_" + DateTime.Now.ToString("yyyy_MM");
+                    string imageBattery = GlobalFunctions.System1Battery;
+                    string LogsFolder = "Logs_" + DateTime.Now.ToString("yyyy_MM"); //newly added 14/4/2023
+                    string combineBattery = Path.Combine(imageBattery, LogsFolder); //newly added 14/4/2023
+                    //if (!string.IsNullOrEmpty(imageBattery))
+                    if(!string.IsNullOrEmpty(imageBattery))
                     {
-                        if (Directory.Exists(imageBattery))
+                        //if (Directory.Exists(imageBattery))
+                        //{
+                        //    //FileInfo fi = new FileInfo(imageBattery);
+                        //    //Process.Start(fi.Directory.FullName);
+                        //    DirectoryInfo fi = new DirectoryInfo(imageBattery);
+                        //    Process.Start(fi.FullName);
+                        //}
+                        if (Directory.Exists(combineBattery))
                         {
-                            //FileInfo fi = new FileInfo(imageBattery);
-                            //Process.Start(fi.Directory.FullName);
-                            DirectoryInfo fi = new DirectoryInfo(imageBattery);
+                            DirectoryInfo fi = new DirectoryInfo(combineBattery);
                             Process.Start(fi.FullName);
+                        }
+                        else
+                        {
+                            Process.Start(imageBattery);
                         }
                     }
                     break;

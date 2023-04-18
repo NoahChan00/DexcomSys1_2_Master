@@ -804,12 +804,14 @@ EndThis:
                     Utilities.FileLogger.logButton(strMotorName, "Save Custom Position" + DgvCustomPos1.Text + " at Pos:" + intCurrentPos, MethodBase.GetCurrentMethod().ToString());
                     if(DO(GetStatus(), StatusMessage()))
                     {
-                        int Pos;
-                        if(DO(int.TryParse(DgvCustomPos.Text, out Pos),
+                        //int Pos;
+                        double Pos;
+                        if(DO(double.TryParse(DgvCustomPos.Text, out Pos),
                             "SaveCus_Click: Invalid Position" + DgvCustomPos.Text))
                         {
-                            TagSharedPosition.Value = Math.Round(Pos * Proportion, 0);
-                            if(DO(PLCController.WriteTag(TagSharedPosition) == ResultCode.E_SUCCESS,
+                            //TagSharedPosition.Value = Math.Round(Pos * Proportion, 0);
+                            TagSharedPosition.Value = Math.Round(Pos * Proportion, 2);
+                            if (DO(PLCController.WriteTag(TagSharedPosition) == ResultCode.E_SUCCESS,
                                 "SaveCus_Click: Write Fail TagSharedPosition"))
                             {
                                 DicTagSaveCus[intCurrentPos].Value = true;
