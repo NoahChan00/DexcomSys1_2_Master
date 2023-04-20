@@ -757,9 +757,9 @@ namespace PentagonHMI
                                 csv.WriteField(OPC.Read<int>(LotSize));
                                 csv.NextRecord();
 
-                                csv.WriteField("Total Quantity In:");
-                                csv.WriteField(OPC.Read<int>(TotalQtyIn));
-                                csv.NextRecord();
+                                //csv.WriteField("Total Quantity In:");
+                                //csv.WriteField(OPC.Read<int>(TotalQtyIn));
+                                //csv.NextRecord();
 
                                 csv.WriteField("Total Quantity Out:");
                                 csv.WriteField(OPC.Read<int>(TotalQtyOut));
