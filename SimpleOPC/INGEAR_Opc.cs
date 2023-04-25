@@ -106,7 +106,7 @@ namespace SimpleOPC
         {
             try
             {
-                Logger.Info(string.Format(Logger.Msg.Read, TagName, TagType?.ToString() ?? "NULL"));
+                //Logger.Info(string.Format(Logger.Msg.Read, TagName, TagType?.ToString() ?? "NULL"));
                 Tag _tag;
                 if(!Dic_TagName_Tag.TryGetValue(TagName, out _tag))
                 {
@@ -132,7 +132,7 @@ namespace SimpleOPC
         {
             try
             {
-                Logger.Info(string.Format(Logger.Msg.Read, TagName, TagType?.ToString() ?? "NULL"));
+                //Logger.Info(string.Format(Logger.Msg.Read, TagName, TagType?.ToString() ?? "NULL"));
                 Tag _tag;
                 if(!Dic_TagName_Tag.TryGetValue(TagName, out _tag))
                 {
@@ -204,7 +204,7 @@ namespace SimpleOPC
         {
             try
             {
-                Logger.Info(string.Format(Logger.Msg.Read, _tag.Name, tagType.ToString() ?? "NULL"));
+                //Logger.Info(string.Format(Logger.Msg.Read, _tag.Name, tagType.ToString() ?? "NULL"));
                 if(_tag.Controller == null)
                 {
                     _tag.Controller = Ctr_OPC;
