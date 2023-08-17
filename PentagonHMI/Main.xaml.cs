@@ -1158,7 +1158,7 @@ namespace PentagonHMI
                         foreach (string folder in failImageInsertionPath.Where(x => x.Contains("Logs_")))
                         {
                             FileInfo info = new FileInfo(folder);
-                            if (Convert.ToDateTime(folder.Substring(folder.Length - 7).Replace("_", "-")) < DateTime.Now.AddMonths(-4))
+                            if (Convert.ToDateTime(folder.Substring(folder.Length - 8).Replace("_", "-")) < DateTime.Now.AddMonths(-4))
                             {
                                 Directory.Delete(folder, true);
                             }
@@ -1167,7 +1167,7 @@ namespace PentagonHMI
                         foreach (string folder in failImageBatteryPath.Where(x => x.Contains("Logs_")))
                         {
                             FileInfo info = new FileInfo(folder);
-                            if (Convert.ToDateTime(folder.Substring(folder.Length - 7).Replace("_", "-")) < DateTime.Now.AddMonths(-4))
+                            if (Convert.ToDateTime(folder.Substring(folder.Length - 8).Replace("_", "-")) < DateTime.Now.AddMonths(-4))
                             {
                                 Directory.Delete(folder, true);
                             }

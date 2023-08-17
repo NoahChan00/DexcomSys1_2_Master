@@ -84,5 +84,14 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">data source=UN-FP-CL-P2451\SQLEXPRESS; integrated security=true; initial catalog=gdb_dexcomsystem1;</Value>
     </Setting>
+    <Setting Name="System1Insertion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\VisionFail\InsertionCheck\</Value>
+    </Setting>
+    <Setting Name="System1Battery" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\VisionFail\BatteryCheck\</Value>
+    </Setting>
+    <Setting Name="System2FailImage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\user\Documents\KEYENCE\XG-X VisionTerminal\192.168.3.21\SD2\xg\hist\</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

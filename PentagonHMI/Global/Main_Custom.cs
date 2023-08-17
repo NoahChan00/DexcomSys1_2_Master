@@ -377,8 +377,8 @@ namespace PentagonHMI
                                 csv.WriteField("UnscheduledDownTime (hh:mm:ss)");
                                 csv.WriteField("NonScheduledTime (hh:mm:ss)");
                                 csv.WriteField("MeanDownTime (hh:mm:ss)");
-                                csv.WriteField("SoftJam (times)");
-                                csv.WriteField("HardJam (times)");
+                                //csv.WriteField("SoftJam (times)");
+                                //csv.WriteField("HardJam (times)");
                                 csv.WriteField("MTBA (hh:mm:ss)");
                                 csv.WriteField("MTBF (hh:mm:ss)");
                                 csv.WriteField("IdealCycleTime (hh:mm:ss)");
@@ -388,7 +388,7 @@ namespace PentagonHMI
                                 csv.WriteField("Quality (%)");
                                 csv.WriteField("Performance (%)");
                                 csv.WriteField("Availability (%)");
-                                csv.WriteField("OEE (%)");
+                                //csv.WriteField("OEE (%)");
                                 csv.WriteField("Loading (%)");
                                 csv.WriteField("TEEP (%)");
                                 csv.WriteField("DeltaTime (hh:mm:ss)");
@@ -444,8 +444,8 @@ namespace PentagonHMI
 
                             csv.WriteField(TotalPass);
                             csv.WriteField(TotalFail);
-                            //csv.WriteField(OPC.Read<double>(Z1_TotalIncomingPartFailTag));
-                            //csv.WriteField(OPC.Read<double>(Z2_TotalIncomingPartFailTag));
+                            csv.WriteField(OPC.Read<double>(Z1_TotalIncomingPartFailTag));
+                            csv.WriteField(OPC.Read<double>(Z2_TotalIncomingPartFailTag));
 
                             csv.WriteField(FormatString(Grouping.sec, Productive));
                             csv.WriteField(FormatString(Grouping.sec, Standby));
@@ -454,8 +454,8 @@ namespace PentagonHMI
                             csv.WriteField(FormatString(Grouping.sec, OPC.Read<int>(MachineUncheduledDownTimeTag)));
                             csv.WriteField(FormatString(Grouping.sec, NonSchedule));
                             csv.WriteField(FormatString(Grouping.sec, OPC.Read<int>(MeanDownTimeTag)));
-                            csv.WriteField(OPC.Read<int>(SoftJamTag));
-                            csv.WriteField(OPC.Read<int>(HardJamTag));
+                            //csv.WriteField(OPC.Read<int>(SoftJamTag));
+                            //csv.WriteField(OPC.Read<int>(HardJamTag));
                             csv.WriteField(FormatString(Grouping.sec, OPC.Read<int>(MTBATag)));
                             csv.WriteField(FormatString(Grouping.sec, OPC.Read<int>(MTBFTag)));
                             csv.WriteField(FormatString(Grouping.sec, Convert.ToInt32(_Main.IdealCycleTime)));
@@ -465,7 +465,7 @@ namespace PentagonHMI
                             csv.WriteField(FormatString(Grouping.percent, QualityPercent));
                             csv.WriteField(FormatString(Grouping.percent, PerformancePercent));
                             csv.WriteField(FormatString(Grouping.percent, AvailabilityPercent));
-                            csv.WriteField(FormatString(Grouping.percent, OEEPercent));
+                            //csv.WriteField(FormatString(Grouping.percent, OEEPercent));
                             csv.WriteField(FormatString(Grouping.percent, LoadingPercent));
                             csv.WriteField(FormatString(Grouping.percent, TeepPercent));
                             csv.WriteField(FormatString(Grouping.sec, DeltaTime));
@@ -545,6 +545,9 @@ namespace PentagonHMI
         private string Total_Undetected_Qty = "VisionFail_BatteryTray.Total_Undetected_Qty";
         private string BatteryTrayTotal_Yield = "VisionFail_BatteryTray.Total_Yield";
         private string Battery_Qty = "VisionFail_BatteryTray.Battery_Qty";
+        private string PorousFail = "Porous_Fail_Qty";
+        private string DelamFail = "Delam_Fail_Qty";
+        private string SnsWelFlashFail = "Sns_Wel_Flash_Fail_Qty";
 
         #endregion LotSummary
 
@@ -920,6 +923,18 @@ namespace PentagonHMI
                                     csv.WriteField(OPC.Read<int>(MouseBiteFail));
                                     csv.NextRecord();
 
+                                    csv.WriteField("Total Porous Fail:");
+                                    csv.WriteField(OPC.Read<int>(PorousFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Total Delam Fail:");
+                                    csv.WriteField(OPC.Read<int>(DelamFail));
+                                    csv.NextRecord();
+
+                                    csv.WriteField("Sensor Well Flashing:");
+                                    csv.WriteField(OPC.Read<int>(SnsWelFlashFail));
+                                    csv.NextRecord();
+
                                     csv.WriteField("Mold Cavity Info");
                                     csv.NextRecord();
 
@@ -963,6 +978,14 @@ namespace PentagonHMI
 
                                         csv.WriteField($"Cavity {i} POROUS:");
                                         csv.WriteField(OPC.Read<int>($"Cavity{i}.POROUS"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Delam:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.Delam"));
+                                        csv.NextRecord();
+
+                                        csv.WriteField($"Cavity {i} Sensor_Well_Flashing:");
+                                        csv.WriteField(OPC.Read<int>($"Cavity{i}.Sns_Wel_Flash"));
                                         csv.NextRecord();
                                     }
                                 }

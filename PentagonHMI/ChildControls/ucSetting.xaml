@@ -229,7 +229,7 @@
 
                         <uc:ucSettingBlock x:Name="ucGeneral" />
 
-                        <!--<StackPanel Name="SP_OEEBlock" Visibility="Collapsed">
+                        <StackPanel Name="SP_OEEBlock" Visibility="Visible">
                             <Label Foreground="DarkBlue" x:Name="OEEtitle" Margin="0 20 0 0" FontWeight="Bold" FontSize="20" Content="OEE Schedule :" />
 
                             <StackPanel x:Name="OEEcontent">
@@ -283,7 +283,7 @@
 
                                         <StackPanel VerticalAlignment="Center" Orientation="Vertical">
                                             <Label Style="{DynamicResource OEETitle}" Content="BREAK TIME" />
-                                            --><!--<Button Style="{DynamicResource OEEbutton}" x:Name="BreaktimeSet" Click="oeeset_Click" />--><!--
+                                            <Button Style="{DynamicResource OEEbutton}" x:Name="BreaktimeSet" Click="oeeset_Click" />
                                             <Label HorizontalContentAlignment="Center" Margin="0" Content="*Equivalent to Non-Scheduled Time" FontSize="9" />
                                             <Label Visibility="Hidden" HorizontalContentAlignment="Center" Margin="0" Content="after the Next Shift"
                                                     FontSize="9" />
@@ -375,7 +375,7 @@
                                     <Button HorizontalAlignment="Left" Width="150" Height="50" Margin="10" Click="OEEReset_Click">OEE Reset</Button>
                                 </StackPanel>
                             </StackPanel>
-                        </StackPanel>-->
+                        </StackPanel>
 
                         <StackPanel Name="SP_TorqueBlock" Visibility="Collapsed">
                             <Label Foreground="DarkBlue" x:Name="TorqueTitle" Margin="0 20 0 0" FontWeight="Bold" FontSize="20" Content="Torque Driver :" />

@@ -20,6 +20,7 @@ namespace PentagonHMI.LogicClasses
         public TagName TN = new TagName();
         public Main_Custom Custom;
         public INGEAR_Opc OPC = new INGEAR_Opc(Info.OPC.IP);
+        //public INGEAR_Opc OPC = new INGEAR_Opc("192.168.3.1");
         public SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         public SQLCarrier MainSQLer;
         public DataTable dt_Config;
