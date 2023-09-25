@@ -456,10 +456,11 @@ namespace PentagonHMI.LogicClasses
                 switch(GlobalFunctions.ProjectType)
                 {
                     case ProjectType.DEXCOM:
-                        HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck = HasUpdateOEEShift = HasPLCSetTime = true;
+                        HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck = HasUpdateOEEShift = HasPLCSetTime = HasUPH = true;
                         // LEK 20230203 System 1_2 not have island0 function
                         //HasTestCSV = HasTesterStnUnitTracker = HasLaserStnUnitTracker = HasUnldStnUnitTracker = HasTnRStnUnitTracker = 
                         HasLotSummary = true;
+                        StationUPHTag = "Shift_OEE_Tags.dint_Hourly_UPH[0]";
                         break;
 
                     case ProjectType.ARCADIA:
