@@ -64,6 +64,10 @@ namespace PentagonHMI
 
         public List<int> AlarmIncluded = new List<int>();
         public List<int> WarningIncluded = new List<int>();
+        #region 20230925 added for AlarmDuration log (refer to Island 0)
+        public DataTable CurAlarmDt = new DataTable { Columns = { "msgDatetime", "msgErrorCode", "msgError", "msgAction", "msgStation", "msgModule", "msgView", "msgType" } };
+        public DataTable PreAlarmDt = new DataTable();
+        #endregion
 
         private string[] ErrorCode;
         private string[] WarningCode;
@@ -72,6 +76,11 @@ namespace PentagonHMI
         private static DataTable dt_PreAlarmTable;
 
         public Tag EMtag;
+
+        #region 20230928 added for AlarmDuration log (refer to Island 0)
+        public static DateTime DTChgTimeMachineStatus;
+        public static string PreviousMachineStatus;
+        #endregion
 
         #region Pages
 
@@ -828,6 +837,26 @@ namespace PentagonHMI
 
             string _Content = _Main.OPC.Read<string>(statustag) ?? "ERROR";
 
+            #region 28/9/2023 add AlarmDuration Log (refer Island 0)
+            if (PreviousMachineStatus is null)
+            {
+                PreviousMachineStatus = _Content;
+            }
+            else
+            {
+                var cmpResult = string.Equals(PreviousMachineStatus, _Content, StringComparison.OrdinalIgnoreCase);
+                if (!cmpResult)
+                {
+                    TimeSpan duration = DateTime.Now - DTChgTimeMachineStatus;
+                    string formattedDuration = $"{duration.Hours:00}:{duration.Minutes:00}:{duration.Seconds:00}";
+
+                    Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.logDexcomDur($"Machine Status", DTChgTimeMachineStatus.ToString("yyyy-MMM-dd_HH:mm:ss.fff"), DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff"), formattedDuration, $"Machine Status: {PreviousMachineStatus}")));
+                    DTChgTimeMachineStatus = DateTime.Now;
+                    PreviousMachineStatus = _Content;
+                }
+            }
+            #endregion
+
             _Main.MachineStatus = _Content;
             string _Color = Yellow;
             switch(_Content.ToUpper())
@@ -887,6 +916,10 @@ namespace PentagonHMI
 
                 this.Dispatcher.Invoke(new Action(() => dgAlertWarning.Items.Refresh()));
 
+                //20230925
+                PreAlarmDt = CurAlarmDt.Copy();
+                CurAlarmDt.Rows.Clear();
+
                 if(alarmLst.Contains(","))
                 {
                     ErrorCode = alarmLst.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);  //don't need split as it is in array
@@ -901,12 +934,14 @@ namespace PentagonHMI
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                                Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(),errMsg)));
                             }
                         }
                         else
                         {
                             ErrorMessage(errornum, out errMsg);
                             this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                            Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                         }
                     }
                 }
@@ -923,12 +958,14 @@ namespace PentagonHMI
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                                Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                             }
                         }
                         else
                         {
                             ErrorMessage(errornum, out errMsg);
                             this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                            Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                         }
                     }
                 }
@@ -948,12 +985,14 @@ namespace PentagonHMI
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                                Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                             }
                         }
                         else
                         {
                             ErrorMessage(errornum, out errMsg);
                             this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                            Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                         }
                     }
                 }
@@ -970,15 +1009,43 @@ namespace PentagonHMI
                             {
                                 ErrorMessage(errornum, out errMsg);
                                 this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                                Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                             }
                         }
                         else
                         {
                             ErrorMessage(errornum, out errMsg);
                             this.Dispatcher.Invoke(new Action(() => Utilities.FileLogger.LogAlertWarning(AlertWarningDt, dt_PreAlarmTable, errornum.ToString(), errMsg)));
+                            Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.LogAlarmDuration(CurAlarmDt, PreAlarmDt, errornum.ToString(), errMsg)));
                         }
                     }
                 }
+
+                try
+                {
+                    foreach (DataRow dr in PreAlarmDt.Rows)
+                    {
+                        DataRow[] rows = CurAlarmDt.Select("msgErrorCode = '" + dr["msgErrorCode"] + "'");
+                        if (rows.Length == 0)
+                        {
+                            DateTime currentDT = DateTime.Now;
+                            TimeSpan duration = currentDT - Convert.ToDateTime(dr["msgDatetime"].ToString().Replace('_', ' '));
+                            string formattedDuration = $"{duration.Hours:00}:{duration.Minutes:00}:{duration.Seconds:00}";
+
+                            string alarmMsg = dr["msgErrorCode"].ToString().Replace(',', ' ') + "|";
+                            alarmMsg += dr["msgModule"].ToString().Replace(',', ' ') + "|";
+                            alarmMsg += dr["msgError"].ToString().Replace(',', ' ') + "|";
+                            alarmMsg += dr["msgAction"].ToString().Replace(',', ' ');
+
+                            Dispatcher.Invoke(new Action(() => DexcomGlobalFunctions.logDexcomDur($"Alarm|{dr["msgType"]}", dr["msgDatetime"].ToString(), DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff"), formattedDuration, alarmMsg)));
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    FileLogger.logError(ex.Message, $"{ex.InnerException}" + $"{ex}");
+                }
+
                 dt_AlarmTable = AlertWarningDt;
             }
             catch(Exception ex)

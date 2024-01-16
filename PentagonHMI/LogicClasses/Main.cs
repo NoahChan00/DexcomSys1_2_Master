@@ -584,8 +584,11 @@ namespace PentagonHMI.LogicClasses
 
                         if(HasVisionResultLog)
                             VisionResult();
-                        if(HasLotSummary)
+                        if (HasLotSummary)
+                        {
                             Custom.LotSummaryCheck();
+                            Custom.LotDuplicateCheck();
+                        }
                         if(HasTestCSV)
                             Custom.TestCSVCheck();
                         if(HasTesterStnUnitTracker)

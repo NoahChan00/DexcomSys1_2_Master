@@ -1,5 +1,7 @@
 ﻿using CsvHelper;
+using PentagonHMI.ChildControls;
 using PentagonHMI.Classes;
+using PentagonHMI.Tags;
 using SimpleDatabase;
 using SimpleOPC;
 using System;
@@ -7,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Text;
 using Utilities;
 
 namespace PentagonHMI
@@ -429,6 +432,7 @@ namespace PentagonHMI
                             double Total = TotalPass + TotalFail;
                             Quality = Total <= 0 ? 0 : TotalPass / (Total);
                             Performance = OperationTime <= 0 ? 0 : (IdealCycleTime * TotalCount) / OperationTime;
+                            Performance = OperationTime <= 0 ? 0 : (IdealCycleTime * TotalCount) / OperationTime;
                             Availability = OperationTime <= 0 ? 0 : EquipmentUpTime / OperationTime;
                             OEE = Quality * Performance * Availability;
                             Loading = _Shift <= 0 ? 0 : EquipmentUpTime / _Shift;
@@ -555,12 +559,56 @@ namespace PentagonHMI
         {
             try
             {
-                var lotID = OPC.Read<string>(LotID); //
+                var logDate = OPC.Read<string>(UniversalPLCTags.Tag_EventLogDateTime_str); //20230925 added but wait for na confirm with tmp team first
+                var formatLogDate = EventLogDateFormat(logDate); //20230925 added but wait for na confirm with tmp team first
+
+#if DEBUG
+                var lotID = "1224";
+                var startdatetime = "20230814063501";
+                int operationTime = 100000;
+                int productiveTime = 92130;
+                int unscheduleDowntime = 330;
+                int standbyTime = 3000;
+                int maintenanceTime = 4540;
+                int lotSize = 9999;
+                int totalOut = 9999;
+                int totalPass = 9990;
+                int totalFail = 9;
+                int totalPartFail = 2;
+                int sprintUph = 1900;
+                int softJam = 10;
+                int hardJam = 0;
+                int mtba = 540;
+                int mtbf = 0;
+                string totalYield = FormatString(Grouping.percent, 99.95);
+
+#else
+                //get data for database
+                var lotID = OPC.Read<string>(LotID);
+                var startdatetime = OPC.Read<string>(StartDateTime);
+                int operationTime = OPC.Read<int>(SystemUpTime);
+                int productiveTime = OPC.Read<int>(OperationTime);
+                int unscheduleDowntime = OPC.Read<int>(DownTime);
+                int standbyTime = OPC.Read<int>(IdleTime);
+                int maintenanceTime = OPC.Read<int>(MaintenanceTime);
+                int lotSize = OPC.Read<int>(LotSize);
+                int totalOut = OPC.Read<int>(TotalQtyOut);
+                int totalPass = OPC.Read<int>(OverallTotalPassed);
+                int totalFail = OPC.Read<int>(OverallTotalFailed);
+                int totalPartFail = OPC.Read<int>(TotalPartFail);
+                int sprintUph = OPC.Read<int>(SprintUPH);
+                int softJam = OPC.Read<int>(SoftJam);
+                int hardJam = OPC.Read<int>(HardJam);
+                int mtba = OPC.Read<int>(MTBA);
+                int mtbf = OPC.Read<int>(MTBF);
+                string totalYield = FormatString(Grouping.percent, OPC.Read<double>(OverallTotalYield));
+#endif
 
                 string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"LotSummary";
                 if(!Directory.Exists(LogsPath))
                 { Directory.CreateDirectory(LogsPath); }
-                string _Path = Path.Combine(LogsPath, $"{lotID}_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
+                //string _Path = Path.Combine(LogsPath, $"{lotID}_{DateTime.Now.ToString("yyyy-MMM-dd")}.csv");
+                string _Path = Path.Combine(LogsPath, $"{lotID}_{formatLogDate}.csv"); //20230925 modified but wait for na confirm with tmp team first
                 bool HasFile = File.Exists(_Path);
                 using(FileStream stream = new FileStream(_Path,
                    HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
@@ -992,6 +1040,22 @@ namespace PentagonHMI
                             }
                             #endregion
                         }
+
+                        //save to database
+                        try
+                        {
+                            string formatDb = "yyyyMMddHHmmss";
+                            DateTime dateTime;
+                            DateTime now = DateTime.Now; //insert value to table date, also may count as end lot date
+                            DateTime.TryParseExact(startdatetime, formatDb, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
+                            _Main.SQLer.Exec_NonQuery("INSERT INTO [dbo].[LotSummary] " +
+                                "([Lot],[StartDateTime],[CreatedDateTime],[OperationTime],[ProductiveTime],[UnscheduleDowntime],[StandbyTime],[MaintenanceTime],[LotSize],[TotalQuantityOut],[TotalPass],[TotalFail],[TotalPartFail],[SprintUPH],[SoftJam],[HardJam],[MTBA],[MTBF],[TotalYield]) " +
+                                "VALUES" + $"('{lotID}', '{dateTime}','{now}','{operationTime}','{productiveTime}','{unscheduleDowntime}','{standbyTime}','{maintenanceTime}','{lotSize}','{totalOut}','{totalPass}','{totalFail}','{totalPartFail}','{sprintUph}','{softJam}','{hardJam}','{mtba}','{mtbf}','{totalYield}')");
+                        }
+                        catch (Exception ex)
+                        {
+                            Utilities.FileLogger.logError(ex.Message, "LotSummary");
+                        }                    
                     }
                 }
             }
@@ -1001,16 +1065,70 @@ namespace PentagonHMI
             }
         }
 
+        public static string EventLogDateFormat(string logDateTime)
+        {
+            StringBuilder sb = new StringBuilder(logDateTime);
+            sb.Replace("/", "");
+            sb.Replace(":", "");
+            return sb.ToString().ToLower();
+        }
+
+        public void LotDuplicateCheck()
+        {
+            try
+            {
+                var lotIdDup = "Lot_Info.HMI_LotIDComparison";
+
+                if (OPC.Read<int>(lotIdDup) == 1)
+                //if (true)
+                {
+                    var lotId = OPC.Read<string>(LotID);
+                    //var lotId = "1224";
+
+                    DateTime startDate = DateTime.Now.AddDays(-30);
+                    DateTime now = DateTime.Now;
+
+                    var records = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [LotSummary] WHERE Lot = '{lotId}' AND StartDateTime > DATEADD(Day, -30, GetDate());");
+                    //var records = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [LotSummary] WHERE Lot = {lotId} AND StartDateTime < {startDate} ORDER BY id DESC;");
+                    if (records != null)
+                    {
+                        if (records.Rows.Count > 0)
+                        {
+                            string duplicate = string.Empty;
+                            foreach (DataRow dr in records.Rows)
+                            {
+                                FileLogger.logEvent("", $"[CLD] MatchDt: {lotId}|{dr["StartDateTime"].ToString()}|3");
+                            }
+                            OPC.Write(lotIdDup, 3);
+                        }
+                        else
+                        {
+                            string noDuplicate = string.Empty;
+                            FileLogger.logEvent("",$"[CLD] MatchDt: No Dup Lot Found|2");
+                            OPC.Write(lotIdDup, 2);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileLogger.logError("LotDuplicateCheck", ex.StackTrace.ToString());
+            }
+        }
+
         public void LotSummaryCheck()
         {
             try
             {
-                if(OPC.Read<bool>("HMI_Log_LotSummary") == true)
+                if (OPC.Read<bool>("HMI_Log_LotSummary") == true)
                 {
                     //OPC.Write("HMI_Log_LotSummary", false);
                     LotSummary();
                     OPC.Write("HMI_Log_LotSummary", false);
                 }
+                //testing only
+                //LotSummary();
+                //LotDuplicateCheck();
             }
             catch(Exception ex)
             {

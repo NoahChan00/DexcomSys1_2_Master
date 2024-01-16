@@ -41,8 +41,7 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>PentagonHMI.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Pentamaster.ico</ApplicationIcon>
@@ -67,13 +66,31 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AxInterop.CVXLib">
-      <HintPath>..\..\..\Dexcom_Island_00_HMI\Dexcom_Island_00_HMI\DLL\AxInterop.CVXLib.dll</HintPath>
-    </Reference>
-    <Reference Include="AxInterop.VWORKSXGLib, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\P1729\Desktop\KeyenceImageCapture\DLL\AxInterop.VWORKSXGLib.dll</HintPath>
+      <HintPath>..\DLL\AxInterop.CVXLib.dll</HintPath>
     </Reference>
     <Reference Include="AxInterop.XGXLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -198,6 +215,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\DexcomGlobalFunctions.cs" />
     <Compile Include="Dexcom_Modules\ucDexcom_OEE.xaml.cs">
       <DependentUpon>ucDexcom_OEE.xaml</DependentUpon>
     </Compile>
@@ -1169,14 +1187,6 @@
     <Resource Include="Images\IOLocation\Main\IMG\I4.png" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="AxXGXLib">
-      <Guid>{241AC984-B8D3-4F78-B56F-B6B5268DF8F7}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>aximp</WrapperTool>
-      <Isolated>False</Isolated>
-    </COMReference>
     <COMReference Include="stdole">
       <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>2</VersionMajor>

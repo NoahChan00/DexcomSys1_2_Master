@@ -70,6 +70,13 @@ namespace PentagonHMI.Tags
         public static Tag Quality = new Tag("Lot_OEE_Tags.dint_Quality", Tag.ATOMIC.REAL);
     }
 
+    #region 20230925 added
+    public class UniversalPLCTags
+    {
+        public static string Tag_EventLogDateTime_str = "Lot_Info.StartLotTime";
+    }
+    #endregion
+
     public class EngineeringPLCTags
     {
         #region PCBA_Robot

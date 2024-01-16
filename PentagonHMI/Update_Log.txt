@@ -1,2 +1,11 @@
-﻿--20/07/20 V1--
+﻿Version         : V1.0.32.1
+Date Modified   : 28/9/2023
+Modified By     : Khaw Wan Yen
+Changes         :
+1. Add Alarm Duration Logs
+2. Add log start dtae time for lot summary file name
+3. Add insert query to dbo.LotSummary table when create lot summary
+4. lot duplicate check
+
+--20/07/20 V1--
 Initial Release
