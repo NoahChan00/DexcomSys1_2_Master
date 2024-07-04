@@ -93,7 +93,7 @@ namespace PentagonHMI.Classes
                 if(dtalarm != null)
                     foreach(DataRow row in dtalarm.Rows)
                     {
-                        ErrorListDict.Add(Convert.ToInt32(row["AlmCode"]), row["ModuleCode"] + ";" + row["AlmDesc"] + ";" + row["AlmAction"]);
+                        ErrorListDict.Add(Convert.ToInt32(row["AlmCode"]), row["ModuleCode"] + ";" + row["AlmType"] + ";" + row["AlmDesc"] + ";" + row["AlmAction"]);
                     }
 
                 ds.Clear();

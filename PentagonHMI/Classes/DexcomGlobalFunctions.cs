@@ -63,7 +63,7 @@ namespace PentagonHMI.Classes
             catch (Exception ex)
             {
                 // temp
-                //FileLogger.logError(ex.Message, ex.ToString());
+                FileLogger.logError(ex.Message, ex.ToString());
             }
         }
 
