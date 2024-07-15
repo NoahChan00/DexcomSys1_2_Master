@@ -28,6 +28,7 @@ namespace PentagonHMI.LogicClasses
         public TcpIpServer PLCEventLogListener = null;
 
         public string UserAccessLevel = "Operator";
+        public string UserName = "";
         public string MachineStatus = "N/A";
         public string MachineName = "N/A";
         public double IdealCycleTime = 0;

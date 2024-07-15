@@ -1,4 +1,5 @@
 ﻿using Logix;
+using PentagonHMI.Classes;
 using PentagonHMI.UserControls;
 using SimpleDatabase;
 using System;
@@ -58,7 +59,14 @@ namespace PentagonHMI.ChildControls
 
             //EM = new Tag("MC_System_Tags.EngineeringMode");//_MainConnection.StationID == "0" ? new Tag("bool_EngineerMode") : new Tag("bool_EngineeringMode");
             EM = new Tag(Tags.MainPage.EngineeringMode.Name, Tags.MainPage.EngineeringMode.DataType);
-            MStatus = new Tag("MC_System_Tags.MachineRunning", Logix.Tag.ATOMIC.BOOL);// _MainConnection.StationID == "0" ? new Tag("Conveyor_Preset.Production_Running") : new Tag("bool_MachineRunning");
+            if (GlobalFunctions.IsSystem1)
+            {
+                MStatus = new Tag("System1_MC_Tag.MachineRunning", Logix.Tag.ATOMIC.BOOL);// _MainConnection.StationID == "0" ? new Tag("Conveyor_Preset.Production_Running") : new Tag("bool_MachineRunning"); 
+            }
+            else
+            {
+                MStatus = new Tag("System2_MC_Tag.MachineRunning", Logix.Tag.ATOMIC.BOOL);
+            }
         }
 
         private class Assignment : SavePosition

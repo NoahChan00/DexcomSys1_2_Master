@@ -1,4 +1,17 @@
-﻿Version         : V1.0.32.1
+﻿Version         : V1.0.32.3
+Date Modified   : 15/3/2023
+Modified By     : Khaw Wan Yen
+Changes         :
+1. Set page access according to user access level when login and logout (set like tmp)
+2. Add event log for setting page
+
+Version         : V1.0.32.2
+Date Modified   : 15/3/2023
+Modified By     : Khaw Wan Yen
+Changes         :
+1. Fix Alarm Duration Logs not log alarm (less one column)
+
+Version         : V1.0.32.1
 Date Modified   : 28/9/2023
 Modified By     : Khaw Wan Yen
 Changes         :

@@ -244,6 +244,15 @@ namespace PentagonHMI.ChildControls
                         LabelLotID.Content = _Main.OPC.Read<string>(Tags.MainPage.LotID.Name, typeof(string)) ?? "Nan";
                     }
 
+                    if (_Main.UserAccessLevel == "admin" || _Main.UserAccessLevel == "Penta")
+                    {
+                        MuteToogleButton.IsEnabled = true;
+                    }
+                    else
+                    {
+                        MuteToogleButton.IsEnabled = false;
+                    }
+
                     #region Station Status Read
 
                     var stats = new List<int>();

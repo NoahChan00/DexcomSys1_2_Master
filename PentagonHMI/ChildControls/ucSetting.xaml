@@ -229,7 +229,7 @@
 
                         <uc:ucSettingBlock x:Name="ucGeneral" />
 
-                        <StackPanel Name="SP_OEEBlock" Visibility="Visible">
+                        <StackPanel Name="SP_OEEBlock" Visibility="Collapsed">
                             <Label Foreground="DarkBlue" x:Name="OEEtitle" Margin="0 20 0 0" FontWeight="Bold" FontSize="20" Content="OEE Schedule :" />
 
                             <StackPanel x:Name="OEEcontent">

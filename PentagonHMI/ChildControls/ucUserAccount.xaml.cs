@@ -59,7 +59,7 @@ namespace PentagonHMI.ChildControls
 
         private void btnAddUser_Click(object sender, RoutedEventArgs e)
         {
-            Utilities.FileLogger.logButton(StrAccount, "Add User", MethodBase.GetCurrentMethod().ToString());
+            Utilities.FileLogger.logButton(StrAccount, $"Add User [{txtUserid.Text}]", MethodBase.GetCurrentMethod().ToString());
 
             if(txtUserid.Text.Length == 0)
             {
@@ -110,7 +110,7 @@ namespace PentagonHMI.ChildControls
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
             string errMsg = "";
-            Utilities.FileLogger.logButton(StrAccount, "Change Password", MethodBase.GetCurrentMethod().ToString());
+            Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}]", MethodBase.GetCurrentMethod().ToString());
             if(txtUserid1.Text == null || txtUserid1.Text == "" || txtPass1.Password == null || txtPass1.Password == "" || txtPass1.Password == null || txtPass1.Password == "" || txtNewPass1.Password == null || txtNewPass1.Password == "")
             {
                 MessageBox.Show("Please fill in all the information!");
@@ -140,7 +140,7 @@ namespace PentagonHMI.ChildControls
 
         private void btnDeleteUser_Click(object sender, RoutedEventArgs e)
         {
-            Utilities.FileLogger.logButton(StrAccount, "Remove User", MethodBase.GetCurrentMethod().ToString());
+            Utilities.FileLogger.logButton(StrAccount, $"Remove User [{UserName}]", MethodBase.GetCurrentMethod().ToString());
 
             if(UserName != null)
             {

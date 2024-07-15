@@ -1097,19 +1097,19 @@ namespace PentagonHMI.ChildControls
 
         private void DatePickerRamBarcode_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Ram Barcode Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Ram Barcode Log", MethodBase.GetCurrentMethod().ToString());
             gridRamBarcode.ItemsSource = loadRamBarcodeTable().DefaultView;
         }
 
         private void DatePickerZoneBarcode_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Zone Barcode Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Zone Barcode Log", MethodBase.GetCurrentMethod().ToString());
             gridZoneBarcode.ItemsSource = loadZoneBarcodeTable().DefaultView;
         }
 
         private void DatePickerRackBarcode_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Rack Barcode Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Rack Barcode Log", MethodBase.GetCurrentMethod().ToString());
             gridRackBarcode.ItemsSource = loadRackBarcodeTable().DefaultView;
         }
 
@@ -1121,7 +1121,7 @@ namespace PentagonHMI.ChildControls
 
         private void DatePickerReject_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Reject Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Reject Log", MethodBase.GetCurrentMethod().ToString());
             gridRejectHistory.ItemsSource = loadRejectTable().DefaultView;
         }
 
@@ -1134,31 +1134,31 @@ namespace PentagonHMI.ChildControls
         // !!
         private void DatePickerTestCSV_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve TestCSV Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve TestCSV Log", MethodBase.GetCurrentMethod().ToString());
             gridTestCSV.ItemsSource = loadTestCSVTable().DefaultView;
         }
 
         private void DatePickerTestStn_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Test Station Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Test Station Log", MethodBase.GetCurrentMethod().ToString());
             gridTestStn.ItemsSource = loadTestStnTable().DefaultView;
         }
 
         private void DatePickerLaserStn_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Laser Station Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Laser Station Log", MethodBase.GetCurrentMethod().ToString());
             gridLaserStn.ItemsSource = loadLaserStnTable().DefaultView;
         }
 
         private void DatePickerUnldStn_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Unld Station Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Unld Station Log", MethodBase.GetCurrentMethod().ToString());
             gridUnldStn.ItemsSource = loadUnldStnTable().DefaultView;
         }
 
         private void DatePickerTnRStn_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve TnR Station Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve TnR Station Log", MethodBase.GetCurrentMethod().ToString());
             gridTnRStn.ItemsSource = loadTnRStnTable().DefaultView;
         }
 
@@ -1194,7 +1194,7 @@ namespace PentagonHMI.ChildControls
 
         private void btnProduction_Click(object sender, RoutedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Vision Result Log", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Vision Result Log", MethodBase.GetCurrentMethod().ToString());
             gridProduction.ItemsSource = loadProduction().DefaultView;
         }
 
@@ -1513,13 +1513,13 @@ namespace PentagonHMI.ChildControls
 
         private void DatePickerVisionResult_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Vision Result", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Vision Result", MethodBase.GetCurrentMethod().ToString());
             gridVisionResult.ItemsSource = loadVisionTable().DefaultView;
         }
 
         private void DatePickerTorqueDriverResult_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            Utilities.FileLogger.logButton(strEventLog, "Retrieve Torque Driver Result", MethodBase.GetCurrentMethod().ToString());
+            //Utilities.FileLogger.logButton(strEventLog, "Retrieve Torque Driver Result", MethodBase.GetCurrentMethod().ToString());
             gridTorqueDriverResult.ItemsSource = loadTorqueDriverResultTable().DefaultView;
         }
 

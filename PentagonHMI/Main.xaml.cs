@@ -2,6 +2,7 @@
 using Logix;
 using NLog;
 using PentagonHMI.Classes;
+using PentagonHMI.LogicClasses;
 using PentagonHMI.Views.Main;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -61,6 +63,7 @@ namespace PentagonHMI
         public int LifterZone = 0;
         public string LifterPosition = "";
         private string NonScheduledOEETagName = "OEE_Tags.bool_NonScheduled";
+        private int logoutCount = 0;
 
         public List<int> AlarmIncluded = new List<int>();
         public List<int> WarningIncluded = new List<int>();
@@ -225,6 +228,10 @@ namespace PentagonHMI
                 }
 
                 PreLoadPages();
+
+                //v1.0.32.3 - critical change: always change penta user access to admin
+                _Main.SQLer.Exec_NonQuery("UPDATE [Users] SET [Level] = 'admin' WHERE [UserName] = 'penta';");
+                //_Main.SQLer.Exec_NonQuery("DELETE FROM [Users] WHERE [Level] = 'admin' OR [UserName] = 'penta';"); //<- change to delete according to the request (Na) 15/7/2024
 
                 EMtag = new Tag(_Main.TN.Dic_Key_Address[TagName.Key.EngineeringMode]);
 
@@ -621,8 +628,9 @@ namespace PentagonHMI
                 idleTime /= 1000;
             }
             int value = Int32.Parse(Classes.GlobalFunctions.login_Timeout);
-            if(idleTime > value && _Main.MotorPageON == false && _Main.IOPageON == false)
+            if(idleTime > value)
             {
+                idleTime = 0;
                 LogIN_OUT(false);
             }
         }
@@ -1131,6 +1139,7 @@ namespace PentagonHMI
 
                 //If Month Add, Path Add
                 string PathThisMonth = Properties.Settings.Default.LogLocation.ToString() + "Logs_" + DateTime.Now.ToString("yyyy-MMM");
+                string LogsPath = @"D:\HMI\";
                 if(FileLogger.DefaultLocation_Time != PathThisMonth)
                     FileLogger.DefaultLocation_Time = PathThisMonth;
 
@@ -1159,7 +1168,7 @@ namespace PentagonHMI
                         }
 
                 //Delete Log Folder if more than 3 month
-                string[] filePaths = Directory.GetDirectories(FileLogger.DefaultLocation);
+                string[] filePaths = Directory.GetDirectories(LogsPath);
                 foreach(string file in filePaths.Where(x => x.Contains("Logs_")))
                 {
                     FileInfo info = new FileInfo(file);
@@ -1170,7 +1179,7 @@ namespace PentagonHMI
                 }
 
                 //Duration, delete ZipFile if longer than a year
-                filePaths = Directory.GetFiles(FileLogger.DefaultLocation);
+                filePaths = Directory.GetFiles(LogsPath);
                 foreach(string file in filePaths.Where(x => x.Contains(LogsPrefix)))
                 {
                     if(Convert.ToDateTime(file.Substring(file.Length - 8)) < DateTime.Now.AddYears(-1))
@@ -1188,7 +1197,7 @@ namespace PentagonHMI
 
                     if((Convert.ToDouble(freespace) / totalspace * 100) < 20)
                     {
-                        filePaths = Directory.GetFiles(FileLogger.DefaultLocation);
+                        filePaths = Directory.GetFiles(LogsPath);
                         if(filePaths.Where(x => x.Contains(LogsPrefix)).Count() > 3)
                         {
                             foreach(string file in filePaths.Where(x => x.Contains(LogsPrefix)))
@@ -1391,21 +1400,102 @@ namespace PentagonHMI
         {
             try
             {
-                if(!LogIN)
+                idleTime = 0;
+                if (!LogIN)
                 {
                     _Main.UserAccessLevel = "Operator";
                     lblCurrUser.Content = "Current User :  " + _Main.UserAccessLevel;
                 }
 
-                Img_Logout.Visibility = LogIN ? Visibility.Visible : Visibility.Collapsed;
+                if (LogIN)
+                {
+                    logoutCount = 0;
+                    FileLogger.logEvent("[HMI]", $"[HMI] UserAccessLevel: {_Main.UserAccessLevel} | {_Main.UserName} Login Success"); 
+                }
+                else
+                {
+                    _Main.UserName = string.Empty;
+                    logoutCount++;
+                    if (logoutCount == 1)
+                    {
+                        FileLogger.logEvent("[HMI]", $"[HMI] Logout Success");
+                    }
+                }
 
+                Img_Logout.Visibility = LogIN ? Visibility.Visible : Visibility.Collapsed;
+                Img_Login.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
                 TXT_Login.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
                 TXT_Logout.Visibility = LogIN ? Visibility.Visible : Visibility.Collapsed;
 
-                foreach(Image img in LstImg_PageDisIcon)
-                    img.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
+                foreach (Image img in LstImg_PageDisIcon)
+                {
+                    if (_Main.UserAccessLevel != "Operator")
+                    {
+                        if (_Main.UserAccessLevel == "Technician")
+                        {
+                            if (img == Img_DryrunDis || img == Img_IOListDis /*|| img == Img_EngineeringDis || img == Img_DryrunDis*/)
+                            {
+                                img.Visibility = Visibility.Collapsed;
+                            }
+                            else
+                            {
+                                img.Visibility = Visibility.Visible;
+                            }
+                        }
 
-                if(!LogIN)
+                        if (_Main.UserAccessLevel == "Engineer")
+                        {
+                            if (img == Img_EngineeringDis || img == Img_MotorDis || img == Img_IOListDis || img == Img_DryrunDis)
+                            {
+                                img.Visibility = Visibility.Collapsed;
+                            }
+                            else
+                            {
+                                img.Visibility = Visibility.Visible;
+                            }
+                        }
+
+                        if (_Main.UserAccessLevel == "admin" || _Main.UserAccessLevel == "Penta")
+                        {
+                            img.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
+                        }
+                    }
+                    else
+                    {
+                        img.Visibility = Visibility.Visible;
+                    }
+                    //if (img == Img_DryrunDis || img == Img_UserDis || img == Img_EngineeringDis)
+                    //{
+                    //    if (_Main.UserAccessLevel == "Engineer")
+                    //    {
+                    //        img.Visibility = Visibility.Collapsed;
+                    //    }
+                    //    else
+                    //    {
+                    //        img.Visibility = Visibility.Visible;
+                    //    }
+                    //}
+
+                    //if (img == Img_SettingDis || img == Img_MotorDis || img == Img_IOListDis /*|| img == Img_EngineeringDis || img == Img_DryrunDis*/)
+                    //{
+                    //    if (_Main.UserAccessLevel == "Technician")
+                    //    {
+                    //        img.Visibility = Visibility.Collapsed;
+                    //    }
+                    //    else
+                    //    {
+                    //        img.Visibility = Visibility.Visible;
+                    //    }
+                    //}
+
+                    //if (_Main.UserAccessLevel == "Engineer" || _Main.UserAccessLevel == "admin" || _Main.UserAccessLevel == "Penta")
+                    //{
+                    //    img.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
+                    //}
+                    //img.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
+                }
+
+                if (!LogIN)
                     SwapPage("HOME");
             }
             catch(Exception ex)
@@ -1450,9 +1540,11 @@ namespace PentagonHMI
                 if(SP_Colored != null)
                     SP_Colored.Background = Brushes.Transparent;
 
+                FileLogger.logEvent("[HMI]", $"[HMI] UserID: {_Main.UserName} | Access Level: {_Main.UserAccessLevel} | Page: {Page}");
+
                 // https://en.wikipedia.org/wiki/Goto#Criticism, suspect below logic written way before 21st century
                 // https://en.wikipedia.org/wiki/Structured_programming Please study this before using goto
-                switch(Page)
+                switch (Page)
                 {
                     case "HOME":
                     case "DUT":

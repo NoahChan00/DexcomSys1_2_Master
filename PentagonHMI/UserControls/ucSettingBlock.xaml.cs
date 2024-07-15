@@ -4,9 +4,12 @@ using PentagonHMI.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Xml.Linq;
+using Utilities;
 
 namespace PentagonHMI.UserControls
 {
@@ -32,7 +35,9 @@ namespace PentagonHMI.UserControls
             ToggleButton Tgbtn = sender as ToggleButton;
             string Address = Tgbtn.Tag.ToString();
             bool Value = Tgbtn.IsChecked ?? false;
+            string tgName = SettingList.SelectMany(x => x.Config).ToList().Find(y => y.Tag.Name == Address).Title;
             _Main.OPC.Write(Address, Value);
+            FileLogger.logEvent("[Settings]", $"[Settings] {tgName} ToggleClick | Tag: {Address} | Value: {Value}");
 
             if(ProjectType.ARCADIA == GlobalFunctions.ProjectType)
             {
@@ -58,6 +63,7 @@ namespace PentagonHMI.UserControls
             {
                 _Main.OPC.Read(Address, item.DataType);
                 _Main.OPC.Write(Address, item.Num_Value, item.DataType);
+                FileLogger.logEvent("[Settings]", $"[Settings] {Btn.Content} NumButtonClick | Tag: {Address} | Value: {item.Num_Value}");
             }
             PendingUpdate = true;
         }
@@ -74,6 +80,7 @@ namespace PentagonHMI.UserControls
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                 {
                     _Main.OPC.Write(settingBlockModel.Key, true);
+                    FileLogger.logEvent("[Settings]", $"[Settings] {button.Content} NumButtonClick | Tag: {settingBlockModel.Key} | Value: true");
                 }
             }
             catch(Exception exception)

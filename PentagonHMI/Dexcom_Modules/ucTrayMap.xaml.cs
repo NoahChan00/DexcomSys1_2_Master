@@ -272,6 +272,8 @@ namespace PentagonHMI.ChildControls
                     short[] OutputAry = default;
 
                     bool isAdminOrPenta = new List<string>() { "ADMIN", "PENTA" }.Contains(_Main.UserAccessLevel.ToUpper());
+                    string usrAcc = _Main.UserAccessLevel;
+
                     if(GlobalFunctions.IsSystem1)
                     {
                         //BatAry = OPCore.Read<short[]>(Tag_Btry_Slot, typeof(short), BRow * BCol);
@@ -286,6 +288,14 @@ namespace PentagonHMI.ChildControls
                                 Button tb = item as Button;
                                 string result = LAry[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
+                                if (isAdminOrPenta || usrAcc == "Engineer")
+                                {
+                                    tb.IsEnabled = true;
+                                }
+                                else
+                                {
+                                    tb.IsEnabled = false;
+                                }
                             }
                         if(RAry != null)
                             foreach(var item in ugrd_RightTray.Children)
@@ -293,6 +303,14 @@ namespace PentagonHMI.ChildControls
                                 Button tb = item as Button;
                                 string result = RAry[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
+                                if (isAdminOrPenta || usrAcc == "Engineer")
+                                {
+                                    tb.IsEnabled = true;
+                                }
+                                else
+                                {
+                                    tb.IsEnabled = false;
+                                }
                             }
                         if(PCBAry != null)
                             foreach(var item in pcba_SlotTray.Children)
@@ -300,6 +318,14 @@ namespace PentagonHMI.ChildControls
                                 Button tb = item as Button;
                                 string result = PCBAry[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
+                                if (isAdminOrPenta || usrAcc == "Engineer")
+                                {
+                                    tb.IsEnabled = true;
+                                }
+                                else
+                                {
+                                    tb.IsEnabled = false;
+                                }
                             }
                         //if(BatAry != null)
                         //    foreach(var item in bat_SlotTray.Children)
@@ -322,6 +348,14 @@ namespace PentagonHMI.ChildControls
                                 Button tb = item as Button;
                                 string result = InputL[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
+                                if (isAdminOrPenta || usrAcc == "Engineer")
+                                {
+                                    tb.IsEnabled = true;
+                                }
+                                else
+                                {
+                                    tb.IsEnabled = false;
+                                }
                             }
                         if(InputR != null)
                             foreach(var item in input_RightSlot.Children)
@@ -329,6 +363,14 @@ namespace PentagonHMI.ChildControls
                                 Button tb = item as Button;
                                 string result = InputR[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
+                                if (isAdminOrPenta || usrAcc == "Engineer")
+                                {
+                                    tb.IsEnabled = true;
+                                }
+                                else
+                                {
+                                    tb.IsEnabled = false;
+                                }
                             }
                         if(OutputAry != null)
                             foreach(var item in output_Slot.Children)
@@ -337,6 +379,14 @@ namespace PentagonHMI.ChildControls
                                 // Somehow tb.Tag start from 0 unlike above 2
                                 string result = OutputAry[Convert.ToInt32(tb.Tag) - 1].ToString();
                                 tb.Background = Dic_ResultColor[result];
+                                if (isAdminOrPenta || usrAcc == "Engineer")
+                                {
+                                    tb.IsEnabled = true;
+                                }
+                                else
+                                {
+                                    tb.IsEnabled = false;
+                                }
                             }
                     }
                 }

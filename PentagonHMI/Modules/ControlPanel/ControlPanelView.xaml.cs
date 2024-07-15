@@ -314,7 +314,7 @@ namespace PentagonHMI
                             },
                             ControlPanelToggleEnableTag = new Logix.Tag
                             {
-                                Name = "MC_System_Tags.MachineRunning",
+                                Name = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineRunning" : "System2_MC_Tag.MachineRunning",
                                 DataType = Logix.Tag.ATOMIC.BOOL
                             }
                         }
@@ -555,7 +555,7 @@ namespace PentagonHMI
                             {
                                 bool value = Convert.ToBoolean(
                                     x.ControlPanelToggleEnableTag.Value) == false &&
-                                    _Main.UserAccessLevel != "Operator";
+                                    (_Main.UserAccessLevel != "Operator" && _Main.UserAccessLevel != "Technician");
 
                                 if(x.ControlPanelToggleEnable != value)
                                 {

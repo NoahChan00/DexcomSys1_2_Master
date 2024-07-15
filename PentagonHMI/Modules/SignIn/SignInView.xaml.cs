@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using PentagonHMI.LogicClasses;
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -95,8 +96,9 @@ namespace PentagonHMI
                 if(PreCheck() == true)
                 {
                     main.UserAccessLevel = main.SQLer.Exec_Scalar<string>($"SELECT [LEVEL] FROM USERS WHERE USERNAME = '{Username.Text}' AND PASSWORD = '{Password.Text}'");
+                    main.UserName = Username.Text;
 
-                    if(string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                    if (string.IsNullOrWhiteSpace(main.UserAccessLevel))
                         if(LocalAccountCheck(Username.Text, Password.Text))
                             main.UserAccessLevel = "Administrator";
 
@@ -125,6 +127,7 @@ namespace PentagonHMI
             {
                 Username.Text = string.Empty;
                 Password.Text = string.Empty;
+                main.UserName = string.Empty;
                 Hide();
             }
             catch(Exception exception)
