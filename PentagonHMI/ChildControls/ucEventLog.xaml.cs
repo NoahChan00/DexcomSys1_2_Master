@@ -65,6 +65,12 @@ namespace PentagonHMI.ChildControls
             datePickerLotSummary.DisplayDate = DateTime.Now;
             datePickerLotSummary.Text = DateTime.Now.ToString();
 
+            datePickerSettingsLog.DisplayDate = DateTime.Now;
+            datePickerSettingsLog.Text = DateTime.Now.ToString();
+
+            datePickerUsersLog.DisplayDate = DateTime.Now;
+            datePickerUsersLog.Text = DateTime.Now.ToString();
+
             datePickerAlarm.DisplayDate = DateTime.Now;
             datePickerAlarm.Text = DateTime.Now.ToString();
 
@@ -424,6 +430,109 @@ namespace PentagonHMI.ChildControls
                 return dtCsv;
             }
         }
+
+        private DataTable loadSettingsLogTable()
+        {
+            DataTable dtCsv = new DataTable();
+            try
+            {
+                string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerSettingsLog.Text).ToString("yyyy-MMM"), "Settings");
+                string Filename = $"Settings_{Convert.ToDateTime(datePickerSettingsLog.Text).ToString("yyyy-MMM-dd")}.csv";
+                string strFilePath = Path.Combine(LogsPath, Filename);
+                currentPath = strFilePath;
+                if (File.Exists(strFilePath))
+                {
+                    string allLine = "";
+                    var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    using (var sr = new StreamReader(fs))
+                    {
+                        allLine = sr.ReadToEnd();
+                        sr.Close();
+                        fs.Close();
+                    }
+
+                    string[] stringList = allLine.Split('\n');
+                    foreach (string row in stringList)
+                    {
+                        string[] cell = row.Split(',');
+                        if (stringList[0] == row)
+                        {
+                            foreach (string column in cell)
+                            {
+                                dtCsv.Columns.Add(column.Trim());
+                            }
+                        }
+                        else
+                        {
+                            DataRow dr = dtCsv.NewRow();
+                            for (int i = 0; i < cell.Length; i++)
+                            {
+                                dr[i] = cell[i];
+                            }
+                            dtCsv.Rows.Add(dr);
+                        }
+                    }
+                }
+                return dtCsv;
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
+                return dtCsv;
+            }
+        }
+
+        private DataTable loadUsersLogTable()
+        {
+            DataTable dtCsv = new DataTable();
+            try
+            {
+                string LogsPath = Path.Combine(FileLogger.DefaultLocation + "Logs_" + Convert.ToDateTime(datePickerUsersLog.Text).ToString("yyyy-MMM"), "Users");
+                string Filename = $"Users_{Convert.ToDateTime(datePickerUsersLog.Text).ToString("yyyy-MMM-dd")}.csv";
+                string strFilePath = Path.Combine(LogsPath, Filename);
+                currentPath = strFilePath;
+                if (File.Exists(strFilePath))
+                {
+                    string allLine = "";
+                    var fs = new FileStream(strFilePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    using (var sr = new StreamReader(fs))
+                    {
+                        allLine = sr.ReadToEnd();
+                        sr.Close();
+                        fs.Close();
+                    }
+
+                    string[] stringList = allLine.Split('\n');
+                    foreach (string row in stringList)
+                    {
+                        string[] cell = row.Split(',');
+                        if (stringList[0] == row)
+                        {
+                            foreach (string column in cell)
+                            {
+                                dtCsv.Columns.Add(column.Trim());
+                            }
+                        }
+                        else
+                        {
+                            DataRow dr = dtCsv.NewRow();
+                            for (int i = 0; i < cell.Length; i++)
+                            {
+                                dr[i] = cell[i];
+                            }
+                            dtCsv.Rows.Add(dr);
+                        }
+                    }
+                }
+                return dtCsv;
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
+                return dtCsv;
+            }
+        }
+
 
         private DataTable loadRamBarcodeTable()
         {
@@ -1399,6 +1508,7 @@ namespace PentagonHMI.ChildControls
                             //}
                             if (Directory.Exists(combined))
                             {
+                                currentPath = combined;
                                 DirectoryInfo fi = new DirectoryInfo(combined);
                                 Process.Start(fi.FullName);
                             }
@@ -1416,6 +1526,7 @@ namespace PentagonHMI.ChildControls
                         {
                             //FileInfo fi = new FileInfo(system2FailImage);
                             //Process.Start(fi.Directory.FullName);
+                            currentPath = system2FailImage;
                             DirectoryInfo fi = new DirectoryInfo(system2FailImage);
                             Process.Start(fi.FullName);
                         }
@@ -1438,6 +1549,7 @@ namespace PentagonHMI.ChildControls
                         //}
                         if (Directory.Exists(combineBattery))
                         {
+                            currentPath = combineBattery;
                             DirectoryInfo fi = new DirectoryInfo(combineBattery);
                             Process.Start(fi.FullName);
                         }
@@ -1447,9 +1559,34 @@ namespace PentagonHMI.ChildControls
                         }
                     }
                     break;
+                case "SETTINGS":
+                    //item = Path.Combine(FileLogger.DefaultLocation_Time, "Alarm");
+                    //if (!Directory.Exists(item))
+                    //    Directory.CreateDirectory(item);
+                    //Process.Start(item);
+                    datePickerSettingsLog.DisplayDate = DateTime.Now;
+                    datePickerSettingsLog.Text = datePickerSettingsLog.DisplayDate.ToString();
+                    SettingsTab.Visibility = Visibility.Visible;
+                    SettingsTab.IsSelected = true;
+                    DatePickerSettings_SelectedDateChanged(null, null);
+                    break;
+                case "USERS":
+                    //item = Path.Combine(FileLogger.DefaultLocation_Time, "Alarm");
+                    //if (!Directory.Exists(item))
+                    //    Directory.CreateDirectory(item);
+                    //Process.Start(item);
+                    datePickerUsersLog.DisplayDate = DateTime.Now;
+                    datePickerUsersLog.Text = datePickerUsersLog.DisplayDate.ToString();
+                    UsersTab.Visibility = Visibility.Visible;
+                    UsersTab.IsSelected = true;
+                    DatePickerUsers_SelectedDateChanged(null, null);
+                    break;
             }
 
-            LogMenu.Visibility = Visibility.Collapsed;
+            if (SP.Tag.ToString().ToUpper() != "FAILIMAGEINSERTION" && SP.Tag.ToString().ToUpper() != "FAILIMAGEBATTERY")
+            {
+                LogMenu.Visibility = Visibility.Collapsed; 
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -1473,6 +1610,8 @@ namespace PentagonHMI.ChildControls
             ZoneBarcodeTab.Visibility = Visibility.Collapsed;
             RackBarcodeTab.Visibility = Visibility.Collapsed;
             TorqueDriverResultTabItem.Visibility = Visibility.Collapsed;
+            SettingsTab.Visibility = Visibility.Collapsed;
+            UsersTab.Visibility = Visibility.Collapsed;
         }
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -1509,6 +1648,11 @@ namespace PentagonHMI.ChildControls
                     Process.Start(currentPath);
                 }
             }
+        }
+        private void DatePickerSettings_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Utilities.FileLogger.logButton(strEventLog, "Retrieve Settings Log", MethodBase.GetCurrentMethod().ToString());
+            gridSettingsLog.ItemsSource = loadSettingsLogTable().DefaultView;
         }
 
         private void DatePickerVisionResult_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -1578,6 +1722,12 @@ namespace PentagonHMI.ChildControls
                 Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 return dtCsv;
             }
+        }
+
+        private void DatePickerUsers_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Utilities.FileLogger.logButton(strEventLog, "Retrieve Users Log", MethodBase.GetCurrentMethod().ToString());
+            gridUsersLog.ItemsSource = loadUsersLogTable().DefaultView;
         }
     }
 }

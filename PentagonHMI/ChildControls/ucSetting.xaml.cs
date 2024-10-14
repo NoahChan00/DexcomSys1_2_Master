@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Utilities;
 
 namespace PentagonHMI.ChildControls
 {
@@ -232,6 +233,7 @@ namespace PentagonHMI.ChildControls
                                                 {
                                                     y.Num_Value = value;
                                                 }
+                                                //FileLogger.logSetting("[HMI - Settings]", $"[HMI - Settings] {y.Key} - Data Change | Tag : {y.Tag.Name} | Value : {value}");
                                             }
                                             else if(y.Vis_isToggle == Visibility.Visible)
                                             {
@@ -241,6 +243,7 @@ namespace PentagonHMI.ChildControls
                                                 {
                                                     y.Tg_Stat = value;
                                                 }
+                                                //FileLogger.logSetting("[HMI - Settings]", $"[HMI - Settings] {y.Key} - Data Change | Tag : {y.Tag.Name} | Value : {value}");
                                             }
                                         }
                                     }

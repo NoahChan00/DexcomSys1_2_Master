@@ -334,6 +334,8 @@
     <!-- Error Messages -->
     <system:String x:Key="LOGIN_ERROR_MSG_PASSWORD_IS_EMPTY">Password cannot be empty.</system:String>
     <system:String x:Key="LOGIN_ERROR_MSG_USERNAME_IS_EMPTY">Username cannot be empty.</system:String>
+    <system:String x:Key="LOGIN_ERROR_MSG_LOGIN_ATTEMPT_EXCEED">Login attempt for this account has been exceed its own limit.</system:String>
+    <system:String x:Key="LOGIN_ERROR_MSG_ADMIN_LOGIN">Please login as admin to proceed.</system:String>
     <!-- Labels -->
     <system:String x:Key="LOGIN_LABEL_PASSWORD">Password</system:String>
     <system:String x:Key="LOGIN_LABEL_USERNAME">Username</system:String>

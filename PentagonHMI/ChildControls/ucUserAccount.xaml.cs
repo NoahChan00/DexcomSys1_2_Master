@@ -160,6 +160,29 @@ namespace PentagonHMI.ChildControls
             }
         }
 
+        private void btnResetAttempt_Click(object sender, RoutedEventArgs e)
+        {
+            Utilities.FileLogger.logButton(StrAccount, $"Reset User [{UserName}] Login Attempt", MethodBase.GetCurrentMethod().ToString());
+
+            try
+            {
+                if (UserName != null)
+                {
+                    _Main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginAttempt] = '0' WHERE [UserName] = '{UserName}'");
+                    MessageBox.Show("User Login Attempt Reset Successful");
+                }
+                else
+                {
+                    MessageBox.Show("No User Selected");
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError("[UserAccountPage]", $"Reset Attempt - {ex.Message}");
+                MessageBox.Show("User Login Attempt Reset Fail");
+            }
+        }
+
         #endregion FormEvents
 
         #region Events

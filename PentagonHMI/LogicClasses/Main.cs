@@ -126,6 +126,10 @@ namespace PentagonHMI.LogicClasses
 
         public event OnAlwaysUpdateHandler OnAlwaysUpdate;
 
+        public delegate void OnPopUpSignInUpdateHandler();
+
+        public event OnPopUpSignInUpdateHandler OnPopUpSignInUpdate;
+
         public delegate void OnFastUpdateHandler();
 
         public event OnFastUpdateHandler OnFastUpdate;
@@ -149,7 +153,7 @@ namespace PentagonHMI.LogicClasses
             EngineeringPageOn, RejectBinDisplayPageOn, RackConfigurationPageOn,
             TrayMapPageOn, StackerPageOn, DUTPageOn, LotPageOn;
 
-        public bool HasErrorCheck, HasStationStatusCheck, HasBreakTimeCheck, HasLogManagement;
+        public bool HasErrorCheck, HasStationStatusCheck, HasBreakTimeCheck, HasLogManagement, HasPopUpSignIn;
 
         public bool HasRackStatus;
 
@@ -354,6 +358,7 @@ namespace PentagonHMI.LogicClasses
                 new Task(() => GeneralLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
                 new Task(() => FastLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
                 new Task(() => PageLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
+                new Task(() => PopUpSignInLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
             }
             catch(Exception ex)
             {
@@ -457,7 +462,7 @@ namespace PentagonHMI.LogicClasses
                 switch(GlobalFunctions.ProjectType)
                 {
                     case ProjectType.DEXCOM:
-                        HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck = HasUpdateOEEShift = HasPLCSetTime = HasUPH = true;
+                        HasPopUpSignIn = HasErrorCheck = HasStationStatusCheck = HasLogManagement = HasBreakTimeCheck = HasUpdateOEEShift = HasPLCSetTime = HasUPH = true;
                         // LEK 20230203 System 1_2 not have island0 function
                         //HasTestCSV = HasTesterStnUnitTracker = HasLaserStnUnitTracker = HasUnldStnUnitTracker = HasTnRStnUnitTracker = 
                         HasLotSummary = true;
@@ -610,6 +615,25 @@ namespace PentagonHMI.LogicClasses
             catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
+            }
+        }
+
+        private void PopUpSignInLane()
+        {
+            try
+            {
+                while (!cancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    //if (HomePageON && Home_OnUpdate != null)
+                    //    Home_OnUpdate?.Invoke();
+
+                    OnPopUpSignInUpdate?.Invoke();
+                    cancellationTokenSource.Token.WaitHandle.WaitOne(500);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, "PopUpSignInLane");
             }
         }
 

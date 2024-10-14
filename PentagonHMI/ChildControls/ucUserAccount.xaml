@@ -89,7 +89,10 @@
                                     <PasswordBox Height="30" Name="txtCNewPass1" Width="150"  Margin="150,-26,0,0" HorizontalAlignment="Left" />
                                     <!--<TextBox Height="30" Name="txtCNewPass1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left" />-->
 
-                                    <Button Background="{DynamicResource NormalBackgroundBrush}" Content="Change Password" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnChangePassword" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnChangePassword_Click" FontSize="16" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <!--<Button Background="{DynamicResource NormalBackgroundBrush}" Content="Reset Attempt" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnReset" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnResetAttempt_Click" FontSize="16" />-->
+                                        <Button Background="{DynamicResource NormalBackgroundBrush}" Content="Change Password" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnChangePassword" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnChangePassword_Click" FontSize="16" />
+                                    </StackPanel>
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="Add User" FontSize="16" BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3" Height="227">

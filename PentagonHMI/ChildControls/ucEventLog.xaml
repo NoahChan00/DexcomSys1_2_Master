@@ -688,6 +688,84 @@
                                 </Grid>
                             </Grid>
                         </TabItem>
+
+                        <TabItem Name="SettingsTab" Visibility="Collapsed" Header="Settings Action Log">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <!--test-->
+                                        <DatePicker SelectedDateChanged="DatePickerSettings_SelectedDateChanged" Margin="10 0 20 0" Height="30"
+                                                Name="datePickerSettingsLog" VerticalAlignment="Center" Width="250" FontSize="15" SelectedDateFormat="Long"
+                                                Focusable="False" />
+                                    </StackPanel>
+                                    <Button Grid.Column="1" Style="{DynamicResource styGlassButton}" Background="LightGray"
+                                            Foreground="{DynamicResource NormalForegroundBrush}" Width="105" Height="30" Margin="0 0 5 0" Padding="10"
+                                            Content="Open File" FontSize="20" Click="OpenFile_Click" />
+                                    <Button Grid.Column="2" Style="{DynamicResource styGlassButton}" Background="LightGray"
+                                            Foreground="{DynamicResource NormalForegroundBrush}" Width="130" Height="30" Margin="0 0 5 0" Padding="10"
+                                            Content="Open Folder" FontSize="20" Click="OpenFolder_Click" />
+                                    <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource styGlassButton}"
+                                            Background="LightGray" Foreground="{DynamicResource NormalForegroundBrush}" Width="95" Height="30" Margin="0 0 5 0"
+                                            Padding="10" Content="Back" FontSize="20" Click="Button_Click" />
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <ScrollViewer VerticalScrollBarVisibility="Visible" Height="auto" Margin="0, 0, 0, 0">
+                                        <DataGrid HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsReadOnly="True"
+                                                Name="gridSettingsLog" CanUserAddRows="false" ItemsSource="{Binding}" FontSize="15" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Name="UsersTab" Visibility="Collapsed" Header="Users Action Log">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <!--test-->
+                                        <DatePicker SelectedDateChanged="DatePickerUsers_SelectedDateChanged" Margin="10 0 20 0" Height="30"
+                                                Name="datePickerUsersLog" VerticalAlignment="Center" Width="250" FontSize="15" SelectedDateFormat="Long"
+                                                Focusable="False" />
+                                    </StackPanel>
+                                    <Button Grid.Column="1" Style="{DynamicResource styGlassButton}" Background="LightGray"
+                                            Foreground="{DynamicResource NormalForegroundBrush}" Width="105" Height="30" Margin="0 0 5 0" Padding="10"
+                                            Content="Open File" FontSize="20" Click="OpenFile_Click" />
+                                    <Button Grid.Column="2" Style="{DynamicResource styGlassButton}" Background="LightGray"
+                                            Foreground="{DynamicResource NormalForegroundBrush}" Width="130" Height="30" Margin="0 0 5 0" Padding="10"
+                                            Content="Open Folder" FontSize="20" Click="OpenFolder_Click" />
+                                    <Button Grid.Column="3" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{DynamicResource styGlassButton}"
+                                            Background="LightGray" Foreground="{DynamicResource NormalForegroundBrush}" Width="95" Height="30" Margin="0 0 5 0"
+                                            Padding="10" Content="Back" FontSize="20" Click="Button_Click" />
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <ScrollViewer VerticalScrollBarVisibility="Visible" Height="auto" Margin="0, 0, 0, 0">
+                                        <DataGrid HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsReadOnly="True"
+                                                Name="gridUsersLog" CanUserAddRows="false" ItemsSource="{Binding}" FontSize="15" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
                     </TabControl>
                 </Grid>
                 <Canvas Visibility="Visible" Name="LogMenu" Grid.Row="1" Background="White" Margin="5 0 5 5">
@@ -750,6 +828,20 @@
                                 <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png" />
                                 <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="Lot Summary Log" VerticalAlignment="Center"
                                         HorizontalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel Name="SettingsLogIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="SETTINGS" Margin="5"
+                                    Orientation="Vertical">
+                                <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png" />
+                                <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="Settings Log" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel Name="UsersLogIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="USERS" Margin="5"
+                                    Orientation="Vertical">
+                                <Image Margin="5" Width="150" Height="150" Stretch="Fill" Source="/HMI;component/Icon/log-icon.png" />
+                                <TextBlock Margin="0" FontSize="20" FontWeight="Bold" Text="Users Log" VerticalAlignment="Center"
+                                    HorizontalAlignment="Center" />
                             </StackPanel>
 
                             <StackPanel Name="FailImageInsertionIcon" PreviewMouseLeftButtonDown="StackPanel_PreviewMouseLeftButtonDown" Tag="FAILIMAGEINSERTION" Margin="5"

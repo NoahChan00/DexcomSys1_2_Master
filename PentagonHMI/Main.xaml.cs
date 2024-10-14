@@ -7,6 +7,7 @@ using PentagonHMI.Views.Main;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
@@ -14,6 +15,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -109,6 +111,7 @@ namespace PentagonHMI
         private PopUpView popUpView = null;
         private PrinterService printerService = null;
         private SignInView signInView = null;
+        private SignInView popupSignInView = null;
         private MainView mainView = null;
         private EngineeringView engineeringView = null;
         private ControlPanelView controlPanelView = null;
@@ -207,7 +210,7 @@ namespace PentagonHMI
                 {
                     Img_AlmDis, Img_IOListDis, Img_IOLocDis, Img_Login, Img_MotorDis, Img_SettingDis,
                     Img_UserDis, Img_ClcDis, Img_DryrunDis, Img_EngineeringDis,
-                    RackConfigurationDisableImage, RecipeConfigurationDisableImage
+                    RackConfigurationDisableImage, RecipeConfigurationDisableImage, Img_TrayMapDis
                 };
 
                 GlobalFunctions.LoadErrorList();
@@ -230,14 +233,15 @@ namespace PentagonHMI
                 PreLoadPages();
 
                 //v1.0.32.3 - critical change: always change penta user access to admin
-                _Main.SQLer.Exec_NonQuery("UPDATE [Users] SET [Level] = 'admin' WHERE [UserName] = 'penta';");
-                //_Main.SQLer.Exec_NonQuery("DELETE FROM [Users] WHERE [Level] = 'admin' OR [UserName] = 'penta';"); //<- change to delete according to the request (Na) 15/7/2024
+                //_Main.SQLer.Exec_NonQuery("UPDATE [Users] SET [Level] = 'admin' WHERE [UserName] = 'penta';");
+                _Main.SQLer.Exec_NonQuery("DELETE FROM [Users] WHERE [Level] = 'admin' OR [UserName] = 'penta';"); //<- change to delete according to the request (Na) 15/7/2024
 
                 EMtag = new Tag(_Main.TN.Dic_Key_Address[TagName.Key.EngineeringMode]);
 
                 dgAlertWarning.ItemsSource = AlertWarningDt.DefaultView;
 
                 _Main.OnAlwaysUpdate += _Main_OnAlwaysUpdate;
+                _Main.OnPopUpSignInUpdate += _MainPopUpUpdate;
                 this.Closed += new EventHandler(Main_Closed);
             }
             catch(Exception ex)
@@ -299,6 +303,21 @@ namespace PentagonHMI
             catch(Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
+            }
+        }
+
+        private void _MainPopUpUpdate()
+        {
+            try
+            {
+                if (_Main.HasPopUpSignIn)
+                {
+                    Dispatcher.Invoke(PopUpSignInAdminView);
+                }
+            }
+            catch (Exception ex)
+            {
+                FileLogger.logError(ex.Message, ex.ToString());
             }
         }
 
@@ -480,7 +499,7 @@ namespace PentagonHMI
             //Custom
             bool HasZoneLeftVisionRightMainPage = false, HasArcadiaConveyorMain = false, HasZoneLeftRackRightMainPage = false,
                  HasRejectBinDisplay = false, HasRackConfig = false, HasRecipeConfig = false, HasLifterTab = false, HasTrayMap = false, HasStacker = false,
-                 HasDUT = false;
+                 HasDUT = false, HasPopUpSignIn = false;
 
             int rejectBinCount = 8;
             string rejectBinDisplayStatusTagKey = "DIMM_Data_Tracking_Barcd_RejBin";
@@ -490,6 +509,7 @@ namespace PentagonHMI
                 case ProjectType.DEXCOM:
                     HasIO = HasUserAccount = HasDryrun = HasSOEE = HasLOEE = HasSetting =
                     HasLog = HasMotor = HasEng = HasTrayMap = HasStacker = HasDUT = HasLot = HasPopUp = HasEng = true;
+                    HasPopUpSignIn = true;
                     HomeView = new ChildControls.ucHome(_Main);
                     break;
 
@@ -570,7 +590,7 @@ namespace PentagonHMI
                 popUpView = new PopUpView(ref _Main);
 
             if(HasSignin)
-                signInView = new SignInView(ref _Main);
+                signInView = new SignInView(ref _Main, false);
             SP_Login.Visibility = HasSignin ? Visibility.Visible : Visibility.Collapsed;
             lblCurrUser.Visibility = HasSignin ? Visibility.Visible : Visibility.Collapsed;
 
@@ -586,6 +606,8 @@ namespace PentagonHMI
                 DUTView = new ChildControls.ucDUT(_Main);
             if(HasLot)
                 LotView = new ChildControls.ucLotEntry(_Main);
+            if (HasPopUpSignIn)
+                popupSignInView = new SignInView(ref _Main, true);
 
             //directorySizeService = new DirectorySizeService(_Main);
 
@@ -1385,6 +1407,27 @@ namespace PentagonHMI
             }
         }
 
+        private void PopUpSignInAdminView()
+        {
+            try
+            {
+                string tag = "b_HMI_ToRequestAdminLogin";
+
+                //bool pop = _Main.OPC.Read<bool>(tag);
+                //if (true)
+                if (_Main.OPC.Read<bool>(tag))
+                {
+                    if (!popupSignInView.IsActive)
+                    {
+                        popupSignInView.ShowDialog(); 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileLogger.logError("[HMI - PopUpSignInView]", ex.Message);
+            }
+        }
         #endregion Method
 
         #region Destructor
@@ -1410,7 +1453,7 @@ namespace PentagonHMI
                 if (LogIN)
                 {
                     logoutCount = 0;
-                    FileLogger.logEvent("[HMI]", $"[HMI] UserAccessLevel: {_Main.UserAccessLevel} | {_Main.UserName} Login Success"); 
+                    FileLogger.logUser("[HMI]", $"[HMI] UserAccessLevel: {_Main.UserAccessLevel} | {_Main.UserName} Login Success"); 
                 }
                 else
                 {
@@ -1418,7 +1461,7 @@ namespace PentagonHMI
                     logoutCount++;
                     if (logoutCount == 1)
                     {
-                        FileLogger.logEvent("[HMI]", $"[HMI] Logout Success");
+                        FileLogger.logUser("[HMI]", $"[HMI] Logout Success");
                     }
                 }
 
@@ -1433,7 +1476,7 @@ namespace PentagonHMI
                     {
                         if (_Main.UserAccessLevel == "Technician")
                         {
-                            if (img == Img_DryrunDis || img == Img_IOListDis /*|| img == Img_EngineeringDis || img == Img_DryrunDis*/)
+                            if (img == Img_DryrunDis || img == Img_IOListDis || img == Img_MotorDis /*|| img == Img_EngineeringDis || img == Img_DryrunDis*/)
                             {
                                 img.Visibility = Visibility.Collapsed;
                             }
@@ -1455,7 +1498,7 @@ namespace PentagonHMI
                             }
                         }
 
-                        if (_Main.UserAccessLevel == "admin" || _Main.UserAccessLevel == "Penta")
+                        if (_Main.UserAccessLevel == "Administrator" || _Main.UserAccessLevel == "Penta")
                         {
                             img.Visibility = LogIN ? Visibility.Collapsed : Visibility.Visible;
                         }
@@ -1540,7 +1583,7 @@ namespace PentagonHMI
                 if(SP_Colored != null)
                     SP_Colored.Background = Brushes.Transparent;
 
-                FileLogger.logEvent("[HMI]", $"[HMI] UserID: {_Main.UserName} | Access Level: {_Main.UserAccessLevel} | Page: {Page}");
+                FileLogger.logUser("[HMI]", $"[HMI] UserID: {_Main.UserName} | Access Level: {_Main.UserAccessLevel} | Page: {Page}");
 
                 // https://en.wikipedia.org/wiki/Goto#Criticism, suspect below logic written way before 21st century
                 // https://en.wikipedia.org/wiki/Structured_programming Please study this before using goto

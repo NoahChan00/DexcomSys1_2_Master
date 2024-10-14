@@ -206,7 +206,7 @@ namespace PentagonHMI
                         StopWrite = "HMI_Tags.StopButton";
                         ResetRead = "Cell_PIO_131:24:O.2";
                         ResetWrite = "HMI_Tags.ResetButton";
-                        InitializeRead = "MC_System_Tags.MachineRunning";
+                        InitializeRead = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineRunning" : "System2_MC_Tag.MachineRunning";
                         InitializeWrite = GlobalFunctions.IsSystem1 ? "System1_MC_Tag.MachineInit" : "System2_MC_Tag.MachineInit";
 
                         if(_Main.MachineName.ToUpper() == "FINAL INSPECTION")
@@ -508,7 +508,7 @@ namespace PentagonHMI
                         if(!string.IsNullOrEmpty(x.ControlPanelActionEnableTag.Name))
                         {
                             _Main.MyPLC.ReadTag(x.ControlPanelActionEnableTag);
-
+                            
                             if(x.ControlPanelActionEnableTag.Value != null)
                             {
                                 bool value = Convert.ToBoolean(

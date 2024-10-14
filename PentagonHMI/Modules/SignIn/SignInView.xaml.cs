@@ -27,16 +27,27 @@ namespace PentagonHMI
 
         private LogicClasses.Main main = null;
 
+        private bool isPopUp = false;
+
+        private int loginAttempt = 0;
+
+        private string loginAttemptStr;
+
+        private string lastLoginShiftTime;
+
+        private string lastLoginShiftDate;
+
         #endregion PrivateFields
 
         #region Constructor
 
-        public SignInView(ref LogicClasses.Main _main)
+        public SignInView(ref LogicClasses.Main _main, bool popUp)
         {
             try
             {
                 InitializeComponent();
                 initialize(_main);
+                isPopUp = popUp;
             }
             catch(Exception exception)
             {
@@ -96,23 +107,103 @@ namespace PentagonHMI
                 if(PreCheck() == true)
                 {
                     main.UserAccessLevel = main.SQLer.Exec_Scalar<string>($"SELECT [LEVEL] FROM USERS WHERE USERNAME = '{Username.Text}' AND PASSWORD = '{Password.Text}'");
-                    main.UserName = Username.Text;
 
-                    if (string.IsNullOrWhiteSpace(main.UserAccessLevel))
-                        if(LocalAccountCheck(Username.Text, Password.Text))
-                            main.UserAccessLevel = "Administrator";
-
-                    if(!string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                    if (!isPopUp)
                     {
-                        Username.Text = "";
-                        Password.Text = "";
-                        Hide();
+                        DateTime currDate = DateTime.Now;
 
-                        Messenger.Default.Send<Tuple<SignInView, string>, Main>(
-                            new Tuple<SignInView, string>(this, main.UserAccessLevel));
+                        //login attempt receive customer feedback say want to remove it on 23/7/2024 by plc people -> Max, temporary remove for both lpm and tmp - KWY 25/7/2024
+                        //if (!string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                        //{
+                        //    lastLoginDateTimeStr = main.SQLer.Exec_Scalar<string>($"SELECT [LASTLOGINDATETIME] FROM USERS WHERE USERNAME = '{Username.Text}' AND PASSWORD = '{Password.Text}'");
+                        //    loginAttemptStr = main.SQLer.Exec_Scalar<string>($"SELECT [LOGINATTEMPT] FROM USERS WHERE USERNAME = '{Username.Text}' AND PASSWORD = '{Password.Text}'");
+
+                        //    if (string.IsNullOrEmpty(loginAttemptStr) || string.IsNullOrEmpty(lastLoginDateTimeStr))
+                        //    {
+                        //        //main.SQLer.Exec_NonQuery($"UPDATE TABLE [Users] SET [LoginAttempt] = '0' AND [LastLoginDateTime] = '{currDate}' WHERE [UserName] = {Username.Text};");
+                        //        loginAttempt = 0;
+                        //    }
+                        //    else
+                        //    {
+                        //        loginAttempt = Convert.ToInt32(loginAttemptStr);
+                        //    }
+
+                        //    if (!string.IsNullOrEmpty(lastLoginDateTimeStr))
+                        //    {
+                        //        DateTime lastLogindateTime = DateTime.Parse(lastLoginDateTimeStr);
+                        //        if (currDate.Date > lastLogindateTime.Date)
+                        //        {
+                        //            loginAttempt = 0;
+                        //            //Update db
+                        //            //main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginAttempt] = '0' WHERE [UserName] = {Username.Text};");
+                        //        }
+                        //    }
+                        //}
+
+                        if (string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                        {
+                            if (LocalAccountCheck(Username.Text, Password.Text))
+                            {
+                                main.UserAccessLevel = "Administrator";
+                                loginAttempt = 0;
+                            }
+                        }
+
+                        //if (loginAttempt < 11)
+                        //{
+                            if (!string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                            {
+                                main.UserName = Username.Text;
+                                //if (main.UserAccessLevel != "Administrator")
+                                //{
+                                //    loginAttempt++;
+                                //    //Update db
+                                //    main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginAttempt] = '{loginAttempt}', [LastLoginDateTime] = '{currDate}' WHERE [UserName] = '{Username.Text}';"); 
+                                //}
+                                Username.Text = "";
+                                Password.Text = "";
+                                Hide();
+
+                                Messenger.Default.Send<Tuple<SignInView, string>, Main>(
+                                    new Tuple<SignInView, string>(this, main.UserAccessLevel));
+                            }
+                            else
+                                this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_TEXTBLOCK_INVALID").ToString();
+                        //}
+                        //else
+                        //{
+                        //    this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_ERROR_MSG_LOGIN_ATTEMPT_EXCEED").ToString();
+                        //} 
                     }
                     else
-                        this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_TEXTBLOCK_INVALID").ToString();
+                    {
+                        if (string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                            if (LocalAccountCheck(Username.Text, Password.Text))
+                                main.UserAccessLevel = "Administrator";
+
+                        if (!string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                        {
+                            if (main.UserAccessLevel == "Administrator")
+                            {
+                                main.UserName = Username.Text;
+                                FileLogger.logUser("[HMI]", $"[HMI] {main.UserName} Login Success | Remark : Bypass");
+                                Username.Text = "";
+                                Password.Text = "";
+                                Hide();
+
+                                //Messenger.Default.Send<Tuple<SignInView, string>, Main>(
+                                //    new Tuple<SignInView, string>(this, main.UserAccessLevel)); 
+                                string tag = "b_HMI_ToRequestAdminLogin";
+                                main.OPC.Write(tag, false);
+                            }
+                            else
+                            {
+                                this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_ERROR_MSG_ADMIN_LOGIN").ToString();
+                            }
+                        }
+                        else
+                            this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_TEXTBLOCK_INVALID").ToString();
+                    }
                 }
             }
             catch(Exception exception)
@@ -164,8 +255,23 @@ namespace PentagonHMI
 
         private bool LocalAccountCheck(string StrName, string strPassword)
         {
-            if(StrName == "admin" && strPassword == "#admin123")
+            //Na requested to change in meeting 10/7/2024 
+            //if (StrName == "admin" && strPassword == "#admin123")
+            //{
+            //    return true;
+            //}
+            if (StrName == "penta" && strPassword == "#penta2121")
+            {
                 return true;
+            }
+            else if (StrName == "jabiladmin" && strPassword == "#penta5196")
+            {
+                return true;
+            }
+            else if (StrName == "plexusadmin" && strPassword == "#penta5196")
+            {
+                return true;
+            }
             return false;
         }
 

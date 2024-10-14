@@ -37,7 +37,8 @@ namespace PentagonHMI.UserControls
             bool Value = Tgbtn.IsChecked ?? false;
             string tgName = SettingList.SelectMany(x => x.Config).ToList().Find(y => y.Tag.Name == Address).Title;
             _Main.OPC.Write(Address, Value);
-            FileLogger.logEvent("[Settings]", $"[Settings] {tgName} ToggleClick | Tag: {Address} | Value: {Value}");
+            string strVal = Value ? "On" : "Off";
+            FileLogger.logSetting("[Settings]", $"[Settings] {tgName} ToggleClick | Tag: {Address} | Value: {strVal}");
 
             if(ProjectType.ARCADIA == GlobalFunctions.ProjectType)
             {
@@ -63,7 +64,7 @@ namespace PentagonHMI.UserControls
             {
                 _Main.OPC.Read(Address, item.DataType);
                 _Main.OPC.Write(Address, item.Num_Value, item.DataType);
-                FileLogger.logEvent("[Settings]", $"[Settings] {Btn.Content} NumButtonClick | Tag: {Address} | Value: {item.Num_Value}");
+                FileLogger.logSetting("[Settings]", $"[Settings] {Btn.Content} NumButtonClick | Tag: {Address} | Value: {item.Num_Value}");
             }
             PendingUpdate = true;
         }
@@ -80,7 +81,7 @@ namespace PentagonHMI.UserControls
                     MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
                 {
                     _Main.OPC.Write(settingBlockModel.Key, true);
-                    FileLogger.logEvent("[Settings]", $"[Settings] {button.Content} NumButtonClick | Tag: {settingBlockModel.Key} | Value: true");
+                    FileLogger.logSetting("[Settings]", $"[Settings] {button.Content} NumButtonClick | Tag: {settingBlockModel.Key} | Value: On");
                 }
             }
             catch(Exception exception)

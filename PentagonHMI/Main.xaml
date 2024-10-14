@@ -270,9 +270,16 @@
                                         <TextBlock Style="{StaticResource Title}" Text="Reject Bin" />
                                     </StackPanel>
 
-                                    <StackPanel x:Name="sp_TrayMap" Style="{StaticResource Bord}">
+                                    <!--<StackPanel x:Name="sp_TrayMap" Style="{StaticResource Bord}">
                                         <Image Style="{StaticResource ClickIcon}" Source="/HMI;component/Icon/gear.png" Tag="TrayMap" />
                                         <TextBlock Style="{StaticResource Title}" Text="Tray Map" />
+                                    </StackPanel>-->
+                                    <StackPanel Name="sp_TrayMap" Style="{StaticResource Bord}">
+                                        <Grid>
+                                            <Image Tag="TrayMap" Source="/HMI;component/Icon/gear.png" Style="{StaticResource ClickIcon}" />
+                                            <Image Name="Img_TrayMapDis" Source="/HMI;component/Icon/gear1.png" Style="{StaticResource Icon}" />
+                                        </Grid>
+                                        <TextBlock Text="Tray Map" Style="{StaticResource Title}" />
                                     </StackPanel>
 
                                     <StackPanel x:Name="sp_Stacker" Style="{StaticResource Bord}">

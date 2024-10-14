@@ -27,11 +27,11 @@
                        Style="{StaticResource ValueTextBlockStyle}"
                        Text="Please enter your credentials to proceed." />
 
-            <userControls:UCLabelTextboxErrorMessage Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+            <userControls:UCLabelTextboxErrorMessage Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Height="48"
                                                      x:Name="Username" ucLabelErrorContent=""
                                                      ucLabelTitleContent="Username" />
 
-            <userControls:UCLabelTextboxErrorMessage Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+            <userControls:UCLabelTextboxErrorMessage Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Height="55"
                                                      x:Name="Password" isPassword="True" ucLabelErrorContent=""
                                                      ucLabelTitleContent="Password" VerticalAlignment="Top" />
 

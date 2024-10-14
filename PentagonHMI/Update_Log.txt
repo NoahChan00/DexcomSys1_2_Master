@@ -1,4 +1,23 @@
-﻿Version         : V1.0.32.3
+﻿Version         : V1.0.32.4
+Date Modified   : 26/7/2023
+Modified By     : Khaw Wan Yen
+Changes         : 
+1. remove check login attempt when login (will reset in next day)
+2. Change password for admin account
+3. Fix Fail Image Log Icon Click issue
+
+Version         : V1.0.32.4
+Date Modified   : 18/7/2023
+Modified By     : Khaw Wan Yen
+Changes         :
+1. Page access change (approve by customer)
+2. add admin level (local account)
+3. add setting log and user log
+4. check login attempt when login (will reset in next day)
+5. add pop up sign in view
+**crtical change: When this version of hmi is applied, penta account will be deleted in database, so if revert back the hmi, penta will unable to login, need to use engineer access level to add it back
+
+Version         : V1.0.32.3
 Date Modified   : 15/3/2023
 Modified By     : Khaw Wan Yen
 Changes         :

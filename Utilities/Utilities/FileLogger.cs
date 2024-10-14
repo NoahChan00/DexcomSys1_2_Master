@@ -95,6 +95,78 @@ namespace Utilities
             }
         }
 
+        public static void logSetting(string type, string descriptions)
+        {
+            string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Settings";
+            string Filename = "Settings_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".csv";
+
+            if (descriptions.Length == 0)
+                return;
+
+            if (!Directory.Exists(strPath))
+                Directory.CreateDirectory(strPath);
+
+            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            {
+                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.WriteLine("DateTime,Message");
+                    writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + "," + descriptions);
+                    writer.Flush();
+                    writer.Close();
+                    stream.Close();
+                }
+            }
+            else
+            {
+                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + descriptions);
+                    writer.Flush();
+                    writer.Close();
+                    stream.Close();
+                }
+            }
+        }
+
+        public static void logUser(string type, string descriptions)
+        {
+            string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Users";
+            string Filename = "Users_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".csv";
+
+            if (descriptions.Length == 0)
+                return;
+
+            if (!Directory.Exists(strPath))
+                Directory.CreateDirectory(strPath);
+
+            if (!File.Exists(strPath + Path.DirectorySeparatorChar + Filename))
+            {
+                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.WriteLine("DateTime,Message");
+                    writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + "," + descriptions);
+                    writer.Flush();
+                    writer.Close();
+                    stream.Close();
+                }
+            }
+            else
+            {
+                using (FileStream stream = new FileStream((strPath + Path.DirectorySeparatorChar + Filename), FileMode.Append, FileAccess.Write, FileShare.ReadWrite))
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.WriteLine(DateTime.Now.ToString("yyyy-MMM-dd_HH:mm:ss.fff") + ", " + descriptions);
+                    writer.Flush();
+                    writer.Close();
+                    stream.Close();
+                }
+            }
+        }
+
         public static void LogAlertWarning(DataTable dt, DataTable prevdt, string ErrorCode, string ErrorAction)
         {
             //Log to Log & DT
@@ -108,11 +180,12 @@ namespace Utilities
                 DataRow dr = dt.NewRow();
 
                 dr["msgErrorCode"] = ErrorCode;
-                dr["msgError"] = ErrorActionString[1];
-                dr["msgAction"] = ErrorActionString[2];
+                dr["msgError"] = ErrorActionString[2];
+                dr["msgAction"] = ErrorActionString[3];
                 dr["msgModule"] = ErrorActionString[0];
-                dr["msgType"] = int.Parse(ErrorCode) >= 2000 ? "Warning" : "Error";
-                if(rows.Length != 0)
+                //dr["msgType"] = int.Parse(ErrorCode) >= 2000 ? "Warning" : "Error";
+                dr["msgType"] = ErrorActionString[1];
+                if (rows.Length != 0)
                 {
                     dr["msgDatetime"] = rows[0]["msgDatetime"];
                 }
