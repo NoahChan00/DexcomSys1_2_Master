@@ -90,7 +90,7 @@
                                     <!--<TextBox Height="30" Name="txtCNewPass1" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left" />-->
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                        <!--<Button Background="{DynamicResource NormalBackgroundBrush}" Content="Reset Attempt" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnReset" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnResetAttempt_Click" FontSize="16" />-->
+                                        <!--<Button Background="{DynamicResource NormalBackgroundBrush}" Content="Reset Shift" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnReset" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnResetAttempt_Click" FontSize="16" />-->
                                         <Button Background="{DynamicResource NormalBackgroundBrush}" Content="Change Password" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnChangePassword" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnChangePassword_Click" FontSize="16" />
                                     </StackPanel>
                                 </StackPanel>
@@ -117,7 +117,7 @@
                         </StackPanel>
                         <StackPanel  Grid.Column="1">
 
-                            <GroupBox BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3" Header="Delete ID" FontSize="16">
+                            <GroupBox BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3" Header="Delete ID" FontSize="16" >
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="200" />
@@ -129,7 +129,7 @@
             Height="auto"
             Margin="10, 10, 10, 10">
                                         <DataGrid
-                Name="dgLog"
+                Name="dgLog" 
                 AutoGenerateColumns="False"
                 ItemsSource="{Binding}"
                 MaxHeight="200"
@@ -139,19 +139,27 @@
                                                 <DataGridTextColumn
                         Binding="{Binding UserName}"
                         HeaderStyle="{StaticResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_DATETIME_STYLE}"
-                        SortDirection="Descending" SortMemberPath="UserName" />
+                        SortDirection="Descending" SortMemberPath="UserName"/>
                                                 <!--<DataGridTextColumn
                         Binding="{Binding Password}"
                         HeaderStyle="{StaticResource
                         MAIN_WINDOW_DATATABLE_EVENT_HEADER_USER_STYLE}" SortMemberPath="Password" />-->
                                                 <DataGridTextColumn
                         Binding="{Binding Level}"
-                        HeaderStyle="{StaticResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_LOG_TYPE_STYLE}" Width="*" SortMemberPath="Level" />
+                        HeaderStyle="{StaticResource MAIN_WINDOW_DATATABLE_EVENT_HEADER_LOG_TYPE_STYLE}" Width="*" SortMemberPath="Level"/>
                                             </DataGrid.Columns>
                                         </DataGrid>
                                     </ScrollViewer>
                                     <Button Background="{DynamicResource NormalBackgroundBrush}" Grid.Row="1" Content="Delete" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnDeleteUser" Style="{DynamicResource styGlassButton}" Width="100" Margin="0,0,10,10" HorizontalAlignment="Right" Click="btnDeleteUser_Click" FontSize="16" />
                                 </Grid>
+                            </GroupBox>
+
+                            <GroupBox BorderBrush="{DynamicResource GridLineBrush}" BorderThickness="3" Header="Reset User Shift" FontSize="16" >
+                                <StackPanel>
+                                    <Label Content="User ID" Height="28"  FontSize="16"  />
+                                    <TextBox Height="30" Name="txtUseridShift" Width="150"  Margin="150,-26,0,0"  HorizontalAlignment="Left" />
+                                    <Button Background="{DynamicResource NormalBackgroundBrush}" Content="Reset Shift" Foreground="{DynamicResource NormalForegroundBrush}" Height="30" Name="btnReset" Style="{DynamicResource styGlassButton}" Width="180" Margin="0,20,10,10" HorizontalAlignment="Right" Click="btnResetAttempt_Click" FontSize="16" />
+                                </StackPanel>
                             </GroupBox>
                         </StackPanel>
                     </Grid>

@@ -3,6 +3,7 @@ using PentagonHMI.Classes;
 using SimpleDatabase;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -117,6 +118,8 @@ namespace PentagonHMI.ChildControls
         private const string Tag_Top5ErrCode_int = "HMI_TOPM5_ErrorCode";
         private const string Tag_Top6ErrCode_int = "HMI_TOPM6_ErrorCode";
 
+        private Dictionary<int, string> dic_BatteryType = new Dictionary<int, string>();
+
         private Dictionary<int, string> dic_TopStatus = new Dictionary<int, string>
         {
             [1] = "Disabled",
@@ -230,6 +233,23 @@ namespace PentagonHMI.ChildControls
                 Station8Tb.Text = "Station 6\r\nBUFFER";
                 Station8DutStatus.Tag = ("Station_6.DUT_Status", "Station_6.Nest_Code");
                 SetCanvasTopLeft(SP8, 80, 240);
+            }
+
+            DataTable dt = SQLer.Exec_DTSelect("Select * From LotInfo");
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                var values = dr["Value"].ToString().Split(';');
+                var keys = dr["Keys"].ToString().Split(';');
+
+                if (dr["Name"].ToString() == "BatteryType")
+                {
+                    for (int n = 0; n < keys.Length; n++)
+                    {
+                        int valuesInt = Convert.ToInt32(values[n]);
+                        dic_BatteryType.Add(valuesInt, keys[n]);
+                    }
+                }
             }
         }
 
@@ -347,7 +367,9 @@ namespace PentagonHMI.ChildControls
                     OperatorIDLabel.Content = OPCore.Read<string>(Tags.MainPage.LotIDOperatorID1.Name);
                     LotQuatityLabel.Content = OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity1.Name).ToString();
                     int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
-                    BatteryTypeLabel.Content = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+                    //BatteryTypeLabel.Content = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+                    if (dic_BatteryType.TryGetValue(batteryTypeId, out string batterytype))
+                        BatteryTypeLabel.Content = batterytype;
                     PCBAModeLabel.Content = OPCore.Read<string>(Tags.MainPage.PCBAMode1.Name);
                 }
                 else
@@ -356,7 +378,9 @@ namespace PentagonHMI.ChildControls
                     OperatorIDLabel.Content = OPCore.Read<string>(Tags.MainPage.LotIDOperatorID2.Name);
                     LotQuatityLabel.Content = OPCore.Read<int>(Tags.MainPage.LotIDLotQuantity2.Name).ToString();
                     int batteryTypeId = OPCore.Read<int>(Tags.MainPage.LotIDLotBatteryType2.Name);
-                    BatteryTypeLabel.Content = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+                    //BatteryTypeLabel.Content = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+                    if (dic_BatteryType.TryGetValue(batteryTypeId, out string batterytype))
+                        BatteryTypeLabel.Content = batterytype;
                     PCBAModeLabel.Content = OPCore.Read<string>(Tags.MainPage.PCBAMode2.Name);
                 }
                 TotalUnitPassLabel.Content = OPCore.Read<int>(Tags.MainPage.TotalUnitPass.Name).ToString();

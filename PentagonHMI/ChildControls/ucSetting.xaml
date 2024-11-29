@@ -411,6 +411,29 @@
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
+
+                        <StackPanel Name="SP_WorkShiftBlock">
+                            <Label Foreground="DarkBlue" x:Name="WorkShiftTitle" Margin="0 20 0 0" FontWeight="Bold" FontSize="20" Content="Work Shift :" />
+
+                            <Border>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="305"/>
+                                        <ColumnDefinition Width="100"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--<TextBlock Grid.Row="0" Grid.Column="0" Text="Shift Hour: " FontWeight="Bold" FontSize="17" Margin="3" VerticalAlignment="Center"/>-->
+                                    <uc:UCLabelNumericUpDown x:Name="WorkShiftHourNumUpDown" Grid.Row="0" ucLabelTitleContent="Shift Start Time: " ucLabelTitleWidth="195" ucUpDownWidth="70" Maximun="23" Minimum="0" Width="300" FormatString="F0" FontSize="20" Increment="1"/>
+                                    <Button Grid.Row="0" Grid.Column="1" Margin="10 5 5 5" Padding="20 5" Click="WorkShiftHour_Click"  FontSize="20" Content="SET" />
+                                    <uc:UCLabelNumericUpDown x:Name="NoOfShiftPerDayNumUpDown" Grid.Row="1" ucLabelTitleContent="No. Of Shift Per Day: " ucLabelTitleWidth="195" ucUpDownWidth="70" Maximun="4" Minimum="2" Width="300" FormatString="F0" FontSize="20" Increment="1"/>
+                                    <Button Grid.Row="1" Grid.Column="1" Margin="10 5 5 5" Padding="20 5" Click="NoOfShiftPerDay_Click" FontSize="20" Content="SET" />
+                                </Grid>
+                            </Border>
+                        </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>

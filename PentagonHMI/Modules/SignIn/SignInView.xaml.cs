@@ -2,6 +2,7 @@
 using PentagonHMI.LogicClasses;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
@@ -33,9 +34,11 @@ namespace PentagonHMI
 
         private string loginAttemptStr;
 
-        private string lastLoginShiftTime;
+        private string lastLoginShiftDateTime;
 
-        private string lastLoginShiftDate;
+        private string currShiftStartTime;
+
+        private string currShiftEndTime;
 
         #endregion PrivateFields
 
@@ -111,6 +114,7 @@ namespace PentagonHMI
                     if (!isPopUp)
                     {
                         DateTime currDate = DateTime.Now;
+                        bool shiftPass = false;
 
                         //login attempt receive customer feedback say want to remove it on 23/7/2024 by plc people -> Max, temporary remove for both lpm and tmp - KWY 25/7/2024
                         //if (!string.IsNullOrWhiteSpace(main.UserAccessLevel))
@@ -146,20 +150,39 @@ namespace PentagonHMI
                             {
                                 main.UserAccessLevel = "Administrator";
                                 loginAttempt = 0;
+                                shiftPass = true;
+                            }
+                        }
+                        else
+                        {
+                            lastLoginShiftDateTime = main.SQLer.Exec_Scalar<string>($"SELECT [LoginShiftDateTime] FROM USERS WHERE USERNAME = '{Username.Text}' AND PASSWORD = '{Password.Text}'");
+
+                            if (string.IsNullOrEmpty(lastLoginShiftDateTime))
+                            {
+                                DateTime shiftDateTime = FirstTimeLoginShift(currDate);
+                                main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{shiftDateTime}', [ResetLoginShift] = '0' WHERE [UserName] = '{Username.Text}';");
+                                shiftPass = true;
+                            }
+                            else
+                            {
+                                DateTime loginShiftDateTime = DateTime.Parse(lastLoginShiftDateTime);
+                                shiftPass = CheckShift(currDate, loginShiftDateTime);
                             }
                         }
 
                         //if (loginAttempt < 11)
                         //{
+                        if (shiftPass)
+                        {
                             if (!string.IsNullOrWhiteSpace(main.UserAccessLevel))
                             {
                                 main.UserName = Username.Text;
-                                //if (main.UserAccessLevel != "Administrator")
-                                //{
-                                //    loginAttempt++;
-                                //    //Update db
-                                //    main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginAttempt] = '{loginAttempt}', [LastLoginDateTime] = '{currDate}' WHERE [UserName] = '{Username.Text}';"); 
-                                //}
+                                if (main.UserAccessLevel != "Administrator")
+                                {
+                                    loginAttempt++;
+                                    //Update db
+                                    main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LastLoginDateTime] = '{currDate}' WHERE [UserName] = '{Username.Text}';");
+                                }
                                 Username.Text = "";
                                 Password.Text = "";
                                 Hide();
@@ -168,7 +191,19 @@ namespace PentagonHMI
                                     new Tuple<SignInView, string>(this, main.UserAccessLevel));
                             }
                             else
+                                this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_TEXTBLOCK_INVALID").ToString(); 
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(main.UserAccessLevel))
+                            {
+                                MessageBox.Show($"Current Shift: {currShiftStartTime} - {currShiftEndTime}. This user account is belong to another shift. Please contact Administrator to reset shift in [User Account] page");
+                            }
+                            else
+                            {
                                 this.Password.ucLabelErrorContent = this.TryFindResource("LOGIN_TEXTBLOCK_INVALID").ToString();
+                            }
+                        }
                         //}
                         //else
                         //{
@@ -273,6 +308,213 @@ namespace PentagonHMI
                 return true;
             }
             return false;
+        }
+
+        private DateTime FirstTimeLoginShift(DateTime now)
+        {
+            try
+            {
+                string shiftStart = main.SQLer.Exec_Scalar<string>($"SELECT [KeyValue] FROM WORKSHIFTSETTING WHERE KeyName = 'ShiftHour';");
+                string hourFromCurrTime = now.ToString("HH");
+                //string nowShiftStart = string.Empty;
+                //bool shiftPrevDay = false;
+
+                int numOfShift = main.SQLer.Exec_Scalar<int>($"SELECT [KeyValue] FROM WORKSHIFTSETTING WHERE KeyName = 'NoOfShiftPerDay';");
+                int durationOfPerShift = 24 / numOfShift;
+
+                if (shiftStart.Length < 2)
+                {
+                    shiftStart = "0" + shiftStart;
+                }
+                string nowShiftStart = DateTime.Now.Date.ToString("yyyy/MM/dd") + "_" + shiftStart;
+
+                //if (Convert.ToInt32(hourFromCurrTime) < Convert.ToInt32(shiftStart))
+                //{
+                //    if (Convert.ToInt32(shiftStart) - durationOfPerShift < 0)
+                //    {
+                //        if (Convert.ToInt32(hourFromCurrTime) - durationOfPerShift < 0)
+                //        {
+                //            shiftPrevDay = true;
+                //        }
+                //    }
+                //}
+
+                //if (!shiftPrevDay)
+                //{
+                //    nowShiftStart = DateTime.Now.Date.ToString("yyyy/MM/dd") + "_" + shiftStart;
+                //}
+                //else
+                //{
+                //    DateTime PrevDate = DateTime.Now.AddDays(-1);
+                //    nowShiftStart = PrevDate.ToString("yyyy/MM/dd") + "_" + shiftStart;
+                //}
+
+                DateTime shiftStartTime = DateTime.ParseExact(nowShiftStart, "yyyy/MM/dd_HH", CultureInfo.InvariantCulture);
+
+                if (now < shiftStartTime)
+                {
+                    shiftStartTime = shiftStartTime.AddDays(-1);
+                }
+
+                if (numOfShift == 2)
+                {
+                    DateTime shift2 = shiftStartTime.AddHours(durationOfPerShift);
+                    if (now >= shift2)
+                    {
+                        return shift2;
+                    }
+                    else if (now < shiftStartTime)
+                    {
+                        return shift2;
+                    }
+                    else if (now >= shiftStartTime && now < shift2)
+                    {
+                        return shiftStartTime;
+                    }
+                }
+                else if (numOfShift == 3)
+                {
+                    DateTime shift2 = shiftStartTime.AddHours(durationOfPerShift);
+                    DateTime shift3 = shift2.AddHours(durationOfPerShift);
+                    if (now >= shift3)
+                    {
+                        return shift3;
+                    }
+                    else if (now < shiftStartTime)
+                    {
+                        return shift3;
+                    }
+                    else if (now >= shift2 && now < shift3)
+                    {
+                        return shift2;
+                    }
+                    else if (now >= shiftStartTime && now < shift2)
+                    {
+                        return shiftStartTime;
+                    }
+                }
+                else
+                {
+                    DateTime shift2 = shiftStartTime.AddHours(durationOfPerShift);
+                    DateTime shift3 = shift2.AddHours(durationOfPerShift);
+                    DateTime shift4 = shift3.AddHours(durationOfPerShift);
+                    if (now >= shift4)
+                    {
+                        return shift4;
+                    }
+                    else if (now < shiftStartTime)
+                    {
+                        return shift4;
+                    }
+                    else if (now >= shift3 && now < shift4)
+                    {
+                        return shift3;
+                    }
+                    else if (now >= shift2 && now < shift3)
+                    {
+                        return shift2;
+                    }
+                    else if (now >= shiftStartTime && now < shift2)
+                    {
+                        return shiftStartTime;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileLogger.logError("[FirstTimeLoginShift]", ex.Message);
+                //throw;
+            }
+            return default(DateTime);
+        }
+
+        private bool CheckShift(DateTime now, DateTime startShiftTime)
+        {
+            bool pass = false;
+
+            try
+            {
+                int numOfShift = main.SQLer.Exec_Scalar<int>($"SELECT [KeyValue] FROM WORKSHIFTSETTING WHERE KeyName = 'NoOfShiftPerDay';");
+                int duration = 24 / numOfShift;
+                DateTime shiftStartTimeCalcFromDb = FirstTimeLoginShift(now);
+                DateTime endShiftTime = shiftStartTimeCalcFromDb.AddHours(duration);
+                currShiftEndTime = shiftStartTimeCalcFromDb.AddHours(duration).AddMinutes(-1).ToString("HH:mm");
+                currShiftStartTime = shiftStartTimeCalcFromDb.ToString("HH:mm");
+
+                if (now.Date == startShiftTime.Date)
+                {
+                    //if (now >= startShiftTime && now < endShiftTime)
+                    //{
+                    //    pass = true;
+                    //}
+                    //else
+                    //{
+                    //    pass = false;
+                    //} 
+
+                    if (startShiftTime != shiftStartTimeCalcFromDb)
+                    {
+                        pass = false;
+                    }
+                    else
+                    {
+                        pass = true;
+                    }
+                }
+                else if (now.Date > startShiftTime.Date)
+                {
+                    int reset = main.SQLer.Exec_Scalar<int>($"SELECT [ResetLoginShift] FROM USERS WHERE [UserName] = '{Username.Text}';");
+                    if (reset == 0)
+                    {
+                        bool nextdayButYtdShift = false;
+                        if (now < endShiftTime)
+                        {
+                            if (startShiftTime == shiftStartTimeCalcFromDb)
+                            {
+                                nextdayButYtdShift = true;
+                                pass = true; 
+                            }
+                        }
+
+                        if (!nextdayButYtdShift)
+                        {
+                            startShiftTime = startShiftTime.AddDays(1);
+                            if (startShiftTime != shiftStartTimeCalcFromDb)
+                            {
+                                string startShiftTimeStr = startShiftTime.ToString("HH:mm");
+                                string shiftStartTimeCalcDbStr = shiftStartTimeCalcFromDb.ToString("HH:mm");
+                                if (startShiftTimeStr != shiftStartTimeCalcDbStr)
+                                {
+                                    pass = false; 
+                                }
+                                else
+                                {
+                                    main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{shiftStartTimeCalcFromDb}' WHERE [UserName] = '{Username.Text}';");
+                                    pass = true;
+                                }
+                            }
+                            else
+                            {
+                                main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{startShiftTime}' WHERE [UserName] = '{Username.Text}';");
+                                pass = true;
+                            }
+                        } 
+                    }
+                    else if (reset == 1)
+                    {
+                        main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{shiftStartTimeCalcFromDb}', [ResetLoginShift] = '0' WHERE [UserName] = '{Username.Text}';");
+                        pass = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                pass = false;
+                FileLogger.logError("[CheckShift]", ex.Message);
+                MessageBox.Show($"Exception Catch - Error: {ex.Message}");
+            }
+
+            return pass;
         }
 
         #endregion PrivateMethods

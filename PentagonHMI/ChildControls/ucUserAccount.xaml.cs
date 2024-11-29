@@ -46,10 +46,11 @@ namespace PentagonHMI.ChildControls
         private void dgLog_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             object item = dgLog.SelectedItem;
-            if(item != null)
+            if (item != null)
             {
                 UserName = (dgLog.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
                 txtUserid1.Text = UserName;
+                txtUseridShift.Text = UserName;
             }
         }
 
@@ -113,6 +114,7 @@ namespace PentagonHMI.ChildControls
             Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}]", MethodBase.GetCurrentMethod().ToString());
             if(txtUserid1.Text == null || txtUserid1.Text == "" || txtPass1.Password == null || txtPass1.Password == "" || txtPass1.Password == null || txtPass1.Password == "" || txtNewPass1.Password == null || txtNewPass1.Password == "")
             {
+                Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}] Error: Please fill in all the information.", MethodBase.GetCurrentMethod().ToString());
                 MessageBox.Show("Please fill in all the information!");
                 return;
             }
@@ -123,17 +125,20 @@ namespace PentagonHMI.ChildControls
             }
             else
             {
+                Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}] Error: Wrong Old password has been filled in.", MethodBase.GetCurrentMethod().ToString());
                 MessageBox.Show("Wrong Old password has been filled in!");
                 return;
             }
             if(txtNewPass1.Password == txtCNewPass1.Password)
             {
                 change = DBCall.Login_ChangePass(txtUserid1.Text, txtPass1.Password, txtNewPass1.Password, ref errMsg);
+                Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}] Success.", MethodBase.GetCurrentMethod().ToString());
                 MessageBox.Show("Password Changed successfully");
                 Updategrid();
             }
             else
             {
+                Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}] Error: New Password Didnt Match.", MethodBase.GetCurrentMethod().ToString());
                 MessageBox.Show("New Password Didnt Match");
             }
         }
@@ -156,30 +161,50 @@ namespace PentagonHMI.ChildControls
             }
             else
             {
+                Utilities.FileLogger.logButton(StrAccount, $"Change Password [{txtUserid1.Text}] Error: No User Selected.", MethodBase.GetCurrentMethod().ToString());
                 MessageBox.Show("No User Selected");
             }
         }
 
         private void btnResetAttempt_Click(object sender, RoutedEventArgs e)
         {
-            Utilities.FileLogger.logButton(StrAccount, $"Reset User [{UserName}] Login Attempt", MethodBase.GetCurrentMethod().ToString());
+            Utilities.FileLogger.logButton(StrAccount, $"Reset User [{txtUseridShift.Text}] Shift", MethodBase.GetCurrentMethod().ToString());
+            Utilities.FileLogger.logUser("[HMI]", $"[HMI] UserAccessLevel: {_Main.UserAccessLevel} | {_Main.UserName} | Action: Reset User [{txtUseridShift.Text}] Shift");
 
             try
             {
-                if (UserName != null)
+                if (!string.IsNullOrEmpty(txtUseridShift.Text))
                 {
-                    _Main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginAttempt] = '0' WHERE [UserName] = '{UserName}'");
-                    MessageBox.Show("User Login Attempt Reset Successful");
+                    DataTable dt = new DataTable();
+                    dt = DBCall.Login_Select(txtUseridShift.Text, ref ErrMsg);
+                    if (dt != null)
+                    {
+                        string dateTimeStr = _Main.SQLer.Exec_Scalar<string>($"SELECT [LoginShiftDateTime] FROM USERS WHERE USERNAME = '{txtUseridShift.Text}'");
+                        if (!string.IsNullOrEmpty(dateTimeStr))
+                        {
+                            DateTime prevDateTime = DateTime.Parse(dateTimeStr).AddDays(-1);
+                            _Main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{prevDateTime}', [ResetLoginShift] = '1' WHERE [UserName] = '{txtUseridShift.Text}'");
+                            MessageBox.Show("User Login Shift Reset Successful");
+                        }
+                        else
+                        {
+                            MessageBox.Show("User Login Shift Reset Successful");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("User Key In Not Matched with Any User From Existing User List");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No User Selected");
+                    MessageBox.Show("User Id Empty");
                 }
             }
             catch (Exception ex)
             {
-                Utilities.FileLogger.logError("[UserAccountPage]", $"Reset Attempt - {ex.Message}");
-                MessageBox.Show("User Login Attempt Reset Fail");
+                Utilities.FileLogger.logError("[UserAccountPage]", $"Reset Shift - {ex.Message}");
+                MessageBox.Show("User Login Shift Reset Fail");
             }
         }
 

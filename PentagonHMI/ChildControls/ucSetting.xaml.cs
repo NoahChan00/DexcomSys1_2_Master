@@ -62,6 +62,7 @@ namespace PentagonHMI.ChildControls
                 UpdateOffDayTable();
                 ShiftSelect();
                 SetupControl();
+                InitializeWorkShift();
                 _Main.OnSettingUpdate += new LogicClasses.Main.onSettingUpdateHandler(Setting_OnUpdate);
             }
             catch(Exception ex)
@@ -338,6 +339,32 @@ namespace PentagonHMI.ChildControls
             //{
             //    Utilities.FileLogger.logError(ex.Message, ex.ToString());
             //}
+        }
+
+        private void InitializeWorkShift()
+        {
+            try
+            {
+                DataTable DT = _Main.SQLer.Exec_DTSelect("SELECT * FROM [WORKSHIFTSETTING]");
+                foreach (DataRow dr in DT.Rows)
+                {
+                    string itemKey = dr["KeyName"].ToString();
+                    string itemVal = dr["KeyValue"].ToString();
+
+                    if (itemKey.ToLower() == "shifthour" && itemVal.All(char.IsDigit))
+                    {
+                        WorkShiftHourNumUpDown.Value = Convert.ToInt32(itemVal);
+                    }
+                    else if (itemKey.ToLower() == "noofshiftperday" && itemVal.All(char.IsDigit))
+                    {
+                        NoOfShiftPerDayNumUpDown.Value = Convert.ToInt32(itemVal);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                FileLogger.logError(nameof(InitializeWorkShift), ex.Message);
+            }
         }
 
         #endregion Constructor
@@ -1008,6 +1035,38 @@ namespace PentagonHMI.ChildControls
             }
             catch(Exception ex)
             {
+                MessageBox.Show("Error : " + ex.Message);
+            }
+        }
+
+        private void WorkShiftHour_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FileLogger.logSetting("[Settings]", $"[Settings] Update Shift Hour (24-hours) | Value: {WorkShiftHourNumUpDown.Value}");
+                int val = Convert.ToInt32(WorkShiftHourNumUpDown.Value);
+                _Main.SQLer.Exec_NonQuery($"UPDATE [dbo].[WORKSHIFTSETTING] SET [KeyValue] = '{val}' WHERE [KeyName] = 'ShiftHour'");
+                MessageBox.Show("Update [Shift Hour] Success. Please Reset Login Shift for all users in [User Account] page to make change.");
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
+                MessageBox.Show("Error : " + ex.Message);
+            }
+        }
+
+        private void NoOfShiftPerDay_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                FileLogger.logSetting("[Settings]", $"[Settings] Update No of Shift Per Day | Value: {NoOfShiftPerDayNumUpDown.Value}");
+                int val = Convert.ToInt32(NoOfShiftPerDayNumUpDown.Value);
+                _Main.SQLer.Exec_NonQuery($"UPDATE [dbo].[WORKSHIFTSETTING] SET [KeyValue] = '{val}' WHERE [KeyName] = 'NoOfShiftPerDay'");
+                MessageBox.Show("Update [No Of Shift Per Day] Success. Please Reset Login Shift for all users in [User Account] page to make change.");
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, ex.ToString());
                 MessageBox.Show("Error : " + ex.Message);
             }
         }
