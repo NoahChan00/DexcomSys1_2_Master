@@ -58,11 +58,13 @@ namespace PentagonHMI.Tags
         public static Tag LotIDLotQuantity1 = new Tag("Lot_Info.HMI_Lot_Quantity", Tag.ATOMIC.DINT);
         public static Tag LotIDLotBatteryType1 = new Tag("Lot_Info.HMI_BatteryType", Tag.ATOMIC.DINT);
         public static Tag PCBAMode1= new Tag("Lot_Info.HMI_PCBA_Mode", Tag.ATOMIC.STRING);
+        public static Tag LotInfoUnitName1 = new Tag("Lot_Info.HMI_Unit_Name_ID", Tag.ATOMIC.DINT);
         public static Tag LotIDLotID2 = new Tag("str_FrmSys1_LotID", Tag.ATOMIC.STRING);
         public static Tag LotIDOperatorID2 = new Tag("str_FrmSys1_OperatorID", Tag.ATOMIC.STRING);
         public static Tag LotIDLotQuantity2 = new Tag("dint_FrmSys1_Lot_Quantity", Tag.ATOMIC.DINT);
         public static Tag LotIDLotBatteryType2 = new Tag("dint_FrmSys1_BatteryType", Tag.ATOMIC.DINT);
         public static Tag PCBAMode2 = new Tag("str_FrmSys1_PCBA_ModeHMI", Tag.ATOMIC.STRING);
+        public static Tag LotInfoUnitName2 = new Tag("dint_FrmSys1_UnitName", Tag.ATOMIC.DINT);
 
         public static Tag TotalUnitPass = new Tag("Lot_OEE_Tags.dint_Total_Pass", Tag.ATOMIC.DINT);
         public static Tag TotalUnitFail = new Tag("Lot_OEE_Tags.dint_Total_Fail", Tag.ATOMIC.DINT);

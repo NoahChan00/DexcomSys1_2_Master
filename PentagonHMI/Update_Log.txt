@@ -1,4 +1,23 @@
-﻿Version         : V1.0.32.5
+﻿Version         : V1.0.32.6
+Date Modified   : 9/1/2025
+Modified By     : Khaw Wan Yen
+Changes         : 
+1. Change from new lot trigger confimation box to selection changed trigger
+2. Fix battery type combo box and unit name combo box if no selection, hmi auto close issue
+
+Version         : V1.0.32.6
+Date Modified   : 3/1/2025
+Modified By     : Khaw Wan Yen
+Changes         : 
+1. Add confirmation box when unit name select stello
+
+Version         : V1.0.32.6
+Date Modified   : 12/12/2024
+Modified By     : Khaw Wan Yen
+Changes         : 
+1. Add new Lot Info (Unit Name)
+
+Version         : V1.0.32.5
 Date Modified   : 20/11/2024
 Modified By     : Khaw Wan Yen
 Changes         : 

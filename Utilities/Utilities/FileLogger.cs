@@ -98,7 +98,7 @@ namespace Utilities
         public static void logSetting(string type, string descriptions)
         {
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Settings";
-            string Filename = "Settings_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".csv";
+            string Filename = "Settings_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
             if (descriptions.Length == 0)
                 return;
@@ -134,7 +134,7 @@ namespace Utilities
         public static void logUser(string type, string descriptions)
         {
             string strPath = DefaultLocation_Time + Path.DirectorySeparatorChar + "Users";
-            string Filename = "Users_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".csv";
+            string Filename = "Users_" + DateTime.Now.ToString("yyyy-MMM-dd") + ".txt";
 
             if (descriptions.Length == 0)
                 return;

@@ -15,6 +15,7 @@ namespace PentagonHMI.ChildControls
         private SimpleOPC.INGEAR_Opc OPCore = new SimpleOPC.INGEAR_Opc(Info.OPC.IP);
         private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         private Dictionary<string, string> dic_BatteryType = new Dictionary<string, string>();
+        private Dictionary<string, string> dic_UnitName = new Dictionary<string, string>();
         private List<string> lst_DUTID = new List<string>();
         private List<string> lst_FirmwareVersion = new List<string>();
 
@@ -34,6 +35,10 @@ namespace PentagonHMI.ChildControls
         private const string Tag_PcbaMFG_str = "Lot_Info.PCBA_MFG";
         private const string Tag_PcbaLotID_str = "Lot_Info.PCBA_LotID";
         private const string Tag_ResinID_str = "Lot_Info.Resin_ID";
+        #endregion
+
+        #region 20241210 - NEw Lot info
+        private const string Tag_UnitName_int = "Lot_Info.HMI_Unit_Name_ID";
         #endregion
 
         public ucLotEntry(LogicClasses.Main main)
@@ -67,11 +72,22 @@ namespace PentagonHMI.ChildControls
                     for(int n = 0; n < values.Length; n++)
                         lst_DUTID.Add(values[n]);
                 }
+                else if (dr["Name"].ToString() == "UnitName")
+                {
+                    for (int n = 0; n < keys.Length; n++)
+                    {
+                        dic_UnitName.Add(keys[n], values[n]);
+                    }
+                }
             }
 
             cbx_offlineBtrytype.DisplayMemberPath = "Key";
             cbx_offlineBtrytype.SelectedValuePath = "Value";
             cbx_offlineBtrytype.ItemsSource = dic_BatteryType;
+            
+            cbx_offlineUnitName.DisplayMemberPath = "Key";
+            cbx_offlineUnitName.SelectedValuePath = "Value";
+            cbx_offlineUnitName.ItemsSource = dic_UnitName;
         }
 
         private void Update()
@@ -88,6 +104,7 @@ namespace PentagonHMI.ChildControls
                     else
                     {
                         cbx_offlineBtrytype.Visibility = Visibility.Visible;
+                        cbx_offlineUnitName.Visibility = Visibility.Visible;
                     }
 
                     ActualPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Actual");
@@ -194,15 +211,37 @@ namespace PentagonHMI.ChildControls
                     MessageBox.Show("Invalid Battery Type");
                     return;
                 }
+                if (!dic_UnitName.TryGetValue(tbx_onlineUnitName.Text, out string unitEnum))
+                {
+                    MessageBox.Show("Invalid Unit Name");
+                    return;
+                }
             }
             else if(!ServerOn)
             {
-                if(string.IsNullOrWhiteSpace(cbx_offlineBtrytype.SelectedValue.ToString()))
+                if(cbx_offlineBtrytype.SelectedValue?.ToString() == null)
                 {
                     MessageBox.Show("Invalid Battery Type");
                     return;
                 }
+                if (cbx_offlineUnitName.SelectedValue?.ToString() == null)
+                {
+                    MessageBox.Show("Invalid Unit Name");
+                    return;
+                }
             }
+
+            //if (cbx_offlineUnitName.SelectedIndex == 1)
+            //{
+            //    if(MessageBox.Show("Are you sure you want to start new lot with unit name 'Stello'?", "Unit Name Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+            //    {
+            //        //do nothing and proceed to write new lot info
+            //    }
+            //    else
+            //    {
+            //        return;
+            //    }
+            //}
 
             OPCore.Write(Tag_OprID_str20, tbx_OprID.Text, typeof(string));
             OPCore.Write(Tag_LotID_str, tbx_LotID.Text, typeof(string));
@@ -219,10 +258,12 @@ namespace PentagonHMI.ChildControls
             if (ServerOn)
             {
                 OPCore.Write(Tag_Btry_dint, dic_BatteryType[tbx_onlineBtrytype.Text], typeof(Int32));
+                OPCore.Write(Tag_UnitName_int, dic_UnitName[tbx_onlineUnitName.Text], typeof(Int32));
             }
             else
             {
                 OPCore.Write(Tag_Btry_dint, cbx_offlineBtrytype.SelectedValue.ToString(), typeof(Int32));
+                OPCore.Write(Tag_UnitName_int, cbx_offlineUnitName.SelectedValue.ToString(), typeof(Int32));
             }
             OPCore.Write(Tag_NewLot_bool, true);
         }
@@ -247,6 +288,21 @@ namespace PentagonHMI.ChildControls
         private void DummyPcbaRaDioButtonChecked(object sender, RoutedEventArgs e)
         {
             OPCore.Write("HMI_PCBA_Dummy", true);
+        }
+
+        private void UnitNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cbx_offlineUnitName.SelectedIndex == 1)
+            {
+                if (MessageBox.Show("Are you sure you want to select unit name 'Stello'?", "Unit Name Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    //do nothing
+                }
+                else
+                {
+                    cbx_offlineUnitName.SelectedIndex = -1;
+                }
+            }
         }
     }
 }

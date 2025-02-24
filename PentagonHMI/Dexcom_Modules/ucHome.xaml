@@ -76,12 +76,12 @@
 
                 <StackPanel.Resources>
                     <Style TargetType="UniformGrid">
-                        <Setter Property="Height" Value="203 " />
+                        <!--<Setter Property="Height" Value="203 " />-->
                     </Style>
                     <Style TargetType="Label">
                         <Setter Property="FontSize" Value="18" />
                         <Setter Property="FontFamily" Value="Bold" />
-                        <Setter Property="Padding" Value="0 10 0 0" />
+                        <!--<Setter Property="Padding" Value="0 10 0 0" />-->
                         <Setter Property="VerticalContentAlignment" Value="Center" />
                         <Setter Property="HorizontalContentAlignment" Value="Center" />
                     </Style>
@@ -90,7 +90,7 @@
                 <Border MinWidth="400" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
                     <StackPanel>
                         <Label Content="Lot Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <UniformGrid Columns="2">
+                        <UniformGrid Columns="2" Height="236">
                             <Label Background="LightGray">Lot ID</Label>
                             <Label Name="LotIDLabel" />
                             <Label Background="LightGray">Operator ID</Label>
@@ -101,6 +101,8 @@
                             <Label Name="BatteryTypeLabel" />
                             <Label Background="LightGray">PCBA Mode</Label>
                             <Label Name="PCBAModeLabel" />
+                            <Label Background="LightGray">Unit Name</Label>
+                            <Label Name="UnitNameLabel" />
                         </UniformGrid>
                     </StackPanel>
                 </Border>
@@ -108,7 +110,7 @@
                 <Border MinWidth="400" CornerRadius=" 14,14,0,0" BorderBrush="{DynamicResource BlueLineBrush}" Margin="1" BorderThickness="2">
                     <StackPanel>
                         <Label Content="Production Info" Style="{DynamicResource styTopPenalBlue}" Height="30" FontSize="18" Padding="15 2" />
-                        <UniformGrid Columns="2">
+                        <UniformGrid Columns="2" Height="169">
                             <Label Background="LightGray">Total Unit Pass</Label>
                             <Label Name="TotalUnitPassLabel" />
                             <Label Background="LightGray">Total Unit Fail</Label>

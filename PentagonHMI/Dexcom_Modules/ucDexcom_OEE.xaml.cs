@@ -887,10 +887,10 @@ namespace PentagonHMI.ChildControls
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Pass);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_Fail);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_TotalProductiveUnit);
-                if(GlobalFunctions.IsSystem1)
-                {
+                //if(GlobalFunctions.IsSystem1)
+                //{
                     Info.OPC.TagGroups.OEE.AddTag(Tag_Shift_OEE_DINT_Total_PartFail);
-                }
+                //}
             }
             else if(OEEGrp == OEEType.Lot)
             {
@@ -913,10 +913,10 @@ namespace PentagonHMI.ChildControls
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Total_Pass);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_Total_Fail);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_TotalProductiveUnit);
-                if(GlobalFunctions.IsSystem1)
-                {
+                //if(GlobalFunctions.IsSystem1)
+                //{
                     Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_dint_TotalPartFail);
-                }
+                //}
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestA);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestB);
                 Info.OPC.TagGroups.OEE.AddTag(Tag_Lot_OEE_real_TurretNestC);

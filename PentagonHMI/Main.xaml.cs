@@ -256,7 +256,12 @@ namespace PentagonHMI
             {
                 //if (ProjectType.LIFTER != GlobalFunctions.ProjectType)
                 //{
-                if(_Main.HasStationStatusCheck)
+                if (!GlobalFunctions.IsSystem1)
+                {
+                    string VisionVersion = _Main.OPC.Read<string>("HMI_str20_Vision_Version");
+                    Dispatcher.Invoke(() => lbl_Robot3Ver.Content = "Vision " + VisionVersion);
+                }
+                if (_Main.HasStationStatusCheck)
                     Update_Station_Status();
                 else
                     Dispatcher.Invoke(() => Status_Border.Visibility = Visibility.Collapsed);
@@ -402,6 +407,7 @@ namespace PentagonHMI
 
             //lbl_PLCVersion.Content = _Main.OPC.Read<string>("HMI_PLCVersion");
             //lbl_VisionVersion.Content = _Main.OPC.Read<string>("HMI_VisionVersion");
+            //vision version System 2 only
         }
 
         private void UpdateConfig()

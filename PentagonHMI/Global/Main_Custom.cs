@@ -25,6 +25,8 @@ namespace PentagonHMI
         private string[] OEEShift = new string[3];
         private string OEELineShift = "";
         public INGEAR_Opc OPC;
+        private Dictionary<int, string> dic_BatteryType = new Dictionary<int, string>();
+        private Dictionary<int, string> dic_UnitName = new Dictionary<int, string>();
 
         #region OEETags
 
@@ -63,6 +65,34 @@ namespace PentagonHMI
             if((GlobalFunctions.ProjectType == ProjectType.ARCADIA && GlobalFunctions.StationType == StationType.VISION) || GlobalFunctions.ProjectType == ProjectType.TLA || GlobalFunctions.ProjectType == ProjectType.DEXCOM)
             {
                 TagRename();
+            }
+
+            if (GlobalFunctions.ProjectType == ProjectType.DEXCOM)
+            {
+                DataTable dt = SQLer.Exec_DTSelect("Select * From LotInfo");
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    var values = dr["Value"].ToString().Split(';');
+                    var keys = dr["Keys"].ToString().Split(';');
+
+                    if (dr["Name"].ToString() == "BatteryType")
+                    {
+                        for (int n = 0; n < keys.Length; n++)
+                        {
+                            int valuesInt = Convert.ToInt32(values[n]);
+                            dic_BatteryType.Add(valuesInt, keys[n]);
+                        }
+                    }
+                    else if (dr["Name"].ToString() == "UnitName")
+                    {
+                        for (int n = 0; n < keys.Length; n++)
+                        {
+                            int valuesInt = Convert.ToInt32(values[n]);
+                            dic_UnitName.Add(valuesInt, keys[n]);
+                        }
+                    }
+                }
             }
         }
 
@@ -490,6 +520,7 @@ namespace PentagonHMI
         private string LotID = "Lot_Info.HMI_LotID";
         private string DutInfo = "RecipeParams.DUTid";
         private string BatteryType = "Lot_Info.HMI_BatteryType";
+        private string UnitName = "Lot_Info.HMI_Unit_Name_ID";
         private string FirmwareVer = "RecipeParams.FirmwareVersion";
         private string ManufactureDate = "Lot_Info.HMI_ManufactureDate";
         private string ExpirationDate = "Lot_Info.HMI_Expiration_Date";
@@ -761,7 +792,9 @@ namespace PentagonHMI
 
                                 #region get batteryType
                                 int batteryTypeId = OPC.Read<int>(Tags.MainPage.LotIDLotBatteryType1.Name);
-                                string batteryType = batteryTypeId == 2 ? "Maxell" : batteryTypeId == 5 ? "Panasonic" : batteryTypeId == 6 ? "Murata" : "";
+                                string batteryType = string.Empty;
+                                if (dic_BatteryType.TryGetValue(batteryTypeId, out string batterytype))
+                                    batteryType = batterytype;
                                 #endregion
 
                                 csv.WriteField("Battery Type:");
@@ -778,6 +811,18 @@ namespace PentagonHMI
 
                                 csv.WriteField("Operator ID:");
                                 csv.WriteField(OPC.Read<string>(OperatorID));
+                                csv.NextRecord();
+
+                                int unitNameId = OPC.Read<int>(Tags.MainPage.LotInfoUnitName1.Name);
+                                FileLogger.logEvent("LotSummary", $"[LotSummary] Read UnitName = {unitNameId}");
+                                string unitName = string.Empty;
+                                if (dic_UnitName.TryGetValue(unitNameId, out string unitname))
+                                {
+                                    unitName = unitname;
+                                    FileLogger.logEvent("LotSummary", $"[LotSummary] UnitName = {unitName}");
+                                }
+                                csv.WriteField("Unit Name:");
+                                csv.WriteField(unitName);
                                 csv.NextRecord();
 
                                 csv.WriteField("Start Date Time:");

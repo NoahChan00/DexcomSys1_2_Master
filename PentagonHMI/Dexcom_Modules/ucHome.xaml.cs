@@ -120,6 +120,8 @@ namespace PentagonHMI.ChildControls
 
         private Dictionary<int, string> dic_BatteryType = new Dictionary<int, string>();
 
+        private Dictionary<int, string> dic_UnitName = new Dictionary<int, string>();
+
         private Dictionary<int, string> dic_TopStatus = new Dictionary<int, string>
         {
             [1] = "Disabled",
@@ -250,6 +252,14 @@ namespace PentagonHMI.ChildControls
                         dic_BatteryType.Add(valuesInt, keys[n]);
                     }
                 }
+                else if (dr["Name"].ToString() == "UnitName")
+                {
+                    for (int n = 0; n < keys.Length; n++)
+                    {
+                        int valuesInt = Convert.ToInt32(values[n]);
+                        dic_UnitName.Add(valuesInt, keys[n]);
+                    }
+                }
             }
         }
 
@@ -371,6 +381,19 @@ namespace PentagonHMI.ChildControls
                     if (dic_BatteryType.TryGetValue(batteryTypeId, out string batterytype))
                         BatteryTypeLabel.Content = batterytype;
                     PCBAModeLabel.Content = OPCore.Read<string>(Tags.MainPage.PCBAMode1.Name);
+                    int unitNameId = OPCore.Read<int>(Tags.MainPage.LotInfoUnitName1.Name);
+                    if (dic_UnitName.TryGetValue(unitNameId, out string unitName))
+                    {
+                        UnitNameLabel.Content = unitName;
+                    }
+#if DEBUG
+                    LotIDLabel.Content = "LotABC";
+                    OperatorIDLabel.Content = "Ogr";
+                    LotQuatityLabel.Content = "99999";
+                    BatteryTypeLabel.Content = "Maxell";
+                    PCBAModeLabel.Content = "Dummy";
+                    UnitNameLabel.Content = "G7";
+#endif
                 }
                 else
                 {
@@ -382,6 +405,11 @@ namespace PentagonHMI.ChildControls
                     if (dic_BatteryType.TryGetValue(batteryTypeId, out string batterytype))
                         BatteryTypeLabel.Content = batterytype;
                     PCBAModeLabel.Content = OPCore.Read<string>(Tags.MainPage.PCBAMode2.Name);
+                    int unitNameId = OPCore.Read<int>(Tags.MainPage.LotInfoUnitName2.Name);
+                    if (dic_UnitName.TryGetValue(unitNameId, out string unitName))
+                    {
+                        UnitNameLabel.Content = unitName;
+                    }
                 }
                 TotalUnitPassLabel.Content = OPCore.Read<int>(Tags.MainPage.TotalUnitPass.Name).ToString();
                 TotalUnitFailLabel.Content = OPCore.Read<int>(Tags.MainPage.TotalUnitFail.Name).ToString();

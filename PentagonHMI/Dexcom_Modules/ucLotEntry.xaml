@@ -52,6 +52,13 @@
                         </Grid>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="20" Text="Unit Name" />
+                        <Grid>
+                            <TextBox x:Name="tbx_onlineUnitName" Width="250" IsEnabled="False" FontSize="20" />
+                            <ComboBox x:Name="cbx_offlineUnitName" FontSize="20" Width="250" Visibility="Hidden" SelectionChanged="UnitNameComboBox_SelectionChanged"/>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="20" Text="MFG Lot ID" />
                         <TextBox x:Name="tbx_MFG_LotID" Width="250" MaxLength="20" FontSize="20" />
                     </StackPanel>
