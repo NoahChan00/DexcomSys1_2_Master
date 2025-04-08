@@ -27,7 +27,8 @@ namespace SimpleDatabase
                 $"Data Source = {ServerName};" +
                 $"Initial Catalog = {InitialCatalog};";
 #else
-            Str_ConnectionString = "Persist Security Info = False;Data Source = 191.168.0.171;Integrated Security = False; Initial Catalog = gdb_DexcomSystem1;User ID=sa;Password=Pss123321!;";
+            //Str_ConnectionString = "Persist Security Info = False;Data Source = 191.168.0.171;Integrated Security = False; Initial Catalog = gdb_DexcomSystem1;User ID=sa;Password=Pss123321!;";
+            Str_ConnectionString = $"Persist Security Info = False;Data Source = {ServerName};Integrated Security = True; Initial Catalog = {InitialCatalog};User ID=sa;Password=Pss123321!;";
 #endif
         }
 

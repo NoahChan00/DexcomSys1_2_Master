@@ -1,4 +1,11 @@
-﻿Version         : V1.0.32.6
+﻿Version         : V1.0.32.7
+Date Modified   : 8/4/2025
+Modified By     : Chan Jen Hao
+Changes         : 
+1. SignInView changed shift duration bug. Users will be able to change shift from morning to night, after 24 hours
+- Function modified: CheckShift
+
+Version         : V1.0.32.6
 Date Modified   : 9/1/2025
 Modified By     : Khaw Wan Yen
 Changes         : 

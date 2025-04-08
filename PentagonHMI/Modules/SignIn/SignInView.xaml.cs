@@ -438,6 +438,7 @@ namespace PentagonHMI
                 int duration = 24 / numOfShift;
                 DateTime shiftStartTimeCalcFromDb = FirstTimeLoginShift(now);
                 DateTime endShiftTime = shiftStartTimeCalcFromDb.AddHours(duration);
+                DateTime new_startShiftTime = startShiftTime;
                 currShiftEndTime = shiftStartTimeCalcFromDb.AddHours(duration).AddMinutes(-1).ToString("HH:mm");
                 currShiftStartTime = shiftStartTimeCalcFromDb.ToString("HH:mm");
 
@@ -483,15 +484,27 @@ namespace PentagonHMI
                             {
                                 string startShiftTimeStr = startShiftTime.ToString("HH:mm");
                                 string shiftStartTimeCalcDbStr = shiftStartTimeCalcFromDb.ToString("HH:mm");
-                                if (startShiftTimeStr != shiftStartTimeCalcDbStr)
+
+                                double shiftDuration = (shiftStartTimeCalcFromDb - new_startShiftTime).TotalDays;
+
+                                if (shiftDuration <= 1)
                                 {
-                                    pass = false; 
+                                    if (startShiftTimeStr != shiftStartTimeCalcDbStr)
+                                    {
+                                        pass = false;
+                                    }
+                                    else
+                                    {
+                                        main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{shiftStartTimeCalcFromDb}' WHERE [UserName] = '{Username.Text}';");
+                                        pass = true;
+                                    }
                                 }
                                 else
                                 {
                                     main.SQLer.Exec_NonQuery($"UPDATE [Users] SET [LoginShiftDateTime] = '{shiftStartTimeCalcFromDb}' WHERE [UserName] = '{Username.Text}';");
                                     pass = true;
                                 }
+
                             }
                             else
                             {
