@@ -1,4 +1,4 @@
-﻿Version         : V1.0.32.7
+﻿Version         : V1.0.32.7 to V1.1.36.2 (Version alligned with PLC Version)
 Date Modified   : 8/4/2025
 Modified By     : Chan Jen Hao
 Changes         : 
