@@ -304,6 +304,11 @@ namespace PentagonHMI
                 {
                     FileLogger.logError(e.Message, e.StackTrace);
                 }
+
+                // Latch Penta Bit on, if penta login
+                if (_Main.UserAccessLevel == "Penta")
+                    _Main.OPC.Write("b_PentaAdmin_LoginSuccess", true);
+
             }
             catch(Exception exception)
             {
@@ -1454,11 +1459,17 @@ namespace PentagonHMI
                 {
                     _Main.UserAccessLevel = "Operator";
                     lblCurrUser.Content = "Current User :  " + _Main.UserAccessLevel;
+                    // Set Penta Bit off
+                    _Main.OPC.Write("b_PentaAdmin_LoginSuccess", false);
                 }
 
                 if (LogIN)
                 {
                     logoutCount = 0;
+                    // Allow ONLY Penta Bit on
+                    if (_Main.UserAccessLevel == "Penta")
+                        _Main.OPC.Write("b_PentaAdmin_LoginSuccess", true);
+
                     FileLogger.logUser("[HMI]", $"[HMI] UserAccessLevel: {_Main.UserAccessLevel} | {_Main.UserName} Login Success"); 
                 }
                 else

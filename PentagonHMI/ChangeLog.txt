@@ -1,4 +1,11 @@
-﻿Version         : V1.0.32.7 to V1.1.36.2 (Version alligned with PLC Version)
+﻿Version         : V1.1.37.2
+Date Modified   : 2025 06 24
+Modified By     : Chan Jen Hao
+Changes         : 
+1. Added bit in SignInView.xaml.cs and Main.xaml.cs, When Penta login this will turn on, and log out, turn off
+- Keyence Security Enhancement
+
+Version         : V1.0.32.7 to V1.1.36.2 (Version alligned with PLC Version)
 Date Modified   : 8/4/2025
 Modified By     : Chan Jen Hao
 Changes         : 

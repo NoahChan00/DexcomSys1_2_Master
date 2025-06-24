@@ -1135,7 +1135,7 @@
     <Resource Include="Images\MainHMI\ArcadiaLine.png" />
     <Resource Include="Images\VTC\VTC_Conveyor.png" />
     <Resource Include="Images\VTC\VTC_Rack.png" />
-    <Resource Include="Update_Log.txt" />
+    <Resource Include="ChangeLog.txt" />
     <Resource Include="Icon\engineering_dis.png" />
     <Resource Include="Icon\engineering.png" />
     <Resource Include="Icon\CLCOFF.png" />

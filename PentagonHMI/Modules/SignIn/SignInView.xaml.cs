@@ -148,7 +148,7 @@ namespace PentagonHMI
                         {
                             if (LocalAccountCheck(Username.Text, Password.Text))
                             {
-                                main.UserAccessLevel = "Administrator";
+                                //main.UserAccessLevel = "Administrator";
                                 loginAttempt = 0;
                                 shiftPass = true;
                             }
@@ -297,16 +297,20 @@ namespace PentagonHMI
             //}
             if (StrName == "penta" && strPassword == "#penta2121")
             {
+                main.UserAccessLevel = "Penta";
                 return true;
             }
             else if (StrName == "jabiladmin" && strPassword == "#penta5196")
             {
+                main.UserAccessLevel = "Administrator";
                 return true;
             }
             else if (StrName == "plexusadmin" && strPassword == "#penta5196")
             {
+                main.UserAccessLevel = "Administrator";
                 return true;
             }
+            main.UserAccessLevel = string.Empty;
             return false;
         }
 
