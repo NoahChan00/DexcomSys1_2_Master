@@ -1,11 +1,13 @@
 ﻿Version         : V1.0.32.7 to V1.1.36.2 (Version alligned with PLC Version)
-Date Modified   : 8/4/2025 (Changes 1), 2025 06 24 (Changes 2)
+Date Modified   : 2025 04 08 (Changes 1), 2025 06 24 (Changes 2)
 Modified By     : Chan Jen Hao
 Changes         : 
 1. SignInView changed shift duration bug. Users will be able to change shift from morning to night, after 24 hours
-- Function modified: CheckShift
+	- Function modified: CheckShift
 2. Added bit in SignInView.xaml.cs and Main.xaml.cs, When Penta login this will turn on, and log out, turn off
-- Keyence Security Enhancement
+	- Keyence Security Enhancement
+	- Added site admin for Luxshare
+	- Password change for Penta
 
 Version         : V1.0.32.6
 Date Modified   : 9/1/2025

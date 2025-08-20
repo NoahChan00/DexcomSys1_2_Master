@@ -295,7 +295,7 @@ namespace PentagonHMI
             //{
             //    return true;
             //}
-            if (StrName == "penta" && strPassword == "#penta2121")
+            if (StrName == "penta" && strPassword == "#Penta382")
             {
                 main.UserAccessLevel = "Penta";
                 return true;
@@ -306,6 +306,11 @@ namespace PentagonHMI
                 return true;
             }
             else if (StrName == "plexusadmin" && strPassword == "#penta5196")
+            {
+                main.UserAccessLevel = "Administrator";
+                return true;
+            }
+            else if (StrName == "luxshareadmin" && strPassword == "#penta5196")
             {
                 main.UserAccessLevel = "Administrator";
                 return true;
