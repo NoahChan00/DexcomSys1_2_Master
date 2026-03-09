@@ -169,6 +169,7 @@ namespace PentagonHMI
                 FileLogger.DefaultLocation = Properties.Settings.Default.LogLocation.ToString();
 
                 Messenger.Default.Register<Tuple<SignInView, string>>(this, signIn);
+                Messenger.Default.Register<Tuple<PentaSignInView, string>>(this, pentasignIn);
 
                 LogFileManagement();
 
@@ -1792,6 +1793,29 @@ namespace PentagonHMI
                 LogIN_OUT(true);
             }
             catch(Exception exception)
+            {
+                FileLogger.logError(exception.Message, exception.ToString());
+            }
+        }
+
+        private void pentasignIn(Tuple<PentaSignInView, string> tuple)
+        {
+            try
+            {
+                lblCurrUser.Content = "Current User :  " + tuple.Item2;
+
+                lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
+                lastInputInfo.dwTime = 0;
+
+                timer.Enabled = true;
+                timer.Tick += timer_Tick; // Everytime timer ticks, timer_Tick will be called
+                timer.Interval = 1000 * 1;              // Timer will tick evert second
+                                                        // Enable the timer
+                timer.Start();
+
+                LogIN_OUT(true);
+            }
+            catch (Exception exception)
             {
                 FileLogger.logError(exception.Message, exception.ToString());
             }

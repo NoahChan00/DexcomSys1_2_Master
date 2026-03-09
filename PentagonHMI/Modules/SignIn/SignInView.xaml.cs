@@ -40,6 +40,9 @@ namespace PentagonHMI
 
         private string currShiftEndTime;
 
+        // Penta second sign in
+        private PentaSignInView pentaSignInView = null;
+
         #endregion PrivateFields
 
         #region Constructor
@@ -151,6 +154,17 @@ namespace PentagonHMI
                                 //main.UserAccessLevel = "Administrator";
                                 loginAttempt = 0;
                                 shiftPass = true;
+
+                                if (main.UserAccessLevel == "Penta")
+                                {
+                                    pentaSignInView = new PentaSignInView(ref main, false);
+                                    pentaSignInView.Show();
+                                    Username.Text = "";
+                                    Password.Text = "";
+                                    Hide();
+                                    // Exit SigninVIew
+                                    return;
+                                }
                             }
                         }
                         else

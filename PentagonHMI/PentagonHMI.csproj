@@ -237,6 +237,7 @@
     <Compile Include="Dexcom_Modules\ucTrayMap.xaml.cs">
       <DependentUpon>ucTrayMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Global\FileDecryption.cs" />
     <Compile Include="Modules\IO\IOView.xaml.cs">
       <DependentUpon>IOView.xaml</DependentUpon>
     </Compile>
@@ -302,6 +303,9 @@
       <DependentUpon>RecipeConfigurationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\RejectBinDisplay\Models\RejectReason\RejectReason.cs" />
+    <Compile Include="Modules\SignIn\PentaSignInView.xaml.cs">
+      <DependentUpon>PentaSignInView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Modules\TorqueDriver\TorqueDriverModel.cs" />
     <Compile Include="Modules\VisionTabControl\KeyenceVision\ImageDisplayControl.cs">
       <SubType>UserControl</SubType>
@@ -683,6 +687,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Modules\RecipeConfiguration\RecipeConfigurationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Modules\SignIn\PentaSignInView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
