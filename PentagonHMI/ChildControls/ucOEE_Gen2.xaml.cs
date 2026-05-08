@@ -166,7 +166,9 @@ namespace PentagonHMI.ChildControls
         {
             AddTagstoGroup();
 
-            PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+            PointLabel = chartPoint => string.Format("{0:F2} ({1:P2})", chartPoint.Y, chartPoint.Participation);
+            // PointLabel = chartPoint => string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
             _Main.IdealCycleTime = _Main.OPC.Read<double>("HMI_IdealCycleTime");
             OEEList = new OEEModel
             {

@@ -18,7 +18,7 @@ namespace PentagonHMI.UserControls
     {
         #region V/P
 
-        private bool isDouble = false;
+        private bool isDouble = true;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -806,7 +806,7 @@ EndThis:
                     {
                         //int Pos;
                         double Pos;
-                        if(DO(double.TryParse(DgvCustomPos.Text, out Pos),
+                        if (DO(double.TryParse(DgvCustomPos.Text, out Pos),
                             "SaveCus_Click: Invalid Position" + DgvCustomPos.Text))
                         {
                             //TagSharedPosition.Value = Math.Round(Pos * Proportion, 0);

@@ -1,4 +1,15 @@
-﻿Version         : V1.1.37.2
+﻿Version         : V1.1.38.2
+Date Modified   : 2026 03 09
+Modified By     : Chan Jen Hao
+Changes         : 
+1. Lot OEE page
+	- Fixed Pie chart to display only 2 decimals
+	- Fixed turrent nest A - H to display percentage
+
+2. Motor Page
+	- enable decimal point for Motor Page
+
+Version         : V1.1.37.2
 Date Modified   : 2025 11 21
 Modified By     : Chan Jen Hao
 Changes         : 

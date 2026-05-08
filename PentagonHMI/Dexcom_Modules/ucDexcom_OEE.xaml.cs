@@ -439,49 +439,49 @@ namespace PentagonHMI.ChildControls
                          {
                              Title= "Turret Nest A",
                              Key=  Tag_Lot_OEE_real_TurretNestA.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest B",
                              Key=  Tag_Lot_OEE_real_TurretNestB.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest C",
                              Key=  Tag_Lot_OEE_real_TurretNestC.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest D",
                              Key=  Tag_Lot_OEE_real_TurretNestD.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest E",
                              Key=  Tag_Lot_OEE_real_TurretNestE.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest F",
                              Key=  Tag_Lot_OEE_real_TurretNestF.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest G",
                              Key=  Tag_Lot_OEE_real_TurretNestG.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                          new InfoBlockModel
                          {
                              Title= "Turret Nest H",
                              Key=  Tag_Lot_OEE_real_TurretNestH.Name,
-                             Group = Grouping.number
+                             Group = Grouping.percent
                          },
                     }
                 };
