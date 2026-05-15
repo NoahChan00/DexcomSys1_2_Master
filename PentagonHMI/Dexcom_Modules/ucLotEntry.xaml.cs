@@ -27,6 +27,12 @@ namespace PentagonHMI.ChildControls
         private const string Tag_Btry_dint = "Lot_Info.HMI_BatteryType";
         private const string Tag_NewLot_bool = "Lot_Info.HMI_New_Lot_Bit";
 
+        private bool b_LotEntryNotFinished;
+        private bool b_NewLotCreated;
+        private string lastSnapshot = "";
+        private bool hasStartedTyping = false;
+        private int lotEntryCounter = 0;
+
         #region v1.0.34.1
         private const string Tag_MFG_LotID_str = "Lot_Info.MFG_LotID";
         private const string Tag_BatteryLotID_str = "Lot_Info.Battery_LotID";
@@ -109,6 +115,81 @@ namespace PentagonHMI.ChildControls
 
                     ActualPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Actual");
                     DummyPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Dummy");
+
+                    // Check if Operator didn't key in finish
+                    b_LotEntryNotFinished = _Main.OPC.Read<bool>("System1_MC_Tag.WarningBit[1]");
+                    b_NewLotCreated = _Main.OPC.Read<bool>("Lot_Info.New_Lot_Created");
+
+                    if (!b_NewLotCreated)
+                    {
+                        // Build snapshot of all inputs
+                        string currentSnapshot =
+                            $"{tbx_OprID.Text}|{tbx_LotID.Text}|{LR_num_LotSize.Value}|{tbx_MFG_LotID.Text}|{tbx_BatteryLotID.Text}|{tbx_BatteryDateCode.Text}|{tbx_PcbaPartNo.Text}|{tbx_PcbaMFG.Text}|{tbx_PcbaLotID.Text}|{tbx_ResinID.Text}";
+
+                        bool anyTextFilled =
+                            !string.IsNullOrWhiteSpace(tbx_OprID.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_LotID.Text) ||
+                            LR_num_LotSize.Value != 0 ||
+                            !string.IsNullOrWhiteSpace(tbx_MFG_LotID.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_BatteryLotID.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_BatteryDateCode.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_PcbaPartNo.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_PcbaMFG.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_PcbaLotID.Text) ||
+                            !string.IsNullOrWhiteSpace(tbx_ResinID.Text);
+
+                        if (anyTextFilled && !hasStartedTyping)
+                        {
+                            // First time operator typed → mark flag and reset snapshot
+                            hasStartedTyping = true;
+                            lastSnapshot = currentSnapshot;
+                            lotEntryCounter = 0;
+                        }
+
+                        if (b_LotEntryNotFinished && hasStartedTyping)
+                        {
+                            if (currentSnapshot != lastSnapshot)
+                            {
+                                lastSnapshot = currentSnapshot;
+                                lotEntryCounter = 0;
+                            }
+
+                            lotEntryCounter++;
+
+                            if (lotEntryCounter >= 135)
+                            {
+                                // Replace with your actual error bit
+                                OPCore.Write("Lot_Info.HMI_New_Lot_Timeout", true);
+
+                                // Clear all textboxes
+                                tbx_OprID.Text = string.Empty;
+                                tbx_LotID.Text = string.Empty;
+                                tbx_MFG_LotID.Text = string.Empty;
+                                tbx_BatteryLotID.Text = string.Empty;
+                                tbx_BatteryDateCode.Text = string.Empty;
+                                tbx_PcbaPartNo.Text = string.Empty;
+                                tbx_PcbaMFG.Text = string.Empty;
+                                tbx_PcbaLotID.Text = string.Empty;
+                                tbx_ResinID.Text = string.Empty;
+
+                                LR_num_LotSize.Value = 0;
+
+                                lotEntryCounter = 0;
+                                hasStartedTyping = false;
+                                lastSnapshot = "";
+                            }
+                        }
+                        else
+                        {
+                            lotEntryCounter = 0;
+                        }
+                    }
+                    else
+                    {
+                        lotEntryCounter = 0;
+                        hasStartedTyping = false;
+                        lastSnapshot = "";
+                    }
                 }
                 catch(Exception exception)
                 {

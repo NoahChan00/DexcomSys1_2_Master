@@ -9,6 +9,9 @@ Changes         :
 2. Motor Page
 	- enable decimal point for Motor Page
 
+3. Lot Entry
+	- Check if Operator didn't finish lot entry key in details
+
 Version         : V1.1.37.2
 Date Modified   : 2025 11 21
 Modified By     : Chan Jen Hao
