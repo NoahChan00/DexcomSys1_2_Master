@@ -94,6 +94,34 @@ namespace PentagonHMI.ChildControls
             cbx_offlineUnitName.DisplayMemberPath = "Key";
             cbx_offlineUnitName.SelectedValuePath = "Value";
             cbx_offlineUnitName.ItemsSource = dic_UnitName;
+
+            if (_Main.OPC.Read<bool>("Lot_Info.New_Lot_Created")) 
+            {
+                // Read string and numeric OPC tags into TextBoxes / Controls
+                tbx_LotID.Text = _Main.OPC.Read<string>(Tag_LotID_str);
+                LR_num_LotSize.Value = _Main.OPC.Read<int>(Tag_LotQty_dint);
+                tbx_OprID.Text = _Main.OPC.Read<string>(Tag_OprID_str20);
+
+                tbx_MFG_LotID.Text = _Main.OPC.Read<string>(Tag_MFG_LotID_str);
+                tbx_BatteryLotID.Text = _Main.OPC.Read<string>(Tag_BatteryLotID_str);
+                tbx_BatteryDateCode.Text = _Main.OPC.Read<string>(Tag_BatteryDateCode_str);
+                tbx_PcbaPartNo.Text = _Main.OPC.Read<string>(Tag_PcbaPartNo_str);
+                tbx_PcbaMFG.Text = _Main.OPC.Read<string>(Tag_PcbaMFG_str);
+                tbx_PcbaLotID.Text = _Main.OPC.Read<string>(Tag_PcbaLotID_str);
+                tbx_ResinID.Text = _Main.OPC.Read<string>(Tag_ResinID_str);
+
+                // Read Radio Buttons status
+                ActualPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Actual");
+                DummyPcbaRadioButton.IsChecked = _Main.OPC.Read<bool>("HMI_PCBA_Dummy");
+
+                // Read Battery Type & Unit Name values
+                string btryVal = _Main.OPC.Read<int>(Tag_Btry_dint).ToString();
+                string unitVal = _Main.OPC.Read<int>(Tag_UnitName_int).ToString();
+
+                cbx_offlineBtrytype.SelectedValue = btryVal;
+                cbx_offlineUnitName.SelectedValue = unitVal;
+            }
+
         }
 
         private void Update()
@@ -189,6 +217,9 @@ namespace PentagonHMI.ChildControls
                         lotEntryCounter = 0;
                         hasStartedTyping = false;
                         lastSnapshot = "";
+
+                        // Read tag values
+
                     }
                 }
                 catch(Exception exception)

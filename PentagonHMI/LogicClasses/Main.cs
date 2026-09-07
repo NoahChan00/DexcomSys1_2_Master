@@ -98,6 +98,10 @@ namespace PentagonHMI.LogicClasses
 
         public event onSettingUpdateHandler OnSettingUpdate;
 
+        public delegate void onAdvancedSettingUpdateHandler();
+
+        public event onAdvancedSettingUpdateHandler OnAdvancedSettingUpdate;
+
         public delegate void onDryrunHandler();
 
         public event onDryrunHandler OnDryrunUpdate;
@@ -148,7 +152,7 @@ namespace PentagonHMI.LogicClasses
 
         public TcpAllenB plc = new TcpAllenB();
 
-        public bool IOPageON, OEEPageON, MotorPageON, SettingPageON,
+        public bool IOPageON, OEEPageON, MotorPageON, SettingPageON, AdvancedSettingPageON,
             IOLocPageON, HomePageON, EnPageOn, DryRunPageON,
             EngineeringPageOn, RejectBinDisplayPageOn, RackConfigurationPageOn,
             TrayMapPageOn, StackerPageOn, DUTPageOn, LotPageOn;
@@ -359,6 +363,11 @@ namespace PentagonHMI.LogicClasses
                 new Task(() => FastLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
                 new Task(() => PageLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
                 new Task(() => PopUpSignInLane(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start();
+                // 
+                if (!GlobalFunctions.IsSystem1)
+                {
+                    new Task(() => VisionResultLog(), cancellationTokenSource.Token, TaskCreationOptions.LongRunning).Start(); 
+                }
             }
             catch(Exception ex)
             {
@@ -386,7 +395,10 @@ namespace PentagonHMI.LogicClasses
                     if(SettingPageON && OnSettingUpdate != null)
                         OnSettingUpdate?.Invoke();
 
-                    if(IOLocPageON && OnIOLocUpdate != null)
+                    if (AdvancedSettingPageON && OnAdvancedSettingUpdate != null)
+                        OnAdvancedSettingUpdate?.Invoke();
+
+                    if (IOLocPageON && OnIOLocUpdate != null)
                         OnIOLocUpdate?.Invoke();
 
                     if(MotorPageON && OnMotorUpdate != null)
@@ -628,6 +640,27 @@ namespace PentagonHMI.LogicClasses
                     //    Home_OnUpdate?.Invoke();
 
                     OnPopUpSignInUpdate?.Invoke();
+                    cancellationTokenSource.Token.WaitHandle.WaitOne(500);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError(ex.Message, "PopUpSignInLane");
+            }
+        }
+
+        private void VisionResultLog()
+        {
+            try
+            {
+                while (!cancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    //if (HomePageON && Home_OnUpdate != null)
+                    //    Home_OnUpdate?.Invoke();
+
+                    //OnPopUpSignInUpdate?.Invoke();
+                    Custom.VisionResultCheck();
+                    Custom.VisionResultCompareCheck();
                     cancellationTokenSource.Token.WaitHandle.WaitOne(500);
                 }
             }

@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
+using System.Web.UI.WebControls;
 using Utilities;
 
 namespace PentagonHMI
@@ -27,6 +29,7 @@ namespace PentagonHMI
         public INGEAR_Opc OPC;
         private Dictionary<int, string> dic_BatteryType = new Dictionary<int, string>();
         private Dictionary<int, string> dic_UnitName = new Dictionary<int, string>();
+        private LoggingState visionResultState, visionResultCompareState = LoggingState.Open;
 
         #region OEETags
 
@@ -50,6 +53,12 @@ namespace PentagonHMI
         private string bool_HMIOEEReset = "OEE_Tags.bool_OEE_Reset";
 
         #endregion OEETags
+
+        public enum LoggingState
+        {
+            Open = 0,
+            InProcess = 1
+        }
 
         public Main_Custom(LogicClasses.Main main)
         {
@@ -93,6 +102,12 @@ namespace PentagonHMI
                         }
                     }
                 }
+
+                // Read first then only can write
+                OPC.Read<int>("DUT_Receiving.int_Tray_ID_HMI");
+                OPC.Read<int>("DUT_Receiving.int_Unit_ID_HMI");
+                OPC.Read<int>("DUT_Receiving.int_Unit_ID_Status_HMI");
+                OPC.Read<string>("DUT_Receiving.str_CONCAT_RejectCode_HMI");
             }
         }
 
@@ -1110,6 +1125,268 @@ namespace PentagonHMI
             }
         }
 
+        #region VisionResult Tags
+
+        private int PLC_TrayID, PLC_UnitID, PLC_UnitStatus = 0;
+        private string PLC_RejectCode = "";
+
+        #endregion
+
+        public void VisionResultCheck()
+        {
+            try
+            {
+                // Check and Logging bit
+                if (OPC.Read<bool>("DUT_Sending.b_DUT_HMI_OkToReceive") == true && visionResultState == LoggingState.Open)
+                {
+
+                    visionResultState = LoggingState.InProcess;
+                    FileLogger.logEvent("", $"[VisionResult] Start execute Vision Result Log | State: {visionResultState}");
+                    bool turnOffBit = false;
+                    turnOffBit = VisionResultLog();
+
+                    if (turnOffBit)
+                    {
+                        // Close Check Bit
+                        OPC.Write("DUT_Sending.b_DUT_HMI_OkToReceive", false);
+                    }
+                    else
+                    {
+                        FileLogger.logError("VisionResultCheck", "[VisionResultCheck] Skip turn off flag");
+                    }
+
+                    visionResultState = LoggingState.Open;
+                    FileLogger.logEvent("", $"[VisionResult] End execute Vision Result Log | State: {visionResultState}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError("VisionResultCheck", ex.Message);
+            }
+        }
+
+        public bool VisionResultLog()
+        {
+            bool visionlogCompleted = false;
+            try
+            {
+                // read plc, csv, insert sql and write back the value to plc, visionlogCompleted to true
+                // HARD CODE HASERROR = FALSE
+                //save to database
+
+                // Read PLC Values
+                PLC_TrayID = OPC.Read<int>("DUT_Sending.int_Tray_ID");
+                PLC_UnitID = OPC.Read<int>("DUT_Sending.int_Unit_ID");
+                PLC_UnitStatus = OPC.Read<int>("DUT_Sending.int_Unit_ID_Status");
+                PLC_RejectCode = OPC.Read<string>("DUT_Sending.str_CONCAT_RejectCode");
+
+                try
+                {
+                    _Main.SQLer.Exec_NonQuery(
+                        "INSERT INTO [dbo].[VisionCheckInfo] " +
+                        "(TrayID, UnitID, Unit_ID_Status, Unit_Error_Code, hasError, hasUpload) " +
+                        "VALUES " +
+                        $"('{PLC_TrayID}', '{PLC_UnitID}', '{PLC_UnitStatus}', '{PLC_RejectCode}', 0, 0)");
+
+                    // Write back to PLC
+                    OPC.Write("DUT_Receiving.int_Tray_ID_HMI", PLC_TrayID);
+                    OPC.Write("DUT_Receiving.int_Unit_ID_HMI", PLC_UnitID);
+                    OPC.Write("DUT_Receiving.int_Unit_ID_Status_HMI", PLC_UnitStatus);
+                    OPC.Write("DUT_Receiving.str_CONCAT_RejectCode_HMI", PLC_RejectCode);
+
+                    // Log event 
+                    FileLogger.logEvent("", $"[VisionResultLog] TrayID: {PLC_TrayID} UnitID: {PLC_UnitID} saved");
+
+                    visionlogCompleted = true;
+                }
+                catch (Exception ex)
+                {
+                    Utilities.FileLogger.logError(ex.Message, "VisionResultLog");
+                }
+            }
+            catch (Exception ex)
+            {
+                FileLogger.logError("VisionResult", $"[VisionResult] {ex.Message}");
+                visionlogCompleted = false;
+            }
+            return visionlogCompleted;
+        }
+
+        public void VisionResultCompareCheck()
+        {
+            try
+            {
+                // COMPARE BIT, PLC TRIGGER READ BIT
+                if (OPC.Read<bool>("DUT_Sending.b_DUT_HMI_OkToSend") == true && visionResultCompareState == LoggingState.Open)
+                {
+                    visionResultCompareState = LoggingState.InProcess;
+                    FileLogger.logEvent("", $"[VisionResultCompareCheck] Start execute Vision Result Log | State: {visionResultCompareState}");
+
+                    // Read PLC Values Again
+                    PLC_TrayID = OPC.Read<int>("DUT_Sending.int_Tray_ID");
+                    PLC_UnitID = OPC.Read<int>("DUT_Sending.int_Unit_ID");
+                    PLC_UnitStatus = OPC.Read<int>("DUT_Sending.int_Unit_ID_Status");
+                    PLC_RejectCode = OPC.Read<string>("DUT_Sending.str_CONCAT_RejectCode");
+
+                    //read tray id and unit id, fetch from sql (hasError false), upload to server
+                    var records = _Main.SQLer.Exec_DTSelect($"SELECT * FROM [dbo].[VisionCheckInfo]  WHERE [TrayID] = '{PLC_TrayID}' AND [UnitID] = '{PLC_UnitID}' AND hasError = 0");
+
+                    bool turnOffBit = false;
+                    try
+                    {
+                        if (records != null)
+                        {
+                            if (records.Rows.Count > 0)
+                            {
+                                // Dexcom DB Insert Function
+                                // Check if need to upload to DB Server
+                                int hasUpload = records.Rows[0].Field<int>(5);
+                                bool success = false;
+
+                                if (hasUpload == 0)
+                                {
+                                    success = VisionDexcomScriptTrigger();
+                                    // Update SQL row hasUpload to true
+                                    _Main.SQLer.Exec_NonQuery($"UPDATE [dbo].[VisionCheckInfo] SET [hasUpload] = 1 WHERE [TrayID] = '{PLC_TrayID}' AND [UnitID] = '{PLC_UnitID}'");
+                                }
+                                else
+                                    success = true;
+
+                                // After checking 
+                                if (success)
+                                {
+                                    // write to CSV
+                                    try
+                                    {
+                                        FileLogger.logEvent("", $"[VisionResultCompareCheck] TrayID: {PLC_TrayID} UnitID: {PLC_UnitID} upload to server done");
+                                        // PLC Variable Read
+                                        var lotID = OPC.Read<string>(LotID);
+                                        var logDate = OPC.Read<string>(UniversalPLCTags.Tag_EventLogDateTime_str);
+                                        //var formatLogDate = EventLogDateFormat(logDate);
+                                        string todayOnly = DateTime.Now.ToString("yyyyMMdd");
+
+                                        string LogsPath = Utilities.FileLogger.DefaultLocation_Time + Path.DirectorySeparatorChar + @"VisionResult";
+                                        if (!Directory.Exists(LogsPath))
+                                        { Directory.CreateDirectory(LogsPath); }
+                                        string _Path = Path.Combine(LogsPath, $"VisionResult_{lotID}_{todayOnly}.csv");
+                                        bool HasFile = File.Exists(_Path);
+                                        using (FileStream stream = new FileStream(_Path, HasFile ? FileMode.Append : FileMode.CreateNew, FileAccess.Write, FileShare.ReadWrite))
+                                        {
+                                            using (var writer = new StreamWriter(stream))
+                                            using (var csv = new CsvHelper.CsvWriter(writer, System.Globalization.CultureInfo.CurrentCulture))
+                                            {
+                                                if (!HasFile)
+                                                {
+                                                    csv.WriteField("DateTime");
+                                                    csv.WriteField("TrayID");
+                                                    csv.WriteField("UnitID");
+                                                    csv.WriteField("Unit_Status");
+                                                    csv.WriteField("Reject Code");
+                                                    csv.NextRecord();
+                                                }
+
+                                                csv.WriteField(DateTime.Now.ToString("yyyy-MMM-dd HH:mm:ss.fff"));
+                                                csv.WriteField(PLC_TrayID);
+                                                csv.WriteField(PLC_UnitID);
+                                                csv.WriteField(PLC_UnitStatus);
+                                                csv.WriteField(PLC_RejectCode);
+                                                csv.NextRecord();
+
+                                                FileLogger.logEvent("", $"[VisionResultCompareCheck] TrayID: {PLC_TrayID} UnitID: {PLC_UnitID} write to csv done");
+                                            }
+                                        }
+
+                                        // CSV Writing Done
+                                        turnOffBit = true;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        FileLogger.logError("VisionResultCompareCheck", $"[VisionResultCompareCheck] {ex.Message}");
+                                        turnOffBit = false;
+                                    }
+
+                                }
+                                else 
+                                    turnOffBit = false;
+                            }
+                        }
+                        else
+                            turnOffBit = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        FileLogger.logError("VisionResultCompareCheck", $"[VisionResultCompareCheck] {ex.Message}");
+                        turnOffBit = false;
+                    }
+
+                    if (turnOffBit)
+                    {
+                        // Close Compare Bit
+                        OPC.Write("DUT_Sending.b_DUT_HMI_OkToSend", false);
+                    }
+                    else
+                    {
+                        FileLogger.logEvent("VisionResultCompareCheck", "[VisionResultCompareCheck] Skip turn off flag");
+                    }
+
+                    visionResultCompareState = LoggingState.Open;
+                    FileLogger.logEvent("", $"[VisionResultCompareCheck] End execute Vision Result Log | State: {visionResultCompareState}");
+                }
+
+                //read compare error bit, true then update hasError to true
+                if (OPC.Read<bool>("DUT_Sending.b_DUT_HMI_FailToCompare") == true && visionResultCompareState == LoggingState.Open)
+                {
+                    // Read PLC Values Again
+                    PLC_TrayID = OPC.Read<int>("DUT_Sending.int_Tray_ID");
+                    PLC_UnitID = OPC.Read<int>("DUT_Sending.int_Unit_ID");
+                    PLC_UnitStatus = OPC.Read<int>("DUT_Sending.int_Unit_ID_Status");
+                    PLC_RejectCode = OPC.Read<string>("DUT_Sending.str_CONCAT_RejectCode");
+
+                    // Update SQL CODING
+                    _Main.SQLer.Exec_NonQuery($"UPDATE [dbo].[VisionCheckInfo] SET [hasError] = 1 WHERE [TrayID] = '{PLC_TrayID}' AND [UnitID] = '{PLC_UnitID}'");
+                    FileLogger.logEvent("", $"[VisionResultCompareCheck] TrayID: {PLC_TrayID} UnitID: {PLC_UnitID} update hasError done");
+                    OPC.Write("DUT_Sending.b_DUT_HMI_FailToCompare", false);
+                }
+
+                //read compare error bit, true then update hasError to true
+                if (OPC.Read<bool>("DUT_Sending.b_DUT_HMI_FailToCompare") == true && visionResultCompareState == LoggingState.Open)
+                {
+                    // Read PLC Values Again
+                    PLC_TrayID = OPC.Read<int>("DUT_Sending.int_Tray_ID");
+                    PLC_UnitID = OPC.Read<int>("DUT_Sending.int_Unit_ID");
+                    PLC_UnitStatus = OPC.Read<int>("DUT_Sending.int_Unit_ID_Status");
+                    PLC_RejectCode = OPC.Read<string>("DUT_Sending.str_CONCAT_RejectCode");
+
+                    // Update SQL CODING
+                    _Main.SQLer.Exec_NonQuery($"UPDATE [dbo].[VisionCheckInfo] SET [hasError] = 1 WHERE [TrayID] = '{PLC_TrayID}' AND [UnitID] = '{PLC_UnitID}'");
+                    FileLogger.logEvent("", $"[VisionResultCompareCheck] TrayID: {PLC_TrayID} UnitID: {PLC_UnitID} update hasError done");
+                    OPC.Write("DUT_Sending.b_DUT_HMI_FailToCompare", false);
+                }
+
+                //read end lot bit
+                if (OPC.Read<bool>("b_SQL_OkToClear_Table") == true)
+                {
+                    // Delete Table 
+                    _Main.SQLer.Exec_NonQuery($"TRUNCATE TABLE [dbo].[VisionCheckInfo]");
+                    FileLogger.logEvent("", $"[VisionResultCompareCheck] Table Clear bit triggered");
+
+                    // Close bit
+                    OPC.Write("b_SQL_OkToClear_Table", false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Utilities.FileLogger.logError("VisionResultCompareCheck", ex.Message);
+            }
+        }
+
+        public bool VisionDexcomScriptTrigger()
+        {
+            // Insert to dexcom DB function
+            // TO BE COMPLETED
+            return true;
+        }
+
         public static string EventLogDateFormat(string logDateTime)
         {
             StringBuilder sb = new StringBuilder(logDateTime);
@@ -1152,6 +1429,11 @@ namespace PentagonHMI
                             FileLogger.logEvent("",$"[CLD] MatchDt: No Dup Lot Found|2");
                             OPC.Write(lotIdDup, 2);
                         }
+                    }
+                    else
+                    {
+                        FileLogger.logEvent("", $"[CLD] MatchDt: No Dup Lot Found|2");
+                        OPC.Write(lotIdDup, 2);
                     }
                 }
             }

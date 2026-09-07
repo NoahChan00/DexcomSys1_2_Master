@@ -307,6 +307,15 @@
                                         <TextBlock Text="Settings" Style="{StaticResource Title}" />
                                     </StackPanel>
 
+                                    <!--ADV SETTING-->
+                                    <StackPanel Name="Sp_AdvSetting" Style="{StaticResource Bord}">
+                                        <Grid>
+                                            <Image Tag="AdvSetting" Source="/HMI;component/Icon/Setting.png" Style="{StaticResource ClickIcon}" />
+                                            <Image Name="Img_AdvSettingDis" Source="/HMI;component/Icon/Setting1.png" Style="{StaticResource Icon}" />
+                                        </Grid>
+                                        <TextBlock Text="ADV Settings" Style="{StaticResource Title}" />
+                                    </StackPanel>
+
                                     <!--ALARM-->
                                     <StackPanel Visibility="Collapsed" Name="Sp_AlmCfg" Style="{StaticResource Bord}">
                                         <Grid>

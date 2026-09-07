@@ -77,8 +77,8 @@ namespace PentagonHMI.ChildControls
             {
                 ucGeneral._Main = _Main;
                 string Pretitle = string.Empty;
-                DataTable DT = _Main.SQLer.Exec_DTSelect("SELECT * FROM [SETTING] ORDER BY [LAYOUTINDEX]");
-                foreach(DataRow dr in DT.Rows)
+                DataTable DT = _Main.SQLer.Exec_DTSelect("SELECT * FROM [SETTING] WHERE [Advanced] IN (0, 2) ORDER BY [LAYOUTINDEX]");
+                foreach (DataRow dr in DT.Rows)
                 {
                     string Tagname = dr["TAGNAME"].ToString().TrimEnd();
                     Tag.ATOMIC MIC = Logix.Tag.ATOMIC.BOOL;

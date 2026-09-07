@@ -946,6 +946,7 @@
     <!-- ##################### -->
     <!-- other-->
     <system:String x:Key="SETTING_WINDOW_TITLE">Settings</system:String>
+    <system:String x:Key="ADVANCED_SETTING_WINDOW_TITLE">Advanced Settings</system:String>
     <!-- Labels -->
     <system:String x:Key="SETTING_LABEL_SPEED">Speed</system:String>
     <system:String x:Key="SETTING_LABEL_APPLICATOR_1">Applicator 1</system:String>

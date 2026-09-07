@@ -215,6 +215,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChildControls\ucAdvancedSetting.xaml.cs">
+      <DependentUpon>ucAdvancedSetting.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Classes\DexcomGlobalFunctions.cs" />
     <Compile Include="Dexcom_Modules\ucDexcom_OEE.xaml.cs">
       <DependentUpon>ucDexcom_OEE.xaml</DependentUpon>
@@ -566,6 +569,10 @@
     <Compile Include="VTC_Modules\ucVTC_Main.xaml.cs">
       <DependentUpon>ucVTC_Main.xaml</DependentUpon>
     </Compile>
+    <Page Include="ChildControls\ucAdvancedSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Dexcom_Modules\ucDexcom_OEE.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

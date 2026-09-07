@@ -95,6 +95,7 @@ namespace PentagonHMI
         private ChildControls.ucDexcom_OEE OEELotView;
         private ChildControls.ucHome HomeView;
         private ChildControls.ucSetting SettingChild;
+        private ChildControls.ucAdvancedSetting AdvancedSettingChild;
         private ChildControls.ucUserAccount UserAcountChild;
         private ChildControls.ucAlertList AlertChild;
         private ChildControls.ucEventLog LogChild;
@@ -209,7 +210,7 @@ namespace PentagonHMI
 
                 LstImg_PageDisIcon = new List<Image>
                 {
-                    Img_AlmDis, Img_IOListDis, Img_IOLocDis, Img_Login, Img_MotorDis, Img_SettingDis,
+                    Img_AlmDis, Img_IOListDis, Img_IOLocDis, Img_Login, Img_MotorDis, Img_SettingDis, Img_AdvSettingDis,
                     Img_UserDis, Img_ClcDis, Img_DryrunDis, Img_EngineeringDis,
                     RackConfigurationDisableImage, RecipeConfigurationDisableImage, Img_TrayMapDis
                 };
@@ -504,7 +505,7 @@ namespace PentagonHMI
         private void PreLoadPages()
         {
             //General
-            bool HasIO = false, HasUserAccount = false, HasDryrun = false, HasOEE = false, HasSOEE = false, HasLOEE = false, HasSetting = false,
+            bool HasIO = false, HasUserAccount = false, HasDryrun = false, HasOEE = false, HasSOEE = false, HasLOEE = false, HasSetting = false, HasAdvancedSetting = false,
                  HasLog = false, HasMotor = false, HasEng = false, HasIOLoc = false, HasLot = false;
             //Essential
             bool HasPopUp = true, HasSignin = true, HasMachineInfo = true, HasControlPanel = true, HasPLCEvent = true;
@@ -519,7 +520,7 @@ namespace PentagonHMI
             switch(GlobalFunctions.ProjectType)
             {
                 case ProjectType.DEXCOM:
-                    HasIO = HasUserAccount = HasDryrun = HasSOEE = HasLOEE = HasSetting =
+                    HasIO = HasUserAccount = HasDryrun = HasSOEE = HasLOEE = HasSetting = HasAdvancedSetting =
                     HasLog = HasMotor = HasEng = HasTrayMap = HasStacker = HasDUT = HasLot = HasPopUp = HasEng = true;
                     HasPopUpSignIn = true;
                     HomeView = new ChildControls.ucHome(_Main);
@@ -562,7 +563,11 @@ namespace PentagonHMI
                 SettingChild = new ChildControls.ucSetting(ref _Main);
             Sp_Setting.Visibility = HasSetting ? Visibility.Visible : Visibility.Collapsed;
 
-            if(HasLog)
+            if (HasAdvancedSetting)
+                AdvancedSettingChild = new ChildControls.ucAdvancedSetting(ref _Main);
+            Sp_AdvSetting.Visibility = HasAdvancedSetting ? Visibility.Visible : Visibility.Collapsed;
+
+            if (HasLog)
                 LogChild = new ChildControls.ucEventLog(ref _Main);
             Sp_Log.Visibility = HasLog ? Visibility.Visible : Visibility.Collapsed;
 
@@ -1494,7 +1499,7 @@ namespace PentagonHMI
                     {
                         if (_Main.UserAccessLevel == "Technician")
                         {
-                            if (img == Img_DryrunDis || img == Img_IOListDis || img == Img_MotorDis /*|| img == Img_EngineeringDis || img == Img_DryrunDis*/)
+                            if (img == Img_DryrunDis || img == Img_IOListDis || img == Img_MotorDis || img == Img_SettingDis /*|| img == Img_EngineeringDis || img == Img_DryrunDis*/)
                             {
                                 img.Visibility = Visibility.Collapsed;
                             }
@@ -1506,7 +1511,7 @@ namespace PentagonHMI
 
                         if (_Main.UserAccessLevel == "Engineer")
                         {
-                            if (img == Img_EngineeringDis || img == Img_MotorDis || img == Img_IOListDis || img == Img_DryrunDis)
+                            if (img == Img_EngineeringDis || img == Img_MotorDis || img == Img_IOListDis || img == Img_DryrunDis || img == Img_SettingDis)
                             {
                                 img.Visibility = Visibility.Collapsed;
                             }
@@ -1656,6 +1661,12 @@ namespace PentagonHMI
                         Info.OPC.TagGroups.Setting.Active = true;
                         SP_Colored = Sp_Setting;
                         ucChild = SettingChild;
+                        goto default;
+                    case "ADVSETTING":
+                        _Main.AdvancedSettingPageON = true;
+                        Info.OPC.TagGroups.Setting.Active = true;
+                        SP_Colored = Sp_AdvSetting;
+                        ucChild = AdvancedSettingChild;
                         goto default;
                     case "LOG":
                         SP_Colored = Sp_Log;

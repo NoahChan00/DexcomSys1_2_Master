@@ -1,14 +1,28 @@
-﻿Version         : V1.1.38.2
+﻿Version         : V1.1.40.2
+Date Modified   : 2026 09 07
+Modified By     : Chan Jen Hao
+Changes         : 
+1. Split Settings Page into Advanced Setting
+	- Added Extra column in [Setting] table
+
+Version         : V1.1.39.1
+Date Modified   : 2026 05 19
+Modified By     : Chan Jen Hao
+Changes         : 
+1. Vision Result Check, now Log data into SQL. After upload succes, update in CSV
+	- Main_Custom.cs and Main.cs
+2. Lot OEE Start Date time fix
+	- ucDexcom_OEE.xaml.cs
+
+Version         : V1.1.38.2
 Date Modified   : 2026 03 09
 Modified By     : Chan Jen Hao
 Changes         : 
 1. Lot OEE page
 	- Fixed Pie chart to display only 2 decimals
 	- Fixed turrent nest A - H to display percentage
-
 2. Motor Page
 	- enable decimal point for Motor Page
-
 3. Lot Entry
 	- Check if Operator didn't finish lot entry key in details
 

@@ -825,7 +825,8 @@ namespace PentagonHMI.ChildControls
                             Convert.ToInt32(strValue.Substring(4, 2)),
                             Convert.ToInt32(strValue.Substring(6, 2)),
                             Convert.ToInt32(strValue.Substring(8, 2)),
-                            Convert.ToInt32(strValue.Substring(10, 2)), 0).ToString();
+                            Convert.ToInt32(strValue.Substring(10, 2)),
+                            Convert.ToInt32(strValue.Substring(12, 2))).ToString();
                     }
                     catch(Exception)
                     {
