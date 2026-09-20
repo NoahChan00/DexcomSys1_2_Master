@@ -62,7 +62,7 @@ namespace PentagonHMI.ChildControls
                 UpdateOffDayTable();
                 ShiftSelect();
                 SetupControl();
-                InitializeWorkShift();
+                //InitializeWorkShift();
                 _Main.OnSettingUpdate += new LogicClasses.Main.onSettingUpdateHandler(Setting_OnUpdate);
             }
             catch(Exception ex)
