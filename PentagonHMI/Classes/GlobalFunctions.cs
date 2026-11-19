@@ -21,6 +21,7 @@ namespace PentagonHMI.Classes
         public static bool StartLot = false;
         public static string LotID = "";
         public static VanillaDB.DataDBCall DBCall = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString.ToString());
+        public static VanillaDB.DataDBCall DBCall2 = new VanillaDB.DataDBCall(Properties.Settings.Default.DatabaseConnectionString2.ToString());
 
         //public static OleDbConnection gl_conn = new OleDbConnection("Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + Directory.GetCurrentDirectory() + @"\Database.mdb");
         public static string StationName = Properties.Settings.Default.Station.ToString();
@@ -32,6 +33,7 @@ namespace PentagonHMI.Classes
         public static ProjectType ProjectType = (ProjectType)System.Enum.Parse(typeof(ProjectType), Properties.Settings.Default.ProjectType, true);
         public static StationType StationType = (StationType)System.Enum.Parse(typeof(StationType), Properties.Settings.Default.StationType, true);
         public static SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString.ToString());
+        public static SqlConnectionStringBuilder sqlConnectionStringBuilder2 = new SqlConnectionStringBuilder(Properties.Settings.Default.DatabaseConnectionString2.ToString());
         public static string ServerName = sqlConnectionStringBuilder.DataSource;
         public static string DatabaseName = sqlConnectionStringBuilder.InitialCatalog;
         public static bool IntegratedSecurity = sqlConnectionStringBuilder.IntegratedSecurity;

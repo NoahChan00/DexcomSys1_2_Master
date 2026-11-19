@@ -14,14 +14,21 @@ using System.Text;
 using System.Web.UI.WebControls;
 using Utilities;
 
+//Testing
+using System.Data.SqlClient;
+using System.Windows.Forms;
+
 namespace PentagonHMI
 {
     public class Main_Custom
     {
+        //Testing
+
         private LogicClasses.Main _Main;
         private VanillaDB.DataDBCall DBCall;
         private SQLCarrier SQLer = new SQLCarrier(Info.SQL.ServerName, Info.SQL.DatabaseName, Info.SQL.IntegratedSecurity, Info.SQL.PersistSecurityInfo, Info.SQL.UserID, Info.SQL.Password);
         private string Connstr = Properties.Settings.Default.DatabaseConnectionString.ToString();
+        private string Connstr2 = Properties.Settings.Default.DatabaseConnectionString2.ToString();
         private Dictionary<string, string> shuttleBarcodeDictionary = new Dictionary<string, string>();
         private Dictionary<string, string> robotGripperDictionary = new Dictionary<string, string>();
         private string[] OEEShift = new string[3];
@@ -29,7 +36,7 @@ namespace PentagonHMI
         public INGEAR_Opc OPC;
         private Dictionary<int, string> dic_BatteryType = new Dictionary<int, string>();
         private Dictionary<int, string> dic_UnitName = new Dictionary<int, string>();
-        private LoggingState visionResultState, visionResultCompareState = LoggingState.Open;
+        private LoggingState visionResultState, visionResultCompareState, lotSummaryState = LoggingState.Open;
 
         #region OEETags
 
@@ -108,6 +115,7 @@ namespace PentagonHMI
                 OPC.Read<int>("DUT_Receiving.int_Unit_ID_HMI");
                 OPC.Read<int>("DUT_Receiving.int_Unit_ID_Status_HMI");
                 OPC.Read<string>("DUT_Receiving.str_CONCAT_RejectCode_HMI");
+
             }
         }
 
@@ -601,13 +609,16 @@ namespace PentagonHMI
 
         #endregion LotSummary
 
-        public void LotSummary()
+        public bool LotSummary()
         {
+            bool summaryCompleted = false;
+
             try
             {
+                
+
                 var logDate = OPC.Read<string>(UniversalPLCTags.Tag_EventLogDateTime_str); //20230925 added but wait for na confirm with tmp team first
                 var formatLogDate = EventLogDateFormat(logDate); //20230925 added but wait for na confirm with tmp team first
-
 #if DEBUG
                 var lotID = "1224";
                 var startdatetime = "20230814063501";
@@ -627,7 +638,7 @@ namespace PentagonHMI
                 int mtba = 540;
                 int mtbf = 0;
                 string totalYield = FormatString(Grouping.percent, 99.95);
-
+               
 #else
                 //get data for database
                 var lotID = OPC.Read<string>(LotID);
@@ -1095,6 +1106,7 @@ namespace PentagonHMI
                                         csv.WriteField($"Cavity {i} Sensor_Well_Flashing:");
                                         csv.WriteField(OPC.Read<int>($"Cavity{i}.Sns_Wel_Flash"));
                                         csv.NextRecord();
+
                                     }
                                 }
                             }
@@ -1115,14 +1127,108 @@ namespace PentagonHMI
                         catch (Exception ex)
                         {
                             Utilities.FileLogger.logError(ex.Message, "LotSummary");
-                        }                    
+                        }
+
+                        // Save to server using Stored Procedure [LPM].[PENTALPMEndLotResult]
+                        try
+                        {
+                            string formatDb = "yyyyMMddHHmmss";
+                            DateTime dateTime;
+                            DateTime.TryParseExact(startdatetime, formatDb, CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime);
+
+                            using (SqlConnection conn = new SqlConnection(Connstr2))
+                            {
+                                using (SqlCommand cmd = new SqlCommand("[LPM].[PENTALPMEndLotResult]", conn))
+                                {
+                                    cmd.CommandType = CommandType.StoredProcedure;
+
+                                    // 1. Create DataTable for ProcessRecordTblType
+                                    DataTable dtRecord = new DataTable();
+                                    dtRecord.Columns.Add("EQNumber", typeof(string));
+                                    dtRecord.Columns.Add("LotID", typeof(string));
+                                    dtRecord.Columns.Add("ProcessName", typeof(string));
+                                    dtRecord.Columns.Add("StartTime", typeof(DateTime));
+                                    dtRecord.Columns.Add("EndTime", typeof(DateTime));
+                                    dtRecord.Columns.Add("TxSN", typeof(string));
+                                    dtRecord.Columns.Add("OverallResult", typeof(int));
+                                    dtRecord.Columns.Add("RejectCode", typeof(string));
+                                    dtRecord.Columns.Add("UserName", typeof(string));
+
+                                    Properties.Settings.Default.EQNUMBER.ToString();
+                                    dtRecord.Rows.Add(
+                                        Properties.Settings.Default.EQNUMBER.ToString(),
+                                        lotID,
+                                        "LPMEndLot",
+                                        dateTime,
+                                        DateTime.Now,
+                                        "EndLot",
+                                        1,
+                                        "",
+                                        _Main.UserName
+                                    );
+
+                                    // 2. Create DataTable for ProcessValueTblType
+                                    DataTable dtValue = new DataTable();
+                                    dtValue.Columns.Add("ValueType", typeof(string));
+                                    dtValue.Columns.Add("Value", typeof(double));
+                                    dtValue.Columns.Add("ValueString", typeof(string));
+                                    dtValue.Columns.Add("Category", typeof(int));
+                                    dtValue.Columns.Add("CreatedDateTime", typeof(DateTime));
+
+                                    // Populate values following your specification
+                                    dtValue.Rows.Add("Lot_Info.HMI_LotID", DBNull.Value, lotID, 3, DateTime.Now);
+                                    dtValue.Rows.Add("Lot_Info.MFG_LotID", DBNull.Value, OPC.Read<string>(MFG_LotID), 3, DateTime.Now);
+                                    dtValue.Rows.Add("Lot_Info.Resin_ID", DBNull.Value, OPC.Read<string>(Resin_ID), 3, DateTime.Now);
+                                    dtValue.Rows.Add("Sns_Wel_Flash_Fail_Qty", OPC.Read<int>(SnsWelFlashFail), DBNull.Value, 7, DateTime.Now);
+
+                                    for (int i = 1; i < 17; i++)
+                                    {
+                                        dtValue.Rows.Add($"Cavity{i}.ShortShot", OPC.Read<int>($"Cavity{i}.ShortShot"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.OMFF", OPC.Read<int>($"Cavity{i}.OMFF"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.FOD", OPC.Read<int>($"Cavity{i}.FOD"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.BSTAIN", OPC.Read<int>($"Cavity{i}.BSTAIN"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.FLASHING", OPC.Read<int>($"Cavity{i}.FLASHING"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.LBBUBBLE", OPC.Read<int>($"Cavity{i}.LBBUBBLE"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.BSTAIN_BCK", OPC.Read<int>($"Cavity{i}.BSTAIN_BCK"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.MOUSE_BITE", OPC.Read<int>($"Cavity{i}.MOUSE_BITE"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.BBTRYCLIP", OPC.Read<int>($"Cavity{i}.BBTRYCLIP"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.POROUS", OPC.Read<int>($"Cavity{i}.POROUS"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.Delam", OPC.Read<int>($"Cavity{i}.Delam"), DBNull.Value, 3, DateTime.Now);
+                                        dtValue.Rows.Add($"Cavity{i}.Sns_Wel_Flash", OPC.Read<int>($"Cavity{i}.Sns_Wel_Flash"), DBNull.Value, 3, DateTime.Now);
+                                    }
+
+                                    // 3. Bind to command parameters as structured TVPs
+                                    SqlParameter paramRecord = cmd.Parameters.AddWithValue("ProcessRecordTblType", dtRecord);
+                                    paramRecord.SqlDbType = SqlDbType.Structured;
+                                    //paramRecord.TypeName = "dbo.ProcessRecordTblType";
+
+                                    SqlParameter paramValue = cmd.Parameters.AddWithValue("ProcessValueTblType", dtValue);
+                                    paramValue.SqlDbType = SqlDbType.Structured;
+                                    //paramValue.TypeName = "dbo.ProcessValueTblType";
+
+                                    conn.Open();
+                                    cmd.ExecuteNonQuery();
+                                }
+                            }
+
+                            summaryCompleted = true;
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Utilities.FileLogger.logError(ex.Message, "LotSummary_StoredProc");
+                            summaryCompleted = false;
+                        }
                     }
                 }
             }
             catch(Exception ex)
             {
                 Utilities.FileLogger.logError(ex.Message, "LotSummary");
+                summaryCompleted = false;
             }
+
+            return summaryCompleted;
         }
 
         #region VisionResult Tags
@@ -1245,7 +1351,7 @@ namespace PentagonHMI
 
                                 if (hasUpload == 0)
                                 {
-                                    success = VisionDexcomScriptTrigger();
+                                    success = VisionDexcomScriptTrigger(PLC_RejectCode);
                                     // Update SQL row hasUpload to true
                                     _Main.SQLer.Exec_NonQuery($"UPDATE [dbo].[VisionCheckInfo] SET [hasUpload] = 1 WHERE [TrayID] = '{PLC_TrayID}' AND [UnitID] = '{PLC_UnitID}'");
                                 }
@@ -1326,6 +1432,7 @@ namespace PentagonHMI
                     }
                     else
                     {
+                        // Write Error bit here if want direct trigger for alarm
                         FileLogger.logEvent("VisionResultCompareCheck", "[VisionResultCompareCheck] Skip turn off flag");
                     }
 
@@ -1380,11 +1487,72 @@ namespace PentagonHMI
             }
         }
 
-        public bool VisionDexcomScriptTrigger()
+        public bool VisionDexcomScriptTrigger(string plc_RejectCode)
         {
-            // Insert to dexcom DB function
-            // TO BE COMPLETED
-            return true;
+            try
+            {
+                // Read LotID or necessary parameters for the record
+                var lotID = OPC.Read<string>(LotID);
+                var startdatetime = OPC.Read<string>(StartDateTime);
+
+                // Parse start date time from string format "yyyyMMddHHmmss"
+                string formatDb = "yyyyMMddHHmmss";
+                DateTime startTime;
+                DateTime.TryParseExact(startdatetime, formatDb, CultureInfo.InvariantCulture, DateTimeStyles.None, out startTime);
+
+                string txSn = $"{lotID}{PLC_TrayID}{PLC_UnitID}";
+
+                int overallResult = (PLC_UnitStatus == 0) ? 0 : 1;
+
+                using (SqlConnection conn = new SqlConnection(Connstr2))
+                {
+                    using (SqlCommand cmd = new SqlCommand("[LPM].[PENTALPMCreatePRResult]", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        // 1. Create DataTable for ProcessRecordTblType matching the stored procedure structure
+                        DataTable dtRecord = new DataTable();
+                        dtRecord.Columns.Add("EQNumber", typeof(string));
+                        dtRecord.Columns.Add("LotID", typeof(string));
+                        dtRecord.Columns.Add("ProcessName", typeof(string));
+                        dtRecord.Columns.Add("StartTime", typeof(DateTime));
+                        dtRecord.Columns.Add("EndTime", typeof(DateTime));
+                        dtRecord.Columns.Add("TxSN", typeof(string));
+                        dtRecord.Columns.Add("OverallResult", typeof(int));
+                        dtRecord.Columns.Add("RejectCode", typeof(string));
+                        dtRecord.Columns.Add("UserName", typeof(string));
+
+                        dtRecord.Rows.Add(
+                            Properties.Settings.Default.EQNUMBER.ToString(),
+                            lotID,
+                            "LPMProcessRecord",
+                            startTime,
+                            DateTime.Now,
+                            txSn,
+                            overallResult,
+                            plc_RejectCode,
+                            _Main.UserName
+                        );
+
+                        // 2. Bind the TVP parameter
+                        SqlParameter paramRecord = cmd.Parameters.AddWithValue("ProcessRecordTblType", dtRecord);
+                        paramRecord.SqlDbType = SqlDbType.Structured;
+                        //paramRecord.TypeName = "dbo.ProcessRecordTblType";
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                // Return true if successful
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // Log the error using your existing file logger framework
+                Utilities.FileLogger.logError(ex.Message, "VisionDexcomScriptTrigger");
+                return false;
+            }
         }
 
         public static string EventLogDateFormat(string logDateTime)
@@ -1447,12 +1615,28 @@ namespace PentagonHMI
         {
             try
             {
-                if (OPC.Read<bool>("HMI_Log_LotSummary") == true)
+                if (OPC.Read<bool>("HMI_Log_LotSummary") == true && lotSummaryState == LoggingState.Open)
                 {
                     //OPC.Write("HMI_Log_LotSummary", false);
-                    LotSummary();
-                    OPC.Write("HMI_Log_LotSummary", false);
-                }
+                    lotSummaryState = LoggingState.InProcess;
+                    FileLogger.logEvent("", $"[LotSummary] Start execute Lot Summary Log | State: {lotSummaryState}");
+
+                    bool success = LotSummary();
+
+                    if (success)
+                    {
+                        OPC.Write("HMI_Log_LotSummary", false);
+                    }
+                    else
+                    {
+                        // If want error can have written bit here, or timeout 30 seconds
+                        FileLogger.logEvent("LotSummaryCheck", "[LotSummaryCheck] Skip turn off flag due to error/failure");
+                    }
+
+                lotSummaryState = LoggingState.Open;
+                FileLogger.logEvent("", $"[LotSummary] End execute Lot Summary Log | State: {lotSummaryState}");
+
+            }
                 //testing only
                 //LotSummary();
                 //LotDuplicateCheck();

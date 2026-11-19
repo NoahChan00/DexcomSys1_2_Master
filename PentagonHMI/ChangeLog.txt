@@ -1,14 +1,19 @@
-﻿Version         : V1.1.39.1
+﻿Version         : V1.1.40.2 (not released)
 Date Modified   : 2026 05 19, 2026 09 07
 Modified By     : Chan Jen Hao
 Changes         : 
-1. Vision Result Check, now Log data into SQL. After upload succes, update in CSV
+1. Vision Result Check and Lot Summary call StoredProc, now Log data into SQL Connection String 2. After upload succes, update in CSV
 	- Main_Custom.cs and Main.cs
-2. Lot OEE Start Date time fix
+
+Version         : V1.1.39.2
+Date Modified   : 2026 05 19, 2026 09 07
+Modified By     : Chan Jen Hao
+Changes         : 
+1. Lot OEE Start Date time fix
 	- ucDexcom_OEE.xaml.cs
-3. Split Settings Page into Advanced Setting
+2. Split Settings Page into Advanced Setting
 	- Added Extra column in [Setting] table
-4. Fix Lot OEE Rewrite back after turning off
+3. Fix Lot OEE Rewrite back after turning off
 
 Version         : V1.1.38.2
 Date Modified   : 2026 03 09
